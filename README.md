@@ -1,0 +1,4 @@
+showfast
+========
+
+Performance dashboard
