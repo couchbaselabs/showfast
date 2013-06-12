@@ -1,4 +1,5 @@
-<div class="masthead" id="{{id}}">
+<div class="masthead">
+	<hr/>
 	<h4>{{title}}</h5>
 	<span class="muted"><strong>Cluster: </strong>{{cluster}}</span>
 	<span class="muted"><strong>Platform: </strong>{{platform}}</span>
@@ -6,4 +7,15 @@
 	<span class="muted"><strong>CPU: </strong>{{cpu}}</span>
 	<span class="muted"><strong>Memory: </strong>{{memory}}</span>
 	<span class="muted"><strong>Disk: </strong>{{disk}}</span>
+	<div id="{{id}}">
+		<svg class="chart"></svg>
+	</div>
+	<script type="text/javascript">
+		$.ajax({url: "/timeline?metric={{id}}", dataType: "json",
+			success: function(data) {
+				var chart_data = [{values: data}];
+				SHOWFAST.addChart("{{id}}", chart_data);
+			}
+    });
+	</script>
 </div>
