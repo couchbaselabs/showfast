@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"github.com/couchbaselabs/go-couchbase"
 	"github.com/hoisie/mustache"
 	"github.com/hoisie/web"
@@ -57,7 +58,10 @@ func home() string {
 }
 
 func main() {
+	address := flag.String("address", "127.0.0.1:8080", "Listen address")
+	flag.Parse()
+
 	web.Get("/", home)
 	web.Get("/timeline", timeline)
-	web.Run("127.0.0.1:8080")
+	web.Run(*address)
 }
