@@ -48,7 +48,7 @@ func timeline(ctx *web.Context) []byte {
 		log.Fatalf("Error reading bucket:  %v", err)
 	}
 
-	res, err := b_benchmarks.View("test", "by_metric", map[string]interface{}{
+	res, err := b_benchmarks.View("benchmarks", "by_metric", map[string]interface{}{
 		"stale": false,
 		"key":   ctx.Params["metric"],
 	})
