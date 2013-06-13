@@ -1,19 +1,17 @@
 package main
 
 import (
-	"bitbucket.org/kardianos/osext"
 	"encoding/json"
 	"flag"
 	"github.com/couchbaselabs/go-couchbase"
 	"github.com/hoisie/mustache"
 	"github.com/hoisie/web"
 	"log"
-	"path/filepath"
-	"strings"
+	"os"
 )
 
 var pool couchbase.Pool
-var exec_dir string
+var pckg_dir string
 
 func get_benchmarks() (benchmarks []map[string]interface{}) {
 	b_metrics, err := pool.GetBucket("metrics")
@@ -70,12 +68,14 @@ func timeline(ctx *web.Context) []byte {
 }
 
 func home() string {
-	var benchmarks = get_benchmarks()
-	var content = ""
+	benchmarks := get_benchmarks()
+	content := ""
+	pckg_dir := os.Getenv("GOPATH") + "/src/github.com/pavel-paulau/showfast/"
+
 	for _, benchmark := range benchmarks {
-		content += mustache.RenderFile(exec_dir+"templates/benchmark.mustache", benchmark)
+		content += mustache.RenderFile(pckg_dir+"templates/benchmark.mustache", benchmark)
 	}
-	return mustache.RenderFile(exec_dir+"templates/home.mustache", map[string]string{"content": content})
+	return mustache.RenderFile(pckg_dir+"templates/home.mustache", map[string]string{"content": content})
 }
 
 func main() {
@@ -87,13 +87,6 @@ func main() {
 		log.Fatalf("Error connecting:  %v", err)
 	}
 	pool, _ = c.GetPool("default")
-
-	filename, _ := osext.Executable()
-	if strings.Contains(filename, "go-build") {
-		exec_dir = ""
-	} else {
-		exec_dir = filepath.Dir(filename)
-	}
 
 	web.Get("/", home)
 	web.Get("/timeline", timeline)
