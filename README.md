@@ -16,4 +16,4 @@ Installation
 Usage
 -----
 
-    showfast -address=127.0.0.1:8000
+    $GOPATH/bin/showfast -address=127.0.0.1:8000
