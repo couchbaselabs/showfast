@@ -70,8 +70,6 @@ func timeline(ctx *web.Context) []byte {
 func home() string {
 	benchmarks := get_benchmarks()
 	content := ""
-	pckg_dir := os.Getenv("GOPATH") + "/src/github.com/pavel-paulau/showfast/"
-
 	for _, benchmark := range benchmarks {
 		content += mustache.RenderFile(pckg_dir+"templates/benchmark.mustache", benchmark)
 	}
@@ -88,6 +86,8 @@ func main() {
 	}
 	pool, _ = c.GetPool("default")
 
+	pckg_dir = os.Getenv("GOPATH") + "/src/github.com/pavel-paulau/showfast/"
+	web.Config.StaticDir = pckg_dir + "static"
 	web.Get("/", home)
 	web.Get("/timeline", timeline)
 	web.Run(*address)
