@@ -7,6 +7,7 @@ Prerequisites
 -------------
 
 * go 1.1
+* Couchbase Server
 
 Installation
 ------------
