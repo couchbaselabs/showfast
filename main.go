@@ -8,6 +8,7 @@ import (
 	"github.com/hoisie/web"
 	"log"
 	"os"
+	"sort"
 )
 
 var pool couchbase.Pool
@@ -44,6 +45,20 @@ func get_benchmarks() (benchmarks []map[string]interface{}) {
 	return benchmarks
 }
 
+type Timeline [][]interface{}
+
+func (b Timeline) Len() int {
+	return len(b)
+}
+
+func (b Timeline) Swap(i, j int) {
+	b[i], b[j] = b[j], b[i]
+}
+
+func (b Timeline) Less(i, j int) bool {
+	return b[i][0].(string) < b[j][0].(string)
+}
+
 func timeline(ctx *web.Context) []byte {
 	b_benchmarks, err := pool.GetBucket("benchmarks")
 	if err != nil {
@@ -58,19 +73,19 @@ func timeline(ctx *web.Context) []byte {
 		log.Fatalf("Error reading view:  %v", err)
 	}
 
-	values := [][]interface{}{}
+	timeline := Timeline{}
 	for _, row := range res.Rows {
 		xy := row.Value.([]interface{})
-		values = append(values, xy)
+		timeline = append(timeline, xy)
 	}
-	b, _ := json.Marshal(values)
-	return b
+	sort.Sort(timeline)
+	t, _ := json.Marshal(timeline)
+	return t
 }
 
 func home() string {
-	benchmarks := get_benchmarks()
 	content := ""
-	for _, benchmark := range benchmarks {
+	for _, benchmark := range get_benchmarks() {
 		content += mustache.RenderFile(pckg_dir+"templates/benchmark.mustache", benchmark)
 	}
 	return mustache.RenderFile(pckg_dir+"templates/home.mustache", map[string]string{"content": content})
