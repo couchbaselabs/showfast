@@ -10,9 +10,9 @@ SHOWFAST.addChart = function(id, data) {
         var chart = nv.models.discreteBarChart()
             .x(function(d) { return d[0]; })
             .y(function(d) { return d[1]; })
-            .showValues(true)
             .color(["#50aa43"]);
 
+        chart.xAxis.rotateLabels(-45);
         d3.select("#" + id + " svg")
             .datum(data)
             .call(chart);
