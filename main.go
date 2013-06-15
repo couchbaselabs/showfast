@@ -31,12 +31,12 @@ func get_benchmarks() (benchmarks []map[string]interface{}) {
 		log.Fatalf("Error reading view:  %v", err)
 	}
 
-	for _, row := range res.Rows {
-		benchmark := row.Value.(map[string]interface{})
-		benchmark["id"] = row.ID
+	for i := range res.Rows {
+		benchmark := res.Rows[i].Value.(map[string]interface{})
+		benchmark["id"] = res.Rows[i].ID
 
 		rv := map[string]string{}
-		b_clusters.Get(benchmark["cluster"].(string), &rv)
+		b_clusters.Get(benchmark["cluster"].(string), rv)
 		for k, v := range rv {
 			benchmark[k] = v
 		}
@@ -74,8 +74,8 @@ func timeline(ctx *web.Context) []byte {
 	}
 
 	timeline := Timeline{}
-	for _, row := range res.Rows {
-		xy := row.Value.([]interface{})
+	for i := range res.Rows {
+		xy := res.Rows[i].Value.([]interface{})
 		timeline = append(timeline, xy)
 	}
 	sort.Sort(timeline)
