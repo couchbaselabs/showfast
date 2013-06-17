@@ -13,8 +13,8 @@ SHOWFAST.addChart = function(id, data) {
             .showValues(true)
             .color(["#50aa43"]);
 
-        chart.valueFormat(d3.format('f'));
-        chart.yAxis.tickFormat(d3.format('f'));
+        chart.valueFormat(d3.format(',f'));
+        chart.yAxis.tickFormat(d3.format(',f'));
 
         if (data[0].values.length > 15) {
             chart.xAxis.rotateLabels(-45);
