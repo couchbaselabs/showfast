@@ -36,7 +36,7 @@ func get_benchmarks() (benchmarks []map[string]interface{}) {
 		benchmark["id"] = res.Rows[i].ID
 
 		rv := map[string]string{}
-		b_clusters.Get(benchmark["cluster"].(string), rv)
+		b_clusters.Get(benchmark["cluster"].(string), &rv)
 		for k, v := range rv {
 			benchmark[k] = v
 		}
