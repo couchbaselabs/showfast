@@ -65,10 +65,8 @@ func timeline(ctx *web.Context) []byte {
 		log.Fatalf("Error reading bucket:  %v", err)
 	}
 
-	res, err := b_benchmarks.View("benchmarks", "by_metric", map[string]interface{}{
-		"stale": false,
-		"key":   ctx.Params["metric"],
-	})
+	res, err := b_benchmarks.View("benchmarks", "by_metric",
+		map[string]interface{}{"stale": false, "key": ctx.Params["metric"]})
 	if err != nil {
 		log.Fatalf("Error reading view:  %v", err)
 	}
@@ -86,9 +84,11 @@ func timeline(ctx *web.Context) []byte {
 func home() string {
 	content := ""
 	for _, benchmark := range get_benchmarks() {
-		content += mustache.RenderFile(pckg_dir+"templates/benchmark.mustache", benchmark)
+		content += mustache.RenderFile(pckg_dir+"templates/benchmark.mustache",
+			benchmark)
 	}
-	return mustache.RenderFile(pckg_dir+"templates/home.mustache", map[string]string{"content": content})
+	return mustache.RenderFile(pckg_dir+"templates/home.mustache",
+		map[string]string{"content": content})
 }
 
 func main() {
