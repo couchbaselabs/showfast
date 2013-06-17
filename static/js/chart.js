@@ -13,6 +13,9 @@ SHOWFAST.addChart = function(id, data) {
             .showValues(true)
             .color(["#50aa43"]);
 
+        chart.valueFormat(d3.format('f'));
+        chart.yAxis.tickFormat(d3.format('f'));
+
         d3.select("#" + id + " svg")
             .datum(data)
             .call(chart);
