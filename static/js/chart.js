@@ -16,6 +16,10 @@ SHOWFAST.addChart = function(id, data) {
         chart.valueFormat(d3.format('f'));
         chart.yAxis.tickFormat(d3.format('f'));
 
+        if (data[0].values.length > 15) {
+            chart.xAxis.rotateLabels(-45);
+        }
+
         d3.select("#" + id + " svg")
             .datum(data)
             .call(chart);
