@@ -16,8 +16,9 @@
 	            .showControls(false)
 	            .valueFormat(d3.format(',f'))
 	            .color(["#50aa43"])
-	            .margin({top: 0, right: 0, bottom: 20, left: 60});
+	            .margin({top: 0, right: 0, bottom: 10, left: 70});
 
+	        chart.yAxis.tickFormat(function(d) {return ""});
 	        d3.select("#" + id + " svg")
 	            .datum(data)
 	            .call(chart);
