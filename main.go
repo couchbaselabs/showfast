@@ -27,7 +27,7 @@ func b2b(ctx *web.Context) []byte {
 	return datasource.GetTimelineForBuilds(metric, builds)
 }
 
-func comparison(ctx *web.Context, val string) string {
+func compare(ctx *web.Context, val string) string {
 	builds := strings.Split(val, "/")
 	if len(val) == 0 || len(builds) > 2 {
 		ctx.WriteHeader(400)
@@ -65,7 +65,7 @@ func main() {
 
 	web.Get("/", home)
 	web.Get("/timeline", timeline)
-	web.Get("/comparison/(.*)", comparison)
+	web.Get("/compare/(.*)", compare)
 	web.Get("/b2b", b2b)
 	web.Run(*address)
 }
