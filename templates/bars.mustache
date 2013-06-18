@@ -27,7 +27,7 @@
 	    });
 	};
 
-	var builds = window.location.pathname.slice(12);
+	var builds = window.location.pathname.slice(9);
 
 	$.ajax({url: "/b2b?metric={{id}}&builds=" + builds, dataType: "json",
 		success: function(data) {
