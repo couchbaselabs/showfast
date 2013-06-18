@@ -1,0 +1,40 @@
+<div id="{{id}}">
+	<svg class="column-chart"></svg>
+</div>
+<script type="text/javascript">
+	var SHOWFAST = SHOWFAST || {};
+
+	SHOWFAST.addChart = function(id, data) {
+	    "use strict";
+
+	    nv.addGraph(function() {
+	        var chart = nv.models.discreteBarChart()
+	            .x(function(d) { return d[0]; })
+	            .y(function(d) { return d[1]; })
+	            .showValues(true)
+	            .color(["#50aa43"])
+	            .valueFormat(d3.format(',f'))
+	            .margin({top: 0, right: 0, bottom: 20, left: 50});
+
+	        chart.yAxis.tickFormat(d3.format(',f'));
+	        if (data[0].values.length > 15) {
+	            chart.xAxis.rotateLabels(-45);
+	        }
+
+	        d3.select("#" + id + " svg")
+	            .datum(data)
+	            .call(chart);
+
+	        nv.utils.windowResize(chart.update);
+
+	        return chart;
+	    });
+	};
+
+	$.ajax({url: "/timeline?metric={{id}}", dataType: "json",
+		success: function(data) {
+			var chart_data = [{values: data}];
+			SHOWFAST.addChart("{{id}}", chart_data);
+		}
+	});
+</script>
