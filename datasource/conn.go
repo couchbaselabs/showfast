@@ -1,8 +1,9 @@
 package datasource
 
 import (
-	"github.com/couchbaselabs/go-couchbase"
 	"log"
+
+	"github.com/couchbaselabs/go-couchbase"
 )
 
 func GetPool() (pool couchbase.Pool) {

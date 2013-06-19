@@ -2,10 +2,11 @@ package main
 
 import (
 	"flag"
-	"github.com/hoisie/mustache"
-	"github.com/hoisie/web"
 	"os"
 	"strings"
+
+	"github.com/hoisie/mustache"
+	"github.com/hoisie/web"
 
 	"github.com/pavel-paulau/showfast/datasource"
 )
