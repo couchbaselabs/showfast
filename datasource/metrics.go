@@ -83,10 +83,10 @@ func getMetricIDs(builds []string) (ids []string) {
 func getIntersection(m1, m2 []string) (intersection []string) {
 	sort.Strings(m1)
 	sort.Strings(m2)
-	for i, j := 0, 0; i < len(m1) && j < len(m2); i += 1 {
+	for i, j := 0, 0; i < len(m1) && j < len(m2); i++ {
 		if m1[i] == m2[j] {
 			intersection = append(intersection, m1[i])
-			j += 1
+			j++
 		}
 	}
 	return
