@@ -37,15 +37,11 @@ func GetTimeline(metric string) []byte {
 
 func getLatestBuild(metric string) string {
 	b_benchmarks := GetBucket("benchmarks")
-	rows := QueryView(b_benchmarks, "benchmarks", "build_by_metric",
-		map[string]interface{}{"key": metric})
-
-	builds := []string{}
-	for i := range rows {
-		builds = append(builds, rows[i].Value.(string))
-	}
-	sort.Strings(builds)
-	return builds[len(builds)-1]
+	rows := QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+		map[string]interface{}{
+			"startkey": []string{metric, "z"}, "endkey": []string{metric},
+			"descending": true, "limit": 1})
+	return rows[0].Key.([]interface{})[1].(string)
 }
 
 func GetTimelineForBuilds(metric string, builds_s string) []byte {
