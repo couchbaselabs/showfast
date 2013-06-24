@@ -6,7 +6,9 @@ import (
 	"github.com/couchbaselabs/go-couchbase"
 )
 
-var Ddocs = map[string]string{
+const cbHost = "http://127.0.0.1:8091/"
+
+var ddocs = map[string]string{
 	"metrics": `{
 		"views": {
 			"all": {
@@ -32,19 +34,27 @@ var Ddocs = map[string]string{
 	}`,
 }
 
-func GetPool() (pool couchbase.Pool) {
-	c, err := couchbase.Connect("http://127.0.0.1:8091/")
+func GetBucket(bucket string) *couchbase.Bucket {
+	b, err := couchbase.GetBucket(cbHost, "default", bucket)
 	if err != nil {
-		log.Fatalf("Error connecting:  %v", err)
+		log.Fatalf("Error reading bucket:  %v", err)
 	}
-	pool, _ = c.GetPool("default")
-	return
+	return b
 }
 
-func InstallDDoc(bucket string) {
-	pool := GetPool()
-	b, _ := pool.GetBucket(bucket)
-	err := b.PutDDoc(bucket, Ddocs[bucket])
+func QueryView(b *couchbase.Bucket, ddoc, view string,
+	params map[string]interface{}) []couchbase.ViewRow {
+	params["stale"] = false
+	vr, err := b.View(ddoc, view, params)
+	if err != nil {
+		InstallDDoc(ddoc)
+	}
+	return vr.Rows
+}
+
+func InstallDDoc(ddoc string) {
+	b := GetBucket(ddoc) // bucket name == ddoc name
+	err := b.PutDDoc(ddoc, ddocs[ddoc])
 	if err != nil {
 		log.Fatalf("%v", err)
 	}

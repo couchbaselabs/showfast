@@ -1,31 +1,17 @@
 package datasource
 
 import (
-	"log"
 	"sort"
 )
 
 func GetAllMetrics() (metrics []map[string]interface{}) {
-	pool := GetPool()
-	b_metrics, err := pool.GetBucket("metrics")
-	if err != nil {
-		log.Fatalf("Error reading bucket:  %v", err)
-	}
-	b_clusters, err := pool.GetBucket("clusters")
-	if err != nil {
-		log.Fatalf("Error reading bucket:  %v", err)
-	}
+	b_metrics := GetBucket("metrics")
+	b_clusters := GetBucket("clusters")
+	rows := QueryView(b_metrics, "metrics", "all", map[string]interface{}{})
 
-	res, err := b_metrics.View("metrics", "all", map[string]interface{}{
-		"stale": false,
-	})
-	if err != nil {
-		InstallDDoc("metrics")
-	}
-
-	for i := range res.Rows {
-		metric := res.Rows[i].Value.(map[string]interface{})
-		metric["id"] = res.Rows[i].ID
+	for i := range rows {
+		metric := rows[i].Value.(map[string]interface{})
+		metric["id"] = rows[i].ID
 
 		rv := map[string]string{}
 		b_clusters.Get(metric["cluster"].(string), &rv)
@@ -47,22 +33,12 @@ func appendIfUnique(slice []string, s string) []string {
 }
 
 func getMetricIDsForBuild(build string) (ids []string) {
-	pool := GetPool()
-	b_benchmarks, err := pool.GetBucket("benchmarks")
-	if err != nil {
-		log.Fatalf("Error reading bucket:  %v", err)
-	}
+	b_benchmarks := GetBucket("benchmarks")
+	rows := QueryView(b_benchmarks, "benchmarks", "metrics_by_build",
+		map[string]interface{}{"key": build})
 
-	res, err := b_benchmarks.View("benchmarks", "metrics_by_build", map[string]interface{}{
-		"stale": false,
-		"key":   build,
-	})
-	if err != nil {
-		log.Fatalf("Error reading view:  %v", err)
-	}
-
-	for i := range res.Rows {
-		id := res.Rows[i].Value.(string)
+	for i := range rows {
+		id := rows[i].Value.(string)
 		ids = appendIfUnique(ids, id)
 	}
 	return
@@ -93,15 +69,8 @@ func getIntersection(m1, m2 []string) (intersection []string) {
 }
 
 func GetMetricsForBuilds(builds []string) (metrics []map[string]interface{}) {
-	pool := GetPool()
-	b_metrics, err := pool.GetBucket("metrics")
-	if err != nil {
-		log.Fatalf("Error reading bucket:  %v", err)
-	}
-	b_clusters, err := pool.GetBucket("clusters")
-	if err != nil {
-		log.Fatalf("Error reading bucket:  %v", err)
-	}
+	b_metrics := GetBucket("metrics")
+	b_clusters := GetBucket("clusters")
 
 	ids := getMetricIDs(builds)
 	for i := range ids {
