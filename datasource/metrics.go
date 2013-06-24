@@ -20,7 +20,7 @@ func GetAllMetrics() (metrics []map[string]interface{}) {
 		"stale": false,
 	})
 	if err != nil {
-		log.Fatalf("Error reading view:  %v", err)
+		InstallDDoc("metrics")
 	}
 
 	for i := range res.Rows {
@@ -53,7 +53,7 @@ func getMetricIDsForBuild(build string) (ids []string) {
 		log.Fatalf("Error reading bucket:  %v", err)
 	}
 
-	res, err := b_benchmarks.View("benchmarks", "by_build", map[string]interface{}{
+	res, err := b_benchmarks.View("benchmarks", "metrics_by_build", map[string]interface{}{
 		"stale": false,
 		"key":   build,
 	})

@@ -28,10 +28,10 @@ func GetTimeline(metric string) (t []byte) {
 		log.Fatalf("Error reading bucket:  %v", err)
 	}
 
-	res, err := b_benchmarks.View("benchmarks", "by_metric",
+	res, err := b_benchmarks.View("benchmarks", "build_and_value_by_metric",
 		map[string]interface{}{"stale": false, "key": metric})
 	if err != nil {
-		log.Fatalf("Error reading view:  %v", err)
+		InstallDDoc("benchmarks")
 	}
 
 	timeline := Timeline{}
@@ -53,7 +53,7 @@ func getLatestBuild(metric string) string {
 	res, err := b_benchmarks.View("benchmarks", "build_by_metric",
 		map[string]interface{}{"stale": false, "key": metric})
 	if err != nil {
-		log.Fatalf("Error reading view:  %v", err)
+		InstallDDoc("benchmarks")
 	}
 	builds := []string{}
 	for i := range res.Rows {
@@ -80,10 +80,10 @@ func GetTimelineForBuilds(metric string, builds_s string) (t []byte) {
 		keys = append(keys, key)
 	}
 
-	res, err := b_benchmarks.View("benchmarks", "by_metric_and_builds",
+	res, err := b_benchmarks.View("benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{"stale": false, "keys": keys})
 	if err != nil {
-		log.Fatalf("Error reading view:  %v", err)
+		InstallDDoc("benchmarks")
 	}
 
 	timeline := Timeline{}
