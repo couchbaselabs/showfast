@@ -2,38 +2,10 @@ package datasource
 
 import (
 	"encoding/json"
-	"sort"
 	"strings"
+
+	"github.com/couchbaselabs/go-couchbase"
 )
-
-type Timeline [][]interface{}
-
-func (b Timeline) Len() int {
-	return len(b)
-}
-
-func (b Timeline) Swap(i, j int) {
-	b[i], b[j] = b[j], b[i]
-}
-
-func (b Timeline) Less(i, j int) bool {
-	return b[i][0].(string) < b[j][0].(string)
-}
-
-func GetTimeline(metric string) []byte {
-	b_benchmarks := GetBucket("benchmarks")
-	rows := QueryView(b_benchmarks, "benchmarks", "build_and_value_by_metric",
-		map[string]interface{}{"key": metric})
-
-	timeline := Timeline{}
-	for i := range rows {
-		xy := rows[i].Value.([]interface{})
-		timeline = append(timeline, xy)
-	}
-	sort.Sort(timeline)
-	t, _ := json.Marshal(timeline)
-	return t
-}
 
 func getLatestBuild(metric string) string {
 	b_benchmarks := GetBucket("benchmarks")
@@ -42,6 +14,25 @@ func getLatestBuild(metric string) string {
 			"startkey": []string{metric, "z"}, "endkey": []string{metric},
 			"descending": true, "limit": 1})
 	return rows[0].Key.([]interface{})[1].(string)
+}
+
+func rowsToTimeline(rows []couchbase.ViewRow) []byte {
+	timeline := [][]interface{}{}
+	for i := range rows {
+		build := rows[i].Key.([]interface{})[1]
+		value := rows[i].Value.(interface{})
+		timeline = append(timeline, []interface{}{build, value})
+	}
+	t, _ := json.Marshal(timeline)
+	return t
+}
+
+func GetTimeline(metric string) []byte {
+	b_benchmarks := GetBucket("benchmarks")
+	rows := QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+		map[string]interface{}{
+			"startkey": []string{metric}, "endkey": []string{metric, "z"}})
+	return rowsToTimeline(rows)
 }
 
 func GetTimelineForBuilds(metric string, builds_s string) []byte {
@@ -58,14 +49,5 @@ func GetTimelineForBuilds(metric string, builds_s string) []byte {
 	b_benchmarks := GetBucket("benchmarks")
 	rows := QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{"keys": keys})
-
-	timeline := Timeline{}
-	for i := range rows {
-		xy := []interface{}{rows[i].Key.([]interface{})[1],
-			rows[i].Value.(interface{})}
-		timeline = append(timeline, xy)
-	}
-	sort.Sort(timeline)
-	t, _ := json.Marshal(timeline)
-	return t
+	return rowsToTimeline(rows)
 }

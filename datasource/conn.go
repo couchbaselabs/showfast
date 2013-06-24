@@ -21,9 +21,6 @@ var ddocs = map[string]string{
 			"metrics_by_build": {
 				 "map": "function (doc, meta) {emit(doc.build, doc.metric);}"
 			},
-			"build_and_value_by_metric": {
-				"map": "function (doc, meta) {emit(doc.metric, [doc.build, doc.value]);}"
-			},
 			"values_by_build_and_metric": {
 				"map": "function (doc, meta) {emit([doc.metric, doc.build], doc.value);}"
 			}
