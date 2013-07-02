@@ -18,9 +18,6 @@ var ddocs = map[string]string{
 	}`,
 	"benchmarks": `{
 		"views": {
-			"all_ids": {
-				"map": "function (doc, meta) {emit(meta.id, null);}"
-			},
 			"metrics_by_build": {
 				 "map": "function (doc, meta) {if (!doc.obsolete) {emit(doc.build, doc.metric);}}"
 			},
