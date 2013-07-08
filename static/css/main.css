@@ -1,3 +1,7 @@
+a, a:hover {
+	color: #333;
+}
+
 .column-chart {
     height: 160px;
 }
