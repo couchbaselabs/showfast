@@ -5,7 +5,30 @@
 		<div class="masthead">
 			<h2>Performance Dashboard</h3>
 		</div>
+		<div class="text-center">
+		<div class="btn-group" data-toggle="buttons-radio">
+			<button id="all" class="btn btn-success active">All</button>
+			<button id="compact" class="btn btn-success">Compaction</button>
+			<button id="index" class="btn btn-success">Indexing</button>
+			<button id="reb" class="btn btn-success">Rebalance</button>
+			<button id="kv" class="btn btn-success">KV</button>
+			<button id="query" class="btn btn-success">Query</button>
+			<button id="xdcr" class="btn btn-success">XDCR</button>
+		</div>
+		</div>
 		{{{content}}}
 	</div>
+<script>
+	$(".btn").on("click", function () {
+		switch (this.id) {
+		case "all":
+			$(".metric").css("display", "block");
+			break;
+		default:
+			$(".metric").css("display", "none");
+			$("div[id*='cont_" + this.id + "']").css("display", "block");
+		}
+	});
+</script>
 </body>
 </html>

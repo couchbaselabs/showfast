@@ -12,9 +12,13 @@ a, a:hover {
 }
 
 .nv-series {
-	display: none
+	display: none;
 }
 
 hr {
-	margin: 0
+	margin: 0;
+}
+
+.btn-group {
+	margin-bottom: 10px;
 }
