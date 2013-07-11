@@ -1,16 +1,16 @@
 <div class="text-center">
 	<div class="btn-group" data-toggle="buttons-radio">
-		<button id="all" class="btn btn-success active">All</button>
-		<button id="comp" class="btn btn-success">Compaction</button>
-		<button id="index" class="btn btn-success">Indexing</button>
-		<button id="reb" class="btn btn-success">Rebalance</button>
-		<button id="kv" class="btn btn-success">KV</button>
-		<button id="query" class="btn btn-success">Query</button>
-		<button id="xdcr" class="btn btn-success">XDCR</button>
+		<button id="all" class="fltr btn btn-success active">All</button>
+		<button id="comp" class="fltr btn btn-success">Compaction</button>
+		<button id="index" class="fltr btn btn-success">Indexing</button>
+		<button id="reb" class="fltr btn btn-success">Rebalance</button>
+		<button id="kv" class="fltr btn btn-success">KV</button>
+		<button id="query" class="fltr btn btn-success">Query</button>
+		<button id="xdcr" class="fltr btn btn-success">XDCR</button>
 	</div>
 	{{{buildy}}}
 	<script>
-		$(".btn").on("click", function () {
+		$(".fltr").on("click", function () {
 			switch (this.id) {
 			case "all":
 				$(".metric").css("display", "block");
