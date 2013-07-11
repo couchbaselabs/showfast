@@ -17,6 +17,10 @@ func head() string {
 	return mustache.RenderFile(pckg_dir + "templates/head.mustache")
 }
 
+func filter() string {
+	return mustache.RenderFile(pckg_dir + "templates/filter.mustache")
+}
+
 func timeline(ctx *web.Context) []byte {
 	metric := ctx.Params["metric"]
 	return datasource.GetTimeline(metric)
@@ -42,7 +46,12 @@ func compare(ctx *web.Context, val string) string {
 			pckg_dir+"templates/metric.mustache", metric)
 	}
 	return mustache.RenderFile(pckg_dir+"templates/b2b.mustache",
-		map[string]string{"head": head(), "content": content})
+		map[string]string{
+			"head":    head(),
+			"filter":  filter(),
+			"content": content,
+		},
+	)
 }
 
 func home() string {
@@ -54,7 +63,12 @@ func home() string {
 			pckg_dir+"templates/metric.mustache", metric)
 	}
 	return mustache.RenderFile(pckg_dir+"templates/home.mustache",
-		map[string]string{"head": head(), "content": content})
+		map[string]string{
+			"head":    head(),
+			"filter":  filter(),
+			"content": content,
+		},
+	)
 }
 
 func main() {
