@@ -22,3 +22,12 @@ hr {
 .btn-group {
 	margin-bottom: 10px;
 }
+
+.buildy {
+	margin-bottom: 10px;
+	margin-left: 20px;
+}
+
+.buildy a {
+	text-decoration: none
+}

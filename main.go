@@ -17,8 +17,14 @@ func head() string {
 	return mustache.RenderFile(pckg_dir + "templates/head.mustache")
 }
 
-func filter() string {
-	return mustache.RenderFile(pckg_dir + "templates/filter.mustache")
+func filter(buildy string) string {
+	return mustache.RenderFile(pckg_dir+"templates/filter.mustache",
+		map[string]string{"buildy": buildy})
+}
+
+func buildy(build1, build2 string) string {
+	return mustache.RenderFile(pckg_dir+"templates/buildy.mustache",
+		map[string]string{"build1": build1, "build2": build2})
 }
 
 func timeline(ctx *web.Context) []byte {
@@ -45,10 +51,13 @@ func compare(ctx *web.Context, val string) string {
 		content += mustache.RenderFile(
 			pckg_dir+"templates/metric.mustache", metric)
 	}
+	if len(builds) != 2 {
+		builds = append(builds, builds[0])
+	}
 	return mustache.RenderFile(pckg_dir+"templates/b2b.mustache",
 		map[string]string{
 			"head":    head(),
-			"filter":  filter(),
+			"filter":  filter(buildy(builds[0], builds[1])),
 			"content": content,
 		},
 	)
@@ -65,7 +74,7 @@ func home() string {
 	return mustache.RenderFile(pckg_dir+"templates/home.mustache",
 		map[string]string{
 			"head":    head(),
-			"filter":  filter(),
+			"filter":  filter(""),
 			"content": content,
 		},
 	)
