@@ -13,10 +13,10 @@
 	            .y(function(d) { return d[1]; })
 	            .showValues(true)
 	            .color(["#50aa43"])
-	            .valueFormat(d3.format(',f'))
+	            .valueFormat(d3.format(','))
 	            .margin({top: 10, right: 0, bottom: 20, left: 50});
 
-	        chart.yAxis.tickFormat(d3.format(',f'));
+	        chart.yAxis.tickFormat(d3.format(','));
 	        if (data[0].values.length > 15) {
 	            chart.xAxis.rotateLabels(-45);
 	        }
