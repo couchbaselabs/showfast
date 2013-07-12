@@ -35,3 +35,7 @@ hr {
 .metric {
 	visibility: hidden;
 }
+
+.error_msg {
+	margin-top: 50px;
+}

@@ -51,6 +51,9 @@ func compare(ctx *web.Context, val string) string {
 		content += mustache.RenderFile(
 			pckg_dir+"templates/metric.mustache", metric)
 	}
+	if len(content) == 0 {
+		content = mustache.RenderFile(pckg_dir+"templates/error.mustache");
+	}
 	if len(builds) != 2 {
 		builds = append(builds, builds[0])
 	}
@@ -71,6 +74,9 @@ func home() string {
 			pckg_dir+"templates/columns.mustache", metric)
 		content += mustache.RenderFile(
 			pckg_dir+"templates/metric.mustache", metric)
+	}
+	if len(content) == 0 {
+		content = mustache.RenderFile(pckg_dir+"templates/error.mustache");
 	}
 	return mustache.RenderFile(pckg_dir+"templates/dashboard.mustache",
 		map[string]string{
