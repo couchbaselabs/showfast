@@ -29,5 +29,9 @@ hr {
 }
 
 .buildy a {
-	text-decoration: none
+	text-decoration: none;
+}
+
+.metric {
+	visibility: hidden;
 }

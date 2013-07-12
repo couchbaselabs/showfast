@@ -9,15 +9,18 @@
 		<button id="xdcr" class="fltr btn btn-success">XDCR</button>
 	</div>
 	{{{buildy}}}
-	<script>
+	<script type="text/javascript">
 		$(".fltr").on("click", function () {
+			$(".metric").css("visibility", "visible");
 			switch (this.id) {
 			case "all":
 				$(".metric").css("display", "block");
+				document.location.href="#";
 				break;
 			default:
 				$(".metric").css("display", "none");
 				$("div[id*='cont_" + this.id + "']").css("display", "block");
+				document.location.href="#" + this.id;
 			}
 		});
 	</script>
