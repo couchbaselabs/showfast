@@ -54,8 +54,9 @@ func compare(ctx *web.Context, val string) string {
 	if len(builds) != 2 {
 		builds = append(builds, builds[0])
 	}
-	return mustache.RenderFile(pckg_dir+"templates/b2b.mustache",
+	return mustache.RenderFile(pckg_dir+"templates/dashboard.mustache",
 		map[string]string{
+			"title":   "Build-to-Build Comparison",
 			"head":    head(),
 			"filter":  filter(buildy(builds[0], builds[1])),
 			"content": content,
@@ -71,8 +72,9 @@ func home() string {
 		content += mustache.RenderFile(
 			pckg_dir+"templates/metric.mustache", metric)
 	}
-	return mustache.RenderFile(pckg_dir+"templates/home.mustache",
+	return mustache.RenderFile(pckg_dir+"templates/dashboard.mustache",
 		map[string]string{
+			"title":   "Performance Dashboard",
 			"head":    head(),
 			"filter":  filter(""),
 			"content": content,
