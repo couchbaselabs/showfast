@@ -32,10 +32,6 @@ hr {
 	text-decoration: none;
 }
 
-.metric {
-	visibility: hidden;
-}
-
 .error_msg {
 	margin-top: 50px;
 }
