@@ -4,6 +4,8 @@
 <script type="text/javascript">
 	var SHOWFAST = SHOWFAST || {};
 
+	SHOWFAST.PERMISSIBLE_ERROR = 0.1;
+
 	SHOWFAST.addChart = function(id, data) {
 	    "use strict";
 
@@ -33,6 +35,17 @@
 		success: function(data) {
 			var chart_data = [{values: data}];
 			SHOWFAST.addChart("{{id}}", chart_data);
+			var diff = (parseFloat(data[1][1]) - parseFloat(data[0][1])) / parseFloat(data[0][1]);
+			var metric = $("#{{id}}");
+			if (metric.attr("data-larger-is-better") === "true") {
+				diff = - diff;
+			}
+			console.log(metric.attr("data-larger-is-better"));
+			if (diff > SHOWFAST.PERMISSIBLE_ERROR) {
+				metric.css("color", "#fbae42");
+			} else if (diff < -SHOWFAST.PERMISSIBLE_ERROR) {
+				metric.css("color", "#5fbe5f");
+			}
 		}
 	});
 </script>
