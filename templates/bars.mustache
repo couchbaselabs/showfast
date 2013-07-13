@@ -1,4 +1,4 @@
-<div id="{{id}}">
+<div id="chart_{{id}}">
 	<svg class="bar-chart"></svg>
 </div>
 <script type="text/javascript">
@@ -19,7 +19,7 @@
 	            .margin({top: 0, right: 0, bottom: 10, left: 70});
 
 	        chart.yAxis.tickFormat(function(d) {return ""});
-	        d3.select("#" + id + " svg")
+	        d3.select("#chart_" + id + " svg")
 	            .datum(data)
 	            .call(chart);
 

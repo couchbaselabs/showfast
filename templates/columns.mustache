@@ -1,4 +1,4 @@
-<div id="{{id}}">
+<div id="chart_{{id}}">
 	<svg class="column-chart"></svg>
 </div>
 <script type="text/javascript">
@@ -21,7 +21,7 @@
 	            chart.xAxis.rotateLabels(-45);
 	        }
 
-	        d3.select("#" + id + " svg")
+	        d3.select("#chart_" + id + " svg")
 	            .datum(data)
 	            .call(chart);
 
