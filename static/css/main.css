@@ -37,27 +37,32 @@ hr {
 }
 
 .t-inventory {
-    width: 50%;
-    margin-left: 25%;
+    width: 90%;
+    margin-left: 5%;
 }
 
 .t-data {
     font-size: 93%;
 }
 
+.t-id {
+    text-align: left;
+    width: 25%;
+}
+
 .t-metric {
 	text-align: left;
-    width: 55%;
+    width: 40%;
 }
 
 .t-build {
 	text-align: center;
-    width: 20%;
+    width: 15%;
 }
 
 .t-value {
 	text-align: center;
-    width: 20%;
+    width: 15%;
 }
 
 .t-buttons {
