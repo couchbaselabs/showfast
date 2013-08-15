@@ -38,6 +38,26 @@ func b2b(ctx *web.Context) []byte {
 	return datasource.GetTimelineForBuilds(metric, builds)
 }
 
+func admin(ctx *web.Context) string {
+	content := ""
+	for _, benchmark := range datasource.GetAllBenchmarks() {
+		content += mustache.RenderFile(
+			pckg_dir+"templates/benchmark.mustache", benchmark)
+	}
+	return mustache.RenderFile(pckg_dir+"templates/admin.mustache",
+		map[string]string{
+			"title":   "Administration",
+			"head":    head(),
+			"content": content,
+		},
+	)
+}
+
+func delete(ctx *web.Context) {
+	id := ctx.Params["id"]
+	datasource.DeleteBenchmark(id)
+}
+
 func compare(ctx *web.Context, val string) string {
 	builds := strings.Split(val, "/")
 	if len(val) == 0 || len(builds) > 2 {
@@ -52,7 +72,7 @@ func compare(ctx *web.Context, val string) string {
 			pckg_dir+"templates/metric.mustache", metric)
 	}
 	if len(content) == 0 {
-		content = mustache.RenderFile(pckg_dir+"templates/error.mustache");
+		content = mustache.RenderFile(pckg_dir + "templates/error.mustache")
 	}
 	if len(builds) != 2 {
 		builds = append(builds, builds[0])
@@ -76,7 +96,7 @@ func home() string {
 			pckg_dir+"templates/metric.mustache", metric)
 	}
 	if len(content) == 0 {
-		content = mustache.RenderFile(pckg_dir+"templates/error.mustache");
+		content = mustache.RenderFile(pckg_dir + "templates/error.mustache")
 	}
 	return mustache.RenderFile(pckg_dir+"templates/dashboard.mustache",
 		map[string]string{
@@ -99,5 +119,7 @@ func main() {
 	web.Get("/timeline", timeline)
 	web.Get("/compare/(.*)", compare)
 	web.Get("/b2b", b2b)
+	web.Get("/admin", admin)
+	web.Post("/delete", delete)
 	web.Run(*address)
 }

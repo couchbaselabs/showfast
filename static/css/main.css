@@ -35,3 +35,36 @@ hr {
 .error_msg {
 	margin-top: 50px;
 }
+
+.t-inventory {
+    width: 50%;
+    margin-left: 25%;
+}
+
+.t-data {
+    font-size: 93%;
+}
+
+.t-metric {
+	text-align: left;
+    width: 55%;
+}
+
+.t-build {
+	text-align: center;
+    width: 20%;
+}
+
+.t-value {
+	text-align: center;
+    width: 20%;
+}
+
+.t-buttons {
+    width: 5%;
+    text-align: center;
+}
+
+.icon-remove:hover {
+    cursor: pointer;
+}

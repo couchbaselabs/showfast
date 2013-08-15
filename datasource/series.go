@@ -2,6 +2,7 @@ package datasource
 
 import (
 	"encoding/json"
+	"strconv"
 	"strings"
 
 	"github.com/couchbaselabs/go-couchbase"
@@ -33,6 +34,27 @@ func GetTimeline(metric string) []byte {
 		map[string]interface{}{
 			"startkey": []string{metric}, "endkey": []string{metric, "z"}})
 	return rowsToTimeline(rows)
+}
+
+func GetAllBenchmarks() (benchmarks []map[string]string) {
+	b_benchmarks := GetBucket("benchmarks")
+	rows := QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+		map[string]interface{}{})
+	for _, row := range rows {
+		benchmark := map[string]string{
+			"id":     row.ID,
+			"metric": row.Key.([]interface{})[0].(string),
+			"build":  row.Key.([]interface{})[1].(string),
+			"value":  strconv.FormatFloat(row.Value.(float64), 'f', 1, 64),
+		}
+		benchmarks = append(benchmarks, benchmark)
+	}
+	return
+}
+
+func DeleteBenchmark(benchmark string) {
+	b_benchmarks := GetBucket("benchmarks")
+	b_benchmarks.Delete(benchmark)
 }
 
 func GetTimelineForBuilds(metric string, builds_s string) []byte {
