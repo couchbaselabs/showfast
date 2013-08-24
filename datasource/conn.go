@@ -31,7 +31,9 @@ var ddocs = map[string]string{
 
 func GetBucket(bucket string) *couchbase.Bucket {
 	uri := fmt.Sprintf(cbHost, bucket)
-	b, err := couchbase.GetBucket(uri, "default", bucket)
+	client, _ := couchbase.Connect(uri)
+	pool, _ := client.GetPool("default")
+	b, err := pool.GetBucket(bucket)
 	if err != nil {
 		log.Fatalf("Error reading bucket:  %v", err)
 	}
