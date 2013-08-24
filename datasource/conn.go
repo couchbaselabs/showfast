@@ -30,7 +30,7 @@ var ddocs = map[string]string{
 }
 
 func GetBucket(bucket string) *couchbase.Bucket {
-	uri := fmt.Sprintf(cbhost, bucket)
+	uri := fmt.Sprintf(cbHost, bucket)
 	b, err := couchbase.GetBucket(uri, "default", bucket)
 	if err != nil {
 		log.Fatalf("Error reading bucket:  %v", err)
