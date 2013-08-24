@@ -1,12 +1,13 @@
 package datasource
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/couchbaselabs/go-couchbase"
 )
 
-const cbHost = "http://:password@127.0.0.1:8091/"
+const cbHost = "http://%s:password@127.0.0.1:8091/"
 
 var ddocs = map[string]string{
 	"metrics": `{
@@ -29,7 +30,8 @@ var ddocs = map[string]string{
 }
 
 func GetBucket(bucket string) *couchbase.Bucket {
-	b, err := couchbase.GetBucket(cbHost, "default", bucket)
+	uri := fmt.Sprintf(cbhost, bucket)
+	b, err := couchbase.GetBucket(uri, "default", bucket)
 	if err != nil {
 		log.Fatalf("Error reading bucket:  %v", err)
 	}
