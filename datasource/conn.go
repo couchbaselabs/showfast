@@ -6,7 +6,7 @@ import (
 	"github.com/couchbaselabs/go-couchbase"
 )
 
-const cbHost = "http://127.0.0.1:8091/"
+const cbHost = "http://:password@127.0.0.1:8091/"
 
 var ddocs = map[string]string{
 	"metrics": `{
