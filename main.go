@@ -47,7 +47,6 @@ func admin(ctx *web.Context) string {
 	}
 	return mustache.RenderFile(pckg_dir+"templates/admin.mustache",
 		map[string]string{
-			"title":   "Administration",
 			"head":    head(),
 			"content": content,
 		},
@@ -65,7 +64,6 @@ func all_runs(ctx *web.Context) string {
 	}
 	return mustache.RenderFile(pckg_dir+"templates/all_runs.mustache",
 		map[string]string{
-			"title":   "All runs",
 			"head":    head(),
 			"content": content,
 		},
