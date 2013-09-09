@@ -9,7 +9,7 @@ import (
 	"github.com/hoisie/mustache"
 	"github.com/hoisie/web"
 
-	"github.com/pavel-paulau/showfast/datasource"
+	"github.com/couchbaselabs/showfast/datasource"
 )
 
 var pckg_dir string
@@ -131,7 +131,7 @@ func main() {
 	address := flag.String("address", "127.0.0.1:8080", "Listen address")
 	flag.Parse()
 
-	pckg_dir = os.Getenv("GOPATH") + "/src/github.com/pavel-paulau/showfast/"
+	pckg_dir = os.Getenv("GOPATH") + "/src/github.com/couchbaselabs/showfast/"
 	web.Config.StaticDir = pckg_dir + "static"
 
 	web.Get("/", home)

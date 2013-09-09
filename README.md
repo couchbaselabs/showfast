@@ -19,7 +19,7 @@ Required buckets
 Installation
 ------------
 
-    go get github.com/pavel-paulau/showfast
+    go get github.com/couchbaselabs/showfast
 
 Usage
 -----
