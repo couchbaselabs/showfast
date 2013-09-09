@@ -30,6 +30,17 @@
 			nv.utils.windowResize(chart.update);
 
 			return chart;
+		}, function(){
+			d3.selectAll(".nv-bar").on("click",
+				function(data) {
+					var build = data[0],
+						metric = $(this).closest("div")[0].id.substring(6);
+					var params = decodeURIComponent($.param({
+						"metric": metric,
+						"build": build
+					}));
+					window.open("/all_runs?" + params)
+			});
 		});
 	};
 

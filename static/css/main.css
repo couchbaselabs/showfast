@@ -73,3 +73,23 @@ hr {
 .icon-remove:hover {
     cursor: pointer;
 }
+
+.t-all-runs {
+    width: 50%;
+    margin-left: 25%;
+}
+
+.t-seq {
+    width: 10%;
+    text-align: center;
+}
+
+.t-value {
+    text-align: center;
+    width: 70%;
+}
+
+.t-report {
+    width: 20%;
+    text-align: center;
+}

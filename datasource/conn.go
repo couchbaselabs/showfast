@@ -24,6 +24,9 @@ var ddocs = map[string]string{
 			},
 			"values_by_build_and_metric": {
 				"map": "function (doc, meta) {if (!doc.obsolete) {emit([doc.metric, doc.build], doc.value);}}"
+			},
+			"value_and_href_by_build_and_metric": {
+				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.report]);}"
 			}
 		}
 	}`,

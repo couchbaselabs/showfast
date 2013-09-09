@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/hoisie/mustache"
@@ -47,6 +48,24 @@ func admin(ctx *web.Context) string {
 	return mustache.RenderFile(pckg_dir+"templates/admin.mustache",
 		map[string]string{
 			"title":   "Administration",
+			"head":    head(),
+			"content": content,
+		},
+	)
+}
+
+func all_runs(ctx *web.Context) string {
+	metric := ctx.Params["metric"]
+	build := ctx.Params["build"]
+	content := ""
+	for i, benchmark := range datasource.GetObsoleteBenchmarks(metric, build) {
+		benchmark["seq"] = strconv.Itoa(i + 1)
+		content += mustache.RenderFile(
+			pckg_dir+"templates/run.mustache", benchmark)
+	}
+	return mustache.RenderFile(pckg_dir+"templates/all_runs.mustache",
+		map[string]string{
+			"title":   "All runs",
 			"head":    head(),
 			"content": content,
 		},
@@ -119,6 +138,7 @@ func main() {
 	web.Get("/timeline", timeline)
 	web.Get("/compare/(.*)", compare)
 	web.Get("/b2b", b2b)
+	web.Get("/all_runs", all_runs)
 	web.Get("/admin", admin)
 	web.Post("/delete", delete)
 	web.Run(*address)
