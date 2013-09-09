@@ -58,11 +58,12 @@ func GetObsoleteBenchmarks(metric string, build string) (benchmarks []map[string
 		"startkey": []string{metric, build},
 		"endkey":   []string{metric, build},
 	}
-	rows := QueryView(b_benchmarks, "benchmarks", "value_and_href_by_build_and_metric", params)
+	rows := QueryView(b_benchmarks, "benchmarks", "value_and_reports_by_build_and_metric", params)
 	for _, row := range rows {
 		benchmark := map[string]interface{}{
-			"value":  strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
-			"report": row.Value.([]interface{})[1],
+			"value":   strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
+			"report1": row.Value.([]interface{})[1],
+			"report2": row.Value.([]interface{})[2],
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
