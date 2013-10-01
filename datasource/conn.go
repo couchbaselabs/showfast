@@ -7,8 +7,6 @@ import (
 	"github.com/couchbaselabs/go-couchbase"
 )
 
-const cbHost = "http://%s:password@127.0.0.1:8091/"
-
 var ddocs = map[string]string{
 	"metrics": `{
 		"views": {
@@ -32,10 +30,16 @@ var ddocs = map[string]string{
 	}`,
 }
 
-func GetBucket(bucket string) *couchbase.Bucket {
-	uri := fmt.Sprintf(cbHost, bucket)
+type DataSource struct {
+	CouchbaseAddress, BucketPassword string
+}
+
+func (ds *DataSource) GetBucket(bucket string) *couchbase.Bucket {
+	uri := fmt.Sprintf("http://%s:%s@%s/", bucket, ds.BucketPassword, ds.CouchbaseAddress)
+
 	client, _ := couchbase.Connect(uri)
 	pool, _ := client.GetPool("default")
+
 	b, err := pool.GetBucket(bucket)
 	if err != nil {
 		log.Fatalf("Error reading bucket:  %v", err)
@@ -43,18 +47,18 @@ func GetBucket(bucket string) *couchbase.Bucket {
 	return b
 }
 
-func QueryView(b *couchbase.Bucket, ddoc, view string,
+func (ds *DataSource) QueryView(b *couchbase.Bucket, ddoc, view string,
 	params map[string]interface{}) []couchbase.ViewRow {
 	params["stale"] = false
 	vr, err := b.View(ddoc, view, params)
 	if err != nil {
-		InstallDDoc(ddoc)
+		ds.installDDoc(ddoc)
 	}
 	return vr.Rows
 }
 
-func InstallDDoc(ddoc string) {
-	b := GetBucket(ddoc) // bucket name == ddoc name
+func (ds *DataSource) installDDoc(ddoc string) {
+	b := ds.GetBucket(ddoc) // bucket name == ddoc name
 	err := b.PutDDoc(ddoc, ddocs[ddoc])
 	if err != nil {
 		log.Fatalf("%v", err)

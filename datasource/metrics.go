@@ -4,10 +4,10 @@ import (
 	"sort"
 )
 
-func GetAllMetrics() (metrics []map[string]interface{}) {
-	b_metrics := GetBucket("metrics")
-	b_clusters := GetBucket("clusters")
-	rows := QueryView(b_metrics, "metrics", "all", map[string]interface{}{})
+func (ds *DataSource) GetAllMetrics() (metrics []map[string]interface{}) {
+	b_metrics := ds.GetBucket("metrics")
+	b_clusters := ds.GetBucket("clusters")
+	rows := ds.QueryView(b_metrics, "metrics", "all", map[string]interface{}{})
 
 	for i := range rows {
 		metric := rows[i].Value.(map[string]interface{})
@@ -32,9 +32,9 @@ func appendIfUnique(slice []string, s string) []string {
 	return append(slice, s)
 }
 
-func getMetricIDsForBuild(build string) (ids []string) {
-	b_benchmarks := GetBucket("benchmarks")
-	rows := QueryView(b_benchmarks, "benchmarks", "metrics_by_build",
+func (ds *DataSource) getMetricIDsForBuild(build string) (ids []string) {
+	b_benchmarks := ds.GetBucket("benchmarks")
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "metrics_by_build",
 		map[string]interface{}{"key": build})
 
 	for i := range rows {
@@ -44,14 +44,14 @@ func getMetricIDsForBuild(build string) (ids []string) {
 	return
 }
 
-func getMetricIDs(builds []string) (ids []string) {
+func (ds *DataSource) getMetricIDs(builds []string) (ids []string) {
 	switch len(builds) {
 	case 2:
-		m1 := getMetricIDsForBuild(builds[0])
-		m2 := getMetricIDsForBuild(builds[1])
+		m1 := ds.getMetricIDsForBuild(builds[0])
+		m2 := ds.getMetricIDsForBuild(builds[1])
 		ids = getIntersection(m1, m2)
 	case 1:
-		ids = getMetricIDsForBuild(builds[0])
+		ids = ds.getMetricIDsForBuild(builds[0])
 	}
 	return
 }
@@ -69,11 +69,11 @@ func getIntersection(m1, m2 []string) (intersection []string) {
 	return
 }
 
-func GetMetricsForBuilds(builds []string) (metrics []map[string]interface{}) {
-	b_metrics := GetBucket("metrics")
-	b_clusters := GetBucket("clusters")
+func (ds *DataSource) GetMetricsForBuilds(builds []string) (metrics []map[string]interface{}) {
+	b_metrics := ds.GetBucket("metrics")
+	b_clusters := ds.GetBucket("clusters")
 
-	ids := getMetricIDs(builds)
+	ids := ds.getMetricIDs(builds)
 	for i := range ids {
 		metric := map[string]interface{}{
 			"id":     ids[i],

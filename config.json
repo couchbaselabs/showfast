@@ -1,0 +1,5 @@
+{
+	"CouchbaseAddress": "showfast.sc.couchbase.com:8091",
+	"BucketPassword": "password",
+	"ListenAddress": "127.0.0.1:8080"
+}

@@ -1,7 +1,9 @@
 package main
 
 import (
-	"flag"
+	"encoding/json"
+	"io/ioutil"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -13,6 +15,8 @@ import (
 )
 
 var pckg_dir string
+
+var data_source datasource.DataSource
 
 func head() string {
 	return mustache.RenderFile(pckg_dir + "templates/head.mustache")
@@ -30,18 +34,18 @@ func buildy(build1, build2 string) string {
 
 func timeline(ctx *web.Context) []byte {
 	metric := ctx.Params["metric"]
-	return datasource.GetTimeline(metric)
+	return data_source.GetTimeline(metric)
 }
 
 func b2b(ctx *web.Context) []byte {
 	metric := ctx.Params["metric"]
 	builds := ctx.Params["builds"]
-	return datasource.GetTimelineForBuilds(metric, builds)
+	return data_source.GetTimelineForBuilds(metric, builds)
 }
 
 func admin(ctx *web.Context) string {
 	content := ""
-	for _, benchmark := range datasource.GetAllBenchmarks() {
+	for _, benchmark := range data_source.GetAllBenchmarks() {
 		content += mustache.RenderFile(
 			pckg_dir+"templates/benchmark.mustache", benchmark)
 	}
@@ -57,7 +61,7 @@ func all_runs(ctx *web.Context) string {
 	metric := ctx.Params["metric"]
 	build := ctx.Params["build"]
 	content := ""
-	for i, benchmark := range datasource.GetObsoleteBenchmarks(metric, build) {
+	for i, benchmark := range data_source.GetObsoleteBenchmarks(metric, build) {
 		benchmark["seq"] = strconv.Itoa(i + 1)
 		content += mustache.RenderFile(
 			pckg_dir+"templates/run.mustache", benchmark)
@@ -72,7 +76,7 @@ func all_runs(ctx *web.Context) string {
 
 func delete(ctx *web.Context) {
 	id := ctx.Params["id"]
-	datasource.DeleteBenchmark(id)
+	data_source.DeleteBenchmark(id)
 }
 
 func compare(ctx *web.Context, val string) string {
@@ -82,7 +86,7 @@ func compare(ctx *web.Context, val string) string {
 		return "Wrong number of builds to compare"
 	}
 	content := ""
-	for _, metric := range datasource.GetMetricsForBuilds(builds) {
+	for _, metric := range data_source.GetMetricsForBuilds(builds) {
 		metric["chart"] = mustache.RenderFile(
 			pckg_dir+"templates/bars.mustache", metric)
 		content += mustache.RenderFile(
@@ -106,7 +110,7 @@ func compare(ctx *web.Context, val string) string {
 
 func home() string {
 	content := ""
-	for _, metric := range datasource.GetAllMetrics() {
+	for _, metric := range data_source.GetAllMetrics() {
 		metric["chart"] = mustache.RenderFile(
 			pckg_dir+"templates/columns.mustache", metric)
 		content += mustache.RenderFile(
@@ -125,12 +129,26 @@ func home() string {
 	)
 }
 
-func main() {
-	address := flag.String("address", "127.0.0.1:8080", "Listen address")
-	flag.Parse()
+type Config struct {
+	CouchbaseAddress, BucketPassword, ListenAddress string
+}
 
+func main() {
 	pckg_dir = os.Getenv("GOPATH") + "/src/github.com/couchbaselabs/showfast/"
 	web.Config.StaticDir = pckg_dir + "static"
+
+	config_file, err := ioutil.ReadFile(pckg_dir + "config.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var config Config
+	err = json.Unmarshal(config_file, &config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	data_source = datasource.DataSource{config.CouchbaseAddress, config.BucketPassword}
 
 	web.Get("/", home)
 	web.Get("/timeline", timeline)
@@ -139,5 +157,5 @@ func main() {
 	web.Get("/all_runs", all_runs)
 	web.Get("/admin", admin)
 	web.Post("/delete", delete)
-	web.Run(*address)
+	web.Run(config.ListenAddress)
 }

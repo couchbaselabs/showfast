@@ -8,9 +8,9 @@ import (
 	"github.com/couchbaselabs/go-couchbase"
 )
 
-func getLatestBuild(metric string) string {
-	b_benchmarks := GetBucket("benchmarks")
-	rows := QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+func (ds *DataSource) getLatestBuild(metric string) string {
+	b_benchmarks := ds.GetBucket("benchmarks")
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{
 			"startkey": []string{metric, "z"}, "endkey": []string{metric},
 			"descending": true, "limit": 1})
@@ -28,17 +28,17 @@ func rowsToTimeline(rows []couchbase.ViewRow) []byte {
 	return t
 }
 
-func GetTimeline(metric string) []byte {
-	b_benchmarks := GetBucket("benchmarks")
-	rows := QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+func (ds *DataSource) GetTimeline(metric string) []byte {
+	b_benchmarks := ds.GetBucket("benchmarks")
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{
 			"startkey": []string{metric}, "endkey": []string{metric, "z"}})
 	return rowsToTimeline(rows)
 }
 
-func GetAllBenchmarks() (benchmarks []map[string]string) {
-	b_benchmarks := GetBucket("benchmarks")
-	rows := QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+func (ds *DataSource) GetAllBenchmarks() (benchmarks []map[string]string) {
+	b_benchmarks := ds.GetBucket("benchmarks")
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{})
 	for _, row := range rows {
 		benchmark := map[string]string{
@@ -52,13 +52,13 @@ func GetAllBenchmarks() (benchmarks []map[string]string) {
 	return
 }
 
-func GetObsoleteBenchmarks(metric string, build string) (benchmarks []map[string]interface{}) {
-	b_benchmarks := GetBucket("benchmarks")
+func (ds *DataSource) GetObsoleteBenchmarks(metric string, build string) (benchmarks []map[string]interface{}) {
+	b_benchmarks := ds.GetBucket("benchmarks")
 	params := map[string]interface{}{
 		"startkey": []string{metric, build},
 		"endkey":   []string{metric, build},
 	}
-	rows := QueryView(b_benchmarks, "benchmarks", "value_and_reports_by_build_and_metric", params)
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "value_and_reports_by_build_and_metric", params)
 	for _, row := range rows {
 		benchmark := map[string]interface{}{
 			"value":   strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
@@ -70,15 +70,15 @@ func GetObsoleteBenchmarks(metric string, build string) (benchmarks []map[string
 	return
 }
 
-func DeleteBenchmark(benchmark string) {
-	b_benchmarks := GetBucket("benchmarks")
+func (ds *DataSource) DeleteBenchmark(benchmark string) {
+	b_benchmarks := ds.GetBucket("benchmarks")
 	b_benchmarks.Delete(benchmark)
 }
 
-func GetTimelineForBuilds(metric string, builds_s string) []byte {
+func (ds *DataSource) GetTimelineForBuilds(metric string, builds_s string) []byte {
 	builds := strings.Split(builds_s, "/")
 	if len(builds) == 1 {
-		builds = append(builds, getLatestBuild(metric))
+		builds = append(builds, ds.getLatestBuild(metric))
 	}
 	keys := [][]string{}
 	for i := range builds {
@@ -86,8 +86,8 @@ func GetTimelineForBuilds(metric string, builds_s string) []byte {
 		keys = append(keys, key)
 	}
 
-	b_benchmarks := GetBucket("benchmarks")
-	rows := QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+	b_benchmarks := ds.GetBucket("benchmarks")
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{"keys": keys})
 	return rowsToTimeline(rows)
 }
