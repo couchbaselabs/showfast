@@ -30,11 +30,7 @@ function MetricList($scope, $http) {
 		});
 
 		$scope.setSelectedCategory = function (value) {
-			if ($scope.selectedCategory === value) {
-				$scope.selectedCategory = undefined;
-			} else {
-				$scope.selectedCategory = value;
-			}
+			$scope.selectedCategory = value;
 		};
 
 		$scope.selectedCategory = "all";
@@ -70,11 +66,7 @@ function MetricList($scope, $http) {
 		};
 
 		$scope.setSelectedOS = function (value) {
-			if ($scope.selectedOS === value) {
-				$scope.selectedOS = undefined;
-			} else {
-				$scope.selectedOS = value;
-			}
+			$scope.selectedOS = value;
 		};
 
 		$scope.selectedOS = "All";
