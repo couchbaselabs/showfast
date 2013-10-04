@@ -22,13 +22,6 @@ function MetricList($scope, $http) {
 			}
 		});
 
-		var format = d3.format(',');
-		$scope.valueFormatFunction = function(){
-			return function(d) {
-				return format(d);
-			};
-		};
-
 		$http.get('/all_timelines').success(function(data) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
 				var id = $scope.metrics[i].id;
@@ -86,7 +79,7 @@ function MetricList($scope, $http) {
 
 		$scope.selectedOS = "All";
 
-		$scope.oses = ["All", "Windows", "Linux"]
+		$scope.oses = ["All", "Windows", "Linux"];
 
 		$scope.byOS = function(entry) {
 			var entryOS = entry.cluster.OS,
@@ -108,6 +101,23 @@ function MetricList($scope, $http) {
 						return true;
 					}
 			}
+		};
+
+		var format = d3.format(',');
+		$scope.valueFormatFunction = function(){
+			return function(d) {
+				return format(d);
+			};
+		};
+
+		$scope.bindOnclick = function(){
+			d3.selectAll(".nv-bar").on("click", function(data) {
+				var build = data[0],
+					metric = $(this).closest("div")[0].id.substring(6),
+					a = $("#run_"  + metric);
+				a.attr("href", "/#/runs/" + metric + "/" + build);
+				a[0].click();
+			});
 		};
 	});
 }

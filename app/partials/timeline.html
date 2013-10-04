@@ -30,7 +30,7 @@
 	<span class="muted"><strong>CPU: </strong>{{metric.cluster.CPU}}</span>
 	<span class="muted"><strong>Memory: </strong>{{metric.cluster.Memory}}</span>
 	<span class="muted"><strong>Disk: </strong>{{metric.cluster.Disk}}</span>
-	<div class="column-chart">
+	<div class="column-chart" id="chart_{{metric.id}}">
 		<nvd3-discrete-bar-chart
 			data="metric.chartData"
 			id="chart_{{metric.id}}"
@@ -40,7 +40,9 @@
 			showYAxis="true"
 			showValues="true"
 			valueFormat="valueFormatFunction()"
-			forceY="[0]"><svg></svg></nvd3-line-chart>
+			forceY="[0]"
+			callback="bindOnclick()"
+		><svg></svg></nvd3-line-chart>
 	</div>
 	<a id="run_{{metric.id}}"></a>
 </div>

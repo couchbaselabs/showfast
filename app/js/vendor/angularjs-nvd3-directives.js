@@ -973,6 +973,7 @@ angular.module('nvd3ChartDirectives', [])
         return {
             restrict: 'E',
             scope: {
+                callback: "&",
                 data: '=',
                 width: '@',
                 height: '@',
@@ -1117,6 +1118,7 @@ angular.module('nvd3ChartDirectives', [])
 
                                 $window.addEventListener('resize', windowResize);
                                 scope.chart = chart;
+                                scope.callback();
                                 return chart;
                             }
                         });
