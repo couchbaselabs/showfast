@@ -14,7 +14,7 @@ var pckg_dir string
 var data_source DataSource
 
 func home() []byte {
-	content, _ := ioutil.ReadFile(pckg_dir+"app/index.html")
+	content, _ := ioutil.ReadFile(pckg_dir + "app/index.html")
 	return content
 }
 
@@ -26,7 +26,7 @@ func all_runs(ctx *web.Context) []byte {
 }
 
 func admin() []byte {
-	content, _ := ioutil.ReadFile(pckg_dir+"app/admin.html")
+	content, _ := ioutil.ReadFile(pckg_dir + "app/admin.html")
 	return content
 }
 

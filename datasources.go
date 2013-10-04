@@ -116,7 +116,7 @@ func (ds *DataSource) GetAllTimelines() []byte {
 		value := rows[i].Value.(interface{})
 
 		if array, ok := timelines[metric.(string)]; ok {
-		    timelines[metric.(string)] = append(array, []interface{}{build, value})
+			timelines[metric.(string)] = append(array, []interface{}{build, value})
 		} else {
 			timelines[metric.(string)] = [][]interface{}{[]interface{}{build, value}}
 		}
@@ -136,7 +136,7 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 	benchmarks := []map[string]interface{}{}
 	for i, row := range rows {
 		benchmark := map[string]interface{}{
-			"seq": strconv.Itoa(i + 1),
+			"seq":     strconv.Itoa(i + 1),
 			"value":   strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
 			"report1": row.Value.([]interface{})[1],
 			"report2": row.Value.([]interface{})[2],
