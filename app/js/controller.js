@@ -62,15 +62,51 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}];
 
-		$scope.byCategory = function(entry){
-			var category = $scope.selectedCategory;
+		$scope.byCategory = function(entry) {
+			var selectedCategory = $scope.selectedCategory,
+				entryCategory = entry.id.substring(0, selectedCategory.length);
 
-			if (category === "all") {
-				return true;
-			} else if (entry.id.substring(0, category.length) === category) {
-				return true;
+			switch(selectedCategory) {
+				case "all":
+					return true;
+				case entryCategory:
+					return true;
+				default:
+					return false;
+			}
+		};
+
+		$scope.setSelectedOS = function (value) {
+			if ($scope.selectedOS === value) {
+				$scope.selectedOS = undefined;
 			} else {
-				return false;
+				$scope.selectedOS = value;
+			}
+		};
+
+		$scope.selectedOS = "All";
+
+		$scope.oses = ["All", "Windows", "Linux"]
+
+		$scope.byOS = function(entry) {
+			var entryOS = entry.cluster.OS,
+				selectedOS = $scope.selectedOS;
+
+			switch(selectedOS) {
+				case "All":
+					return true;
+				case "Windows":
+					if (entryOS.substring(0, 7) === "Windows") {
+						return true;
+					} else {
+						return false;
+					}
+				case "Linux":
+					if (entryOS.substring(0, 7) === "Windows") {
+						return false;
+					} else {
+						return true;
+					}
 			}
 		};
 	});
