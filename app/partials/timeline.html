@@ -6,7 +6,7 @@
 		<button
 			ng-repeat="category in categories"
 			ng-class="{active: category.id == selectedCategory}"
-    		ng-click="setSelectedCategory(category.id)"
+			ng-click="setSelectedCategory(category.id)"
 			class="btn btn-success">{{category.title}}</button>
 	</div>
 	<div class="btn-group" data-toggle="buttons-radio">
@@ -31,17 +31,16 @@
 	<span class="muted"><strong>Memory: </strong>{{metric.cluster.Memory}}</span>
 	<span class="muted"><strong>Disk: </strong>{{metric.cluster.Disk}}</span>
 	<div class="column-chart">
-	    <nvd3-discrete-bar-chart
-	    	data="metric.chartData"
-	    	id="chart_{{metric.id}}"
-	    	margin="{left: 50, top: 10, bottom: 10, right: 0}"
-	    	color="['#50aa43']"
-	    	showXAxis="true"
-	    	showYAxis="true"
-	    	showValues="true"
-	    	valueFormat="valueFormatFunction()"
-	    	forceY="[0]"
-	    ><svg></svg></nvd3-line-chart>
+		<nvd3-discrete-bar-chart
+			data="metric.chartData"
+			id="chart_{{metric.id}}"
+			margin="{left: 50, top: 5, bottom: 10, right: 0}"
+			color="['#50aa43']"
+			showXAxis="true"
+			showYAxis="true"
+			showValues="true"
+			valueFormat="valueFormatFunction()"
+			forceY="[0]"><svg></svg></nvd3-line-chart>
 	</div>
 	<a id="run_{{metric.id}}"></a>
 </div>
