@@ -1,0 +1,41 @@
+<div class="masthead text-center">
+	<h2>Performance Dashboard</h3>
+</div>
+<div class="text-center">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in categories"
+			ng-class="{active: category.id == selectedCategory}"
+    		ng-click="setSelectedCategory(category.id)"
+			class="btn btn-success">{{category.title}}</button>
+	</div>
+</div>
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory" >
+	<hr/>
+	<h4>
+		<span id="{{metric.id}}" data-larger-is-better="{{metric.larger_is_better}}">
+			{{metric.title}}
+		</span>
+	</h4>
+	<span class="muted"><strong>Cluster: </strong>{{metric.cluster.Name}}</span>
+	<span class="muted"><strong>Platform: </strong>{{metric.cluster.Platform}}</span>
+	<span class="muted"><strong>OS: </strong>{{metric.cluster.OS}}</span>
+	<span class="muted"><strong>CPU: </strong>{{metric.cluster.CPU}}</span>
+	<span class="muted"><strong>Memory: </strong>{{metric.cluster.Memory}}</span>
+	<span class="muted"><strong>Disk: </strong>{{metric.cluster.Disk}}</span>
+	<div class="column-chart">
+	    <nvd3-discrete-bar-chart
+	    	data="metric.chartData"
+	    	id="chart_{{metric.id}}"
+	    	margin="{left: 50, top: 10, bottom: 10, right: 0}"
+	    	color="['#50aa43']"
+	    	showXAxis="true"
+	    	showYAxis="true"
+	    	showValues="true"
+	    	valueFormat="valueFormatFunction()"
+	    	forceY="[0]"
+	    ><svg></svg></nvd3-line-chart>
+	</div>
+	<a id="run_{{metric.id}}"></a>
+</div>
+<h3 class="text-center muted error_msg" ng-if="error">No data found</h3>

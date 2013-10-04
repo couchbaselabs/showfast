@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>ShowFast</title>
+	<link rel="stylesheet" href="/css/vendor/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/main.css" />
+	<script type="text/javascript" src="/js/vendor/jquery-2.0.2.min.js"></script>
+	<script type="text/javascript" src="/js/vendor/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/vendor/angular.js"></script>
+	<script type="text/javascript" src="/js/vendor/angular-route.js"></script>
+	<script type="text/javascript" src="/js/controller.js"></script>
+</head>
+<body ng-app ng-controller="AdminList">
+	<div class="masthead text-center">
+		<h2>Administration</h3>
+		<table class="table-striped table-bordered table-condensed t-inventory">
+			<tr>
+				<th class="t-data t-id">ID</th>
+				<th class="t-data t-metric">Metric</th>
+				<th class="t-data t-build">Build</th>
+				<th class="t-data t-value">Value</th>
+				<th class="t-data t-buttons"></th>
+			</tr>
+			<tr ng-repeat="benchmark in benchmarks">
+				<td class="t-data t-id">{{benchmark.id}}</td>
+				<td class="t-data t-metric">{{benchmark.metric}}</td>
+				<td class="t-data t-build">{{benchmark.build}}</td>
+				<td class="t-data t-value">{{benchmark.value}}</td>
+				<td class="t-data t-buttons">
+					<i class="icon-remove" ng-click="deleteBenchmark(benchmark.id)"></i>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

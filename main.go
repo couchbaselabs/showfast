@@ -5,128 +5,34 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"strconv"
-	"strings"
 
-	"github.com/hoisie/mustache"
 	"github.com/hoisie/web"
-
-	"github.com/couchbaselabs/showfast/datasource"
 )
 
 var pckg_dir string
 
-var data_source datasource.DataSource
+var data_source DataSource
 
-func head() string {
-	return mustache.RenderFile(pckg_dir + "templates/head.mustache")
+func home() []byte {
+	content, _ := ioutil.ReadFile(pckg_dir+"app/index.html")
+	return content
 }
 
-func filter(buildy string) string {
-	return mustache.RenderFile(pckg_dir+"templates/filter.mustache",
-		map[string]string{"buildy": buildy})
-}
-
-func buildy(build1, build2 string) string {
-	return mustache.RenderFile(pckg_dir+"templates/buildy.mustache",
-		map[string]string{"build1": build1, "build2": build2})
-}
-
-func timeline(ctx *web.Context) []byte {
-	metric := ctx.Params["metric"]
-	return data_source.GetTimeline(metric)
-}
-
-func b2b(ctx *web.Context) []byte {
-	metric := ctx.Params["metric"]
-	builds := ctx.Params["builds"]
-	return data_source.GetTimelineForBuilds(metric, builds)
-}
-
-func admin(ctx *web.Context) string {
-	content := ""
-	for _, benchmark := range data_source.GetAllBenchmarks() {
-		content += mustache.RenderFile(
-			pckg_dir+"templates/benchmark.mustache", benchmark)
-	}
-	return mustache.RenderFile(pckg_dir+"templates/admin.mustache",
-		map[string]string{
-			"head":    head(),
-			"content": content,
-		},
-	)
-}
-
-func all_runs(ctx *web.Context) string {
+func all_runs(ctx *web.Context) []byte {
 	metric := ctx.Params["metric"]
 	build := ctx.Params["build"]
-	content := ""
-	for i, benchmark := range data_source.GetObsoleteBenchmarks(metric, build) {
-		benchmark["seq"] = strconv.Itoa(i + 1)
-		content += mustache.RenderFile(
-			pckg_dir+"templates/run.mustache", benchmark)
-	}
-	return mustache.RenderFile(pckg_dir+"templates/all_runs.mustache",
-		map[string]string{
-			"head":    head(),
-			"content": content,
-		},
-	)
+
+	return data_source.GetAllRuns(metric, build)
+}
+
+func admin() []byte {
+	content, _ := ioutil.ReadFile(pckg_dir+"app/admin.html")
+	return content
 }
 
 func delete(ctx *web.Context) {
 	id := ctx.Params["id"]
 	data_source.DeleteBenchmark(id)
-}
-
-func compare(ctx *web.Context, val string) string {
-	builds := strings.Split(val, "/")
-	if len(val) == 0 || len(builds) > 2 {
-		ctx.WriteHeader(400)
-		return "Wrong number of builds to compare"
-	}
-	content := ""
-	for _, metric := range data_source.GetMetricsForBuilds(builds) {
-		metric["chart"] = mustache.RenderFile(
-			pckg_dir+"templates/bars.mustache", metric)
-		content += mustache.RenderFile(
-			pckg_dir+"templates/metric.mustache", metric)
-	}
-	if len(content) == 0 {
-		content = mustache.RenderFile(pckg_dir + "templates/error.mustache")
-	}
-	if len(builds) != 2 {
-		builds = append(builds, builds[0])
-	}
-	return mustache.RenderFile(pckg_dir+"templates/dashboard.mustache",
-		map[string]string{
-			"title":   "Build-to-Build Comparison",
-			"head":    head(),
-			"filter":  filter(buildy(builds[0], builds[1])),
-			"content": content,
-		},
-	)
-}
-
-func home() string {
-	content := ""
-	for _, metric := range data_source.GetAllMetrics() {
-		metric["chart"] = mustache.RenderFile(
-			pckg_dir+"templates/columns.mustache", metric)
-		content += mustache.RenderFile(
-			pckg_dir+"templates/metric.mustache", metric)
-	}
-	if len(content) == 0 {
-		content = mustache.RenderFile(pckg_dir + "templates/error.mustache")
-	}
-	return mustache.RenderFile(pckg_dir+"templates/dashboard.mustache",
-		map[string]string{
-			"title":   "Performance Dashboard",
-			"head":    head(),
-			"filter":  filter(""),
-			"content": content,
-		},
-	)
 }
 
 type Config struct {
@@ -135,7 +41,7 @@ type Config struct {
 
 func main() {
 	pckg_dir = os.Getenv("GOPATH") + "/src/github.com/couchbaselabs/showfast/"
-	web.Config.StaticDir = pckg_dir + "static"
+	web.Config.StaticDir = pckg_dir + "app"
 
 	config_file, err := ioutil.ReadFile(pckg_dir + "config.json")
 	if err != nil {
@@ -148,14 +54,17 @@ func main() {
 		log.Fatal(err)
 	}
 
-	data_source = datasource.DataSource{config.CouchbaseAddress, config.BucketPassword}
+	data_source = DataSource{config.CouchbaseAddress, config.BucketPassword}
 
 	web.Get("/", home)
-	web.Get("/timeline", timeline)
-	web.Get("/compare/(.*)", compare)
-	web.Get("/b2b", b2b)
-	web.Get("/all_runs", all_runs)
 	web.Get("/admin", admin)
+
+	web.Get("/all_metrics", data_source.GetAllMetrics)
+	web.Get("/all_clusters", data_source.GetAllClusters)
+	web.Get("/all_timelines", data_source.GetAllTimelines)
+	web.Get("/all_benchmarks", data_source.GetAllBenchmarks)
+	web.Get("/all_runs", all_runs)
+
 	web.Post("/delete", delete)
 	web.Run(config.ListenAddress)
 }

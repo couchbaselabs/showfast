@@ -1,0 +1,22 @@
+<div class="masthead text-center">
+	<h2>All test runs</h3>
+	<table class="table-striped table-bordered table-condensed t-all-runs">
+		<tr>
+			<th class="t-data t-seq">#</th>
+			<th class="t-data t-value">Value</th>
+			<th class="t-data t-report">HTML reports</th>
+		</tr>
+		<tr ng-repeat="run in runs">
+			<td class="t-data t-seq">{{run.seq}}</td>
+			<td class="t-data t-value">{{run.value}}</td>
+			<td class="t-data t-report">
+				<a href="{{run.report1}}" target="_blank" ng-if="run.report1">
+					<i class="icon-file"></i>
+				</a>
+				<a href="{{run.report1}}" target="_blank" ng-if="run.report2">
+					<i class="icon-file"></i>
+				</a>
+			</td>
+		</tr>
+	<table>
+</div>

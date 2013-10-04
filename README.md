@@ -1,7 +1,7 @@
 showfast
 ========
 
-Performance dashboard
+Performance dashboard. Powered by web.go, AngularJS, nvd3 and Couchbase Server.
 
 Prerequisites
 -------------
