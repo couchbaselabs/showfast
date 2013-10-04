@@ -64,7 +64,7 @@ func main() {
 	web.Get("/all_timelines", data_source.GetAllTimelines)
 	web.Get("/all_benchmarks", data_source.GetAllBenchmarks)
 	web.Get("/all_runs", all_runs)
-
 	web.Post("/delete", delete)
+
 	web.Run(config.ListenAddress)
 }
