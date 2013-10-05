@@ -29,12 +29,6 @@ function MetricList($scope, $http) {
 			}
 		});
 
-		$scope.setSelectedCategory = function (value) {
-			$scope.selectedCategory = value;
-		};
-
-		$scope.selectedCategory = "all";
-
 		$scope.categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -51,6 +45,12 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}];
 
+		$scope.selectedCategory = "all";
+
+		$scope.setSelectedCategory = function (value) {
+			$scope.selectedCategory = value;
+		};
+
 		$scope.byCategory = function(entry) {
 			var selectedCategory = $scope.selectedCategory,
 				entryCategory = entry.id.substring(0, selectedCategory.length);
@@ -65,13 +65,13 @@ function MetricList($scope, $http) {
 			}
 		};
 
-		$scope.setSelectedOS = function (value) {
-			$scope.selectedOS = value;
-		};
+		$scope.oses = ["All", "Windows", "Linux"];
 
 		$scope.selectedOS = "All";
 
-		$scope.oses = ["All", "Windows", "Linux"];
+		$scope.setSelectedOS = function (value) {
+			$scope.selectedOS = value;
+		};
 
 		$scope.byOS = function(entry) {
 			var entryOS = entry.cluster.OS,
@@ -81,17 +81,26 @@ function MetricList($scope, $http) {
 				case "All":
 					return true;
 				case "Windows":
-					if (entryOS.substring(0, 7) === "Windows") {
-						return true;
-					} else {
-						return false;
-					}
+					return entryOS.substring(0, 7) === "Windows";
 				case "Linux":
-					if (entryOS.substring(0, 7) === "Windows") {
-						return false;
-					} else {
-						return true;
-					}
+					return !(entryOS.substring(0, 7) === "Windows");
+			}
+		};
+
+		$scope.levels = ["Basic", "Advanced"];
+
+		$scope.selectedLevel = "Basic";
+
+		$scope.setSelectedLevel = function (value) {
+			$scope.selectedLevel = value;
+		};
+
+		$scope.byLevel = function(entry) {
+			switch($scope.selectedLevel) {
+				case "Advanced":
+					return true;
+				case "Basic":
+					return entry.level === "Basic";
 			}
 		};
 

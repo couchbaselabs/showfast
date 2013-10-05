@@ -16,8 +16,16 @@
 			ng-click="setSelectedOS(os)"
 			class="btn btn-warning">{{os}}</button>
 	</div>
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="level in levels"
+			ng-class="{active: level == selectedLevel}"
+			ng-click="setSelectedLevel(level)"
+			class="btn btn-danger">{{level}}</button>
+	</div>
 </div>
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory | filter:byOS" >
+<div class="masthead metric" id="cont_{{metric.id}}"
+		ng-repeat="metric in metrics | filter:byCategory | filter:byOS | filter:byLevel">
 	<hr/>
 	<h4>
 		<span id="{{metric.id}}" data-larger-is-better="{{metric.larger_is_better}}">
