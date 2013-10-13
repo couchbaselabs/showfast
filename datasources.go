@@ -149,7 +149,7 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 
 func (ds *DataSource) GetAllBenchmarks() []byte {
 	b_benchmarks := ds.GetBucket("benchmarks")
-	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "value_and_reports_by_build_and_metric",
 		map[string]interface{}{})
 
 	benchmarks := []map[string]string{}
@@ -158,7 +158,7 @@ func (ds *DataSource) GetAllBenchmarks() []byte {
 			"id":     row.ID,
 			"metric": row.Key.([]interface{})[0].(string),
 			"build":  row.Key.([]interface{})[1].(string),
-			"value":  strconv.FormatFloat(row.Value.(float64), 'f', 1, 64),
+			"value":  strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
