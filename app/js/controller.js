@@ -111,15 +111,13 @@ function MetricList($scope, $http) {
 			};
 		};
 
-		$scope.bindOnclick = function(){
-			d3.selectAll(".nv-bar").on("click", function(data) {
-				var build = data[0],
-					metric = $(this).closest("div")[0].id.substring(6),
-					a = $("#run_"  + metric);
-				a.attr("href", "/#/runs/" + metric + "/" + build);
-				a[0].click();
-			});
-		};
+		$scope.$on('barClick', function(event, data) {
+			var build = data.point[0],
+				metric = event.targetScope.id.substring(6),
+				a = $("#run_"  + metric);
+			a.attr("href", "/#/runs/" + metric + "/" + build);
+			a[0].click();
+		});
 	});
 }
 

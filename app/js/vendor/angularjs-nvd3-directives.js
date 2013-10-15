@@ -1,5 +1,318 @@
-/*! angularjs-nvd3-directives - v0.0.0 - 2013-10-03
-* Copyright (c) 2013 Christian Maurer; Licensed Apache */
+/*! angularjs-nvd3-directives - v0.0.0 - 2013-10-10
+* http://cmaurer.github.io/angularjs-nvd3-directives
+* Copyright (c) 2013 Christian Maurer; Licensed Apache License, v2.0 */
+angular.module('legendDirectives', [])
+    .directive('simpleSvgLegend', function(){
+        return {
+            restrict: 'E',
+            scope: {
+                id: '@',
+                width: '@',
+                height: '@',
+                margin: '@',
+                x: '@',
+                y: '@',
+                labels: '@',
+                styles: '@',
+                classes: '@',
+                shapes: '@',  //rect, circle, ellipse
+                padding: '@',
+                columns: '@'
+            },
+            compile: function(){
+                return function link(scope, element, attrs){
+                    "use strict";
+                    var id,
+                        width,
+                        height,
+                        margin,
+                        widthTracker = 0,
+                        heightTracker = 0,
+                        columns = 1,
+                        columnTracker = 0,
+                        padding = 10,
+                        paddingStr,
+                        svgNamespace = 'http://www.w3.org/2000/svg',
+                        svg,
+                        g,
+                        labels,
+                        styles,
+                        classes,
+                        shapes,
+                        x = 0,
+                        y = 0,
+                        container;
+
+                    margin = (scope.$eval(attrs.margin) || {left:5, top:5, bottom:5, right:5});
+                    width = (attrs.width  === "undefined" ? ((element[0].parentElement.offsetWidth) - (margin.left + margin.right)) : (+attrs.width - (margin.left + margin.right)));
+                    height = (attrs.height === "undefined" ? ((element[0].parentElement.offsetHeight) - (margin.top + margin.bottom)) : (+attrs.height - (margin.top + margin.bottom)));
+
+                    if(!attrs.id){
+                        //if an id is not supplied, create a random id.
+                        id = 'legend-' + Math.random();
+                    } else {
+                        id = attrs.id;
+                    }
+                    container = d3.select(this).classed('legend-' + id, true);
+
+                    if(attrs.columns){
+                        columns = (+attrs.columns);
+                    }
+
+                    if(attrs.padding){
+                        padding = (+attrs.padding);
+                    }
+                    paddingStr = padding + '';
+
+                    svg = document.createElementNS(svgNamespace, 'svg');
+                    if(attrs.width){
+                        svg.setAttribute('width', width + '');
+                    }
+
+                    if(attrs.height){
+                        svg.setAttribute('height', height + '');
+                    }
+                    svg.setAttribute('id', id);
+
+                    if(attrs.x){
+                        x = (+attrs.x);
+                    }
+
+                    if(attrs.y){
+                        y = (+attrs.y);
+                    }
+
+                    element.append(svg);
+
+                    g = document.createElementNS(svgNamespace, 'g');
+                    g.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+
+                    svg.appendChild(g);
+
+                    if(attrs.labels){
+                        labels = scope.$eval(attrs.labels);
+                    }
+
+                    if(attrs.styles){
+                        styles = scope.$eval(attrs.styles);
+                    }
+
+                    if(attrs.classes){
+                        classes = scope.$eval(attrs.classes);
+                    }
+
+                    if(attrs.shapes){
+                        shapes = scope.$eval(attrs.shapes);
+                    }
+
+                    for(var i in labels){
+
+                        var shpe = shapes[i], shape, text, textSize, g1;
+
+                        if( ( columnTracker % columns ) === 0 ){
+                            widthTracker = 0;
+                            heightTracker = heightTracker + ( padding + ( padding * 1.5 ) );
+                        }
+                        g1 = document.createElementNS(svgNamespace,'g');
+                        g1.setAttribute('transform', 'translate(' +  widthTracker + ', ' + heightTracker + ')');
+
+                        if(shpe === 'rect'){
+                            shape = document.createElementNS(svgNamespace, 'rect');
+                            //x, y, rx, ry
+                            shape.setAttribute('y', ( 0 - ( padding / 2 ) ) + '');
+                            shape.setAttribute('width', paddingStr);
+                            shape.setAttribute('height', paddingStr);
+                        } else if (shpe === 'ellipse'){
+                            shape = document.createElementNS(svgNamespace, 'ellipse');
+                            shape.setAttribute('rx', paddingStr);
+                            shape.setAttribute('ry', ( padding + ( padding / 2 ) ) + '');
+                        } else {
+                            shape = document.createElementNS(svgNamespace, 'circle');
+                            shape.setAttribute('r', ( padding / 2 ) + '');
+                        }
+
+                        if(styles && styles[i]){
+                            shape.setAttribute('style', styles[i]);
+                        }
+
+                        if(classes && classes[i]){
+                            shape.setAttribute('class', classes[i]);
+                        }
+
+                        g1.appendChild(shape);
+
+                        widthTracker = widthTracker + shape.clientWidth + ( padding + ( padding / 2 ) );
+
+                        text = document.createElementNS(svgNamespace, 'text');
+                        text.setAttribute('transform', 'translate(10, 5)');
+                        text.appendChild(document.createTextNode(labels[i]));
+
+                        g1.appendChild(text);
+                        g.appendChild(g1);
+
+                        textSize = text.clientWidth;
+                        widthTracker = widthTracker + textSize + ( padding + ( padding * 0.75 ) );
+
+                        columnTracker++;
+                    }
+                };
+            }
+        };
+    });
+function processEvents(chart, scope){
+
+    if(chart.dispatch){
+        if(chart.dispatch.tooltipShow){
+            chart.dispatch.on('tooltipShow.directive', function(event) {
+                scope.$emit('tooltipShow.directive', event);
+            });
+        }
+
+        if(chart.dispatch.tooltipHide){
+            chart.dispatch.on('tooltipHide.directive', function(event) {
+                scope.$emit('tooltipHide.directive', event);
+            });
+        }
+
+        if(chart.dispatch.beforeUpdate){
+            chart.dispatch.on('beforeUpdate.directive', function(event) {
+                scope.$emit('beforeUpdate.directive', event);
+            });
+        }
+
+        if(chart.dispatch.stateChange){
+            chart.dispatch.on('stateChange.directive', function(event) {
+                scope.$emit('stateChange.directive', event);
+            });
+        }
+
+        if(chart.dispatch.changeState){
+            chart.dispatch.on('changeState.directive', function(event) {
+                scope.$emit('changeState.directive', event);
+            });
+        }
+    }
+
+    if(chart.lines){
+        chart.lines.dispatch.on('elementMouseover.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+
+        chart.lines.dispatch.on('elementMouseout.tooltip.directive', function(event) {
+            scope.$emit('elementMouseout.tooltip.directive', event);
+        });
+
+        chart.lines.dispatch.on('elementClick.directive', function(event) {
+            scope.$emit('elementClick.directive', event);
+        });
+    }
+
+    if(chart.stacked && chart.stacked.dispatch){
+        chart.stacked.dispatch.on('areaClick.toggle.directive', function(event) {
+            scope.$emit('areaClick.toggle.directive', event);
+        });
+
+        chart.stacked.dispatch.on('tooltipShow.directive', function(event){
+            scope.$emit('tooltipShow.directive', event);
+        });
+
+
+        chart.stacked.dispatch.on('tooltipHide.directive', function(event){
+            scope.$emit('tooltipHide.directive', event);
+        });
+
+    }
+
+    if(chart.interactiveLayer){
+        if(chart.interactiveLayer.elementMouseout){
+            chart.interactiveLayer.dispatch.on('elementMouseout.directive', function(event){
+                scope.$emit('elementMouseout.directive', event);
+            });
+        }
+
+        if(chart.interactiveLayer.elementMousemove){
+            chart.interactiveLayer.dispatch.on('elementMousemove.directive', function(event){
+                scope.$emit('elementMousemove.directive', event);
+            });
+        }
+    }
+
+    if(chart.discretebar){
+        chart.discretebar.dispatch.on('elementClick.directive', function(event, data, z) {
+            scope.$emit('barClick', event, data);
+        });
+
+        chart.discretebar.dispatch.on('elementMouseover.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+
+        chart.discretebar.dispatch.on('elementMouseout.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+    }
+
+    if(chart.multibar){
+        chart.multibar.dispatch.on('elementMouseover.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+
+        chart.multibar.dispatch.on('elementMouseout.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+    }
+
+    if(chart.pie){
+        chart.pie.dispatch.on('elementMouseover.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+
+        chart.pie.dispatch.on('elementMouseout.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+    }
+
+    if(chart.scatter){
+        chart.scatter.dispatch.on('elementMouseover.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+
+        chart.scatter.dispatch.on('elementMouseout.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+    }
+
+    if(chart.bullet){
+        chart.bullet.dispatch.on('elementMouseover.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+
+        chart.bullet.dispatch.on('elementMouseout.tooltip.directive', function(event) {
+            scope.$emit('elementMouseover.tooltip.directive', event);
+        });
+    }
+
+    if(chart.legend){
+        //stateChange
+        chart.legend.dispatch.on('stateChange.legend.directive', function(event) {
+            scope.$emit('stateChange.legend.directive', event);
+        });
+
+        chart.legend.dispatch.on('legendClick.directive', function(d, i) {
+            scope.$emit('legendClick.directive', d, i);
+        });
+
+    }
+
+    if(chart.controls){
+        if(chart.controls.legendClick){
+            chart.controls.dispatch.on('legendClick.directive', function(d, i){
+               scope.$emit('legendClick.directive', d, i);
+            });
+        }
+    }
+
+}
+
 function configureXaxis(chart, scope, attrs){
 "use strict";
     if(attrs.xaxisorient){
@@ -235,9 +548,16 @@ function configureY2axis(chart, scope, attrs){
         chart.y2Axis.staggerlabels((attrs.y2axisstaggerlabels === "true"));
     }
 }
+function setupDimensions(scope, attrs, element) {
+    'use strict';
+    var margin = (scope.$eval(attrs.margin) || {left: 50, top: 50, bottom: 50, right: 50});
+    scope.width = (attrs.width  === "undefined" ? ((element[0].parentElement.offsetWidth) - (margin.left + margin.right)) : (+attrs.width - (margin.left + margin.right)));
+    scope.height = (attrs.height === "undefined" ? ((element[0].parentElement.offsetHeight) - (margin.top + margin.bottom)) : (+attrs.height - (margin.top + margin.bottom)));
+    return margin;
+}
 angular.module('nvd3ChartDirectives', [])
     .directive('nvd3LineChart', ['$window', '$timeout', function($window, $timeout){
-        "use strict";
+        'use strict';
         return {
             restrict: 'E',
             scope: {
@@ -331,10 +651,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.lineChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -366,6 +683,8 @@ angular.module('nvd3ChartDirectives', [])
 
                                 configureXaxis(chart, scope, attrs);
                                 configureYaxis(chart, scope, attrs);
+
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -412,7 +731,7 @@ angular.module('nvd3ChartDirectives', [])
         };
     }])
     .directive('nvd3CumulativeLineChart', ['$window', '$timeout', function($window, $timeout){
-        "use strict";
+        'use strict';
         return {
             restrict: 'E',
             scope: {
@@ -508,10 +827,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.cumulativeLineChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -545,6 +861,8 @@ angular.module('nvd3ChartDirectives', [])
 
                                 configureXaxis(chart, scope, attrs);
                                 configureYaxis(chart, scope, attrs);
+
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -693,10 +1011,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.stackedAreaChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -765,6 +1080,7 @@ angular.module('nvd3ChartDirectives', [])
 
                                 configureXaxis(chart, scope, attrs);
                                 configureYaxis(chart, scope, attrs);
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -899,10 +1215,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.multiBarChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -923,6 +1236,7 @@ angular.module('nvd3ChartDirectives', [])
 
                                 configureXaxis(chart, scope, attrs);
                                 configureYaxis(chart, scope, attrs);
+                                processEvents(chart, scope);
 
                                 if(attrs.tooltipcontent){
                                     chart.tooltipContent(scope.tooltipcontent());
@@ -973,7 +1287,6 @@ angular.module('nvd3ChartDirectives', [])
         return {
             restrict: 'E',
             scope: {
-                callback: "&",
                 data: '=',
                 width: '@',
                 height: '@',
@@ -1057,10 +1370,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.discreteBarChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -1085,6 +1395,12 @@ angular.module('nvd3ChartDirectives', [])
                                     chart.valueFormat(scope.valueformat());
                                 }
 
+                                //events
+                                //https://github.com/mbostock/d3/wiki/Internals#wiki-dispatch
+                                //dispatch: 'tooltipShow', 'tooltipHide', 'beforeUpdate',
+                                //discretebar.dispatch: 'elementMouseout.tooltip', 'elementMouseover.tooltip'
+
+                                processEvents(chart, scope);
                                 scope.d3Call(data, chart);
 
                                 var chartResize = function() {
@@ -1118,7 +1434,6 @@ angular.module('nvd3ChartDirectives', [])
 
                                 $window.addEventListener('resize', windowResize);
                                 scope.chart = chart;
-                                scope.callback();
                                 return chart;
                             }
                         });
@@ -1218,10 +1533,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                    scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                    scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.historicalBarChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -1248,6 +1560,7 @@ angular.module('nvd3ChartDirectives', [])
                                 if(attrs.valueformat){
                                     chart.valueFormat(scope.valueformat());
                                 }
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -1381,10 +1694,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                    scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                    scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.multiBarHorizontalChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -1504,10 +1814,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.pieChart()
                                     .x(attrs.x === undefined ? function(d){ return d[0]; } : scope.x())
                                     .y(attrs.y === undefined ? function(d){ return d[1]; } : scope.y())
@@ -1531,6 +1838,7 @@ angular.module('nvd3ChartDirectives', [])
                                 if(attrs.tooltipcontent){
                                     chart.tooltipContent(scope.tooltipcontent());
                                 }
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -1683,10 +1991,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                    scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                    scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.scatterChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -1741,6 +2046,7 @@ angular.module('nvd3ChartDirectives', [])
                                     chart.zScale(scope.zscale());
                                 }
 
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -1811,10 +2117,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.scatterPlusLineChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -1842,6 +2145,7 @@ angular.module('nvd3ChartDirectives', [])
                                     chart.scatter.onlyCircles(false);
                                     chart.scatter.shape(attrs.shape === undefined ? function(d) { return d.shape || 'circle'; } : scope.shape());
                                 }
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -1885,7 +2189,7 @@ angular.module('nvd3ChartDirectives', [])
         };
     }])
     .directive('nvd3LinePlusBarChart', ['$window', '$timeout', function($window, $timeout){
-        "use strict";
+        'use strict';
         return {
             restrict: 'E',
             scope: {
@@ -1995,10 +2299,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                    scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                    scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.linePlusBarChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -2017,7 +2318,7 @@ angular.module('nvd3ChartDirectives', [])
                                 configureXaxis(chart, scope, attrs);
                                 configureY1axis(chart, scope, attrs);
                                 configureY2axis(chart, scope, attrs);
-
+                                processEvents(chart, scope);
                                 scope.d3Call(data, chart);
 
                                 var chartResize = function() {
@@ -2060,7 +2361,7 @@ angular.module('nvd3ChartDirectives', [])
         };
     }])
     .directive('nvd3LineWithFocusChart', ['$window', '$timeout', function($window, $timeout){
-        "use strict";
+        'use strict';
         return {
             restrict: 'E',
             scope: {
@@ -2171,10 +2472,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                    scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                    scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.lineWithFocusChart()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -2192,6 +2490,7 @@ angular.module('nvd3ChartDirectives', [])
                                 configureXaxis(chart, scope, attrs);
                                 configureY1axis(chart, scope, attrs);
                                 configureY2axis(chart, scope, attrs);
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -2235,7 +2534,7 @@ angular.module('nvd3ChartDirectives', [])
         };
     }])
     .directive('nvd3BulletChart', ['$window', '$timeout', function($window, $timeout){
-        "use strict";
+        'use strict';
         return {
             restrict: 'E',
             scope: {
@@ -2246,10 +2545,10 @@ angular.module('nvd3ChartDirectives', [])
                 margin: '&',
                 tooltips: '@',
                 tooltipcontent: '&',
-                orient: '@',
-                ranges: '&',
-                markers: '&',
-                measures: '&',
+                orient: '@',  // left, right, top, bottom
+                ranges: '&', //ranges (bad, satisfactory, good)
+                markers: '&', // markers (previous, goal)
+                measures: '&', // measures (actual, forecast)
                 tickformat: '&',
                 nodata: '@',
 
@@ -2279,18 +2578,15 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                    scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                    scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.bulletChart()
                                     .width(scope.width)
                                     .height(scope.height)
                                     .margin(margin)
                                     .orient(attrs.orient === undefined ? 'left' : attrs.orient)
-                                    .ranges(attrs.ranges === undefined ? function(d){ return d.ranges; } : scope.ranges())
-                                    .markers(attrs.markers === undefined ? function(d){ return d.markers; } : scope.markers())
-                                    .measures(attrs.measures === undefined ? function(d){ return d.measures; } : scope.measures())
+//                                    .ranges(attrs.ranges === undefined ? function(d){ return d.ranges; } : scope.ranges())
+//                                    .markers(attrs.markers === undefined ? function(d){ return d.markers; } : scope.markers())
+//                                    .measures(attrs.measures === undefined ? function(d){ return d.measures; } : scope.measures())
                                     .tickFormat(attrs.tickformat === undefined ? null : scope.tickformat())
                                     .tooltips(attrs.tooltips === undefined ? false : (attrs.tooltips  === "true"))
                                     .noData(attrs.nodata === undefined ? 'No Data Available.' : scope.nodata);
@@ -2298,6 +2594,7 @@ angular.module('nvd3ChartDirectives', [])
                                 if(attrs.tooltipcontent){
                                     chart.tooltipContent(scope.tooltipcontent());
                                 }
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -2341,7 +2638,7 @@ angular.module('nvd3ChartDirectives', [])
         };
     }])
     .directive('nvd3SparklineChart', ['$window', '$timeout', function($window, $timeout){
-        "use strict";
+        'use strict';
         return {
             restrict: 'E',
             scope: {
@@ -2358,6 +2655,7 @@ angular.module('nvd3ChartDirectives', [])
                 showvalue: '@',
                 alignvalue: '@',
                 rightalignvalue: '@',
+                nodata: '@',
 
                 xaxistickformat: '&',
                 yaxistickformat: '&',
@@ -2388,10 +2686,7 @@ angular.module('nvd3ChartDirectives', [])
                         }
                         nv.addGraph({
                             generate: function(){
-                                var margin = (scope.$eval(attrs.margin) || {left:50, top:50, bottom:50, right:50});
-                                    scope.width = (attrs.width || element[0].parentElement.offsetWidth) - (margin.left + margin.right);
-                                    scope.height = (attrs.height || element[0].parentElement.offsetHeight) - (margin.top + margin.bottom);
-
+                                var margin = setupDimensions(scope, attrs, element);
                                 var chart = nv.models.sparklinePlus()
                                     .width(scope.width)
                                     .height(scope.height)
@@ -2414,6 +2709,7 @@ angular.module('nvd3ChartDirectives', [])
 
                                 configureXaxis(chart, scope, attrs);
                                 configureYaxis(chart, scope, attrs);
+                                processEvents(chart, scope);
 
                                 scope.d3Call(data, chart);
 
@@ -2458,9 +2754,8 @@ angular.module('nvd3ChartDirectives', [])
     }]);
 
 //still need to implement
-
-//nv.models.sparkline
-//nv.models.sparklinePlus
+//sparkline with bands (Stephen Few)
+//sparkbars
 //nv.models.multiChart
 //nv.models.scatterPlusLineChart
 //nv.models.linePlusBarWithFocusChart
