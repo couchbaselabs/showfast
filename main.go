@@ -31,8 +31,12 @@ func admin() []byte {
 }
 
 func delete(ctx *web.Context) {
-	id := ctx.Params["id"]
-	data_source.DeleteBenchmark(id)
+	var params struct {
+		ID string `json:"id"`
+	}
+	body, _ := ioutil.ReadAll(ctx.Request.Body)
+	json.Unmarshal(body, &params)
+	data_source.DeleteBenchmark(params.ID)
 }
 
 type Config struct {
