@@ -93,3 +93,40 @@ hr {
     width: 25%;
     text-align: center;
 }
+
+.vs {
+    vertical-align: text-bottom;
+}
+
+.t-release {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
+.t-r-metric {
+    text-align: left;
+    width: 67%;
+}
+
+.t-baseline, .t-target, .t-comparison {
+    text-align: center;
+    width: 11%;
+}
+
+.metric-cluster {
+    font-size: 85%;
+    color: #999;
+}
+
+.metric-descr {
+    font-size: 93%;
+}
+
+.better {
+    color: #51a351;
+}
+
+.worse {
+    color: #f89406;
+}

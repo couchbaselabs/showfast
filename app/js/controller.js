@@ -140,3 +140,36 @@ function AdminList($scope, $http) {
 		$scope.benchmarks = data;
 	});
 }
+
+function GetComparison($scope, $http) {
+	var params = {
+		'baseline': $scope.selectedBaseline,
+		'target': $scope.selectedTarget
+	};
+	$http({method: 'GET', url: '/get_comparison', params: params})
+	.success(function(data) {
+		$scope.metrics = data;
+	});
+}
+
+function ReleaseList($scope, $http) {
+	$http.get('/all_releases').success(function(data) {
+		$scope.baselines = data;
+		$scope.targets = data;
+
+		$scope.selectedBaseline = data[0];
+		$scope.selectedTarget = data[0];
+
+		$scope.setSelectedBaseline = function (value) {
+			$scope.selectedBaseline = value;
+			GetComparison($scope, $http);
+		};
+
+		$scope.setSelectedTarget = function (value) {
+			$scope.selectedTarget = value;
+			GetComparison($scope, $http);
+		};
+
+		GetComparison($scope, $http);
+	});
+}

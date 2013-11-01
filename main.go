@@ -30,6 +30,17 @@ func admin() []byte {
 	return content
 }
 
+func release() []byte {
+	content, _ := ioutil.ReadFile(pckg_dir + "app/release.html")
+	return content
+}
+
+func get_comparison(ctx *web.Context) []byte {
+	baseline := ctx.Params["baseline"]
+	target := ctx.Params["target"]
+	return data_source.GetComparison(baseline, target)
+}
+
 func delete(ctx *web.Context) {
 	var params struct {
 		ID string `json:"id"`
@@ -62,12 +73,15 @@ func main() {
 
 	web.Get("/", home)
 	web.Get("/admin", admin)
+	web.Get("/release", release)
 
 	web.Get("/all_metrics", data_source.GetAllMetrics)
 	web.Get("/all_clusters", data_source.GetAllClusters)
 	web.Get("/all_timelines", data_source.GetAllTimelines)
 	web.Get("/all_benchmarks", data_source.GetAllBenchmarks)
 	web.Get("/all_runs", all_runs)
+	web.Get("/all_releases", data_source.GetAllReleases)
+	web.Get("/get_comparison", get_comparison)
 	web.Post("/delete", delete)
 
 	web.Run(config.ListenAddress)

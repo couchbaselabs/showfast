@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/couchbaselabs/go-couchbase"
 )
@@ -169,4 +170,106 @@ func (ds *DataSource) GetAllBenchmarks() []byte {
 func (ds *DataSource) DeleteBenchmark(benchmark string) {
 	b_benchmarks := ds.GetBucket("benchmarks")
 	b_benchmarks.Delete(benchmark)
+}
+
+func appendIfUnique(slice []string, s string) []string {
+	for i := range slice {
+		if slice[i] == s {
+			return slice
+		}
+	}
+	return append(slice, s)
+}
+
+func (ds *DataSource) GetAllReleases() []byte {
+	b_benchmarks := ds.GetBucket("benchmarks")
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "metrics_by_build",
+		map[string]interface{}{})
+
+	releases := []string{}
+	for _, row := range rows {
+		release := row.Key.(string)[:5]
+		releases = appendIfUnique(releases, release)
+	}
+
+	j, _ := json.Marshal(releases)
+	return j
+}
+
+
+func (ds *DataSource) GetComparison(baseline, target string) []byte {
+	b_metrics := ds.GetBucket("metrics")
+	b_benchmarks := ds.GetBucket("benchmarks")
+	b_clusters := ds.GetBucket("clusters")
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+		map[string]interface{}{})
+
+	metrics := map[string]map[string]interface{}{}
+	for _, row := range rows {
+		metric := row.Key.([]interface{})[0].(string)
+		build := row.Key.([]interface{})[1].(string)
+		value := row.Value.(float64)
+		if _, ok := metrics[metric]; ok {
+		    if (strings.HasPrefix(build, baseline) &&
+					build > metrics[metric]["baseline"].(string)) {
+				metrics[metric]["baseline"] = build
+				metrics[metric]["baseline_value"] = value
+			}
+			if (strings.HasPrefix(build, target) &&
+					build > metrics[metric]["target"].(string)) {
+				metrics[metric]["target"] = build
+				metrics[metric]["target_value"] = value
+			}
+		} else {
+			metrics[metric] = map[string]interface{}{
+				"baseline": build,
+				"target": build,
+				"baseline_value": value,
+				"target_value": value,
+			}
+		}
+	}
+	reduced_metrics := map[string]map[string]interface{}{}
+	for metric_name, builds := range metrics {
+		if (strings.HasPrefix(builds["baseline"].(string), baseline) &&
+				strings.HasPrefix(builds["target"].(string), target)) {
+			metric := map[string]string{}
+			b_metrics.Get(metric_name, &metric)
+			cluster := map[string]string{}
+			b_clusters.Get(metric["cluster"], &cluster)
+
+			diff := 100 * (builds["target_value"].(float64) - builds["baseline_value"].(float64)) /
+				builds["baseline_value"].(float64)
+
+			var coeff float64
+			if metric["larger_is_better"] == "false" {
+				coeff = -1
+			} else {
+				coeff = 1
+			}
+
+			comparison := "The same"
+			class := "same"
+			if coeff * diff > 10 {
+				diff := strconv.FormatFloat(diff * coeff, 'f', 1, 64)
+				comparison = fmt.Sprintf("%s%% better", diff)
+				class = "better"
+			} else if coeff * diff < -10 {
+				diff := strconv.FormatFloat(-diff * coeff, 'f', 1, 64)
+				comparison = fmt.Sprintf("%s%% worse", diff)
+				class = "worse"
+			}
+
+			reduced_metrics[metric_name] = map[string]interface{}{
+				"title": metric["title"],
+				"cluster": cluster,
+				"baseline": builds["baseline"],
+				"target": builds["target"],
+				"comparison": comparison,
+				"class": class,
+			}
+		}
+	}
+	j, _ := json.Marshal(reduced_metrics)
+	return j
 }
