@@ -45,10 +45,11 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}];
 
-		$scope.selectedCategory = "all";
+		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
+			$.cookie("selectedCategory", value);
 		};
 
 		$scope.byCategory = function(entry) {
@@ -67,10 +68,11 @@ function MetricList($scope, $http) {
 
 		$scope.oses = ["All", "Windows", "Linux"];
 
-		$scope.selectedOS = "All";
+		$scope.selectedOS = $.cookie("selectedOS") || "All";
 
 		$scope.setSelectedOS = function (value) {
 			$scope.selectedOS = value;
+			$.cookie("selectedOS", value);
 		};
 
 		$scope.byOS = function(entry) {
@@ -89,10 +91,11 @@ function MetricList($scope, $http) {
 
 		$scope.levels = ["Basic", "Advanced"];
 
-		$scope.selectedLevel = "Basic";
+		$scope.selectedLevel = $.cookie("selectedLevel") || "Basic";
 
 		$scope.setSelectedLevel = function (value) {
 			$scope.selectedLevel = value;
+			$.cookie("selectedLevel", value);
 		};
 
 		$scope.byLevel = function(entry) {
@@ -157,16 +160,18 @@ function ReleaseList($scope, $http) {
 		$scope.baselines = data;
 		$scope.targets = data;
 
-		$scope.selectedBaseline = data[0];
-		$scope.selectedTarget = data[0];
+		$scope.selectedBaseline = $.cookie('selectedBaseline') || data[0];
+		$scope.selectedTarget = $.cookie('selectedTarget') || data[0];
 
 		$scope.setSelectedBaseline = function (value) {
 			$scope.selectedBaseline = value;
+			$.cookie('selectedBaseline', value, {expires: 60});
 			GetComparison($scope, $http);
 		};
 
 		$scope.setSelectedTarget = function (value) {
 			$scope.selectedTarget = value;
+			$.cookie('selectedTarget', value, {expires: 60});
 			GetComparison($scope, $http);
 		};
 
