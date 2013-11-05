@@ -38,7 +38,7 @@
 			<tr ng-repeat="metric in metrics">
 				<td class="t-data t-r-metric">
 					<span class="metric-descr"><b>{{metric.title}}</b><span><br>
-					<span class="metric-cluster">{{metric.cluster.OS}}<span>
+					<span class="metric-cluster">{{metric.cluster.OS}} / {{metric.cluster.Disk}}<span>
 				</td>
 				<td class="t-data t-comparison {{metric.class}}">{{metric.comparison}}</td>
 				<td class="t-data t-baseline">{{metric.baseline}}</td>
