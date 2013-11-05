@@ -125,8 +125,10 @@ hr {
 
 .better {
     color: #51a351;
+    font-weight: bold;
 }
 
 .worse {
     color: #f89406;
+    font-weight: bold;
 }
