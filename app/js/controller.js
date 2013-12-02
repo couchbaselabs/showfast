@@ -132,11 +132,16 @@ function RunList($scope, $routeParams, $http) {
 }
 
 function AdminList($scope, $http) {
-	$scope.deleteBenchmark = function(entry) {
-		$http({method: 'POST', url: '/delete', data: {id: entry}})
+	$scope.deleteBenchmark = function(benchmark) {
+		$http({method: 'POST', url: '/delete', data: {id: benchmark.id}})
 		.success(function(data) {
-			location.reload();	
+			var index = $scope.benchmarks.indexOf(benchmark);
+			$scope.benchmarks.splice(index, 1);
 		});
+	};
+
+	$scope.reverseObsolete = function(id) {
+		$http({method: 'POST', url: '/reverse_obsolete', data: {id: id}});
 	};
 
 	$http.get('/all_benchmarks').success(function(data) {

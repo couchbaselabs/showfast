@@ -57,12 +57,12 @@ hr {
 
 .t-build {
 	text-align: center;
-    width: 15%;
+    width: 10%;
 }
 
-.t-value {
+.t-avalue, .t-obsolete {
 	text-align: center;
-    width: 15%;
+    width: 10%;
 }
 
 .t-buttons {

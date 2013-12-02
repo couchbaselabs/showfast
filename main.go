@@ -50,6 +50,15 @@ func delete(ctx *web.Context) {
 	data_source.DeleteBenchmark(params.ID)
 }
 
+func reverse_obsolete(ctx *web.Context) {
+	var params struct {
+		ID string `json:"id"`
+	}
+	body, _ := ioutil.ReadAll(ctx.Request.Body)
+	json.Unmarshal(body, &params)
+	data_source.ReverseObsolete(params.ID)
+}
+
 type Config struct {
 	CouchbaseAddress, BucketPassword, ListenAddress string
 }
@@ -83,6 +92,7 @@ func main() {
 	web.Get("/all_releases", data_source.GetAllReleases)
 	web.Get("/get_comparison", get_comparison)
 	web.Post("/delete", delete)
+	web.Post("/reverse_obsolete", reverse_obsolete)
 
 	web.Run(config.ListenAddress)
 }

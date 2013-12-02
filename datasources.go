@@ -35,6 +35,9 @@ var ddocs = map[string]string{
 			},
 			"value_and_reports_by_build_and_metric": {
 				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.report1, doc.report2]);}"
+			},
+			"value_and_obsolete_by_build_and_metric": {
+				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.obsolete == true]);}"
 			}
 		}
 	}`,
@@ -148,18 +151,29 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 	return j
 }
 
+type Benchmark struct {
+	ID       string  `json:"id"`
+	Metric   string  `json:"metric"`
+	Build    string  `json:"build"`
+	Value    float64 `json:"value"`
+	Obsolete bool    `json:"obsolete"`
+	Report1  string  `json:"report1"`
+	Report2  string  `json:"report2"`
+}
+
 func (ds *DataSource) GetAllBenchmarks() []byte {
 	b_benchmarks := ds.GetBucket("benchmarks")
-	rows := ds.QueryView(b_benchmarks, "benchmarks", "value_and_reports_by_build_and_metric",
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "value_and_obsolete_by_build_and_metric",
 		map[string]interface{}{})
 
-	benchmarks := []map[string]string{}
+	benchmarks := []Benchmark{}
 	for _, row := range rows {
-		benchmark := map[string]string{
-			"id":     row.ID,
-			"metric": row.Key.([]interface{})[0].(string),
-			"build":  row.Key.([]interface{})[1].(string),
-			"value":  strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
+		benchmark := Benchmark{
+			ID:       row.ID,
+			Metric:   row.Key.([]interface{})[0].(string),
+			Build:    row.Key.([]interface{})[1].(string),
+			Value:    row.Value.([]interface{})[0].(float64),
+			Obsolete: row.Value.([]interface{})[1].(bool),
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
@@ -167,9 +181,20 @@ func (ds *DataSource) GetAllBenchmarks() []byte {
 	return j
 }
 
-func (ds *DataSource) DeleteBenchmark(benchmark string) {
+func (ds *DataSource) DeleteBenchmark(id string) {
 	b_benchmarks := ds.GetBucket("benchmarks")
-	b_benchmarks.Delete(benchmark)
+	b_benchmarks.Delete(id)
+}
+
+func (ds *DataSource) ReverseObsolete(id string) {
+	b_benchmarks := ds.GetBucket("benchmarks")
+	benchmark := Benchmark{}
+	b_benchmarks.Get(id, &benchmark)
+	benchmark.Obsolete = !benchmark.Obsolete
+	err := b_benchmarks.Set(id, 0, benchmark)
+	if err != nil {
+		log.Println("Error updating benchmark:  %v", err)
+	}
 }
 
 func appendIfUnique(slice []string, s string) []string {
@@ -196,7 +221,6 @@ func (ds *DataSource) GetAllReleases() []byte {
 	return j
 }
 
-
 func (ds *DataSource) GetComparison(baseline, target string) []byte {
 	b_metrics := ds.GetBucket("metrics")
 	b_benchmarks := ds.GetBucket("benchmarks")
@@ -210,29 +234,29 @@ func (ds *DataSource) GetComparison(baseline, target string) []byte {
 		build := row.Key.([]interface{})[1].(string)
 		value := row.Value.(float64)
 		if _, ok := metrics[metric]; ok {
-		    if (strings.HasPrefix(build, baseline) &&
-					build > metrics[metric]["baseline"].(string)) {
+			if strings.HasPrefix(build, baseline) &&
+				build > metrics[metric]["baseline"].(string) {
 				metrics[metric]["baseline"] = build
 				metrics[metric]["baseline_value"] = value
 			}
-			if (strings.HasPrefix(build, target) &&
-					build > metrics[metric]["target"].(string)) {
+			if strings.HasPrefix(build, target) &&
+				build > metrics[metric]["target"].(string) {
 				metrics[metric]["target"] = build
 				metrics[metric]["target_value"] = value
 			}
 		} else {
 			metrics[metric] = map[string]interface{}{
-				"baseline": build,
-				"target": build,
+				"baseline":       build,
+				"target":         build,
 				"baseline_value": value,
-				"target_value": value,
+				"target_value":   value,
 			}
 		}
 	}
 	reduced_metrics := map[string]map[string]interface{}{}
 	for metric_name, builds := range metrics {
-		if (strings.HasPrefix(builds["baseline"].(string), baseline) &&
-				strings.HasPrefix(builds["target"].(string), target)) {
+		if strings.HasPrefix(builds["baseline"].(string), baseline) &&
+			strings.HasPrefix(builds["target"].(string), target) {
 			metric := map[string]string{}
 			b_metrics.Get(metric_name, &metric)
 			cluster := map[string]string{}
@@ -250,23 +274,23 @@ func (ds *DataSource) GetComparison(baseline, target string) []byte {
 
 			comparison := "The same"
 			class := "same"
-			if coeff * diff > 10 {
-				diff := strconv.FormatFloat(diff * coeff, 'f', 1, 64)
+			if coeff*diff > 10 {
+				diff := strconv.FormatFloat(diff*coeff, 'f', 1, 64)
 				comparison = fmt.Sprintf("%s%% better", diff)
 				class = "better"
-			} else if coeff * diff < -10 {
-				diff := strconv.FormatFloat(-diff * coeff, 'f', 1, 64)
+			} else if coeff*diff < -10 {
+				diff := strconv.FormatFloat(-diff*coeff, 'f', 1, 64)
 				comparison = fmt.Sprintf("%s%% worse", diff)
 				class = "worse"
 			}
 
 			reduced_metrics[metric_name] = map[string]interface{}{
-				"title": metric["title"],
-				"cluster": cluster,
-				"baseline": builds["baseline"],
-				"target": builds["target"],
+				"title":      metric["title"],
+				"cluster":    cluster,
+				"baseline":   builds["baseline"],
+				"target":     builds["target"],
 				"comparison": comparison,
-				"class": class,
+				"class":      class,
 			}
 		}
 	}
