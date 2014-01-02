@@ -5,16 +5,23 @@
 			<th class="t-data t-seq">#</th>
 			<th class="t-data t-value">Value</th>
 			<th class="t-data t-report">HTML reports</th>
+			<th class="t-data t-report">Correlation matrices</th>
 		</tr>
 		<tr ng-repeat="run in runs">
 			<td class="t-data t-seq">{{run.seq}}</td>
 			<td class="t-data t-value">{{run.value}}</td>
 			<td class="t-data t-report">
-				<a href="{{run.report1}}" target="_blank" ng-if="run.report1">
+				<a ng-repeat="snapshot in run.snapshots"
+					 href="http://cbmonitor.sc.couchbase.com/reports/html/?snapshot={{snapshot}}"
+					 target="_blank">
 					<i class="icon-file"></i>
 				</a>
-				<a href="{{run.report2}}" target="_blank" ng-if="run.report2">
-					<i class="icon-file"></i>
+			</td>
+			<td class="t-data t-corr">
+				<a ng-repeat="snapshot in run.snapshots"
+				   href="http://cbmonitor.sc.couchbase.com/reports/corr/?snapshot={{snapshot}}"
+				   target="_blank">
+					<i class="icon-th"></i>
 				</a>
 			</td>
 		</tr>

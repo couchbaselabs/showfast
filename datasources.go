@@ -36,6 +36,9 @@ var ddocs = map[string]string{
 			"value_and_reports_by_build_and_metric": {
 				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.report1, doc.report2]);}"
 			},
+			"value_and_snapshots_by_build_and_metric": {
+				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.snapshots]);}"
+			},
 			"value_and_obsolete_by_build_and_metric": {
 				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.obsolete == true]);}"
 			}
@@ -135,15 +138,14 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 		"startkey": []string{metric, build},
 		"endkey":   []string{metric, build},
 	}
-	rows := ds.QueryView(b_benchmarks, "benchmarks", "value_and_reports_by_build_and_metric", params)
+	rows := ds.QueryView(b_benchmarks, "benchmarks", "value_and_snapshots_by_build_and_metric", params)
 
 	benchmarks := []map[string]interface{}{}
 	for i, row := range rows {
 		benchmark := map[string]interface{}{
 			"seq":     strconv.Itoa(i + 1),
 			"value":   strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
-			"report1": row.Value.([]interface{})[1],
-			"report2": row.Value.([]interface{})[2],
+			"snapshots": row.Value.([]interface{})[1],
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}

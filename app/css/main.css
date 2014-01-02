@@ -80,17 +80,22 @@ hr {
 }
 
 .t-seq {
-    width: 15%;
+    width: 10%;
     text-align: center;
 }
 
 .t-value {
     text-align: center;
-    width: 60%;
+    width: 30%;
 }
 
 .t-report {
     width: 25%;
+    text-align: center;
+}
+
+.t-corr {
+    width: 35%;
     text-align: center;
 }
 
