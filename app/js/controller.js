@@ -91,24 +91,6 @@ function MetricList($scope, $http) {
 			}
 		};
 
-		$scope.levels = ["Basic", "Advanced"];
-
-		$scope.selectedLevel = $.cookie("selectedLevel") || "Basic";
-
-		$scope.setSelectedLevel = function (value) {
-			$scope.selectedLevel = value;
-			$.cookie("selectedLevel", value);
-		};
-
-		$scope.byLevel = function(entry) {
-			switch($scope.selectedLevel) {
-				case "Advanced":
-					return true;
-				case "Basic":
-					return entry.level === "Basic";
-			}
-		};
-
 		var format = d3.format(',');
 		$scope.valueFormatFunction = function(){
 			return function(d) {
