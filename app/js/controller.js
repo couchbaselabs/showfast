@@ -34,6 +34,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "comp", "title": "Compaction"
 		}, {
+			"id": "beam", "title": "beam.smp"
+		}, {
 			"id": "index", "title": "Indexing"
 		}, {
 			"id": "reb", "title": "Rebalance"
