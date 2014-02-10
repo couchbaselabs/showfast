@@ -143,8 +143,8 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 	benchmarks := []map[string]interface{}{}
 	for i, row := range rows {
 		benchmark := map[string]interface{}{
-			"seq":     strconv.Itoa(i + 1),
-			"value":   strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
+			"seq":       strconv.Itoa(i + 1),
+			"value":     strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
 			"snapshots": row.Value.([]interface{})[1],
 		}
 		benchmarks = append(benchmarks, benchmark)
@@ -154,13 +154,12 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 }
 
 type Benchmark struct {
-	ID       string  `json:"id"`
-	Metric   string  `json:"metric"`
-	Build    string  `json:"build"`
-	Value    float64 `json:"value"`
-	Obsolete bool    `json:"obsolete"`
-	Report1  string  `json:"report1"`
-	Report2  string  `json:"report2"`
+	ID        string   `json:"id"`
+	Metric    string   `json:"metric"`
+	Build     string   `json:"build"`
+	Value     float64  `json:"value"`
+	Obsolete  bool     `json:"obsolete"`
+	Snapshots []string `json:"snapshots"`
 }
 
 func (ds *DataSource) GetAllBenchmarks() []byte {
