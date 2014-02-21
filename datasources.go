@@ -33,9 +33,6 @@ var ddocs = map[string]string{
 			"values_by_build_and_metric": {
 				"map": "function (doc, meta) {if (!doc.obsolete) {emit([doc.metric, doc.build], doc.value);}}"
 			},
-			"value_and_reports_by_build_and_metric": {
-				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.report1, doc.report2]);}"
-			},
 			"value_and_snapshots_by_build_and_metric": {
 				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.snapshots]);}"
 			},
