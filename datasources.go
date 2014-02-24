@@ -41,6 +41,13 @@ var ddocs = map[string]string{
 			}
 		}
 	}`,
+	"feed": `{
+		"views": {
+			"all": {
+				"map": "function (doc, meta) {emit(meta.id, doc);}"
+			}
+		}
+	}`,
 }
 
 type DataSource struct {
@@ -293,5 +300,21 @@ func (ds *DataSource) GetComparison(baseline, target string) []byte {
 		}
 	}
 	j, _ := json.Marshal(reduced_metrics)
+	return j
+}
+
+func (ds *DataSource) GetAllFeedRecords() []byte {
+	b_feed := ds.GetBucket("feed")
+	params := map[string]interface{}{
+		"descending": true,
+	}
+	rows := ds.QueryView(b_feed, "feed", "all", params)
+
+	records := []map[string]interface{}{}
+	for _, row := range rows {
+		record := row.Value.(map[string]interface{})
+		records = append(records, record)
+	}
+	j, _ := json.Marshal(records)
 	return j
 }

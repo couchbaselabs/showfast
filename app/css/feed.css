@@ -1,0 +1,51 @@
+.feed {
+  width: 80%;
+  margin-left: 10%;
+  font-size: 100%;
+  margin-top: 10px;
+}
+
+.datetime {
+  width: 15%;
+  color: #51a351;
+  font-weight: bold;
+}
+
+.build {
+  width: 10%;
+  color: #f89406;
+  font-weight: bold;
+}
+
+.summary {
+  width: 75%;
+  font-weight: bold;
+}
+
+.record {
+  width: 80%;
+  margin-left: 10%;
+  font-size: 100%;
+  margin-top: 5px;
+}
+
+.changes {
+  width: 100%;
+  color: #777;
+}
+
+.change {
+  margin-top: 5px;
+  margin-left: 100px;
+}
+
+.prev_build {
+  font-weight: bold;
+}
+
+.hr {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

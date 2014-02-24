@@ -35,6 +35,11 @@ func release() []byte {
 	return content
 }
 
+func feed() []byte {
+	content, _ := ioutil.ReadFile(pckg_dir + "app/feed.html")
+	return content
+}
+
 func get_comparison(ctx *web.Context) []byte {
 	baseline := ctx.Params["baseline"]
 	target := ctx.Params["target"]
@@ -83,6 +88,7 @@ func main() {
 	web.Get("/", home)
 	web.Get("/admin", admin)
 	web.Get("/release", release)
+	web.Get("/feed", feed)
 
 	web.Get("/all_metrics", data_source.GetAllMetrics)
 	web.Get("/all_clusters", data_source.GetAllClusters)
@@ -90,6 +96,7 @@ func main() {
 	web.Get("/all_benchmarks", data_source.GetAllBenchmarks)
 	web.Get("/all_runs", all_runs)
 	web.Get("/all_releases", data_source.GetAllReleases)
+	web.Get("/all_feed_records", data_source.GetAllFeedRecords)
 	web.Get("/get_comparison", get_comparison)
 	web.Post("/delete", delete)
 	web.Post("/reverse_obsolete", reverse_obsolete)

@@ -133,6 +133,12 @@ function AdminList($scope, $http) {
 	});
 }
 
+function Feed($scope, $http) {
+	$http.get('/all_feed_records').success(function(data) {
+		$scope.records = data;
+	});
+}
+
 function GetComparison($scope, $http) {
 	var params = {
 		'baseline': $scope.selectedBaseline,

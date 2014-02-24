@@ -1,0 +1,36 @@
+<html>
+<head>
+  <title>ShowFast</title>
+  <link rel="stylesheet" href="/css/vendor/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/feed.css" />
+  <script type="text/javascript" src="/js/vendor/jquery-2.0.2.min.js"></script>
+  <script type="text/javascript" src="/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/vendor/angular.js"></script>
+  <script type="text/javascript" src="/js/vendor/angular-route.js"></script>
+  <script type="text/javascript" src="/js/controller.js"></script>
+</head>
+<body ng-app ng-controller="Feed">
+  <div class="masthead text-center">
+    <h2>Performance feed</h2>
+    <hr class="hr">
+    <div ng-repeat="record in records">
+      <table class="feed">
+        <tr>
+          <td class="datetime">{{record.datetime}}</td>
+          <td class="build">{{record.build}}</td>
+          <td class="summary">{{record.summary}}</td>
+        </tr>
+      </table>
+      <table class="record">
+        <tr ng-repeat="(build, changes) in record.changes">
+          <td class="changes">
+            Changed from <span class="prev_build">{{build}}</span>:
+            <p class="change" ng-repeat="change in changes">{{change}}</p>
+          </td>
+        </tr>
+      </table>
+      <hr class="hr">
+    </div>
+  </div>
+</body>
+</html>
