@@ -12,14 +12,21 @@
 }
 
 .build {
-  width: 10%;
+  width: 8%;
   color: #f89406;
   font-weight: bold;
 }
 
 .summary {
-  width: 75%;
+  width: 69%;
   font-weight: bold;
+}
+
+.cluster {
+  width: 8%;
+  color: #285e8e;
+  font-weight: bold;
+  text-align: right;
 }
 
 .record {
