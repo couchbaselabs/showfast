@@ -23,10 +23,10 @@
         </tr>
       </table>
       <table class="record">
-        <tr ng-repeat="(build, changes) in record.changes">
+        <tr ng-repeat="changes in record.changes">
           <td class="changes">
-            Changed from <span class="prev_build">{{build}}</span>:
-            <p class="change" ng-repeat="change in changes">{{change}}</p>
+            Changed from <span class="prev_build">{{changes[0]}}</span>:
+            <p class="change" ng-repeat="change in changes[1]">{{change}}</p>
           </td>
         </tr>
       </table>
