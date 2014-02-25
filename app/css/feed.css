@@ -22,6 +22,14 @@
   font-weight: bold;
 }
 
+.test_config {
+  color: #000;
+}
+
+a.test_config:hover {
+  color: #000;
+}
+
 .cluster {
   width: 8%;
   font-weight: bold;

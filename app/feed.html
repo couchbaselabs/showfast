@@ -18,9 +18,13 @@
         <tr>
           <td class="datetime">{{record.datetime}}</td>
           <td class="build">{{record.build}}</td>
-          <td class="summary">{{record.summary}}</td>
+          <td class="summary">
+            <a class="test_config" target="_blank" href="https://github.com/couchbaselabs/perfrunner/blob/master/tests/{{record.test_config}}.test">
+              {{record.summary}}
+            </a>
+          </td>
           <td class="cluster">
-            <a class="spec" target="_blank" href="https://github.com/couchbaselabs/perfrunner/blob/master/clusters/{{record.cluster}}.spec">
+            <a class="spec" target="_blank" href="https://raw.github.com/couchbaselabs/perfrunner/master/clusters/{{record.cluster}}.spec">
               {{record.cluster}}
             </a>
           </td>
