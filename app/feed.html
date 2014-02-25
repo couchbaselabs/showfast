@@ -23,9 +23,9 @@
         </tr>
       </table>
       <table class="record">
-        <tr ng-repeat="changes in record.changes">
+        <tr ng-repeat="(i, changes) in record.changes">
           <td class="changes">
-            Changed from <span class="prev_build">{{changes[0]}}</span>:
+            Changed from <a class="prev_build" target="_blank" href="{{record.reports[i][1]}}"> {{changes[0]}}</a>:
             <p class="change" ng-repeat="change in changes[1]">{{change}}</p>
           </td>
         </tr>

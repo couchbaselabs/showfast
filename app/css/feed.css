@@ -48,6 +48,11 @@
 
 .prev_build {
   font-weight: bold;
+  color: #777;
+}
+
+a.prev_build:hover {
+  color: #777;
 }
 
 .hr {
