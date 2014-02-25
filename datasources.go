@@ -307,6 +307,7 @@ func (ds *DataSource) GetAllFeedRecords() []byte {
 	b_feed := ds.GetBucket("feed")
 	params := map[string]interface{}{
 		"descending": true,
+		"limit":      100,
 	}
 	rows := ds.QueryView(b_feed, "feed", "all", params)
 
