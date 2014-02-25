@@ -24,9 +24,16 @@
 
 .cluster {
   width: 8%;
-  color: #285e8e;
   font-weight: bold;
   text-align: right;
+}
+
+.spec {
+  color: #285e8e;
+}
+
+a.spec:hover {
+  color: #285e8e;
 }
 
 .record {

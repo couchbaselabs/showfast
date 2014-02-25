@@ -19,13 +19,17 @@
           <td class="datetime">{{record.datetime}}</td>
           <td class="build">{{record.build}}</td>
           <td class="summary">{{record.summary}}</td>
-          <td class="cluster">{{record.cluster}}</td>
+          <td class="cluster">
+            <a class="spec" target="_blank" href="https://github.com/couchbaselabs/perfrunner/blob/master/clusters/{{record.cluster}}.spec">
+              {{record.cluster}}
+            </a>
+          </td>
         </tr>
       </table>
       <table class="record">
         <tr ng-repeat="(i, changes) in record.changes">
           <td class="changes">
-            Changed from <a class="prev_build" target="_blank" href="{{record.reports[i][1]}}"> {{changes[0]}}</a>:
+            Changed from <a class="prev_build" target="_blank" href="{{record.reports[i][1]}}">{{changes[0]}}</a>:
             <p class="change" ng-repeat="change in changes[1]">{{change}}</p>
           </td>
         </tr>
