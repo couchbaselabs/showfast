@@ -12,15 +12,25 @@
 <body ng-app ng-controller="Feed">
   <div class="masthead text-center">
     <h2>Performance feed</h2>
-    <hr class="hr">
-    <div ng-repeat="record in records">
+    <div ng-repeat="(id, record) in records">
+      <table class="feed" ng-if="records[id - 1].datetime.split(' ')[0] !== record.datetime.split(' ')[0]">
+        <tr>
+          <td class="date">
+            {{record.datetime.split(' ')[0]}}
+          </td>
+        </tr>
+      </table>
+      <hr class="hr">
       <table class="feed">
         <tr>
-          <td class="datetime">{{record.datetime}}</td>
+          <td class="datetime">{{record.datetime.split(" ")[1]}}</td>
           <td class="build">{{record.build}}</td>
           <td class="summary">
-            <a class="test_config" target="_blank" href="https://raw.github.com/couchbaselabs/perfrunner/master/tests/{{record.test_config}}.test">
               {{record.summary}}
+          </td>
+          <td class="test_config">
+            <a class="config" target="_blank" href="https://raw.github.com/couchbaselabs/perfrunner/master/tests/{{record.test_config}}.test">
+              {{record.test_config}}
             </a>
           </td>
           <td class="cluster">
@@ -38,7 +48,6 @@
           </td>
         </tr>
       </table>
-      <hr class="hr">
     </div>
   </div>
 </body>
