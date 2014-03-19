@@ -137,3 +137,8 @@ hr {
     color: #f89406;
     font-weight: bold;
 }
+
+.links {
+    font-size: 93%;
+    margin-bottom: -20px;
+}
