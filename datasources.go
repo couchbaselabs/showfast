@@ -34,7 +34,7 @@ var ddocs = map[string]string{
 				"map": "function (doc, meta) {if (!doc.obsolete) {emit([doc.metric, doc.build], doc.value);}}"
 			},
 			"value_and_snapshots_by_build_and_metric": {
-				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.snapshots]);}"
+				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.snapshots, doc.master_events]);}"
 			},
 			"value_and_obsolete_by_build_and_metric": {
 				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.obsolete == true]);}"
@@ -146,10 +146,17 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 
 	benchmarks := []map[string]interface{}{}
 	for i, row := range rows {
+		var master_events string
+		if str, ok := row.Value.([]interface{})[2].(string); ok {
+			master_events = str
+		} else {
+			master_events = ""
+		}
 		benchmark := map[string]interface{}{
-			"seq":       strconv.Itoa(i + 1),
-			"value":     strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
-			"snapshots": row.Value.([]interface{})[1],
+			"seq":           strconv.Itoa(i + 1),
+			"value":         strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
+			"snapshots":     row.Value.([]interface{})[1],
+			"master_events": master_events,
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}

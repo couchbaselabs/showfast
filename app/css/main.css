@@ -75,27 +75,32 @@ hr {
 }
 
 .t-all-runs {
-    width: 50%;
-    margin-left: 25%;
+    width: 80%;
+    margin-left: 10%;
 }
 
 .t-seq {
-    width: 10%;
+    width: 4%;
     text-align: center;
 }
 
 .t-value {
     text-align: center;
-    width: 30%;
+    width: 24%;
 }
 
 .t-report {
-    width: 25%;
+    width: 24%;
+    text-align: center;
+}
+
+.t-moves {
+    width: 24%;
     text-align: center;
 }
 
 .t-corr {
-    width: 35%;
+    width: 24%;
     text-align: center;
 }
 

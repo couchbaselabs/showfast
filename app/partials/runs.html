@@ -5,6 +5,7 @@
 			<th class="t-data t-seq">#</th>
 			<th class="t-data t-value">Value</th>
 			<th class="t-data t-report">HTML reports</th>
+			<th class="t-data t-report">Rebalance flows</th>
 			<th class="t-data t-report">Correlation matrices</th>
 		</tr>
 		<tr ng-repeat="run in runs">
@@ -15,6 +16,13 @@
 					 href="http://cbmonitor.sc.couchbase.com/reports/html/?snapshot={{snapshot}}"
 					 target="_blank">
 					<i class="icon-file"></i>
+				</a>
+			</td>
+			<td class="t-data t-moves">
+				<a ng-if="run.master_events"
+					 href="http://cbmonitor.sc.couchbase.com/reports/movements/?filename={{run.master_events}}"
+					 target="_blank">
+					<i class="icon-align-left"></i>
 				</a>
 			</td>
 			<td class="t-data t-corr">
