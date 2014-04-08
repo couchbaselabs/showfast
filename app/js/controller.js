@@ -47,11 +47,33 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}];
 
+		$scope.reb_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "empty", "title": "Empty"
+		}, {
+			"id": "kv", "title": "KV"
+		}, {
+			"id": "views", "title": "Views"
+		}, {
+			"id": "xdcr", "title": "XDCR"
+		}, {
+			"id": "failover", "title": "Failover"
+		}, {
+			"id": "failover_views", "title": "Failover+Views"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
+		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
 			$.cookie("selectedCategory", value);
+		};
+
+		$scope.setSelectedRebCategory = function (value) {
+			$scope.selectedRebCategory = value;
+			$.cookie("selectedRebCategory", value);
 		};
 
 		$scope.byCategory = function(entry) {
@@ -61,10 +83,66 @@ function MetricList($scope, $http) {
 			switch(selectedCategory) {
 				case "all":
 					return true;
+				case "reb":
+					if (entryCategory === selectedCategory) {
+						return byRebCategory(entry);
+					}
+					break;
 				case entryCategory:
 					return true;
 				default:
 					return false;
+			}
+			return false;
+		};
+
+		var byRebCategory = function(entry) {
+			var selectedRebCategory = $scope.selectedRebCategory;
+
+			if (selectedRebCategory === "all") {
+				return true;
+			} else {
+				switch(selectedRebCategory) {
+					case "failover_views":
+						if (entry.id.indexOf("failover") !== -1 &&
+								entry.id.indexOf("views") !== -1) {
+							return true;
+						}
+						break;
+					case "failover":
+						if (entry.id.indexOf("failover") !== -1 &&
+								entry.id.indexOf("views") === -1) {
+							return true;
+						}
+						break;
+					case "empty":
+						if (entry.id.indexOf("0_kv_") !== -1) {
+							return true;
+						}
+						break;
+					case "views":
+						if (entry.id.indexOf("views") !== -1 &&
+								entry.id.indexOf("failover") === -1) {
+							return true;
+						}
+						break;
+					case "xdcr":
+						if (entry.id.indexOf("xdcr") !== -1) {
+							return true;
+						}
+						break;
+					case "kv":
+						if (entry.id.indexOf("0_kv_") === -1 &&
+								entry.id.indexOf("views") === -1 &&
+								entry.id.indexOf("failover") === -1 &&
+								entry.id.indexOf("xdcr") === -1) {
+							return true;
+						}
+						break;
+					default:
+						return false;
+				}
+				return false;
 			}
 		};
 
@@ -87,7 +165,7 @@ function MetricList($scope, $http) {
 				case "Windows":
 					return entryOS.substring(0, 7) === "Windows";
 				case "Linux":
-					return !(entryOS.substring(0, 7) === "Windows");
+					return entryOS.substring(0, 7) !== "Windows";
 			}
 		};
 

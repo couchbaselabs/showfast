@@ -8,7 +8,7 @@
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button
 			ng-repeat="category in categories"
-			ng-class="{active: category.id == selectedCategory}"
+			ng-class="{active: category.id === selectedCategory}"
 			ng-click="setSelectedCategory(category.id)"
 			class="btn btn-success">{{category.title}}</button>
 	</div>
@@ -20,6 +20,17 @@
 			class="btn btn-warning">{{os}}</button>
 	</div>
 </div>
+
+<div class="text-center" ng-if="selectedCategory === 'reb'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in reb_categories"
+			ng-class="{active: category.id === selectedRebCategory}"
+			ng-click="setSelectedRebCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
 <div class="masthead metric" id="cont_{{metric.id}}"
 		ng-repeat="metric in metrics | filter:byCategory | filter:byOS">
 	<hr/>
