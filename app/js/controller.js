@@ -63,8 +63,17 @@ function MetricList($scope, $http) {
 			"id": "failover_views", "title": "Failover+Views"
 		}];
 
+		$scope.idx_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "init", "title": "Initial"
+		}, {
+			"id": "incr", "title": "Incremental"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
+		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -76,6 +85,11 @@ function MetricList($scope, $http) {
 			$.cookie("selectedRebCategory", value);
 		};
 
+		$scope.setSelectedIdxCategory = function (value) {
+			$scope.selectedIdxCategory = value;
+			$.cookie("selectedIdxCategory", value);
+		};
+
 		$scope.byCategory = function(entry) {
 			var selectedCategory = $scope.selectedCategory,
 				entryCategory = entry.id.substring(0, selectedCategory.length);
@@ -83,6 +97,11 @@ function MetricList($scope, $http) {
 			switch(selectedCategory) {
 				case "all":
 					return true;
+				case "index":
+					if (entryCategory === selectedCategory) {
+						return byIdxCategory(entry);
+					}
+					break;
 				case "reb":
 					if (entryCategory === selectedCategory) {
 						return byRebCategory(entry);
@@ -94,6 +113,20 @@ function MetricList($scope, $http) {
 					return false;
 			}
 			return false;
+		};
+
+		var byIdxCategory = function(entry) {
+			var selectedIdxCategory = $scope.selectedIdxCategory;
+
+			if (selectedIdxCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedIdxCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
 		};
 
 		var byRebCategory = function(entry) {
