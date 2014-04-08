@@ -71,9 +71,18 @@ function MetricList($scope, $http) {
 			"id": "incr", "title": "Incremental"
 		}];
 
+		$scope.xdcr_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "ongoing", "title": "Ongoing"
+		}, {
+			"id": "init", "title": "Initial"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
+		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -88,6 +97,11 @@ function MetricList($scope, $http) {
 		$scope.setSelectedIdxCategory = function (value) {
 			$scope.selectedIdxCategory = value;
 			$.cookie("selectedIdxCategory", value);
+		};
+
+		$scope.setSelectedXdcrCategory = function (value) {
+			$scope.selectedXdcrCategory = value;
+			$.cookie("selectedXdcrCategory", value);
 		};
 
 		$scope.byCategory = function(entry) {
@@ -107,12 +121,16 @@ function MetricList($scope, $http) {
 						return byRebCategory(entry);
 					}
 					break;
+				case "xdcr":
+					if (entryCategory === selectedCategory) {
+						return byXdcrCategory(entry);
+					}
+					break;
 				case entryCategory:
 					return true;
 				default:
 					return false;
 			}
-			return false;
 		};
 
 		var byIdxCategory = function(entry) {
@@ -175,7 +193,27 @@ function MetricList($scope, $http) {
 					default:
 						return false;
 				}
-				return false;
+			}
+		};
+
+		var byXdcrCategory = function(entry) {
+			var selectedXdcrCategory = $scope.selectedXdcrCategory;
+
+			switch(selectedXdcrCategory) {
+					case "all":
+						return true;
+					case "init":
+						if (entry.id.indexOf("init") !== -1) {
+							return true;
+						}
+						break;
+					case "ongoing":
+						if (entry.id.indexOf("init") === -1) {
+							return true;
+						}
+						break;
+					default:
+						return false;
 			}
 		};
 
