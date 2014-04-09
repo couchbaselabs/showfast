@@ -20,6 +20,25 @@ function MetricList($scope, $http) {
 					.ends('Name', $scope.metrics[i].cluster)
 					.select()[0];
 			}
+
+			$scope.oses = ["All", "Windows", "Linux"];
+			$scope.selectedOS = $.cookie("selectedOS") || "All";
+			$scope.setSelectedOS = function (value) {
+				$scope.selectedOS = value;
+				$.cookie("selectedOS", value);
+			};
+			$scope.byOS = function(entry) {
+				var entryOS = entry.cluster.OS,
+					selectedOS = $scope.selectedOS;
+				switch(selectedOS) {
+					case "All":
+						return true;
+					case "Windows":
+						return entryOS.substring(0, 7) === "Windows";
+					case "Linux":
+						return entryOS.substring(0, 7) !== "Windows";
+				}
+			};
 		});
 
 		$http.get('/all_timelines').success(function(data) {
@@ -249,29 +268,6 @@ function MetricList($scope, $http) {
 				} else {
 					return false;
 				}
-			}
-		};
-
-		$scope.oses = ["All", "Windows", "Linux"];
-
-		$scope.selectedOS = $.cookie("selectedOS") || "All";
-
-		$scope.setSelectedOS = function (value) {
-			$scope.selectedOS = value;
-			$.cookie("selectedOS", value);
-		};
-
-		$scope.byOS = function(entry) {
-			var entryOS = entry.cluster.OS,
-				selectedOS = $scope.selectedOS;
-
-			switch(selectedOS) {
-				case "All":
-					return true;
-				case "Windows":
-					return entryOS.substring(0, 7) === "Windows";
-				case "Linux":
-					return entryOS.substring(0, 7) !== "Windows";
 			}
 		};
 
