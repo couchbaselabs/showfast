@@ -51,8 +51,6 @@ function MetricList($scope, $http) {
 		$scope.categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "comp", "title": "Compaction"
-		}, {
 			"id": "beam", "title": "beam.smp"
 		}, {
 			"id": "index", "title": "Indexing"
