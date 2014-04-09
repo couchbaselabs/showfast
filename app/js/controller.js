@@ -106,11 +106,28 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}];
 
+		$scope.kv_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "latency", "title": "Latency"
+		}, {
+			"id": "observe", "title": "Observe"
+		}, {
+			"id": "warmup", "title": "Warmup"
+		}, {
+			"id": "fragmentation", "title": "Fragmentation"
+		}, {
+			"id": "bgfetcher", "title": "BgFetcher"
+		}, {
+			"id": "drain", "title": "Flusher"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
 		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || "all";
 		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
+		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -137,6 +154,11 @@ function MetricList($scope, $http) {
 			$.cookie("selectedBeamCategory", value);
 		};
 
+		$scope.setSelectedKVCategory = function (value) {
+			$scope.selectedKVCategory = value;
+			$.cookie("selectedKVCategory", value);
+		};
+
 		$scope.byCategory = function(entry) {
 			var selectedCategory = $scope.selectedCategory,
 				entryCategory = entry.id.substring(0, selectedCategory.length);
@@ -157,6 +179,11 @@ function MetricList($scope, $http) {
 				case "reb":
 					if (entryCategory === selectedCategory) {
 						return byRebCategory(entry);
+					}
+					break;
+				case "kv":
+					if (entryCategory === selectedCategory) {
+						return byKVCategory(entry);
 					}
 					break;
 				case "xdcr":
@@ -262,6 +289,20 @@ function MetricList($scope, $http) {
 				return true;
 			} else {
 				if (entry.id.indexOf(selectedBeamCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+
+		var byKVCategory = function(entry) {
+			var selectedKVCategory = $scope.selectedKVCategory;
+
+			if (selectedKVCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedKVCategory) !== -1) {
 					return true;
 				} else {
 					return false;

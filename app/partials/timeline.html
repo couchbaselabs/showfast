@@ -51,6 +51,16 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'kv'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in kv_categories"
+			ng-class="{active: category.id === selectedKVCategory}"
+			ng-click="setSelectedKVCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
 <div class="text-center" ng-if="selectedCategory === 'xdcr'">
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button
