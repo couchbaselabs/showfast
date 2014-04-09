@@ -61,6 +61,16 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'query'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in query_categories"
+			ng-class="{active: category.id === selectedQueryCategory}"
+			ng-click="setSelectedQueryCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
 <div class="text-center" ng-if="selectedCategory === 'xdcr'">
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button

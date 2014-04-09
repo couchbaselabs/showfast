@@ -53,13 +53,13 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "beam", "title": "beam.smp"
 		}, {
-			"id": "index", "title": "Indexing"
+			"id": "kv", "title": "KV"
 		}, {
 			"id": "reb", "title": "Rebalance"
 		}, {
-			"id": "kv", "title": "KV"
+			"id": "index", "title": "View Indexing"
 		}, {
-			"id": "query", "title": "Query"
+			"id": "query", "title": "View Query"
 		}, {
 			"id": "xdcr", "title": "XDCR"
 		}];
@@ -122,12 +122,21 @@ function MetricList($scope, $http) {
 			"id": "drain", "title": "Flusher"
 		}];
 
+		$scope.query_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "lat", "title": "Latency"
+		}, {
+			"id": "thr", "title": "Throughput"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
 		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || "all";
 		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
 		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
+		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -159,6 +168,11 @@ function MetricList($scope, $http) {
 			$.cookie("selectedKVCategory", value);
 		};
 
+		$scope.setSelectedQueryCategory = function (value) {
+			$scope.selectedQueryCategory = value;
+			$.cookie("selectedQueryCategory", value);
+		};
+
 		$scope.byCategory = function(entry) {
 			var selectedCategory = $scope.selectedCategory,
 				entryCategory = entry.id.substring(0, selectedCategory.length);
@@ -184,6 +198,11 @@ function MetricList($scope, $http) {
 				case "kv":
 					if (entryCategory === selectedCategory) {
 						return byKVCategory(entry);
+					}
+					break;
+				case "query":
+					if (entryCategory === selectedCategory) {
+						return byQueryCategory(entry);
 					}
 					break;
 				case "xdcr":
@@ -303,6 +322,20 @@ function MetricList($scope, $http) {
 				return true;
 			} else {
 				if (entry.id.indexOf(selectedKVCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+
+		var byQueryCategory = function(entry) {
+			var selectedQueryCategory = $scope.selectedQueryCategory;
+
+			if (selectedQueryCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedQueryCategory) !== -1) {
 					return true;
 				} else {
 					return false;
