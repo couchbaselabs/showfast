@@ -79,10 +79,21 @@ function MetricList($scope, $http) {
 			"id": "init", "title": "Initial"
 		}];
 
+		$scope.beam_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "kv", "title": "KV"
+		}, {
+			"id": "query", "title": "Views"
+		}, {
+			"id": "xdcr", "title": "XDCR"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
 		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || "all";
+		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -104,6 +115,11 @@ function MetricList($scope, $http) {
 			$.cookie("selectedXdcrCategory", value);
 		};
 
+		$scope.setSelectedBeamCategory = function (value) {
+			$scope.selectedBeamCategory = value;
+			$.cookie("selectedBeamCategory", value);
+		};
+
 		$scope.byCategory = function(entry) {
 			var selectedCategory = $scope.selectedCategory,
 				entryCategory = entry.id.substring(0, selectedCategory.length);
@@ -114,6 +130,11 @@ function MetricList($scope, $http) {
 				case "index":
 					if (entryCategory === selectedCategory) {
 						return byIdxCategory(entry);
+					}
+					break;
+				case "beam":
+					if (entryCategory === selectedCategory) {
+						return byBeamCategory(entry);
 					}
 					break;
 				case "reb":
@@ -214,6 +235,20 @@ function MetricList($scope, $http) {
 						break;
 					default:
 						return false;
+			}
+		};
+
+		var byBeamCategory = function(entry) {
+			var selectedBeamCategory = $scope.selectedBeamCategory;
+
+			if (selectedBeamCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedBeamCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		};
 

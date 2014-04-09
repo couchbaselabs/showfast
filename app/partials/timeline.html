@@ -21,6 +21,16 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'beam'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in beam_categories"
+			ng-class="{active: category.id === selectedBeamCategory}"
+			ng-click="setSelectedBeamCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
 <div class="text-center" ng-if="selectedCategory === 'index'">
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button
