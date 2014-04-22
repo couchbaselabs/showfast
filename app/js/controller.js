@@ -125,6 +125,8 @@ function MetricList($scope, $http) {
 		$scope.query_categories = [{
 			"id": "all", "title": "All"
 		}, {
+			"id": "dev", "title": "By Query Type"
+		}, {
 			"id": "lat", "title": "Latency"
 		}, {
 			"id": "thr", "title": "Throughput"
