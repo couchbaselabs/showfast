@@ -2,6 +2,10 @@ a, a:hover, a:visited {
 	color: #333;
 }
 
+.container {
+    width: 95%;
+}
+
 .column-chart {
     height: 100px;
 }
