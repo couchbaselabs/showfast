@@ -62,6 +62,8 @@ function MetricList($scope, $http) {
 			"id": "query", "title": "View Query"
 		}, {
 			"id": "xdcr", "title": "XDCR"
+		}, {
+			"id": "gateway", "title": "Sync Gateway"
 		}];
 
 		$scope.reb_categories = [{
