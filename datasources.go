@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -115,6 +116,26 @@ func (ds *DataSource) GetAllClusters() []byte {
 	return j
 }
 
+type ByBuild [][]interface{}
+
+func (b ByBuild) Len() int {
+	return len(b)
+}
+
+func (b ByBuild) Swap(i, j int) {
+	b[i], b[j] = b[j], b[i]
+}
+
+func (b ByBuild) Less(i, j int) bool {
+	build_i := strings.Split(b[i][0].(string), "-")
+	build_j := strings.Split(b[j][0].(string), "-")
+	if build_i[0] == build_j[0] {
+		return build_i[1] < build_j[1]
+	} else {
+		return build_i[0] < build_j[0]
+	}
+}
+
 func (ds *DataSource) GetAllTimelines() []byte {
 	b_benchmarks := ds.GetBucket("benchmarks")
 	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
@@ -132,6 +153,10 @@ func (ds *DataSource) GetAllTimelines() []byte {
 			timelines[metric.(string)] = [][]interface{}{[]interface{}{build, value}}
 		}
 	}
+	for _, timeline := range timelines {
+		sort.Sort(ByBuild(timeline))
+	}
+
 	j, _ := json.Marshal(timelines)
 	return j
 }
