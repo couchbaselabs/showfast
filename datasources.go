@@ -130,7 +130,9 @@ func (b ByBuild) Less(i, j int) bool {
 	build_i := strings.Split(b[i][0].(string), "-")
 	build_j := strings.Split(b[j][0].(string), "-")
 	if build_i[0] == build_j[0] {
-		return build_i[1] < build_j[1]
+		int_i, _ := strconv.ParseInt(build_i[1], 10, 16)
+		int_j, _ := strconv.ParseInt(build_j[1], 10, 16)
+		return int_i < int_j
 	} else {
 		return build_i[0] < build_j[0]
 	}
