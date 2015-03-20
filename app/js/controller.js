@@ -153,6 +153,7 @@ function MetricList($scope, $http) {
 		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
 		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
 		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
+		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
