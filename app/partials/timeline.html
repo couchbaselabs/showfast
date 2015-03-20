@@ -71,6 +71,16 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'n1ql'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in n1ql_categories"
+			ng-class="{active: category.id === selectedN1QLCategory}"
+			ng-click="setSelectedN1QLCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
 <div class="text-center" ng-if="selectedCategory === 'xdcr'">
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button
