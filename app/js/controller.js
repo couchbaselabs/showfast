@@ -61,6 +61,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "query", "title": "View Query"
 		}, {
+			"id": "xdcr", "title": "N1QL"
+		}, {
 			"id": "xdcr", "title": "XDCR"
 		}, {
 			"id": "gateway", "title": "Sync Gateway"
@@ -90,6 +92,16 @@ function MetricList($scope, $http) {
 			"id": "incr", "title": "Incremental"
 		}];
 
+		$scope.n1ql_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "n1qllattype", "title": "Latency by Query Type"
+		}, {
+			"id": "n1qllatwl", "title": "Latency by Query Workload"
+		}, {
+			"id": "n1qlthr", "title": "Throughput"
+		}];
+		
 		$scope.xdcr_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -176,6 +188,11 @@ function MetricList($scope, $http) {
 			$scope.selectedQueryCategory = value;
 			$.cookie("selectedQueryCategory", value);
 		};
+		
+		$scope.setSelectedN1QLCategory = function (value) {
+			$scope.selectedN1QLCategory = value;
+			$.cookie("selectedN1QLCategory", value);
+		};
 
 		$scope.byCategory = function(entry) {
 			var selectedCategory = $scope.selectedCategory,
@@ -207,6 +224,11 @@ function MetricList($scope, $http) {
 				case "query":
 					if (entryCategory === selectedCategory) {
 						return byQueryCategory(entry);
+					}
+					break;
+				case "n1ql":
+					if (entryCategory === selectedCategory) {
+						return byN1QLCategory(entry);
 					}
 					break;
 				case "xdcr":
@@ -340,6 +362,19 @@ function MetricList($scope, $http) {
 				return true;
 			} else {
 				if (entry.id.indexOf(selectedQueryCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+		var byN1QLCategory = function(entry) {
+			var selectedN1QLCategory = $scope.selectedN1QLCategory;
+
+			if (selectedN1QLCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedN1QLCategory) !== -1) {
 					return true;
 				} else {
 					return false;
