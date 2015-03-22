@@ -61,6 +61,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "query", "title": "View Query"
 		}, {
+			"id": "n1ql", "title": "N1QL"
+		}, {
 			"id": "xdcr", "title": "XDCR"
 		}, {
 			"id": "gateway", "title": "Sync Gateway"
@@ -90,6 +92,16 @@ function MetricList($scope, $http) {
 			"id": "incr", "title": "Incremental"
 		}];
 
+		$scope.n1ql_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "lattype", "title": "Latency by Query Type"
+		}, {
+			"id": "latwl", "title": "Latency by Query Workload"
+		}, {
+			"id": "thr", "title": "Throughput"
+		}];
+		
 		$scope.xdcr_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -141,6 +153,7 @@ function MetricList($scope, $http) {
 		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
 		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
 		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
+		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -177,6 +190,11 @@ function MetricList($scope, $http) {
 			$.cookie("selectedQueryCategory", value);
 		};
 
+                $scope.setSelectedN1QLCategory = function (value) {
+			$scope.selectedN1QLCategory = value;
+			$.cookie("selectedN1QLCategory", value);
+		};
+
 		$scope.byCategory = function(entry) {
 			var selectedCategory = $scope.selectedCategory,
 				entryCategory = entry.id.substring(0, selectedCategory.length);
@@ -207,6 +225,11 @@ function MetricList($scope, $http) {
 				case "query":
 					if (entryCategory === selectedCategory) {
 						return byQueryCategory(entry);
+					}
+					break;
+				case "n1ql":
+					if (entryCategory === selectedCategory) {
+						return byN1QLCategory(entry);
 					}
 					break;
 				case "xdcr":
@@ -304,6 +327,34 @@ function MetricList($scope, $http) {
 						return false;
 			}
 		};
+		
+		var byN1QLCategory = function(entry) {
+			var selectedN1QLCategory = $scope.selectedN1QLCategory;
+
+			switch(selectedN1QLCategory) {
+					case "all":
+						return true;
+					case "dev":
+						if (entry.id.indexOf("init") !== -1) {
+							return true;
+						}
+						break;
+					case "latwl":
+						if (entry.id.indexOf("init") === -1) {
+							return true;
+						}
+						break;
+					case "thr":
+						if (entry.id.indexOf("init") === -1) {
+							return true;
+						}
+						break;
+					default:
+						return false;
+			}
+		};
+		
+		
 
 		var byBeamCategory = function(entry) {
 			var selectedBeamCategory = $scope.selectedBeamCategory;
