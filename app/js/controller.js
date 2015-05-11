@@ -44,7 +44,7 @@ function MetricList($scope, $http) {
 		$http.get('/all_timelines').success(function(data) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
 				var id = $scope.metrics[i].id;
-				$scope.metrics[i].chartData = [{"values": data[id]}];
+				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
 			}
 		});
 
@@ -428,7 +428,7 @@ function MetricList($scope, $http) {
 
 		$scope.$on('barClick', function(event, data) {
 			var build = data.point[0],
-				metric = event.targetScope.id.substring(6),
+				metric = data.series.key,
 				a = $("#run_"  + metric);
 			a.attr("href", "/#/runs/" + metric + "/" + build);
 			a[0].click();

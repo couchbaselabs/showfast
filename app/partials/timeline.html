@@ -118,7 +118,7 @@
 	<div class="column-chart" id="chart_{{metric.id}}">
 		<nvd3-discrete-bar-chart
 			data="metric.chartData"
-			id="chart_{{metric.id}}"
+			id="chart_{{$index}}"
 			margin="{left: 50, top: 5, bottom: 15, right: 0}"
 			color="['#50aa43']"
 			showXAxis="true"
