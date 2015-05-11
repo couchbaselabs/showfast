@@ -44,7 +44,7 @@ function MetricList($scope, $http) {
 		$http.get('/all_timelines').success(function(data) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
 				var id = $scope.metrics[i].id;
-				$scope.metrics[i].chartData = [{"values": data[id]}];
+				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
 			}
 		});
 
@@ -60,6 +60,10 @@ function MetricList($scope, $http) {
 			"id": "index", "title": "View Indexing"
 		}, {
 			"id": "query", "title": "View Query"
+		}, {
+			"id": "n1ql", "title": "N1QL"
+		}, {
+			"id": "secondary", "title": "Sec. Index"
 		}, {
 			"id": "xdcr", "title": "XDCR"
 		}, {
@@ -90,6 +94,24 @@ function MetricList($scope, $http) {
 			"id": "incr", "title": "Incremental"
 		}];
 
+		$scope.secondary_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "init", "title": "Initial"
+		}, {
+			"id": "incr", "title": "Incremental"
+		}];
+		
+                $scope.n1ql_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "dev", "title": "Latency by Query Type"
+		}, {
+			"id": "wl", "title": "Latency by Query Workload"
+		}, {
+			"id": "thr", "title": "Throughput"
+		}];
+		
 		$scope.xdcr_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -141,6 +163,8 @@ function MetricList($scope, $http) {
 		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
 		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
 		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
+		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
+		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -176,6 +200,16 @@ function MetricList($scope, $http) {
 			$scope.selectedQueryCategory = value;
 			$.cookie("selectedQueryCategory", value);
 		};
+		
+                $scope.setSelectedSecondaryCategory = function (value) {
+			$scope.selectedSecondaryCategory = value;
+			$.cookie("selectedSecondaryCategory", value);
+		};
+		
+		$scope.setSelectedN1QLCategory = function (value) {
+			$scope.selectedN1QLCategory = value;
+			$.cookie("selectedN1QLCategory", value);
+		};
 
 		$scope.byCategory = function(entry) {
 			var selectedCategory = $scope.selectedCategory,
@@ -187,6 +221,11 @@ function MetricList($scope, $http) {
 				case "index":
 					if (entryCategory === selectedCategory) {
 						return byIdxCategory(entry);
+					}
+					break;
+				case "secondary":
+					if (entryCategory === selectedCategory) {
+						return bySecondaryCategory(entry);
 					}
 					break;
 				case "beam":
@@ -209,6 +248,11 @@ function MetricList($scope, $http) {
 						return byQueryCategory(entry);
 					}
 					break;
+				case "n1ql":
+					if (entryCategory === selectedCategory) {
+						return byN1QLCategory(entry);
+					}
+					break;
 				case "xdcr":
 					if (entryCategory === selectedCategory) {
 						return byXdcrCategory(entry);
@@ -228,6 +272,20 @@ function MetricList($scope, $http) {
 				return true;
 			} else {
 				if (entry.id.indexOf(selectedIdxCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+		
+                var bySecondaryCategory = function(entry) {
+			var selectedSecondaryCategory = $scope.selectedSecondaryCategory;
+
+			if (selectedSecondaryCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedSecondaryCategory) !== -1) {
 					return true;
 				} else {
 					return false;
@@ -346,6 +404,20 @@ function MetricList($scope, $http) {
 				}
 			}
 		};
+		
+                var byN1QLCategory = function(entry) {
+			var selectedN1QLCategory = $scope.selectedN1QLCategory;
+
+                        if (selectedN1QLCategory === "all") {
+                                return true;
+                        } else {
+                                if (entry.id.indexOf(selectedN1QLCategory) !== -1) {
+                                      return true;
+                                } else {
+                                      return false;
+                                }
+                        }
+		};
 
 		var format = d3.format(',');
 		$scope.valueFormatFunction = function(){
@@ -356,7 +428,7 @@ function MetricList($scope, $http) {
 
 		$scope.$on('barClick', function(event, data) {
 			var build = data.point[0],
-				metric = event.targetScope.id.substring(6),
+				metric = data.series.key,
 				a = $("#run_"  + metric);
 			a.attr("href", "/#/runs/" + metric + "/" + build);
 			a[0].click();

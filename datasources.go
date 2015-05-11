@@ -89,7 +89,6 @@ func (ds *DataSource) installDDoc(ddoc string) {
 func (ds *DataSource) GetAllMetrics() []byte {
 	b_metrics := ds.GetBucket("metrics")
 	rows := ds.QueryView(b_metrics, "metrics", "all", map[string]interface{}{})
-
 	metrics := []map[string]interface{}{}
 	for i := range rows {
 		metric := rows[i].Value.(map[string]interface{})
