@@ -41,6 +41,16 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'secondary'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in secondary_categories"
+			ng-class="{active: category.id === selectedSecondaryCategory}"
+			ng-click="setSelectedSecondaryCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
 <div class="text-center" ng-if="selectedCategory === 'reb'">
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button
