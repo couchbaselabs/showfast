@@ -45,6 +45,7 @@ function MetricList($scope, $http) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
 				var id = $scope.metrics[i].id;
 				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
+                $scope.metrics[i].link = id.replace(".", "_");
 			}
 		});
 
@@ -429,7 +430,7 @@ function MetricList($scope, $http) {
 		$scope.$on('barClick', function(event, data) {
 			var build = data.point[0],
 				metric = data.series.key,
-				a = $("#run_"  + metric);
+				a = $("#run_"  + metric.replace(".", "_"));
 			a.attr("href", "/#/runs/" + metric + "/" + build);
 			a[0].click();
 		});
