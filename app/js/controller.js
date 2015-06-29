@@ -47,7 +47,6 @@ function MetricList($scope, $http) {
 				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
 			}
 		});
-                $scope.metrics[i].link = id.replace(".", "_");
 
 		$scope.categories = [{
 			"id": "all", "title": "All"
@@ -113,22 +112,20 @@ function MetricList($scope, $http) {
 			"id": "wl", "title": "Latency by Query Workload"
 		}, {
 			"id": "thr", "title": "Throughput"
-		}, {
-			"id": "reb", "title": "Rebalancet"
 		}];
 		
-		$scope.spatial_categories = [{
+                $scope.spatial_categories = [{
 			"id": "all", "title": "All"
 		}, {
 			"id": "index", "title": "Index Creation"
 		}, {
 			"id": "lat", "title": "Latency"
 		}, {
-			"id": "thr", "title": "Throughput:
+			"id": "thr", "title": "Throughput"
 		}, {
 			"id": "reb", "title": "Rebalance"
 		}];
-
+		
 		$scope.xdcr_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -162,7 +159,7 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "drain", "title": "Flusher"
 		}, {
-			"id": "max_ops", "title": "Max Throughput"
+			"id": "maxx_ops", "title": "Max Throughput"
 		}];
 
 		$scope.query_categories = [{
@@ -184,7 +181,7 @@ function MetricList($scope, $http) {
 		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
 		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
 		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
-		$scope.selectedSpatialCategory = $.cookie("selectedSpecialCategory") || "all";
+		$scope.selectedSpatialCategory = $.cookie("selectedSpatialCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -273,14 +270,14 @@ function MetricList($scope, $http) {
 						return byQueryCategory(entry);
 					}
 					break;
-				case "n1ql":
-					if (entryCategory === selectedCategory) {
-						return byN1QLCategory(entry);
-					}
-					break;
 				case "spatial":
 					if (entryCategory === selectedCategory) {
 						return bySpatialCategory(entry);
+					}
+					break;
+				case "n1ql":
+					if (entryCategory === selectedCategory) {
+						return byN1QLCategory(entry);
 					}
 					break;
 				case "xdcr":
@@ -435,20 +432,6 @@ function MetricList($scope, $http) {
 			}
 		};
 		
-		var bySpatialCategory = function(entry) {
-			var selectedSpatialCategory = $scope.selectedSpatialCategory;
-
-			if (selectedSpatialCategory === "all") {
-				return true;
-			} else {
-				if (entry.id.indexOf(selectedSpatialCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		};
-		
                 var byN1QLCategory = function(entry) {
 			var selectedN1QLCategory = $scope.selectedN1QLCategory;
 
@@ -463,20 +446,6 @@ function MetricList($scope, $http) {
                         }
 		};
 
-                var byN1QLCategory = function(entry) {
-			var selectedN1QLCategory = $scope.selectedN1QLCategory;
-
-                        if (selectedN1QLCategory === "all") {
-                                return true;
-                        } else {
-                                if (entry.id.indexOf(selectedN1QLCategory) !== -1) {
-                                      return true;
-                                } else {
-                                      return false;
-                                }
-                        }
-		};
-                
                 var bySpatialCategory = function(entry) {
 			var selectedSpatialCategory = $scope.selectedSpatialCategory;
 
@@ -491,7 +460,6 @@ function MetricList($scope, $http) {
                         }
 		};
 
-
 		var format = d3.format(',');
 		$scope.valueFormatFunction = function(){
 			return function(d) {
@@ -501,90 +469,8 @@ function MetricList($scope, $http) {
 
 		$scope.$on('barClick', function(event, data) {
 			var build = data.point[0],
-				metric = event.targetScope.id.substring(6),
+				metric = data.series.key,
 				a = $("#run_"  + metric);
-			a.attr("href", "/#/runs/" + metric + "/" + build);
-			a[0].click();
-		});
-	});
-}
-
-function RunList($scope, $routeParams, $http) {
-	$http({method: 'GET', url: '/all_runs', params: $routeParams})
-	.success(function(data) {
-		$scope.runs = data;
-	});
-}
-
-function AdminList($scope, $http) {
-	$scope.deleteBenchmark = function(benchmark) {
-		$http({method: 'POST', url: '/delete', data: {id: benchmark.id}})
-		.success(function(data) {
-			var index = $scope.benchmarks.indexOf(benchmark);
-			$scope.benchmarks.splice(index, 1);
-		});
-	};
-
-	$scope.reverseObsolete = function(id) {
-		$http({method: 'POST', url: '/reverse_obsolete', data: {id: id}});
-	};
-
-	$http.get('/all_benchmarks').success(function(data) {
-		$scope.benchmarks = data;
-	});
-}
-
-function Feed($scope, $http) {
-	$http.get('/all_feed_records').success(function(data) {
-		$scope.records = data;
-	});
-}
-
-function GetComparison($scope, $http) {
-	var params = {
-		'baseline': $scope.selectedBaseline,
-		'target': $scope.selectedTarget
-	};
-	$http({method: 'GET', url: '/get_comparison', params: params})
-	.success(function(data) {
-		$scope.metrics = data;
-	});
-}
-
-function ReleaseList($scope, $http) {
-	$http.get('/all_releases').success(function(data) {
-		$scope.baselines = data;
-		$scope.targets = data;
-
-		$scope.selectedBaseline = $.cookie('selectedBaseline') || data[0];
-		$scope.selectedTarget = $.cookie('selectedTarget') || data[0];
-
-		$scope.setSelectedBaseline = function (value) {
-			$scope.selectedBaseline = value;
-			$.cookie('selectedBaseline', value, {expires: 60});
-			GetComparison($scope, $http);
-		};
-
-		$scope.setSelectedTarget = function (value) {
-			$scope.selectedTarget = value;
-			$.cookie('selectedTarget', value, {expires: 60});
-			GetComparison($scope, $http);
-		};
-
-		GetComparison($scope, $http);
-	});
-}
-		var format = d3.format(',');
-		$scope.valueFormatFunction = function(){
-			return function(d) {
-				return format(d);
-			};
-		};
-
-		$scope.$on('barClick', function(event, data) {
-			var build = data.point[0],
-				metric = data.series.key ,
-				a = $("#run_"  + metric.replace(".", "_"));
 			a.attr("href", "/#/runs/" + metric + "/" + build);
 			a[0].click();
 		});
