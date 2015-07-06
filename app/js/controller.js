@@ -112,6 +112,8 @@ function MetricList($scope, $http) {
 			"id": "wl", "title": "Latency by Query Workload"
 		}, {
 			"id": "thr", "title": "Throughput"
+		}, {
+			"id": "reb", "title": "Rebalance"
 		}];
 		
                 $scope.spatial_categories = [{
