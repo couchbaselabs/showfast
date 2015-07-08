@@ -115,7 +115,7 @@
 	<span class="muted"><strong>CPU: </strong>{{metric.cluster.CPU}}</span>
 	<span class="muted"><strong>Memory: </strong>{{metric.cluster.Memory}}</span>
 	<span class="muted"><strong>Disk: </strong>{{metric.cluster.Disk}}</span>
-	<div class="column-chart" id="chart_{{metric.id}}">
+	<div class="column-chart" id="chart_{{$metric.link}}">
 		<nvd3-discrete-bar-chart
 			data="metric.chartData"
 			id="chart_{{$index}}"
@@ -128,6 +128,6 @@
 			forceY="[0]"
 		><svg></svg></nvd3-line-chart>
 	</div>
-	<a id="run_{{metric.id}}"></a>
+	<a id="run_{{metric.link}}"></a>
 </div>
 <h3 class="text-center muted error_msg" ng-if="error">No data found</h3>
