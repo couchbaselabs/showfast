@@ -103,14 +103,14 @@ function MetricList($scope, $http) {
 			"id": "incr", "title": "Incremental"
 		}];
 		
-                $scope.n1ql_categories = [{
+        $scope.n1ql_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "dev", "title": "Latency by Query Type"
+			"id": "lat", "title": "Latency"
 		}, {
-			"id": "wl", "title": "Latency by Query Workload"
+            "id": "thr", "title": "Throughput"
 		}, {
-			"id": "thr", "title": "Throughput"
+            "id": "wl", "title": "Archive"
 		}];
 		
 		$scope.xdcr_categories = [{
@@ -406,11 +406,15 @@ function MetricList($scope, $http) {
 			}
 		};
 		
-                var byN1QLCategory = function(entry) {
+        var byN1QLCategory = function(entry) {
 			var selectedN1QLCategory = $scope.selectedN1QLCategory;
 
                         if (selectedN1QLCategory === "all") {
-                                return true;
+                                if (entry.id.indexOf("wl") == -1) {
+                                      return true;
+                                } else {
+                                      return false;
+                                }
                         } else {
                                 if (entry.id.indexOf(selectedN1QLCategory) !== -1) {
                                       return true;
