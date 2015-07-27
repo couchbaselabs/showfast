@@ -110,6 +110,8 @@ function MetricList($scope, $http) {
 		}, {
             "id": "thr", "title": "Throughput"
 		}, {
+            "id": "vs", "title": "CE vs. EE"
+		}, {
             "id": "wl", "title": "Archive"
 		}];
 		
