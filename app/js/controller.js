@@ -98,6 +98,10 @@ function MetricList($scope, $http) {
 		$scope.secondary_categories = [{
 			"id": "all", "title": "All"
 		}, {
+			"id": "lat", "title": "Latency"
+		}, {
+                        "id": "thr", "title": "Throughput"
+		}, {
 			"id": "init", "title": "Initial"
 		}, {
 			"id": "incr", "title": "Incremental"
