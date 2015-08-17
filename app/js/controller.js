@@ -116,6 +116,8 @@ function MetricList($scope, $http) {
 		}, {
             "id": "vs", "title": "CE vs. EE"
 		}, {
+            "id": "part", "title": "Partitioned"
+		}, {
             "id": "wl", "title": "Archive"
 		}];
 		
@@ -415,19 +417,29 @@ function MetricList($scope, $http) {
         var byN1QLCategory = function(entry) {
 			var selectedN1QLCategory = $scope.selectedN1QLCategory;
 
-                        if (selectedN1QLCategory === "all") {
-                                if (entry.id.indexOf("wl") == -1) {
-                                      return true;
-                                } else {
-                                      return false;
-                                }
-                        } else {
-                                if (entry.id.indexOf(selectedN1QLCategory) !== -1) {
-                                      return true;
-                                } else {
-                                      return false;
-                                }
-                        }
+            if (selectedN1QLCategory === "all") {
+                if (entry.id.indexOf("wl") == -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (selectedN1QLCategory === "part") {
+                if (entry.id.indexOf(selectedN1QLCategory) !== -1 ||
+                    entry.id.indexOf("thr_Q2") !== -1 ||
+                    entry.id.indexOf("thr_Q3") !== -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } else {
+                if (entry.id.indexOf(selectedN1QLCategory) !== -1 &&
+                    entry.id.indexOf("part") == -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 		};
 
 		var format = d3.format(',');
