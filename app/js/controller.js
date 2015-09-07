@@ -153,6 +153,8 @@ function MetricList($scope, $http) {
 			"id": "bgfetcher", "title": "BgFetcher"
 		}, {
 			"id": "drain", "title": "Flusher"
+		}, {
+			"id": "max_ops", "title": "Throughput"
 		}];
 
 		$scope.query_categories = [{
