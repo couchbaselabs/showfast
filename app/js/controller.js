@@ -119,7 +119,9 @@ function MetricList($scope, $http) {
                 $scope.spatial_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "index", "title": "Index Creation"
+			"id": "index", "title": "Index Init"
+		}, {
+			"id": "incr", "title": "Index Incr"
 		}, {
 			"id": "lat", "title": "Latency"
 		}, {

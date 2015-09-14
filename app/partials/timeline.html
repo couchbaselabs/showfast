@@ -41,16 +41,6 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'secondary'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
-			ng-repeat="category in secondary_categories"
-			ng-class="{active: category.id === selectedSecondaryCategory}"
-			ng-click="setSelectedSecondaryCategory(category.id)"
-			class="btn">{{category.title}}</button>
-	</div>
-</div>
-
 <div class="text-center" ng-if="selectedCategory === 'reb'">
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button
@@ -77,36 +67,6 @@
 			ng-repeat="category in query_categories"
 			ng-class="{active: category.id === selectedQueryCategory}"
 			ng-click="setSelectedQueryCategory(category.id)"
-			class="btn">{{category.title}}</button>
-	</div>
-</div>
-
-<div class="text-center" ng-if="selectedCategory === 'spatial'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
-			ng-repeat="category in spatial_categories"
-			ng-class="{active: category.id === selectedSpatialCategory}"
-			ng-click="setSelectedSpatialCategory(category.id)"
-			class="btn">{{category.title}}</button>
-	</div>
-</div>
-
-<div class="text-center" ng-if="selectedCategory === 'n1ql'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
-			ng-repeat="category in n1ql_categories"
-			ng-class="{active: category.id === selectedN1QLCategory}"
-			ng-click="setSelectedN1QLCategory(category.id)"
-			class="btn">{{category.title}}</button>
-	</div>
-</div>
-
-<div class="text-center" ng-if="selectedCategory === 'secondary'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
-			ng-repeat="category in secondary_categories"
-			ng-class="{active: category.id === selectedSecondaryCategory}"
-			ng-click="setSelectedSecondaryCategory(category.id)"
 			class="btn">{{category.title}}</button>
 	</div>
 </div>
@@ -138,7 +98,7 @@
 	<div class="column-chart" id="chart_{{metric.id}}">
 		<nvd3-discrete-bar-chart
 			data="metric.chartData"
-			id="chart_{{$index}}"
+			id="chart_{{metric.id}}"
 			margin="{left: 50, top: 5, bottom: 15, right: 0}"
 			color="['#50aa43']"
 			showXAxis="true"
