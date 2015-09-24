@@ -179,11 +179,11 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 		} else {
 			master_events = ""
 		}
-                var build_url string
-                if str, ok := row.Value.([]interface{})[3].(string); ok {
-                        build_url = str
-                } else {
-                        build_url = "" 
+		var build_url string
+		if str, ok := row.Value.([]interface{})[3].(string); ok {
+			build_url = str
+		} else {
+			build_url = ""
                 }
 		benchmark := map[string]interface{}{
 			"seq":           strconv.Itoa(i + 1),
