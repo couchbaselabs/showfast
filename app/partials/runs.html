@@ -10,7 +10,15 @@
 		</tr>
 		<tr ng-repeat="run in runs">
 			<td class="t-data t-seq">{{run.seq}}</td>
-			<td class="t-data t-value">{{run.value}}</td>
+                        <td ng-if="run.build_url" class="t-data t-value"> 
+                                <a href="{{run.build_url}}consoleFull"
+                                    target="_blank">
+                                    {{run.value}}
+                                </a>
+                        </td>
+                        <td ng-if="!run.build_url" class="t-data t-value">
+                            {{run.value}}
+                        </td>
 			<td class="t-data t-report">
 				<a ng-repeat="snapshot in run.snapshots"
 					 href="http://cbmonitor.sc.couchbase.com/reports/html/?snapshot={{snapshot}}"
