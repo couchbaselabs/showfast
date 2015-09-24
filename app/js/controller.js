@@ -43,8 +43,9 @@ function MetricList($scope, $http) {
 
 		$http.get('/all_timelines').success(function(data) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
-				var id = $scope.metrics[i].id;
-				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
+			    var id = $scope.metrics[i].id;
+			    $scope.metrics[i].chartData = [{"values": data[id]}];
+                            $scope.metrics[i].link = id.replace(".", "_");
 			}
 		});
 
@@ -99,6 +100,10 @@ function MetricList($scope, $http) {
 		$scope.secondary_categories = [{
 			"id": "all", "title": "All"
 		}, {
+			"id": "init", "title": "Latency"
+		}, {
+			"id": "init", "title": "Throughput"
+		}, {
 			"id": "init", "title": "Initial"
 		}, {
 			"id": "incr", "title": "Incremental"
@@ -107,13 +112,15 @@ function MetricList($scope, $http) {
                 $scope.n1ql_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "dev", "title": "Latency by Query Type"
-		}, {
-			"id": "wl", "title": "Latency by Query Workload"
+			"id": "dev", "title": "Latency"
 		}, {
 			"id": "thr", "title": "Throughput"
 		}, {
-			"id": "reb", "title": "Rebalance"
+			"id": "vs", "title": "CE vs. EE"
+		}, {
+			"id": "part", "title": "Partitioned"
+		}, {
+			"id": "wl", "title": "Archive"
 		}];
 		
                 $scope.spatial_categories = [{
@@ -438,9 +445,22 @@ function MetricList($scope, $http) {
 			var selectedN1QLCategory = $scope.selectedN1QLCategory;
 
                         if (selectedN1QLCategory === "all") {
+                            if (entry.id.indexOf("wl") == -1) {
                                 return true;
+                            } else {
+                                return false;
+                            }
                         } else {
-                                if (entry.id.indexOf(selectedN1QLCategory) !== -1) {
+                            if (entry.id.indexOf(selectedN1QLCategory) !== -1 ||
+                                entry.id.indexOf("thr_Q2") !== -1 ||
+                                entry.id.indexOf("thr_Q3") !== -1   {
+                                      return true;
+                                } else {
+                                      return false;
+                                }
+                        } else {
+                            if (entry.id.indexOf(selectedN1QLCategory) !== -1 && 
+                                entry.id.indexOf("part") !== -1  {
                                       return true;
                                 } else {
                                       return false;
@@ -471,8 +491,8 @@ function MetricList($scope, $http) {
 
 		$scope.$on('barClick', function(event, data) {
 			var build = data.point[0],
-				metric = data.series.key,
-				a = $("#run_"  + metric);
+				metric = event.targetScope.id.substring(6),
+				a = $("#run_"  + metric.replace(".","_"));
 			a.attr("href", "/#/runs/" + metric + "/" + build);
 			a[0].click();
 		});
