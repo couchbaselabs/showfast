@@ -44,7 +44,7 @@ function MetricList($scope, $http) {
 		$http.get('/all_timelines').success(function(data) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
 			    var id = $scope.metrics[i].id;
-			    $scope.metrics[i].chartData = [{"values": data[id]}];
+			    $scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
                             $scope.metrics[i].link = id.replace(".", "_");
 			}
 		});
@@ -450,17 +450,17 @@ function MetricList($scope, $http) {
                             } else {
                                 return false;
                             }
-                        } else {
+                        } else if {
                             if (entry.id.indexOf(selectedN1QLCategory) !== -1 ||
                                 entry.id.indexOf("thr_Q2") !== -1 ||
-                                entry.id.indexOf("thr_Q3") !== -1   {
+                                entry.id.indexOf("thr_Q3") !== -1 )   {
                                       return true;
                                 } else {
                                       return false;
                                 }
                         } else {
                             if (entry.id.indexOf(selectedN1QLCategory) !== -1 && 
-                                entry.id.indexOf("part") !== -1  {
+                                entry.id.indexOf("part") !== -1  ) {
                                       return true;
                                 } else {
                                       return false;
@@ -519,7 +519,7 @@ function AdminList($scope, $http) {
 		$http({method: 'POST', url: '/reverse_obsolete', data: {id: id}});
 	};
 
-	$http.get('/all_benchmarks').success(function(data) {
+	$http.get('/all_benchmarks').success(function(data)) {
 		$scope.benchmarks = data;
 	});
 }
