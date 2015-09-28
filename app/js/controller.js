@@ -43,8 +43,8 @@ function MetricList($scope, $http) {
 
 		$http.get('/all_timelines').success(function(data) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
-			    var id = $scope.metrics[i].id;
-			    $scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
+				var id = $scope.metrics[i].id;
+				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
                             $scope.metrics[i].link = id.replace(".", "_");
 			}
 		});
@@ -100,39 +100,27 @@ function MetricList($scope, $http) {
 		$scope.secondary_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "init", "title": "Latency"
+			"id": "lat", "title": "Latency"
 		}, {
-			"id": "init", "title": "Throughput"
+                        "id": "thr", "title": "Throughput"
 		}, {
 			"id": "init", "title": "Initial"
 		}, {
 			"id": "incr", "title": "Incremental"
 		}];
 		
-                $scope.n1ql_categories = [{
+        $scope.n1ql_categories = [{
 			"id": "all", "title": "All"
-		}, {
-			"id": "dev", "title": "Latency"
-		}, {
-			"id": "thr", "title": "Throughput"
-		}, {
-			"id": "vs", "title": "CE vs. EE"
-		}, {
-			"id": "part", "title": "Partitioned"
-		}, {
-			"id": "wl", "title": "Archive"
-		}];
-		
-                $scope.spatial_categories = [{
-			"id": "all", "title": "All"
-		}, {
-			"id": "index", "title": "Index"
 		}, {
 			"id": "lat", "title": "Latency"
 		}, {
-			"id": "thr", "title": "Throughput"
+            "id": "thr", "title": "Throughput"
 		}, {
-			"id": "reb", "title": "Rebalance"
+            "id": "vs", "title": "CE vs. EE"
+		}, {
+            "id": "part", "title": "Partitioned"
+		}, {
+            "id": "wl", "title": "Archive"
 		}];
 		
 		$scope.xdcr_categories = [{
@@ -181,6 +169,30 @@ function MetricList($scope, $http) {
 			"id": "thr", "title": "Throughput"
 		}];
 
+		$scope.spatial_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "lat", "title": "Latency"
+		}, {
+			"id": "index", "title": "Index Creation"
+		}, {
+			"id": "thr", "title": "Throughput"
+		}, {
+			"id": "reb", "title": "Rebalance"
+		}];
+
+		$scope.spatial_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "lat", "title": "Latency"
+		}, {
+			"id": "index", "title": "Index Creation"
+		}, {
+			"id": "thr", "title": "Throughput"
+		}, {
+			"id": "reb", "title": "Rebalance"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
@@ -188,9 +200,9 @@ function MetricList($scope, $http) {
 		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
 		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
 		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
+		$scope.selectedQueryCategory = $.cookie("selectedSpatialCategory") || "all";
 		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
 		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
-		$scope.selectedSpatialCategory = $.cookie("selectedSpatialCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -227,6 +239,11 @@ function MetricList($scope, $http) {
 			$.cookie("selectedQueryCategory", value);
 		};
 		
+		$scope.setSelectedSpatialCategory = function (value) {
+			$scope.selectedSpatialCategory = value;
+			$.cookie("selectedSpatialCategory", value);
+		};
+		
                 $scope.setSelectedSecondaryCategory = function (value) {
 			$scope.selectedSecondaryCategory = value;
 			$.cookie("selectedSecondaryCategory", value);
@@ -235,11 +252,6 @@ function MetricList($scope, $http) {
 		$scope.setSelectedN1QLCategory = function (value) {
 			$scope.selectedN1QLCategory = value;
 			$.cookie("selectedN1QLCategory", value);
-		};
-
-		$scope.setSelectedSpatialCategory = function (value) {
-			$scope.selectedSpatialCategory = value;
-			$.cookie("selectedSpatialCategory", value);
 		};
 
 		$scope.byCategory = function(entry) {
@@ -441,45 +453,46 @@ function MetricList($scope, $http) {
 			}
 		};
 		
-                var byN1QLCategory = function(entry) {
-			var selectedN1QLCategory = $scope.selectedN1QLCategory;
-
-                        if (selectedN1QLCategory === "all") {
-                            if (entry.id.indexOf("wl") == -1) {
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        } else if {
-                            if (entry.id.indexOf(selectedN1QLCategory) !== -1 ||
-                                entry.id.indexOf("thr_Q2") !== -1 ||
-                                entry.id.indexOf("thr_Q3") !== -1 )   {
-                                      return true;
-                                } else {
-                                      return false;
-                                }
-                        } else {
-                            if (entry.id.indexOf(selectedN1QLCategory) !== -1 && 
-                                entry.id.indexOf("part") !== -1  ) {
-                                      return true;
-                                } else {
-                                      return false;
-                                }
-                        }
-		};
-
-                var bySpatialCategory = function(entry) {
+		var bySpatialCategory = function(entry) {
 			var selectedSpatialCategory = $scope.selectedSpatialCategory;
 
-                        if (selectedSpatialCategory === "all") {
-                                return true;
-                        } else {
-                                if (entry.id.indexOf(selectedSpatialCategory) !== -1) {
-                                      return true;
-                                } else {
-                                      return false;
-                                }
-                        }
+			if (selectedSpatialCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedSpatialCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+		
+        var byN1QLCategory = function(entry) {
+			var selectedN1QLCategory = $scope.selectedN1QLCategory;
+
+            if (selectedN1QLCategory === "all") {
+                if (entry.id.indexOf("wl") == -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (selectedN1QLCategory === "part") {
+                if (entry.id.indexOf(selectedN1QLCategory) !== -1 ||
+                    entry.id.indexOf("thr_Q2") !== -1 ||
+                    entry.id.indexOf("thr_Q3") !== -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } else {
+                if (entry.id.indexOf(selectedN1QLCategory) !== -1 &&
+                    entry.id.indexOf("part") == -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 		};
 
 		var format = d3.format(',');
@@ -491,8 +504,8 @@ function MetricList($scope, $http) {
 
 		$scope.$on('barClick', function(event, data) {
 			var build = data.point[0],
-				metric = event.targetScope.id.substring(6),
-				a = $("#run_"  + metric.replace(".","_"));
+				metric = data.series.key,
+				a = $("#run_"  + metric.replace(".", "_"));
 			a.attr("href", "/#/runs/" + metric + "/" + build);
 			a[0].click();
 		});
@@ -519,7 +532,7 @@ function AdminList($scope, $http) {
 		$http({method: 'POST', url: '/reverse_obsolete', data: {id: id}});
 	};
 
-	$http.get('/all_benchmarks').success(function(data)) {
+	$http.get('/all_benchmarks').success(function(data) {
 		$scope.benchmarks = data;
 	});
 }

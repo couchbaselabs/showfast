@@ -69,7 +69,7 @@ type Config struct {
 }
 
 func main() {
-	pckg_dir = os.Getenv("GOPATH") + "/src/github.com/thomas-couchbase/showfast/"
+	pckg_dir = os.Getenv("GOPATH") + "/src/github.com/couchbaselabs/showfast/"
 	web.Config.StaticDir = pckg_dir + "app"
 
 	config_file, err := ioutil.ReadFile(pckg_dir + "config.json")
