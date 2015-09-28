@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/couchbaselabs/go-couchbase"
+	"github.com/couchbase/go-couchbase"
 )
 
 var ddocs = map[string]string{
@@ -35,7 +35,7 @@ var ddocs = map[string]string{
 				"map": "function (doc, meta) {if (!doc.obsolete) {emit([doc.metric, doc.build], doc.value);}}"
 			},
 			"value_and_snapshots_by_build_and_metric": {
-				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.snapshots, doc.master_events, doc.build_url || null]);}"
+				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.snapshots, doc.master_events]);}"
 			},
 			"value_and_obsolete_by_build_and_metric": {
 				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.obsolete == true]);}"
@@ -89,7 +89,6 @@ func (ds *DataSource) installDDoc(ddoc string) {
 func (ds *DataSource) GetAllMetrics() []byte {
 	b_metrics := ds.GetBucket("metrics")
 	rows := ds.QueryView(b_metrics, "metrics", "all", map[string]interface{}{})
-
 	metrics := []map[string]interface{}{}
 	for i := range rows {
 		metric := rows[i].Value.(map[string]interface{})
@@ -179,18 +178,11 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 		} else {
 			master_events = ""
 		}
-		var build_url string
-		if str, ok := row.Value.([]interface{})[3].(string); ok {
-			build_url = str
-		} else {
-			build_url = ""
-                }
 		benchmark := map[string]interface{}{
 			"seq":           strconv.Itoa(i + 1),
 			"value":         strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
 			"snapshots":     row.Value.([]interface{})[1],
 			"master_events": master_events,
-			"build_url": build_url,
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
