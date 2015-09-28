@@ -181,18 +181,6 @@ function MetricList($scope, $http) {
 			"id": "reb", "title": "Rebalance"
 		}];
 
-		$scope.spatial_categories = [{
-			"id": "all", "title": "All"
-		}, {
-			"id": "lat", "title": "Latency"
-		}, {
-			"id": "index", "title": "Index Creation"
-		}, {
-			"id": "thr", "title": "Throughput"
-		}, {
-			"id": "reb", "title": "Rebalance"
-		}];
-
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
