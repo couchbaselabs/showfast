@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/couchbaselabs/go-couchbase"
+	"github.com/couchbase/go-couchbase"
 )
 
 var ddocs = map[string]string{
