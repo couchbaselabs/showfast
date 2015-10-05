@@ -81,6 +81,16 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'spatial'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in spatial_categories"
+			ng-class="{active: category.id === selectedSpatialCategory}"
+			ng-click="setSelectedSpatialCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
 <div class="text-center" ng-if="selectedCategory === 'n1ql'">
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button
