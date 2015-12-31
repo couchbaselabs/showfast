@@ -102,11 +102,13 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "lat", "title": "Latency"
 		}, {
-                        "id": "thr", "title": "Throughput"
+			"id": "thr", "title": "Throughput"
 		}, {
 			"id": "init", "title": "Initial"
 		}, {
 			"id": "incr", "title": "Incremental"
+		}, {
+			"id": "fdb", "title": "fdb"
 		}];
 		
         $scope.n1ql_categories = [{
