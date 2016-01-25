@@ -179,8 +179,12 @@ func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
 			master_events = ""
 		}
 		var build_url string
-		if str, ok := row.Value.([]interface{})[3].(string); ok {
-			build_url = str
+		if val, ok := row.Value.([]interface{}); ok && len(val) > 3 {
+			if str, ok := val[3].(string); ok {
+				build_url = str
+			} else {
+				build_url = ""
+			}
 		} else {
 			build_url = ""
 		}
