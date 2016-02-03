@@ -21,6 +21,17 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'bandr'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in backup_restore_categories"
+			ng-class="{active: category.id === selectedBackupRestoreCategory}"
+			ng-click="setSelectedBackupRestoreCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
+
 <div class="text-center" ng-if="selectedCategory === 'beam'">
 	<div class="btn-group" data-toggle="buttons-radio">
 		<button
