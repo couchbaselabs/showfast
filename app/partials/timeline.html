@@ -111,6 +111,16 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'subdoc'">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button
+			ng-repeat="category in subdoc_categories"
+			ng-class="{active: category.id === selectedSubdocCategory}"
+			ng-click="setSelectedSubdocCategory(category.id)"
+			class="btn">{{category.title}}</button>
+	</div>
+</div>
+
 <div class="masthead metric" id="cont_{{metric.id}}"
 		ng-repeat="metric in metrics | filter:byCategory | filter:byOS">
 	<hr/>
