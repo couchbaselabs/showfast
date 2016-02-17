@@ -52,6 +52,8 @@ function MetricList($scope, $http) {
 		$scope.categories = [{
 			"id": "all", "title": "All"
 		}, {
+			"id": "bandr", "title": "Backup/Restore"
+		}, {
 			"id": "beam", "title": "beam.smp"
 		}, {
 			"id": "kv", "title": "KV"
@@ -135,6 +137,14 @@ function MetricList($scope, $http) {
 			"id": "init", "title": "Initial"
 		}];
 
+		$scope.backup_restore_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "backup", "title": "Backup"
+		}, {
+			"id": "restore", "title": "Restore"
+		}];
+
 		$scope.beam_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -210,6 +220,7 @@ function MetricList($scope, $http) {
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
 		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || "all";
 		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
+		$scope.selectedBackupRestoreCategory = $.cookie("selectedBackupRestoreCategory") || "all";
 		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
 		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
 		$scope.selectedQueryCategory = $.cookie("selectedSpatialCategory") || "all";
@@ -235,6 +246,11 @@ function MetricList($scope, $http) {
 		$scope.setSelectedXdcrCategory = function (value) {
 			$scope.selectedXdcrCategory = value;
 			$.cookie("selectedXdcrCategory", value);
+		};
+
+		$scope.setSelectedBackupRestoreCategory = function (value) {
+			$scope.selectedBackupRestoreCategory = value;
+			$.cookie("selectedBackupRestoreCategory", value);
 		};
 
 		$scope.setSelectedBeamCategory = function (value) {
@@ -287,6 +303,11 @@ function MetricList($scope, $http) {
 				case "secondary":
 					if (entryCategory === selectedCategory) {
 						return bySecondaryCategory(entry);
+					}
+					break;
+				case "bandr":
+					if (entryCategory === selectedCategory) {
+						return byBackupRestoreCategory(entry);
 					}
 					break;
 				case "beam":
@@ -431,6 +452,20 @@ function MetricList($scope, $http) {
 						break;
 					default:
 						return false;
+			}
+		};
+
+		var byBackupRestoreCategory = function(entry) {
+			var selectedBackupRestoreCategory = $scope.selectedBackupRestoreCategory;
+
+			if (selectedBackupRestoreCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedBackupRestoreCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		};
 
