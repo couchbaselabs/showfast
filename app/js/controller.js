@@ -71,6 +71,8 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}, {
 			"id": "gateway", "title": "Sync Gateway"
+		}, {
+			"id": "subdoc", "title": "Sub Doc"
 		}];
 
 		$scope.reb_categories = [{
@@ -195,6 +197,14 @@ function MetricList($scope, $http) {
 			"id": "reb", "title": "Rebalance"
 		}];
 
+		$scope.subdoc_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "latency", "title": "Latency"
+		}, {
+			"id": "bandwidth", "title": "Bandwidth"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
@@ -205,6 +215,7 @@ function MetricList($scope, $http) {
 		$scope.selectedQueryCategory = $.cookie("selectedSpatialCategory") || "all";
 		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
 		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
+		$scope.selectedSubdocCategory = $.cookie("selectedSubdocCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -254,6 +265,11 @@ function MetricList($scope, $http) {
 		$scope.setSelectedN1QLCategory = function (value) {
 			$scope.selectedN1QLCategory = value;
 			$.cookie("selectedN1QLCategory", value);
+		};
+
+		$scope.setSelectedSubdocCategory = function (value) {
+			$scope.selectedSubdocCategory = value;
+			$.cookie("selectedSubdocCategory", value);
 		};
 
 		$scope.byCategory = function(entry) {
@@ -306,6 +322,11 @@ function MetricList($scope, $http) {
 				case "xdcr":
 					if (entryCategory === selectedCategory) {
 						return byXdcrCategory(entry);
+					}
+					break;
+				case "subdoc":
+					if (entryCategory === selectedCategory) {
+						return bySubdocCategory(entry);
 					}
 					break;
 				case entryCategory:
@@ -495,6 +516,21 @@ function MetricList($scope, $http) {
                     return false;
                 }
             }
+		};
+
+		var bySubdocCategory = function(entry) {
+
+			var selectedSubdocCategory = $scope.selectedSubdocCategory;
+
+			if (selectedSubdocCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedSubdocCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
 		};
 
 		var format = d3.format(',');
