@@ -113,6 +113,8 @@ function MetricList($scope, $http) {
 			"id": "incr", "title": "Incremental"
 		}, {
 			"id": "fdb", "title": "fdb"
+		}, {
+			"id": "memdb", "title": "Memdb"
 		}];
 		
         $scope.n1ql_categories = [{
