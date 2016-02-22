@@ -551,6 +551,8 @@ function configureY2axis(chart, scope, attrs){
 function setupDimensions(scope, attrs, element) {
     'use strict';
     var margin = (scope.$eval(attrs.margin) || {left: 50, top: 50, bottom: 50, right: 50});
+    attrs.width = attrs.width || 1200
+    attrs.height = attrs.height || 100
     scope.width = (attrs.width  === "undefined" ? ((element[0].parentElement.offsetWidth) - (margin.left + margin.right)) : (+attrs.width - (margin.left + margin.right)));
     scope.height = (attrs.height === "undefined" ? ((element[0].parentElement.offsetHeight) - (margin.top + margin.bottom)) : (+attrs.height - (margin.top + margin.bottom)));
     return margin;
@@ -1358,7 +1360,13 @@ angular.module('nvd3ChartDirectives', [])
                         .attr('width', $scope.width)
                         .datum(data)
                         .transition().duration(($attrs.transitionduration === undefined ? 250 : (+$attrs.transitionduration)))
-                        .call(chart);
+                        .call(chart)
+                            .selectAll(".nv-x text")
+                            .text(function(d){ d=d||""; return d.replace("-enterprise", "") })
+                            .attr("dy", "1.0em" )
+                            .attr("dx", function(d){ return $scope.nx > 35 ? "1em" : 0 })
+                            .attr("transform", function(d){ var v = $scope.nx > 35 ? "15" : "0"; return "rotate("+v+")"})
+
                 };
             }],
             link: function(scope, element, attrs){
@@ -1371,11 +1379,12 @@ angular.module('nvd3ChartDirectives', [])
                         nv.addGraph({
                             generate: function(){
                                 var margin = setupDimensions(scope, attrs, element);
+                                scope.nx = 0
                                 var chart = nv.models.discreteBarChart()
                                     .width(scope.width)
                                     .height(scope.height)
                                     .margin(margin)
-                                    .x(attrs.x === undefined ? function(d){ return d[0]; } : scope.x())
+                                    .x(function(d){ scope.nx++; return attrs.x === undefined ?  d[0] : 0})
                                     .y(attrs.y === undefined ? function(d){ return d[1]; } : scope.y())
                                     .forceY(attrs.forcey === undefined ? [0] : scope.$eval(attrs.forcey)) // List of numbers to Force into the Y scale
                                     .showValues(attrs.showvalues === undefined ? false : (attrs.showvalues === "true"))
