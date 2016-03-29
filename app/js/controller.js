@@ -75,7 +75,10 @@ function MetricList($scope, $http) {
 			"id": "gateway", "title": "Sync Gateway"
 		}, {
 			"id": "subdoc", "title": "Sub Doc"
-		}];
+		}, {
+			"id": "fts", "title": "Fts"
+		}
+		];
 
 		$scope.reb_categories = [{
 			"id": "all", "title": "All"
@@ -217,6 +220,17 @@ function MetricList($scope, $http) {
 			"id": "bandwidth", "title": "Bandwidth"
 		}];
 
+		$scope.fts_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "latency", "title": "Latency"
+		}, {
+			"id": "throughput", "title": "throughput"
+		},{
+			"id": "index", "title": "index"
+		}
+		];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
@@ -229,6 +243,7 @@ function MetricList($scope, $http) {
 		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
 		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
 		$scope.selectedSubdocCategory = $.cookie("selectedSubdocCategory") || "all";
+		$scope.selectedFtsCategory = $.cookie("selectedFtsCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -288,6 +303,11 @@ function MetricList($scope, $http) {
 		$scope.setSelectedSubdocCategory = function (value) {
 			$scope.selectedSubdocCategory = value;
 			$.cookie("selectedSubdocCategory", value);
+		};
+
+		$scope.setSelectedFtsCategory = function (value) {
+			$scope.selectedFtsCategory = value;
+			$.cookie("selectedFtsCategory", value);
 		};
 
 		$scope.byCategory = function(entry) {
@@ -350,6 +370,11 @@ function MetricList($scope, $http) {
 				case "subdoc":
 					if (entryCategory === selectedCategory) {
 						return bySubdocCategory(entry);
+					}
+					break;
+				case "fts":
+					if (entryCategory === selectedCategory) {
+						return byFtsCategory(entry);
 					}
 					break;
 				case entryCategory:
@@ -563,6 +588,21 @@ function MetricList($scope, $http) {
 				return true;
 			} else {
 				if (entry.id.indexOf(selectedSubdocCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+
+		var byFtsCategory = function(entry) {
+
+			var selectedFtsCategory = $scope.selectedFtsCategory;
+
+			if (selectedFtsCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedFtsCategory) !== -1) {
 					return true;
 				} else {
 					return false;
