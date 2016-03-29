@@ -131,6 +131,15 @@
 			class="btn">{{category.title}}</button>
 	</div>
 </div>
+<div class="text-center" ng-if="selectedCategory === 'fts'">
+        <div class="btn-group" data-toggle="buttons-radio">
+                <button
+                        ng-repeat="category in fts_categories"
+                        ng-class="{active: category.id === selectedFtsCategory}"
+                        ng-click="setSelectedFtsCategory(category.id)"
+                        class="btn">{{category.title}}</button>
+        </div>
+</div>
 
 <div class="masthead metric" id="cont_{{metric.id}}"
 		ng-repeat="metric in metrics | filter:byCategory | filter:byOS">
