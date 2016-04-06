@@ -225,10 +225,12 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "latency", "title": "Latency"
 		}, {
-			"id": "throughput", "title": "throughput"
+			"id": "throughput", "title": "Throughput"
 		},{
-			"id": "index", "title": "index"
-		}
+			"id": "index", "title": "Index"
+		},{
+                        "id": "elastic", "title": "Elastic"
+                }
 		];
 
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
