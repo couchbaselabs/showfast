@@ -76,7 +76,7 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "subdoc", "title": "Sub Doc"
 		}, {
-			"id": "fts", "title": "Fts"
+			"id": "fts", "title": "FTS"
 		}
 		];
 
@@ -229,7 +229,7 @@ function MetricList($scope, $http) {
 		},{
 			"id": "index", "title": "Index"
 		},{
-                        "id": "elastic", "title": "Elastic"
+                        "id": "elastic", "title": "ElasticSearch"
                 }
 		];
 
