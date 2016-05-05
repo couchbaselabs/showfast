@@ -58,6 +58,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "kv", "title": "KV"
 		}, {
+			"id": "subdoc", "title": "Sub Doc"
+		}, {
 			"id": "reb", "title": "Rebalance"
 		}, {
 			"id": "index", "title": "View Indexing"
@@ -73,8 +75,6 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}, {
 			"id": "gateway", "title": "Sync Gateway"
-		}, {
-			"id": "subdoc", "title": "Sub Doc"
 		}, {
 			"id": "fts", "title": "FTS"
 		}
@@ -117,7 +117,7 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "fdb", "title": "fdb"
 		}, {
-			"id": "memdb", "title": "Memdb"
+			"id": "memdb", "title": "MOI"
 		}];
 		
         $scope.n1ql_categories = [{
@@ -131,6 +131,14 @@ function MetricList($scope, $http) {
 		}, {
             "id": "part", "title": "Partitioned"
 		}, {
+			"id": "moi", "title": "MOI"
+		}, {
+			"id": "array", "title": "Array"
+		}, {
+			"id": "CI", "title": "Covering"
+		}, {
+			"id": "_Q", "title": "Query"
+		},  {
             "id": "wl", "title": "Archive"
 		}];
 		
@@ -175,7 +183,7 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "drain", "title": "Flusher"
 		}, {
-			"id": "maxx_ops", "title": "Max Throughput"
+			"id": "max_ops", "title": "Max Throughput"
 		}];
 
 		$scope.query_categories = [{
