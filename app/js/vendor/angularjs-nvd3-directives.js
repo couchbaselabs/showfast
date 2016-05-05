@@ -551,7 +551,7 @@ function configureY2axis(chart, scope, attrs){
 function setupDimensions(scope, attrs, element) {
     'use strict';
     var margin = (scope.$eval(attrs.margin) || {left: 50, top: 50, bottom: 50, right: 50});
-    attrs.width = attrs.width || 1200
+    //attrs.width = attrs.width || 1200
     attrs.height = attrs.height || 100
     scope.width = (attrs.width  === "undefined" ? ((element[0].parentElement.offsetWidth) - (margin.left + margin.right)) : (+attrs.width - (margin.left + margin.right)));
     scope.height = (attrs.height === "undefined" ? ((element[0].parentElement.offsetHeight) - (margin.top + margin.bottom)) : (+attrs.height - (margin.top + margin.bottom)));
@@ -1363,8 +1363,8 @@ angular.module('nvd3ChartDirectives', [])
                         .call(chart)
                             .selectAll(".nv-x text")
                             .text(function(d){ d=d||""; return d.replace("-enterprise", "") })
-                            .attr("dy", "1.0em" )
-                            .attr("dx", function(d){ return $scope.nx > 35 ? "1em" : 0 })
+                            .attr("dy", "1.2em" )
+                            .attr("dx", function(d){ return $scope.nx > 35 ? "0.5em" : 0 })
                             .attr("transform", function(d){ var v = $scope.nx > 35 ? "15" : "0"; return "rotate("+v+")"})
 
                 };
