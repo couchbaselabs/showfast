@@ -151,7 +151,7 @@ func (ds *DataSource) GetAllTimelines() []byte {
 		if array, ok := timelines[metric.(string)]; ok {
 			timelines[metric.(string)] = append(array, []interface{}{build, value})
 		} else {
-			timelines[metric.(string)] = [][]interface{}{[]interface{}{build, value}}
+			timelines[metric.(string)] = [][]interface{}{{build, value}}
 		}
 	}
 	for _, timeline := range timelines {
@@ -242,7 +242,7 @@ func (ds *DataSource) ReverseObsolete(id string) {
 	benchmark.Obsolete = !benchmark.Obsolete
 	err := b_benchmarks.Set(id, 0, benchmark)
 	if err != nil {
-		log.Println("Error updating benchmark:  %v", err)
+		log.Printf("Error updating benchmark:  %v\n", err)
 	}
 }
 
