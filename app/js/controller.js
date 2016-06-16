@@ -52,7 +52,7 @@ function MetricList($scope, $http) {
 		$scope.categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "bandr", "title": "Backup/Restore"
+			"id": "bandr", "title": "Backup"
 		}, {
 			"id": "beam", "title": "beam.smp"
 		}, {
@@ -66,15 +66,11 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "query", "title": "View Query"
 		}, {
-			"id": "spatial", "title": "Spatial Query"
-		}, {
 			"id": "n1ql", "title": "N1QL"
 		}, {
-			"id": "secondary", "title": "Sec. Index"
+			"id": "secondary", "title": "2i"
 		}, {
 			"id": "xdcr", "title": "XDCR"
-		}, {
-			"id": "gateway", "title": "Sync Gateway"
 		}, {
 			"id": "fts", "title": "FTS"
 		}
