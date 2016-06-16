@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/couchbaselabs/showfast)](https://goreportcard.com/report/github.com/couchbaselabs/showfast)
+
 showfast
 ========
 
