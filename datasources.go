@@ -55,7 +55,7 @@ type DataSource struct {
 	CouchbaseAddress, BucketPassword string
 }
 
-func (ds *DataSource) GetBucket(bucket string) *couchbase.Bucket {
+func (ds *DataSource) getBucket(bucket string) *couchbase.Bucket {
 	uri := fmt.Sprintf("http://%s:%s@%s/", bucket, ds.BucketPassword, ds.CouchbaseAddress)
 
 	client, _ := couchbase.Connect(uri)
@@ -68,7 +68,7 @@ func (ds *DataSource) GetBucket(bucket string) *couchbase.Bucket {
 	return b
 }
 
-func (ds *DataSource) QueryView(b *couchbase.Bucket, ddoc, view string,
+func (ds *DataSource) queryView(b *couchbase.Bucket, ddoc, view string,
 	params map[string]interface{}) []couchbase.ViewRow {
 	params["stale"] = false
 	vr, err := b.View(ddoc, view, params)
@@ -79,16 +79,16 @@ func (ds *DataSource) QueryView(b *couchbase.Bucket, ddoc, view string,
 }
 
 func (ds *DataSource) installDDoc(ddoc string) {
-	b := ds.GetBucket(ddoc) // bucket name == ddoc name
+	b := ds.getBucket(ddoc) // bucket name == ddoc name
 	err := b.PutDDoc(ddoc, ddocs[ddoc])
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
 }
 
-func (ds *DataSource) GetAllMetrics() []byte {
-	b_metrics := ds.GetBucket("metrics")
-	rows := ds.QueryView(b_metrics, "metrics", "all", map[string]interface{}{})
+func (ds *DataSource) getAllMetrics() []byte {
+	bMetrics := ds.getBucket("metrics")
+	rows := ds.queryView(bMetrics, "metrics", "all", map[string]interface{}{})
 	metrics := []map[string]interface{}{}
 	for i := range rows {
 		metric := rows[i].Value.(map[string]interface{})
@@ -100,9 +100,9 @@ func (ds *DataSource) GetAllMetrics() []byte {
 	return j
 }
 
-func (ds *DataSource) GetAllClusters() []byte {
-	b_clusters := ds.GetBucket("clusters")
-	rows := ds.QueryView(b_clusters, "clusters", "all", map[string]interface{}{})
+func (ds *DataSource) getAllClusters() []byte {
+	bClusters := ds.getBucket("clusters")
+	rows := ds.queryView(bClusters, "clusters", "all", map[string]interface{}{})
 
 	clusters := []map[string]interface{}{}
 	for i := range rows {
@@ -115,31 +115,30 @@ func (ds *DataSource) GetAllClusters() []byte {
 	return j
 }
 
-type ByBuild [][]interface{}
+type byBuild [][]interface{}
 
-func (b ByBuild) Len() int {
+func (b byBuild) Len() int {
 	return len(b)
 }
 
-func (b ByBuild) Swap(i, j int) {
+func (b byBuild) Swap(i, j int) {
 	b[i], b[j] = b[j], b[i]
 }
 
-func (b ByBuild) Less(i, j int) bool {
-	build_i := strings.Split(b[i][0].(string), "-")
-	build_j := strings.Split(b[j][0].(string), "-")
-	if build_i[0] == build_j[0] {
-		int_i, _ := strconv.ParseInt(build_i[1], 10, 16)
-		int_j, _ := strconv.ParseInt(build_j[1], 10, 16)
-		return int_i < int_j
-	} else {
-		return build_i[0] < build_j[0]
+func (b byBuild) Less(i, j int) bool {
+	buildI := strings.Split(b[i][0].(string), "-")
+	buildJ := strings.Split(b[j][0].(string), "-")
+	if buildI[0] == buildJ[0] {
+		intBuildI, _ := strconv.ParseInt(buildI[1], 10, 16)
+		intBuildJ, _ := strconv.ParseInt(buildJ[1], 10, 16)
+		return intBuildI < intBuildJ
 	}
+	return buildI[0] < buildJ[0]
 }
 
-func (ds *DataSource) GetAllTimelines() []byte {
-	b_benchmarks := ds.GetBucket("benchmarks")
-	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+func (ds *DataSource) getAllTimelines() []byte {
+	bBenchmarks := ds.getBucket("benchmarks")
+	rows := ds.queryView(bBenchmarks, "benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{})
 
 	timelines := map[string][][]interface{}{}
@@ -155,45 +154,45 @@ func (ds *DataSource) GetAllTimelines() []byte {
 		}
 	}
 	for _, timeline := range timelines {
-		sort.Sort(ByBuild(timeline))
+		sort.Sort(byBuild(timeline))
 	}
 
 	j, _ := json.Marshal(timelines)
 	return j
 }
 
-func (ds *DataSource) GetAllRuns(metric string, build string) []byte {
-	b_benchmarks := ds.GetBucket("benchmarks")
+func (ds *DataSource) getAllRuns(metric string, build string) []byte {
+	bBenchmarks := ds.getBucket("benchmarks")
 	params := map[string]interface{}{
 		"startkey": []string{metric, build},
 		"endkey":   []string{metric, build},
 	}
-	rows := ds.QueryView(b_benchmarks, "benchmarks", "value_and_snapshots_by_build_and_metric", params)
+	rows := ds.queryView(bBenchmarks, "benchmarks", "value_and_snapshots_by_build_and_metric", params)
 
 	benchmarks := []map[string]interface{}{}
 	for i, row := range rows {
-		var master_events string
+		var masterEvents string
 		if str, ok := row.Value.([]interface{})[2].(string); ok {
-			master_events = str
+			masterEvents = str
 		} else {
-			master_events = ""
+			masterEvents = ""
 		}
-		var build_url string
+		var buildURL string
 		if val, ok := row.Value.([]interface{}); ok && len(val) > 3 {
 			if str, ok := val[3].(string); ok {
-				build_url = str
+				buildURL = str
 			} else {
-				build_url = ""
+				buildURL = ""
 			}
 		} else {
-			build_url = ""
+			buildURL = ""
 		}
 		benchmark := map[string]interface{}{
 			"seq":           strconv.Itoa(i + 1),
 			"value":         strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
 			"snapshots":     row.Value.([]interface{})[1],
-			"master_events": master_events,
-			"build_url":     build_url,
+			"master_events": masterEvents,
+			"build_url":     buildURL,
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
@@ -210,9 +209,9 @@ type Benchmark struct {
 	Snapshots []string `json:"snapshots"`
 }
 
-func (ds *DataSource) GetAllBenchmarks() []byte {
-	b_benchmarks := ds.GetBucket("benchmarks")
-	rows := ds.QueryView(b_benchmarks, "benchmarks", "value_and_obsolete_by_build_and_metric",
+func (ds *DataSource) getAllBenchmarks() []byte {
+	bBenchmarks := ds.getBucket("benchmarks")
+	rows := ds.queryView(bBenchmarks, "benchmarks", "value_and_obsolete_by_build_and_metric",
 		map[string]interface{}{})
 
 	benchmarks := []Benchmark{}
@@ -230,17 +229,17 @@ func (ds *DataSource) GetAllBenchmarks() []byte {
 	return j
 }
 
-func (ds *DataSource) DeleteBenchmark(id string) {
-	b_benchmarks := ds.GetBucket("benchmarks")
-	b_benchmarks.Delete(id)
+func (ds *DataSource) deleteBenchmark(id string) {
+	bBenchmarks := ds.getBucket("benchmarks")
+	bBenchmarks.Delete(id)
 }
 
-func (ds *DataSource) ReverseObsolete(id string) {
-	b_benchmarks := ds.GetBucket("benchmarks")
+func (ds *DataSource) reverseObsolete(id string) {
+	bBenchmarks := ds.getBucket("benchmarks")
 	benchmark := Benchmark{}
-	b_benchmarks.Get(id, &benchmark)
+	bBenchmarks.Get(id, &benchmark)
 	benchmark.Obsolete = !benchmark.Obsolete
-	err := b_benchmarks.Set(id, 0, benchmark)
+	err := bBenchmarks.Set(id, 0, benchmark)
 	if err != nil {
 		log.Printf("Error updating benchmark:  %v\n", err)
 	}
@@ -255,9 +254,9 @@ func appendIfUnique(slice []string, s string) []string {
 	return append(slice, s)
 }
 
-func (ds *DataSource) GetAllReleases() []byte {
-	b_benchmarks := ds.GetBucket("benchmarks")
-	rows := ds.QueryView(b_benchmarks, "benchmarks", "metrics_by_build",
+func (ds *DataSource) getAllReleases() []byte {
+	bBenchmarks := ds.getBucket("benchmarks")
+	rows := ds.queryView(bBenchmarks, "benchmarks", "metrics_by_build",
 		map[string]interface{}{})
 
 	releases := []string{}
@@ -270,11 +269,12 @@ func (ds *DataSource) GetAllReleases() []byte {
 	return j
 }
 
-func (ds *DataSource) GetComparison(baseline, target string) []byte {
-	b_metrics := ds.GetBucket("metrics")
-	b_benchmarks := ds.GetBucket("benchmarks")
-	b_clusters := ds.GetBucket("clusters")
-	rows := ds.QueryView(b_benchmarks, "benchmarks", "values_by_build_and_metric",
+func (ds *DataSource) getComparison(baseline, target string) []byte {
+	bMetrics := ds.getBucket("metrics")
+	bBenchmarks := ds.getBucket("benchmarks")
+	bClusters := ds.getBucket("clusters")
+
+	rows := ds.queryView(bBenchmarks, "benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{})
 
 	metrics := map[string]map[string]interface{}{}
@@ -302,14 +302,15 @@ func (ds *DataSource) GetComparison(baseline, target string) []byte {
 			}
 		}
 	}
-	reduced_metrics := map[string]map[string]interface{}{}
-	for metric_name, builds := range metrics {
+
+	reducedMetrics := map[string]map[string]interface{}{}
+	for metricName, builds := range metrics {
 		if strings.HasPrefix(builds["baseline"].(string), baseline) &&
 			strings.HasPrefix(builds["target"].(string), target) {
 			metric := map[string]string{}
-			b_metrics.Get(metric_name, &metric)
+			bMetrics.Get(metricName, &metric)
 			cluster := map[string]string{}
-			b_clusters.Get(metric["cluster"], &cluster)
+			bClusters.Get(metric["cluster"], &cluster)
 
 			diff := 100 * (builds["target_value"].(float64) - builds["baseline_value"].(float64)) /
 				builds["baseline_value"].(float64)
@@ -333,7 +334,7 @@ func (ds *DataSource) GetComparison(baseline, target string) []byte {
 				class = "worse"
 			}
 
-			reduced_metrics[metric_name] = map[string]interface{}{
+			reducedMetrics[metricName] = map[string]interface{}{
 				"title":      metric["title"],
 				"cluster":    cluster,
 				"baseline":   builds["baseline"],
@@ -343,17 +344,17 @@ func (ds *DataSource) GetComparison(baseline, target string) []byte {
 			}
 		}
 	}
-	j, _ := json.Marshal(reduced_metrics)
+	j, _ := json.Marshal(reducedMetrics)
 	return j
 }
 
-func (ds *DataSource) GetAllFeedRecords() []byte {
-	b_feed := ds.GetBucket("feed")
+func (ds *DataSource) getAllFeedRecords() []byte {
+	bFeed := ds.getBucket("feed")
 	params := map[string]interface{}{
 		"descending": true,
 		"limit":      100,
 	}
-	rows := ds.QueryView(b_feed, "feed", "all", params)
+	rows := ds.queryView(bFeed, "feed", "all", params)
 
 	records := []map[string]interface{}{}
 	for _, row := range rows {

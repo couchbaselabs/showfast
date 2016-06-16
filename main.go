@@ -9,59 +9,59 @@ import (
 	"github.com/hoisie/web"
 )
 
-var pckg_dir string
+var pkgDir string
 
-var data_source DataSource
+var dataSource DataSource
 
 func home() []byte {
-	content, _ := ioutil.ReadFile(pckg_dir + "app/index.html")
+	content, _ := ioutil.ReadFile(pkgDir + "app/index.html")
 	return content
 }
 
-func all_runs(ctx *web.Context) []byte {
+func allRuns(ctx *web.Context) []byte {
 	metric := ctx.Params["metric"]
 	build := ctx.Params["build"]
 
-	return data_source.GetAllRuns(metric, build)
+	return dataSource.getAllRuns(metric, build)
 }
 
 func admin() []byte {
-	content, _ := ioutil.ReadFile(pckg_dir + "app/admin.html")
+	content, _ := ioutil.ReadFile(pkgDir + "app/admin.html")
 	return content
 }
 
 func release() []byte {
-	content, _ := ioutil.ReadFile(pckg_dir + "app/release.html")
+	content, _ := ioutil.ReadFile(pkgDir + "app/release.html")
 	return content
 }
 
 func feed() []byte {
-	content, _ := ioutil.ReadFile(pckg_dir + "app/feed.html")
+	content, _ := ioutil.ReadFile(pkgDir + "app/feed.html")
 	return content
 }
 
-func get_comparison(ctx *web.Context) []byte {
+func getComparison(ctx *web.Context) []byte {
 	baseline := ctx.Params["baseline"]
 	target := ctx.Params["target"]
-	return data_source.GetComparison(baseline, target)
+	return dataSource.getComparison(baseline, target)
 }
 
-func delete(ctx *web.Context) {
+func deleteBenchmark(ctx *web.Context) {
 	var params struct {
 		ID string `json:"id"`
 	}
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
 	json.Unmarshal(body, &params)
-	data_source.DeleteBenchmark(params.ID)
+	dataSource.deleteBenchmark(params.ID)
 }
 
-func reverse_obsolete(ctx *web.Context) {
+func reverseObsolete(ctx *web.Context) {
 	var params struct {
 		ID string `json:"id"`
 	}
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
 	json.Unmarshal(body, &params)
-	data_source.ReverseObsolete(params.ID)
+	dataSource.reverseObsolete(params.ID)
 }
 
 type Config struct {
@@ -69,37 +69,37 @@ type Config struct {
 }
 
 func main() {
-	pckg_dir = os.Getenv("GOPATH") + "/src/github.com/couchbaselabs/showfast/"
-	web.Config.StaticDir = pckg_dir + "app"
+	pkgDir = os.Getenv("GOPATH") + "/src/github.com/couchbaselabs/showfast/"
+	web.Config.StaticDir = pkgDir + "app"
 
-	config_file, err := ioutil.ReadFile(pckg_dir + "config.json")
+	configFile, err := ioutil.ReadFile(pkgDir + "config.json")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var config Config
-	err = json.Unmarshal(config_file, &config)
+	err = json.Unmarshal(configFile, &config)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	data_source = DataSource{config.CouchbaseAddress, config.BucketPassword}
+	dataSource = DataSource{config.CouchbaseAddress, config.BucketPassword}
 
 	web.Get("/", home)
 	web.Get("/admin", admin)
 	web.Get("/release", release)
 	web.Get("/feed", feed)
 
-	web.Get("/all_metrics", data_source.GetAllMetrics)
-	web.Get("/all_clusters", data_source.GetAllClusters)
-	web.Get("/all_timelines", data_source.GetAllTimelines)
-	web.Get("/all_benchmarks", data_source.GetAllBenchmarks)
-	web.Get("/all_runs", all_runs)
-	web.Get("/all_releases", data_source.GetAllReleases)
-	web.Get("/all_feed_records", data_source.GetAllFeedRecords)
-	web.Get("/get_comparison", get_comparison)
-	web.Post("/delete", delete)
-	web.Post("/reverse_obsolete", reverse_obsolete)
+	web.Get("/all_metrics", dataSource.getAllMetrics)
+	web.Get("/all_clusters", dataSource.getAllClusters)
+	web.Get("/all_timelines", dataSource.getAllTimelines)
+	web.Get("/all_benchmarks", dataSource.getAllBenchmarks)
+	web.Get("/all_runs", allRuns)
+	web.Get("/all_releases", dataSource.getAllReleases)
+	web.Get("/all_feed_records", dataSource.getAllFeedRecords)
+	web.Get("/get_comparison", getComparison)
+	web.Post("/delete", deleteBenchmark)
+	web.Post("/reverse_obsolete", reverseObsolete)
 
 	web.Run(config.ListenAddress)
 }
