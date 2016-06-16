@@ -1,0 +1,37 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "rkPhSCqo2O6WiR8QLGfmTWCu/9w=",
+			"path": "github.com/couchbase/go-couchbase",
+			"revision": "e7e0e4cc00545f11130a22025222a48c0bfd4821",
+			"revisionTime": "2016-05-25T17:40:50Z"
+		},
+		{
+			"checksumSHA1": "Uvqyxwzs9pdV148eRgpS+LJsVCk=",
+			"path": "github.com/couchbase/go-couchbase/platform",
+			"revision": "e7e0e4cc00545f11130a22025222a48c0bfd4821",
+			"revisionTime": "2016-05-25T17:40:50Z"
+		},
+		{
+			"checksumSHA1": "nOWyesiQ8DV7Ph/yk+lAX19eJR8=",
+			"path": "github.com/couchbase/gomemcached",
+			"revision": "c50a529032fd97b50f1b4728de60e5dd30bcd586",
+			"revisionTime": "2016-05-31T02:17:51Z"
+		},
+		{
+			"checksumSHA1": "kfjKUl0oTLGspLI1GZoPKqu5jpQ=",
+			"path": "github.com/couchbase/gomemcached/client",
+			"revision": "c50a529032fd97b50f1b4728de60e5dd30bcd586",
+			"revisionTime": "2016-05-31T02:17:51Z"
+		},
+		{
+			"checksumSHA1": "VyUvTYdCzR4RUKBuN6Wr4oQIWms=",
+			"path": "github.com/couchbase/goutils/logging",
+			"revision": "5823a0cbaaa9008406021dc5daf80125ea30bba6",
+			"revisionTime": "2016-03-11T02:08:04Z"
+		}
+	],
+	"rootPath": "github.com/couchbaselabs/showfast"
+}
