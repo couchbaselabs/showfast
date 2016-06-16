@@ -41,37 +41,17 @@ hr {
 }
 
 .t-inventory {
-    width: 90%;
-    margin-left: 5%;
+    table-layout: fixed;
+    width: 96%;
+    margin-left: 2%;
 }
 
 .t-data {
-    font-size: 93%;
+    font-size: 87%;
 }
 
-.t-id {
-    text-align: left;
-    width: 25%;
-}
-
-.t-metric {
-	text-align: left;
-    width: 40%;
-}
-
-.t-build {
+.col-center {
 	text-align: center;
-    width: 10%;
-}
-
-.t-avalue, .t-obsolete {
-	text-align: center;
-    width: 10%;
-}
-
-.t-buttons {
-    width: 5%;
-    text-align: center;
 }
 
 .icon-remove:hover {

@@ -12,29 +12,45 @@
 <body ng-app ng-controller="AdminList">
 	<div class="masthead text-center">
 		<h2>Administration</h2>
-		<table class="table-striped table-bordered table-condensed t-inventory">
-			<tr>
-				<th class="t-data t-id">ID</th>
-				<th class="t-data t-metric">Metric</th>
-				<th class="t-data t-build">Build</th>
-				<th class="t-data t-avalue">Value</th>
-				<th class="t-data t-obsolete">Obsolete</th>
-				<th class="t-data t-buttons"></th>
-			</tr>
-			<tr ng-repeat="benchmark in benchmarks">
-				<td class="t-data t-id">{{benchmark.id}}</td>
-				<td class="t-data t-metric">{{benchmark.metric}}</td>
-				<td class="t-data t-build">{{benchmark.build}}</td>
-				<td class="t-data t-avalue">{{benchmark.value}}</td>
-				<td class="t-data t-obsolete">
-					<input ng-click="reverseObsolete(benchmark.id)" type="checkbox" checked ng-if="benchmark.obsolete">
-					<input ng-click="reverseObsolete(benchmark.id)" type="checkbox" ng-if="!benchmark.obsolete">
-				</td>
-				<td class="t-data t-buttons">
-					<i class="icon-remove" ng-click="deleteBenchmark(benchmark)"></i>
-				</td>
-			</tr>
-		</table>
+		<div>
+			<table class="table-striped table-bordered table-condensed t-inventory">
+				<colgroup>
+					<col span="1" style="width: 25%;">
+					<col span="1" style="width: 42%;">
+					<col span="1" style="width: 14%;">
+					<col span="1" style="width: 8%;">
+					<col span="1" style="width: 8%;">
+					<col span="1" style="width: 3%;">
+				</colgroup>
+
+				<thead>
+					<tr class="t-data">
+						<th>ID</th>
+						<th>Metric</th>
+						<th>Build</th>
+						<th>Value</th>
+						<th>Obsolete</th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="benchmark in benchmarks" class="t-data">
+						<td>{{benchmark.id}}</td>
+						<td>{{benchmark.metric}}</td>
+						<td class="col-center">{{benchmark.build}}</td>
+						<td class="col-center">{{benchmark.value}}</td>
+						<td class="col-center">
+							<input ng-click="reverseObsolete(benchmark.id)" type="checkbox" checked ng-if="benchmark.obsolete">
+							<input ng-click="reverseObsolete(benchmark.id)" type="checkbox" ng-if="!benchmark.obsolete">
+						</td>
+						<td class="col-center">
+							<i class="icon-remove" ng-click="deleteBenchmark(benchmark)"></i>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </body>
 </html>
