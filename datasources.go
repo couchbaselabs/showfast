@@ -52,11 +52,11 @@ var ddocs = map[string]string{
 }
 
 type DataSource struct {
-	CouchbaseAddress, BucketPassword string
+	hostname, password string
 }
 
 func (ds *DataSource) getBucket(bucket string) *couchbase.Bucket {
-	uri := fmt.Sprintf("http://%s:%s@%s/", bucket, ds.BucketPassword, ds.CouchbaseAddress)
+	uri := fmt.Sprintf("http://%s:%s@%s:8091/", bucket, ds.password, ds.hostname)
 
 	client, _ := couchbase.Connect(uri)
 	pool, _ := client.GetPool("default")

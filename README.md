@@ -1,32 +1,26 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/couchbaselabs/showfast)](https://goreportcard.com/report/github.com/couchbaselabs/showfast)
 
 showfast
 ========
+[![Go Report Card](https://goreportcard.com/badge/github.com/couchbaselabs/showfast)](https://goreportcard.com/report/github.com/couchbaselabs/showfast)
 
-Performance dashboard. Powered by web.go, AngularJS, nvd3 and Couchbase Server.
+Couchbase Server performance dashboard.
 
 Prerequisites
 -------------
 
-* go 1.1
-* Couchbase Server 2.0.0 or higher
+* go 1.6
+* Couchbase Server 4.x.
 
 Required buckets
 ----------------
 
 * benchmarks
 * clusters
+* feed
 * metrics
-
-Installation
-------------
-
-    go get github.com/couchbaselabs/showfast
 
 Usage
 -----
 
-    $GOPATH/bin/showfast
-
- All parameters are specified in config.json
- 
+    docker pull perflab/showfast
+    docker run -t -i -e CB_HOST=... -e CB_PASS=... -p 8000:8000 perflab/showfast

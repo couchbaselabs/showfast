@@ -9,12 +9,33 @@ import (
 	"github.com/hoisie/web"
 )
 
-var pkgDir string
+const (
+	address   = ":8000"
+	staticDir = "app"
+)
 
-var dataSource DataSource
+var (
+	dataSource     DataSource
+	cbHost, cbPass string
+)
 
 func home() []byte {
-	content, _ := ioutil.ReadFile(pkgDir + "app/index.html")
+	content, _ := ioutil.ReadFile("app/index.html")
+	return content
+}
+
+func admin() []byte {
+	content, _ := ioutil.ReadFile("app/admin.html")
+	return content
+}
+
+func release() []byte {
+	content, _ := ioutil.ReadFile("app/release.html")
+	return content
+}
+
+func feed() []byte {
+	content, _ := ioutil.ReadFile("app/feed.html")
 	return content
 }
 
@@ -23,21 +44,6 @@ func allRuns(ctx *web.Context) []byte {
 	build := ctx.Params["build"]
 
 	return dataSource.getAllRuns(metric, build)
-}
-
-func admin() []byte {
-	content, _ := ioutil.ReadFile(pkgDir + "app/admin.html")
-	return content
-}
-
-func release() []byte {
-	content, _ := ioutil.ReadFile(pkgDir + "app/release.html")
-	return content
-}
-
-func feed() []byte {
-	content, _ := ioutil.ReadFile(pkgDir + "app/feed.html")
-	return content
 }
 
 func getComparison(ctx *web.Context) []byte {
@@ -64,31 +70,23 @@ func reverseObsolete(ctx *web.Context) {
 	dataSource.reverseObsolete(params.ID)
 }
 
-type Config struct {
-	CouchbaseAddress, BucketPassword, ListenAddress string
+func init() {
+	cbHost = os.Getenv("CB_HOST")
+	cbPass = os.Getenv("CB_PASS")
+	if cbHost == "" || cbPass == "" {
+		log.Fatalln("Missing Couchbase Server settings.")
+	}
 }
 
 func main() {
-	pkgDir = os.Getenv("GOPATH") + "/src/github.com/couchbaselabs/showfast/"
-	web.Config.StaticDir = pkgDir + "app"
-
-	configFile, err := ioutil.ReadFile(pkgDir + "config.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var config Config
-	err = json.Unmarshal(configFile, &config)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	dataSource = DataSource{config.CouchbaseAddress, config.BucketPassword}
+	dataSource = DataSource{cbHost, cbPass}
 
 	web.Get("/", home)
 	web.Get("/admin", admin)
 	web.Get("/release", release)
 	web.Get("/feed", feed)
+
+	web.Config.StaticDir = staticDir
 
 	web.Get("/all_metrics", dataSource.getAllMetrics)
 	web.Get("/all_clusters", dataSource.getAllClusters)
@@ -101,5 +99,5 @@ func main() {
 	web.Post("/delete", deleteBenchmark)
 	web.Post("/reverse_obsolete", reverseObsolete)
 
-	web.Run(config.ListenAddress)
+	web.Run(address)
 }

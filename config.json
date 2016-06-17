@@ -1,5 +1,0 @@
-{
-	"CouchbaseAddress": "127.0.0.1:8091",
-	"BucketPassword": "password",
-	"ListenAddress": "127.0.0.1:8000"
-}
