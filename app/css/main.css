@@ -46,8 +46,12 @@ hr {
     margin-left: 2%;
 }
 
-.t-data {
+.t-header, .t-data {
     font-size: 87%;
+}
+
+.t-data {
+    font-family: "Courier";
 }
 
 .col-center {

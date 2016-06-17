@@ -15,16 +15,16 @@
 		<div>
 			<table class="table-striped table-bordered table-condensed t-inventory">
 				<colgroup>
-					<col span="1" style="width: 25%;">
-					<col span="1" style="width: 42%;">
-					<col span="1" style="width: 14%;">
+					<col span="1" style="width: 22%;">
+					<col span="1" style="width: 43%;">
+					<col span="1" style="width: 17%;">
 					<col span="1" style="width: 8%;">
-					<col span="1" style="width: 8%;">
+					<col span="1" style="width: 7%;">
 					<col span="1" style="width: 3%;">
 				</colgroup>
 
-				<thead>
-					<tr class="t-data">
+				<thead class="t-header">
+					<tr>
 						<th>ID</th>
 						<th>Metric</th>
 						<th>Build</th>
@@ -34,8 +34,8 @@
 					</tr>
 				</thead>
 
-				<tbody>
-					<tr ng-repeat="benchmark in benchmarks" class="t-data">
+				<tbody class="t-data">
+					<tr ng-repeat="benchmark in benchmarks">
 						<td>{{benchmark.id}}</td>
 						<td>{{benchmark.metric}}</td>
 						<td class="col-center">{{benchmark.build}}</td>
