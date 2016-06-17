@@ -1,51 +1,68 @@
-<html>
+<html ng-app="sf-release">
+
 <head>
 	<title>ShowFast</title>
 	<link rel="stylesheet" href="/css/vendor/bootstrap.min.css"/>
-	<link rel="stylesheet" href="/css/main.css"/>
-	<script type="text/javascript" src="/js/vendor/jquery-2.2.4.min.js"></script>
-	<script type="text/javascript" src="/js/vendor/jquery.cookie.js"></script>
+	<link rel="stylesheet" href="/css/release.css" />
+
+	<script type="text/javascript" src="/js/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/vendor/jquery.cookie.min.js"></script>
 	<script type="text/javascript" src="/js/vendor/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/js/vendor/angular.js"></script>
-	<script type="text/javascript" src="/js/vendor/angular-route.js"></script>
+	<script type="text/javascript" src="/js/vendor/angular.min.js"></script>
 	<script type="text/javascript" src="/js/controller.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
 </head>
-<body ng-app ng-controller="ReleaseList">
+
+<body ng-controller="ReleaseList">
 	<div class="text-center">
 		<h2>Release dashboard</h2>
-		<div class="btn-group" data-toggle="buttons-radio">
-			<button
+
+		<div class="btn-group" data-toggle="buttons">
+			<label
 				ng-repeat="baseline in baselines"
 				ng-class="{active: baseline == selectedBaseline}"
 				ng-click="setSelectedBaseline(baseline)"
-				class="btn btn-success">{{baseline}}</button>
+				class="btn btn-success">
+				<input type="radio">{{baseline}}
+			</label>
 		</div>
-		<span class="vs"><b>&nbsp;vs.&nbsp;</b></span>
-		<div class="btn-group" data-toggle="buttons-radio">
-			<button
+		<div class="vs">
+			<strong>vs</strong>
+		</div>
+		<div class="btn-group" data-toggle="buttons">
+			<label
 				ng-repeat="target in targets"
 				ng-class="{active: target == selectedTarget}"
 				ng-click="setSelectedTarget(target)"
-				class="btn btn-warning">{{target}}</button>
+				class="btn btn-warning">
+				<input type="radio">{{target}}
+			</label>
 		</div>
-		<table class="table-striped table-bordered table-condensed t-release">
-			<tr>
-				<th class="t-data t-r-metric">Metric</th>
-				<th class="t-data t-comparison">Comparison</th>
-				<th class="t-data t-baseline">Baseline Build</th>
-				<th class="t-data t-target">Target Build</th>
-			</tr>
-			<tr ng-repeat="metric in metrics">
-				<td class="t-data t-r-metric">
-					<span class="metric-descr"><b>{{metric.title}}</b><span><br>
-					<span class="metric-cluster">{{metric.cluster.OS}} / {{metric.cluster.Disk}}<span>
-				</td>
-				<td class="t-data t-comparison {{metric.class}}">{{metric.comparison}}</td>
-				<td class="t-data t-baseline">{{metric.baseline}}</td>
-				<td class="t-data t-target">{{metric.target}}</td>
-			</tr>
+
+		<table class="table-striped table-bordered table-condensed t-release t-data">
+			<thead>
+				<tr>
+					<th class="t-metric">Metric</th>
+					<th class="t-comparison">Comparison</th>
+					<th class="t-baseline">Baseline Build</th>
+					<th class="t-target">Target Build</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr ng-repeat="metric in metrics">
+					<td class="t-metric">
+						<span class="metric-descr"><b>{{metric.title}}</b></span>
+						<br>
+						<span class="metric-cluster">{{metric.cluster.OS}} / {{metric.cluster.Disk}}</span>
+					</td>
+					<td class="t-comparison {{metric.class}}">{{metric.comparison}}</td>
+					<td class="t-baseline">{{metric.baseline}}</td>
+					<td class="t-target">{{metric.target}}</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
-</div>
 </body>
+
 </html>

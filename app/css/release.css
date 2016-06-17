@@ -1,0 +1,37 @@
+.vs {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.t-release {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 20px;
+}
+
+.t-header, .t-data {
+    font-size: 85%;
+}
+
+.t-metric {
+    text-align: left;
+}
+
+.t-baseline, .t-target, .t-comparison {
+    text-align: center;
+}
+
+.metric-cluster {
+    font-size: 85%;
+    color: #999;
+}
+
+.better {
+    color: #51a351;
+    font-weight: bold;
+}
+
+.worse {
+    color: #f89406;
+    font-weight: bold;
+}

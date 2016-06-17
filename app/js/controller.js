@@ -45,7 +45,7 @@ function MetricList($scope, $http) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
 				var id = $scope.metrics[i].id;
 				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
-                            $scope.metrics[i].link = id.replace(".", "_");
+				$scope.metrics[i].link = id.replace(".", "_");
 			}
 		});
 
@@ -233,9 +233,8 @@ function MetricList($scope, $http) {
 		},{
 			"id": "index", "title": "Index"
 		},{
-                        "id": "elastic", "title": "ElasticSearch"
-                }
-		];
+            "id": "elastic", "title": "ElasticSearch"
+        }];
 
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
@@ -296,7 +295,7 @@ function MetricList($scope, $http) {
 			$.cookie("selectedSpatialCategory", value);
 		};
 		
-                $scope.setSelectedSecondaryCategory = function (value) {
+		$scope.setSelectedSecondaryCategory = function (value) {
 			$scope.selectedSecondaryCategory = value;
 			$.cookie("selectedSecondaryCategory", value);
 		};
@@ -404,7 +403,7 @@ function MetricList($scope, $http) {
 			}
 		};
 		
-                var bySecondaryCategory = function(entry) {
+		var bySecondaryCategory = function(entry) {
 			var selectedSecondaryCategory = $scope.selectedSecondaryCategory;
 
 			if (selectedSecondaryCategory === "all") {
@@ -587,7 +586,6 @@ function MetricList($scope, $http) {
 		};
 
 		var bySubdocCategory = function(entry) {
-
 			var selectedSubdocCategory = $scope.selectedSubdocCategory;
 
 			if (selectedSubdocCategory === "all") {
@@ -602,7 +600,6 @@ function MetricList($scope, $http) {
 		};
 
 		var byFtsCategory = function(entry) {
-
 			var selectedFtsCategory = $scope.selectedFtsCategory;
 
 			if (selectedFtsCategory === "all") {
@@ -623,11 +620,11 @@ function MetricList($scope, $http) {
 			};
 		};
 
-		$scope.$on('barClick', function(event, data) {
-			var build = data.point[0],
-				metric = data.series.key,
-				a = $("#run_"  + metric.replace(".", "_"));
-			a.attr("href", "/#/runs/" + metric + "/" + build);
+		$scope.$on('elementClick.directive', function(event, data) {
+		    var build = data.data[0],
+		        metric = event.targetScope.id,
+		        a = $("#run_"  + metric);
+		    a.attr("href", "/#/runs/" + metric + "/" + build);
 			a[0].click();
 		});
 	});

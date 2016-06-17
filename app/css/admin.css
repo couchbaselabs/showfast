@@ -1,0 +1,17 @@
+.t-inventory {
+    table-layout: fixed;
+    width: 96%;
+    margin-left: 2%;
+}
+
+.t-header, .t-data {
+    font-size: 85%;
+}
+
+.t-data {
+    font-family: "Courier";
+}
+
+.col-center {
+	text-align: center;
+}

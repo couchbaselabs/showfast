@@ -2,163 +2,190 @@
 	<a target="_blank" href="/feed"> Feed</a> | <a target="_blank" href="/release">Releases</a>
 </div>
 <div class="masthead text-center">
-	<h2>Performance Dashboard</h3>
+	<h2>Performance Dashboard</h2>
 </div>
 <div class="text-center">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in categories"
 			ng-class="{active: category.id === selectedCategory}"
 			ng-click="setSelectedCategory(category.id)"
-			class="btn btn-success">{{category.title}}</button>
+			class="btn btn-success">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="os in oses"
 			ng-class="{active: os == selectedOS}"
 			ng-click="setSelectedOS(os)"
-			class="btn btn-warning">{{os}}</button>
+			class="btn btn-warning">
+			<input type="radio">{{os}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'bandr'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in backup_restore_categories"
 			ng-class="{active: category.id === selectedBackupRestoreCategory}"
 			ng-click="setSelectedBackupRestoreCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 
 <div class="text-center" ng-if="selectedCategory === 'beam'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in beam_categories"
 			ng-class="{active: category.id === selectedBeamCategory}"
 			ng-click="setSelectedBeamCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'index'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in idx_categories"
 			ng-class="{active: category.id === selectedIdxCategory}"
 			ng-click="setSelectedIdxCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'secondary'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in secondary_categories"
 			ng-class="{active: category.id === selectedSecondaryCategory}"
 			ng-click="setSelectedSecondaryCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'reb'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in reb_categories"
 			ng-class="{active: category.id === selectedRebCategory}"
 			ng-click="setSelectedRebCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'kv'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in kv_categories"
 			ng-class="{active: category.id === selectedKVCategory}"
 			ng-click="setSelectedKVCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'query'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in query_categories"
 			ng-class="{active: category.id === selectedQueryCategory}"
 			ng-click="setSelectedQueryCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'spatial'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in spatial_categories"
 			ng-class="{active: category.id === selectedSpatialCategory}"
 			ng-click="setSelectedSpatialCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'n1ql'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in n1ql_categories"
 			ng-class="{active: category.id === selectedN1QLCategory}"
 			ng-click="setSelectedN1QLCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'xdcr'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in xdcr_categories"
 			ng-class="{active: category.id === selectedXdcrCategory}"
 			ng-click="setSelectedXdcrCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'subdoc'">
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button
+	<div class="btn-group" data-toggle="buttons">
+		<label
 			ng-repeat="category in subdoc_categories"
 			ng-class="{active: category.id === selectedSubdocCategory}"
 			ng-click="setSelectedSubdocCategory(category.id)"
-			class="btn">{{category.title}}</button>
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
 	</div>
 </div>
 <div class="text-center" ng-if="selectedCategory === 'fts'">
-        <div class="btn-group" data-toggle="buttons-radio">
-                <button
-                        ng-repeat="category in fts_categories"
-                        ng-class="{active: category.id === selectedFtsCategory}"
-                        ng-click="setSelectedFtsCategory(category.id)"
-                        class="btn">{{category.title}}</button>
-        </div>
+	<div class="btn-group" data-toggle="buttons">
+		<label
+			ng-repeat="category in fts_categories"
+			ng-class="{active: category.id === selectedFtsCategory}"
+			ng-click="setSelectedFtsCategory(category.id)"
+			class="btn btn-default">
+			<input type="radio">{{category.title}}
+		</label>
+	</div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}"
-		ng-repeat="metric in metrics | filter:byCategory | filter:byOS">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory | filter:byOS">
 	<hr/>
 	<h4>
-		<span id="{{metric.id}}" data-larger-is-better="{{metric.larger_is_better}}">
-			{{metric.title}}
+		<span id="{{metric.id}}">
+			<strong>{{metric.title}}</strong>
 		</span>
 	</h4>
-	<span class="muted"><strong>Cluster: </strong>{{metric.cluster.Name}}</span>
-	<span class="muted"><strong>Platform: </strong>{{metric.cluster.Platform}}</span>
-	<span class="muted"><strong>OS: </strong>{{metric.cluster.OS}}</span>
-	<span class="muted"><strong>CPU: </strong>{{metric.cluster.CPU}}</span>
-	<span class="muted"><strong>Memory: </strong>{{metric.cluster.Memory}}</span>
-	<span class="muted"><strong>Disk: </strong>{{metric.cluster.Disk}}</span>
-	<div class="column-chart" id="chart_{{$metric.link}}">
+	<span class="text-muted"><strong>Cluster: </strong>{{metric.cluster.Name}}</span>
+	<span class="text-muted"><strong>Platform: </strong>{{metric.cluster.Platform}}</span>
+	<span class="text-muted"><strong>OS: </strong>{{metric.cluster.OS}}</span>
+	<span class="text-muted"><strong>CPU: </strong>{{metric.cluster.CPU}}</span>
+	<span class="text-muted"><strong>Memory: </strong>{{metric.cluster.Memory}}</span>
+	<span class="text-muted"><strong>Disk: </strong>{{metric.cluster.Disk}}</span>
+	<div class="column-chart">
 		<nvd3-discrete-bar-chart
 			data="metric.chartData"
-			id="chart_{{$index}}"
+			id="{{metric.link}}"
 			margin="{left: 50, top: 5, bottom: 15, right: 0}"
 			color="['#50aa43']"
 			showXAxis="true"
@@ -166,7 +193,7 @@
 			showValues="true"
 			valueFormat="valueFormatFunction()"
 			forceY="[0]"
-		><svg></svg></nvd3-line-chart>
+		><svg></svg></nvd3-discrete-bar-chart>
 	</div>
 	<a id="run_{{metric.link}}"></a>
 </div>
