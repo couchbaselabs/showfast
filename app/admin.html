@@ -30,9 +30,9 @@
 					<tr>
 						<th>ID</th>
 						<th>Metric</th>
-						<th>Build</th>
-						<th>Value</th>
-						<th>Obsolete</th>
+						<th class="col-center">Build</th>
+						<th class="col-center">Value</th>
+						<th class="col-center">Hidden</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -48,7 +48,7 @@
 							<input ng-click="reverseObsolete(benchmark.id)" type="checkbox" ng-if="!benchmark.obsolete">
 						</td>
 						<td class="col-center">
-							<i class="icon-remove" ng-click="deleteBenchmark(benchmark)"></i>
+							<span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="deleteBenchmark(benchmark)"></span>
 						</td>
 					</tr>
 				</tbody>
