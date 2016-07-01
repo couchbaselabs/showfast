@@ -242,9 +242,9 @@ function MetricList($scope, $http) {
         $scope.ycsb_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "workloada", "title": "Workloada"
+			"id": "workloada", "title": "Workload A"
 		}, {
-			"id": "workloade", "title": "Workloade"
+			"id": "workloade", "title": "Workload E"
 		}];
 
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
