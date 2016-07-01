@@ -169,6 +169,16 @@
 	</div>
 </div>
 
+<div class="text-center" ng-if="selectedCategory === 'ycsb'">
+        <div class="btn-group" data-toggle="buttons-radio">
+                <button
+                        ng-repeat="category in ycsb_categories"
+                        ng-class="{active: category.id === selectedYcsbCategory}"
+                        ng-click="setSelectedYcsbCategory(category.id)"
+                        class="btn">{{category.title}}</button>
+        </div>
+</div>
+
 <div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory | filter:byOS">
 	<hr/>
 	<h4>
