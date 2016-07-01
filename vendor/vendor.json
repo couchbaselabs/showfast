@@ -31,6 +31,18 @@
 			"path": "github.com/couchbase/goutils/logging",
 			"revision": "5823a0cbaaa9008406021dc5daf80125ea30bba6",
 			"revisionTime": "2016-03-11T02:08:04Z"
+		},
+		{
+			"checksumSHA1": "R522LHnNanrU8+XjcBFOOFOJavs=",
+			"path": "github.com/hoisie/web",
+			"revision": "bb5992ad5e02a2b8bd2a69fae788781d4b1f80a9",
+			"revisionTime": "2016-01-28T00:05:05Z"
+		},
+		{
+			"checksumSHA1": "likOl7O0BJntqagR050kkOBuY4o=",
+			"path": "golang.org/x/net/websocket",
+			"revision": "b400c2eff1badec7022a8c8f5bea058b6315eed7",
+			"revisionTime": "2016-06-19T19:44:24Z"
 		}
 	],
 	"rootPath": "github.com/couchbaselabs/showfast"
