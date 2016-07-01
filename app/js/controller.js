@@ -73,7 +73,10 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}, {
 			"id": "fts", "title": "FTS"
+		}, {
+			"id": "ycsb", "title": "YCSB"
 		}
+
 		];
 
 		$scope.reb_categories = [{
@@ -236,6 +239,14 @@ function MetricList($scope, $http) {
             "id": "elastic", "title": "ElasticSearch"
         }];
 
+        $scope.ycsb_categories = [{
+			"id": "all", "title": "All"
+		}, {
+			"id": "workloada", "title": "Workload A"
+		}, {
+			"id": "workloade", "title": "Workload E"
+		}];
+
 		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
 		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
@@ -249,6 +260,7 @@ function MetricList($scope, $http) {
 		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
 		$scope.selectedSubdocCategory = $.cookie("selectedSubdocCategory") || "all";
 		$scope.selectedFtsCategory = $.cookie("selectedFtsCategory") || "all";
+		$scope.selectedYcsbCategory = $.cookie("selectedYcsbCategory") || "all";
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -313,6 +325,11 @@ function MetricList($scope, $http) {
 		$scope.setSelectedFtsCategory = function (value) {
 			$scope.selectedFtsCategory = value;
 			$.cookie("selectedFtsCategory", value);
+		};
+
+		$scope.setSelectedYcsbCategory = function (value) {
+			$scope.selectedYcsbCategory = value;
+			$.cookie("selectedYcsbCategory", value);
 		};
 
 		$scope.byCategory = function(entry) {
@@ -382,6 +399,11 @@ function MetricList($scope, $http) {
 						return byFtsCategory(entry);
 					}
 					break;
+				case "ycsb":
+					if (entryCategory === selectedCategory) {
+						return byYcsbCategory(entry);
+					}
+					break;	
 				case entryCategory:
 					return true;
 				default:
@@ -606,6 +628,20 @@ function MetricList($scope, $http) {
 				return true;
 			} else {
 				if (entry.id.indexOf(selectedFtsCategory) !== -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+
+		var byYcsbCategory = function(entry) {
+			var selectedYcsbCategory = $scope.selectedYcsbCategory;
+
+			if (selectedYcsbCategory === "all") {
+				return true;
+			} else {
+				if (entry.id.indexOf(selectedYcsbCategory) !== -1) {
 					return true;
 				} else {
 					return false;
