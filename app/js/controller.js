@@ -180,8 +180,6 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "fragmentation", "title": "Memory"
 		}, {
-			"id": "bgfetcher", "title": "BgFetcher"
-		}, {
 			"id": "drain", "title": "Flusher"
 		}, {
 			"id": "max_ops", "title": "Max Throughput"
