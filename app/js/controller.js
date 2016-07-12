@@ -143,6 +143,8 @@ function MetricList($scope, $http) {
 			"id": "ongoing", "title": "Ongoing"
 		}, {
 			"id": "init", "title": "Initial"
+		}, {
+			"id": "reb", "title": "Initial+Rebalance"
 		}];
 
 		$scope.backup_restore_categories = [{
@@ -443,11 +445,18 @@ function MetricList($scope, $http) {
 							return true;
 						}
 						break;
-					case "ongoing":
-						if (entry.id.indexOf("init") === -1) {
+					case "reb":
+						if (entry.id.indexOf("reb") !== -1) {
 							return true;
 						}
 						break;
+					case "ongoing":
+						if (entry.id.indexOf("init") === -1 &&
+						        entry.id.indexOf("reb") === -1) {
+							return true;
+						}
+						break;
+
 					default:
 						return false;
 			}
