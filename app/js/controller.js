@@ -73,9 +73,7 @@ function MetricList($scope, $http) {
 			"id": "fts", "title": "FTS"
 		}, {
 			"id": "ycsb", "title": "YCSB"
-		}
-
-		];
+		}];
 
 		$scope.reb_categories = [{
 			"id": "all", "title": "All"
@@ -138,7 +136,7 @@ function MetricList($scope, $http) {
 		},  {
             "id": "wl", "title": "Archive"
 		}];
-		
+
 		$scope.xdcr_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -195,30 +193,6 @@ function MetricList($scope, $http) {
 			"id": "thr", "title": "Throughput"
 		}];
 
-		$scope.spatial_categories = [{
-			"id": "all", "title": "All"
-		}, {
-			"id": "lat", "title": "Latency"
-		}, {
-			"id": "index", "title": "Index Creation"
-		}, {
-			"id": "thr", "title": "Throughput"
-		}, {
-			"id": "reb", "title": "Rebalance"
-		}];
-
-		$scope.spatial_categories = [{
-			"id": "all", "title": "All"
-		}, {
-			"id": "lat", "title": "Latency"
-		}, {
-			"id": "index", "title": "Index Creation"
-		}, {
-			"id": "thr", "title": "Throughput"
-		}, {
-			"id": "reb", "title": "Rebalance"
-		}];
-
 		$scope.fts_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -247,7 +221,6 @@ function MetricList($scope, $http) {
 		$scope.selectedBackupRestoreCategory = $.cookie("selectedBackupRestoreCategory") || "all";
 		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
 		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
-		$scope.selectedQueryCategory = $.cookie("selectedSpatialCategory") || "all";
 		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
 		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
 		$scope.selectedFtsCategory = $.cookie("selectedFtsCategory") || "all";
@@ -291,11 +264,6 @@ function MetricList($scope, $http) {
 		$scope.setSelectedQueryCategory = function (value) {
 			$scope.selectedQueryCategory = value;
 			$.cookie("selectedQueryCategory", value);
-		};
-		
-		$scope.setSelectedSpatialCategory = function (value) {
-			$scope.selectedSpatialCategory = value;
-			$.cookie("selectedSpatialCategory", value);
 		};
 		
 		$scope.setSelectedSecondaryCategory = function (value) {
@@ -358,11 +326,6 @@ function MetricList($scope, $http) {
 				case "query":
 					if (entryCategory === selectedCategory) {
 						return byQueryCategory(entry);
-					}
-					break;
-				case "spatial":
-					if (entryCategory === selectedCategory) {
-						return bySpatialCategory(entry);
 					}
 					break;
 				case "n1ql":
@@ -539,20 +502,6 @@ function MetricList($scope, $http) {
 				return true;
 			} else {
 				if (entry.id.indexOf(selectedQueryCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		};
-		
-		var bySpatialCategory = function(entry) {
-			var selectedSpatialCategory = $scope.selectedSpatialCategory;
-
-			if (selectedSpatialCategory === "all") {
-				return true;
-			} else {
-				if (entry.id.indexOf(selectedSpatialCategory) !== -1) {
 					return true;
 				} else {
 					return false;

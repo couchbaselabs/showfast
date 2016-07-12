@@ -110,18 +110,6 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'spatial'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in spatial_categories"
-			ng-class="{active: category.id === selectedSpatialCategory}"
-			ng-click="setSelectedSpatialCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
 <div class="text-center" ng-if="selectedCategory === 'n1ql'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
@@ -140,18 +128,6 @@
 			ng-repeat="category in xdcr_categories"
 			ng-class="{active: category.id === selectedXdcrCategory}"
 			ng-click="setSelectedXdcrCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="selectedCategory === 'subdoc'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in subdoc_categories"
-			ng-class="{active: category.id === selectedSubdocCategory}"
-			ng-click="setSelectedSubdocCategory(category.id)"
 			class="btn btn-default">
 			<input type="radio">{{category.title}}
 		</label>
