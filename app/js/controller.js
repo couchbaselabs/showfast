@@ -174,6 +174,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "observe", "title": "Observe"
 		}, {
+			"id": "durability", "title": "Durability"
+		}, {
 			"id": "warmup", "title": "Warmup"
 		}, {
 			"id": "fragmentation", "title": "Memory"
