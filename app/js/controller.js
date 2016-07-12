@@ -58,8 +58,6 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "kv", "title": "KV"
 		}, {
-			"id": "subdoc", "title": "Sub Doc"
-		}, {
 			"id": "reb", "title": "Rebalance"
 		}, {
 			"id": "index", "title": "View Indexing"
@@ -176,6 +174,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "durability", "title": "Durability"
 		}, {
+			"id": "subdoc", "title": "Sub Doc"
+		}, {
 			"id": "warmup", "title": "Warmup"
 		}, {
 			"id": "fragmentation", "title": "Memory"
@@ -221,14 +221,6 @@ function MetricList($scope, $http) {
 			"id": "reb", "title": "Rebalance"
 		}];
 
-		$scope.subdoc_categories = [{
-			"id": "all", "title": "All"
-		}, {
-			"id": "latency", "title": "Latency"
-		}, {
-			"id": "bandwidth", "title": "Bandwidth"
-		}];
-
 		$scope.fts_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -260,7 +252,6 @@ function MetricList($scope, $http) {
 		$scope.selectedQueryCategory = $.cookie("selectedSpatialCategory") || "all";
 		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
 		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
-		$scope.selectedSubdocCategory = $.cookie("selectedSubdocCategory") || "all";
 		$scope.selectedFtsCategory = $.cookie("selectedFtsCategory") || "all";
 		$scope.selectedYcsbCategory = $.cookie("selectedYcsbCategory") || "all";
 
@@ -317,11 +308,6 @@ function MetricList($scope, $http) {
 		$scope.setSelectedN1QLCategory = function (value) {
 			$scope.selectedN1QLCategory = value;
 			$.cookie("selectedN1QLCategory", value);
-		};
-
-		$scope.setSelectedSubdocCategory = function (value) {
-			$scope.selectedSubdocCategory = value;
-			$.cookie("selectedSubdocCategory", value);
 		};
 
 		$scope.setSelectedFtsCategory = function (value) {
@@ -389,11 +375,6 @@ function MetricList($scope, $http) {
 				case "xdcr":
 					if (entryCategory === selectedCategory) {
 						return byXdcrCategory(entry);
-					}
-					break;
-				case "subdoc":
-					if (entryCategory === selectedCategory) {
-						return bySubdocCategory(entry);
 					}
 					break;
 				case "fts":
@@ -607,20 +588,6 @@ function MetricList($scope, $http) {
                     return false;
                 }
             }
-		};
-
-		var bySubdocCategory = function(entry) {
-			var selectedSubdocCategory = $scope.selectedSubdocCategory;
-
-			if (selectedSubdocCategory === "all") {
-				return true;
-			} else {
-				if (entry.id.indexOf(selectedSubdocCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
-			}
 		};
 
 		var byFtsCategory = function(entry) {
