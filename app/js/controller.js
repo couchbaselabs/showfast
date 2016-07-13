@@ -87,8 +87,6 @@ function MetricList($scope, $http) {
 			"id": "xdcr", "title": "XDCR"
 		}, {
 			"id": "failover", "title": "Failover"
-		}, {
-			"id": "failover_views", "title": "Failover+Views"
 		}];
 
 		$scope.idx_categories = [{
@@ -392,12 +390,6 @@ function MetricList($scope, $http) {
 				return true;
 			} else {
 				switch(selectedRebCategory) {
-					case "failover_views":
-						if (entry.id.indexOf("failover") !== -1 &&
-								entry.id.indexOf("views") !== -1) {
-							return true;
-						}
-						break;
 					case "failover":
 						if (entry.id.indexOf("failover") !== -1 &&
 								entry.id.indexOf("views") === -1) {
