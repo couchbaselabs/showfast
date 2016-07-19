@@ -112,27 +112,27 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "memdb", "title": "MOI"
 		}];
-		
-        $scope.n1ql_categories = [{
+
+		$scope.n1ql_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "lat", "title": "Latency"
+			"id": "fdb_thr", "title": "Throughput FDB"
 		}, {
-            "id": "thr", "title": "Throughput"
+			"id": "moi_thr", "title": "Throughput MOI"
 		}, {
-            "id": "vs", "title": "CE vs. EE"
+			"id": "fdb_lat", "title": "Latency FDB"
 		}, {
-            "id": "part", "title": "Partitioned"
-		}, {
-			"id": "moi", "title": "MOI"
+			"id": "moi_lat", "title": "Latency MOI"
 		}, {
 			"id": "array", "title": "Array"
 		}, {
-			"id": "CI", "title": "Covering"
+			"id": "part", "title": "Partitioned"
+		}, {
+			"id": "vs", "title": "CE vs. EE"
 		}, {
 			"id": "_Q", "title": "Query"
-		},  {
-            "id": "wl", "title": "Archive"
+		}, {
+			"id": "CI", "title": "Covering"
 		}];
 
 		$scope.xdcr_categories = [{
@@ -202,10 +202,10 @@ function MetricList($scope, $http) {
 		},{
 			"id": "index", "title": "Index"
 		},{
-            "id": "elastic", "title": "ElasticSearch"
-        }];
+			"id": "elastic", "title": "ElasticSearch"
+		}];
 
-        $scope.ycsb_categories = [{
+		$scope.ycsb_categories = [{
 			"id": "all", "title": "All"
 		}, {
 			"id": "workloada", "title": "Workload A"
@@ -360,69 +360,57 @@ function MetricList($scope, $http) {
 
 			if (selectedIdxCategory === "all") {
 				return true;
-			} else {
-				if (entry.id.indexOf(selectedIdxCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
 			}
+			return entry.id.indexOf(selectedIdxCategory) !== -1;
 		};
-		
+
 		var bySecondaryCategory = function(entry) {
 			var selectedSecondaryCategory = $scope.selectedSecondaryCategory;
 
 			if (selectedSecondaryCategory === "all") {
 				return true;
-			} else {
-				if (entry.id.indexOf(selectedSecondaryCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
 			}
+			return entry.id.indexOf(selectedSecondaryCategory) !== -1;
 		};
 
 		var byRebCategory = function(entry) {
 			var selectedRebCategory = $scope.selectedRebCategory;
 
-			if (selectedRebCategory === "all") {
-				return true;
-			} else {
-				switch(selectedRebCategory) {
-					case "failover":
-						if (entry.id.indexOf("failover") !== -1 &&
-								entry.id.indexOf("views") === -1) {
-							return true;
-						}
-						break;
-					case "empty":
-						if (entry.id.indexOf("0_kv_") !== -1) {
-							return true;
-						}
-						break;
-					case "views":
-						if (entry.id.indexOf("views") !== -1 &&
-								entry.id.indexOf("failover") === -1) {
-							return true;
-						}
-						break;
-					case "xdcr":
-						if (entry.id.indexOf("xdcr") !== -1) {
-							return true;
-						}
-						break;
-					case "kv":
-						if (entry.id.indexOf("0_kv_") === -1 &&
-								entry.id.indexOf("views") === -1 &&
-								entry.id.indexOf("failover") === -1 &&
-								entry.id.indexOf("xdcr") === -1) {
-							return true;
-						}
-						break;
-					default:
-						return false;
-				}
+			switch(selectedRebCategory) {
+				case "all":
+					return true;
+				case "failover":
+					if (entry.id.indexOf("failover") !== -1 &&
+							entry.id.indexOf("views") === -1) {
+						return true;
+					}
+					break;
+				case "empty":
+					if (entry.id.indexOf("0_kv_") !== -1) {
+						return true;
+					}
+					break;
+				case "views":
+					if (entry.id.indexOf("views") !== -1 &&
+							entry.id.indexOf("failover") === -1) {
+						return true;
+					}
+					break;
+				case "xdcr":
+					if (entry.id.indexOf("xdcr") !== -1) {
+						return true;
+					}
+					break;
+				case "kv":
+					if (entry.id.indexOf("0_kv_") === -1 &&
+							entry.id.indexOf("views") === -1 &&
+							entry.id.indexOf("failover") === -1 &&
+							entry.id.indexOf("xdcr") === -1) {
+						return true;
+					}
+					break;
+				default:
+					return false;
 			}
 		};
 
@@ -430,27 +418,26 @@ function MetricList($scope, $http) {
 			var selectedXdcrCategory = $scope.selectedXdcrCategory;
 
 			switch(selectedXdcrCategory) {
-					case "all":
+				case "all":
+					return true;
+				case "init":
+					if (entry.id.indexOf("init") !== -1) {
 						return true;
-					case "init":
-						if (entry.id.indexOf("init") !== -1) {
-							return true;
-						}
-						break;
-					case "reb":
-						if (entry.id.indexOf("reb") !== -1) {
-							return true;
-						}
-						break;
-					case "ongoing":
-						if (entry.id.indexOf("init") === -1 &&
-						        entry.id.indexOf("reb") === -1) {
-							return true;
-						}
-						break;
-
-					default:
-						return false;
+					}
+					break;
+				case "reb":
+					if (entry.id.indexOf("reb") !== -1) {
+						return true;
+					}
+					break;
+				case "ongoing":
+					if (entry.id.indexOf("init") === -1 &&
+							entry.id.indexOf("reb") === -1) {
+						return true;
+					}
+					break;
+				default:
+					return false;
 			}
 		};
 
@@ -459,13 +446,9 @@ function MetricList($scope, $http) {
 
 			if (selectedBackupRestoreCategory === "all") {
 				return true;
-			} else {
-				if (entry.id.indexOf(selectedBackupRestoreCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
 			}
+
+			return entry.id.indexOf(selectedBackupRestoreCategory) !== -1;
 		};
 
 		var byBeamCategory = function(entry) {
@@ -473,13 +456,9 @@ function MetricList($scope, $http) {
 
 			if (selectedBeamCategory === "all") {
 				return true;
-			} else {
-				if (entry.id.indexOf(selectedBeamCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
 			}
+
+			return entry.id.indexOf(selectedBeamCategory) !== -1;
 		};
 
 		var byKVCategory = function(entry) {
@@ -487,13 +466,8 @@ function MetricList($scope, $http) {
 
 			if (selectedKVCategory === "all") {
 				return true;
-			} else {
-				if (entry.id.indexOf(selectedKVCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
 			}
+			return entry.id.indexOf(selectedKVCategory) !== -1;
 		};
 
 		var byQueryCategory = function(entry) {
@@ -501,41 +475,46 @@ function MetricList($scope, $http) {
 
 			if (selectedQueryCategory === "all") {
 				return true;
-			} else {
-				if (entry.id.indexOf(selectedQueryCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
 			}
+			return entry.id.indexOf(selectedQueryCategory) !== -1;
 		};
-		
-        var byN1QLCategory = function(entry) {
+
+		var byN1QLCategory = function(entry) {
 			var selectedN1QLCategory = $scope.selectedN1QLCategory;
 
-            if (selectedN1QLCategory === "all") {
-                if (entry.id.indexOf("wl") == -1) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else if (selectedN1QLCategory === "part") {
-                if (entry.id.indexOf(selectedN1QLCategory) !== -1 ||
-                    entry.id.indexOf("thr_Q2") !== -1 ||
-                    entry.id.indexOf("thr_Q3") !== -1) {
-                    return true;
-                } else {
-                    return false;
-                }
-
-            } else {
-                if (entry.id.indexOf(selectedN1QLCategory) !== -1 &&
-                    entry.id.indexOf("part") == -1) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+			switch(selectedN1QLCategory) {
+				case "all":
+					return true;
+				case "fdb_thr":
+					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_moi_") === -1 && entry.id.indexOf("_part") === -1 && entry.id.indexOf("_array_") === -1) {
+						return true;
+					}
+					break;
+				case "fdb_lat":
+					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_moi_") === -1) {
+						return true;
+					}
+					break;
+				case "moi_thr":
+					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+				case "moi_lat":
+					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+				case "part":
+					if (entry.id.indexOf(selectedN1QLCategory) !== -1 ||
+							entry.id.indexOf("thr_Q2") !== -1 ||
+							entry.id.indexOf("thr_Q3") !== -1) {
+						return true;
+					}
+					break;
+				default:
+					return entry.id.indexOf(selectedN1QLCategory) !== -1;
+			}
 		};
 
 		var byFtsCategory = function(entry) {
@@ -543,13 +522,8 @@ function MetricList($scope, $http) {
 
 			if (selectedFtsCategory === "all") {
 				return true;
-			} else {
-				if (entry.id.indexOf(selectedFtsCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
 			}
+			return entry.id.indexOf(selectedFtsCategory) !== -1;
 		};
 
 		var byYcsbCategory = function(entry) {
@@ -557,13 +531,8 @@ function MetricList($scope, $http) {
 
 			if (selectedYcsbCategory === "all") {
 				return true;
-			} else {
-				if (entry.id.indexOf(selectedYcsbCategory) !== -1) {
-					return true;
-				} else {
-					return false;
-				}
 			}
+			return entry.id.indexOf(selectedYcsbCategory) !== -1;
 		};
 
 		var format = d3.format(',');
@@ -574,10 +543,10 @@ function MetricList($scope, $http) {
 		};
 
 		$scope.$on('elementClick.directive', function(event, data) {
-		    var build = data.data[0],
-		        metric = event.targetScope.id,
-		        a = $("#run_"  + metric);
-		    a.attr("href", "/#/runs/" + metric + "/" + build);
+			var build = data.data[0],
+				metric = event.targetScope.id,
+				a = $("#run_"  + metric);
+			a.attr("href", "/#/runs/" + metric + "/" + build);
 			a[0].click();
 		});
 	});
