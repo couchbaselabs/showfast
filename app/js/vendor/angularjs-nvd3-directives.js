@@ -792,9 +792,7 @@
       if ( d3.select( '#' + attrs.id + ' svg' ).empty() ) {
         d3.select( '#' + attrs.id ).append( 'svg' );
       }
-      d3.select( '#' + attrs.id + ' svg' ).attr( 'height', scope.height ).attr( 'width', scope.width ).datum( data ).transition().duration( attrs.transitionduration === undefined ? 250 : +attrs.transitionduration ).call( chart )
-        .selectAll(".nv-x text")
-        .text(function( txt ){ txt = txt || ""; return txt.replace("-enterprise", "") });
+      d3.select( '#' + attrs.id + ' svg' ).attr( 'height', scope.height ).attr( 'width', scope.width ).datum( data ).transition().duration( attrs.transitionduration === undefined ? 250 : +attrs.transitionduration ).call( chart );
     }
   }
   angular.module( 'nvd3ChartDirectives', [] ).directive( 'nvd3LineChart', [
@@ -2484,7 +2482,7 @@
        * 1) the lowest value,
        * 2) the 25th percentile (i.e., the point at and below which the lowest 25% of the values reside),
        * 3) the median (a.k.a., the 50th percentile, the point at and below which 50% of the values reside),
-       * 4) the 75th percentile (i.e., the point at and below which 75% of the values reside), and
+       * 4) the 75th percentile (i.e., the point at and below which 75% of the values reside), and
        * 5) the highest value.
        */
       return {
