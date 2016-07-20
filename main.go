@@ -1,17 +1,17 @@
 package main
 
 import (
-	"encoding/json"
+	"fmt"
 	"io/ioutil"
-	"log"
+	"net/http"
 	"os"
 
-	"github.com/hoisie/web"
+	"github.com/gorilla/mux"
+	log "gopkg.in/inconshreveable/log15.v2"
 )
 
 const (
-	address   = ":8000"
-	staticDir = "app"
+	address   = "127.0.0.1:8000"
 )
 
 var (
@@ -19,85 +19,97 @@ var (
 	cbHost, cbPass string
 )
 
-func home() []byte {
+func home(rw http.ResponseWriter, r *http.Request) {
 	content, _ := ioutil.ReadFile("app/index.html")
-	return content
+	rw.Write(content)
 }
 
-func admin() []byte {
+func admin(rw http.ResponseWriter, r *http.Request) {
 	content, _ := ioutil.ReadFile("app/admin.html")
-	return content
+	rw.Write(content)
 }
 
-func release() []byte {
+func release(rw http.ResponseWriter, r *http.Request) {
 	content, _ := ioutil.ReadFile("app/release.html")
-	return content
+	rw.Write(content)
 }
 
-func feed() []byte {
+func feed(rw http.ResponseWriter, r *http.Request) {
 	content, _ := ioutil.ReadFile("app/feed.html")
-	return content
+	rw.Write(content)
 }
 
-func allRuns(ctx *web.Context) []byte {
-	metric := ctx.Params["metric"]
-	build := ctx.Params["build"]
+func allRuns(rw http.ResponseWriter, r *http.Request) {
+	metric := r.URL.Query()["metric"][0]
+	build := r.URL.Query()["build"][0]
 
-	return dataSource.getAllRuns(metric, build)
+	writeJSON(rw, dataSource.getAllRuns(metric, build))
 }
 
-func getComparison(ctx *web.Context) []byte {
-	baseline := ctx.Params["baseline"]
-	target := ctx.Params["target"]
-	return dataSource.getComparison(baseline, target)
+func getComparison(rw http.ResponseWriter, r *http.Request) {
+	baseline := r.URL.Query()["baseline"][0]
+	target := r.URL.Query()["target"][0]
+
+	writeJSON(rw, dataSource.getComparison(baseline, target))
 }
 
-func deleteBenchmark(ctx *web.Context) {
+func deleteBenchmark(rw http.ResponseWriter, r *http.Request) {
 	var params struct {
 		ID string `json:"id"`
 	}
-	body, _ := ioutil.ReadAll(ctx.Request.Body)
-	json.Unmarshal(body, &params)
-	dataSource.deleteBenchmark(params.ID)
+	if err := readJSON(r, &params); err == nil {
+		dataSource.deleteBenchmark(params.ID)
+	}
 }
 
-func reverseObsolete(ctx *web.Context) {
+func reverseObsolete(rw http.ResponseWriter, r *http.Request) {
 	var params struct {
 		ID string `json:"id"`
 	}
-	body, _ := ioutil.ReadAll(ctx.Request.Body)
-	json.Unmarshal(body, &params)
-	dataSource.reverseObsolete(params.ID)
+	if err := readJSON(r, &params); err == nil {
+		dataSource.reverseObsolete(params.ID)
+	}
 }
 
 func init() {
 	cbHost = os.Getenv("CB_HOST")
 	cbPass = os.Getenv("CB_PASS")
 	if cbHost == "" || cbPass == "" {
-		log.Fatalln("Missing Couchbase Server settings.")
+		log.Error("Missing Couchbase Server settings.")
+		os.Exit(1)
 	}
 }
 
 func main() {
 	dataSource = DataSource{cbHost, cbPass}
 
-	web.Get("/", home)
-	web.Get("/admin", admin)
-	web.Get("/release", release)
-	web.Get("/feed", feed)
+	router := mux.NewRouter()
 
-	web.Config.StaticDir = staticDir
+	router.HandleFunc("/", home).Methods("GET")
+	router.HandleFunc("/admin", admin).Methods("GET")
+	router.HandleFunc("/feed", feed).Methods("GET")
+	router.HandleFunc("/release", release).Methods("GET")
 
-	web.Get("/all_metrics", dataSource.getAllMetrics)
-	web.Get("/all_clusters", dataSource.getAllClusters)
-	web.Get("/all_timelines", dataSource.getAllTimelines)
-	web.Get("/all_benchmarks", dataSource.getAllBenchmarks)
-	web.Get("/all_runs", allRuns)
-	web.Get("/all_releases", dataSource.getAllReleases)
-	web.Get("/all_feed_records", dataSource.getAllFeedRecords)
-	web.Get("/get_comparison", getComparison)
-	web.Post("/delete", deleteBenchmark)
-	web.Post("/reverse_obsolete", reverseObsolete)
+	router.HandleFunc("/all_metrics", dataSource.getAllMetrics).Methods("GET")
+	router.HandleFunc("/all_clusters", dataSource.getAllClusters).Methods("GET")
+	router.HandleFunc("/all_timelines", dataSource.getAllTimelines).Methods("GET")
+	router.HandleFunc("/all_benchmarks", dataSource.getAllBenchmarks).Methods("GET")
+	router.HandleFunc("/all_releases", dataSource.getAllReleases).Methods("GET")
+	router.HandleFunc("/all_feed_records", dataSource.getAllFeedRecords).Methods("GET")
 
-	web.Run(address)
+	router.HandleFunc("/all_runs", allRuns).Methods("GET")
+	router.HandleFunc("/get_comparison", getComparison).Methods("GET")
+	router.HandleFunc("/delete", deleteBenchmark).Methods("POST")
+	router.HandleFunc("/reverse_obsolete", reverseObsolete).Methods("POST")
+
+	router.PathPrefix("/css").Handler(http.FileServer(http.Dir("./app")))
+	router.PathPrefix("/js").Handler(http.FileServer(http.Dir("./app")))
+	router.PathPrefix("/partials").Handler(http.FileServer(http.Dir("./app")))
+
+	http.Handle("/", router)
+
+	banner := fmt.Sprintf("\n\t.:: Serving http://%s/ ::.\n", address)
+        fmt.Println(banner)
+
+	http.ListenAndServe(address, accessLog(http.DefaultServeMux))
 }
