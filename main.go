@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	address   = "127.0.0.1:8000"
+	address   = "0.0.0.0:8000"
 )
 
 var (
