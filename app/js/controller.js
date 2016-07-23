@@ -124,7 +124,9 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "moi_lat", "title": "Latency MOI"
 		}, {
-			"id": "array", "title": "Array"
+			"id": "fdb_array", "title": "Array FDB"
+		}, {
+			"id": "moi_array", "title": "Array MOI"
 		}];
 
 		$scope.xdcr_categories = [{
@@ -497,6 +499,17 @@ function MetricList($scope, $http) {
 						return true;
 					}
 					break;
+				case "fdb_array":
+					if (entry.id.indexOf("_array_") !== -1 && entry.id.indexOf("_moi_") === -1) {
+						return true;
+					}
+					break;
+				case "moi_array":
+					if (entry.id.indexOf("_array_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+
 				default:
 					return entry.id.indexOf(selectedN1QLCategory) !== -1;
 			}
