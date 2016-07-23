@@ -496,7 +496,7 @@ function MetricList($scope, $http) {
 					}
 					break;
 				case "moi_thr":
-					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_moi_") !== -1 && entry.id.indexOf("_array_") === -1) {
 						return true;
 					}
 					break;
