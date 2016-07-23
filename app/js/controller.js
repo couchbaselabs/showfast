@@ -125,14 +125,6 @@ function MetricList($scope, $http) {
 			"id": "moi_lat", "title": "Latency MOI"
 		}, {
 			"id": "array", "title": "Array"
-		}, {
-			"id": "part", "title": "Partitioned"
-		}, {
-			"id": "vs", "title": "CE vs. EE"
-		}, {
-			"id": "_Q", "title": "Query"
-		}, {
-			"id": "CI", "title": "Covering"
 		}];
 
 		$scope.xdcr_categories = [{
@@ -502,13 +494,6 @@ function MetricList($scope, $http) {
 					break;
 				case "moi_lat":
 					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
-						return true;
-					}
-					break;
-				case "part":
-					if (entry.id.indexOf(selectedN1QLCategory) !== -1 ||
-							entry.id.indexOf("thr_Q2") !== -1 ||
-							entry.id.indexOf("thr_Q3") !== -1) {
 						return true;
 					}
 					break;
