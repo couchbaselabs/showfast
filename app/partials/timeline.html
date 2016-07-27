@@ -147,18 +147,18 @@
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'ycsb'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in ycsb_categories"
-			ng-class="{active: category.id === selectedYcsbCategory}"
-			ng-click="setSelectedYcsbCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
+        <div class="btn-group" data-toggle="buttons">
+                <label
+                        ng-repeat="category in ycsb_categories"
+                        ng-class="{active: category.id === selectedYcsbCategory}"
+                        ng-click="setSelectedYcsbCategory(category.id)"
+                        class="btn btn-default">
+                        <input type="radio">{{category.title}}
+                </label>
+        </div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory | filter:byOS">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory | filter:byOS |  orderBy:'orderby'">
 	<hr/>
 	<h4>
 		<span id="{{metric.id}}">
