@@ -147,18 +147,6 @@
 </div>
 
 <div class="text-center" ng-if="selectedCategory === 'ycsb'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in ycsb_categories"
-			ng-class="{active: category.id === selectedYcsbCategory}"
-			ng-click="setSelectedYcsbCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="selectedCategory === 'ycsb'">
         <div class="btn-group" data-toggle="buttons">
                 <label
                         ng-repeat="category in ycsb_categories"
