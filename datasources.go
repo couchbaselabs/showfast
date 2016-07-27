@@ -1,9 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"sort"
 	"strconv"
 	"strings"
@@ -86,7 +86,7 @@ func (ds *DataSource) installDDoc(ddoc string) {
 	}
 }
 
-func (ds *DataSource) getAllMetrics() []byte {
+func (ds *DataSource) getAllMetrics(rw http.ResponseWriter, r *http.Request) {
 	bMetrics := ds.getBucket("metrics")
 	rows := ds.queryView(bMetrics, "metrics", "all", map[string]interface{}{})
 	metrics := []map[string]interface{}{}
@@ -96,11 +96,10 @@ func (ds *DataSource) getAllMetrics() []byte {
 		metrics = append(metrics, metric)
 	}
 
-	j, _ := json.Marshal(metrics)
-	return j
+	writeJSON(rw, metrics)
 }
 
-func (ds *DataSource) getAllClusters() []byte {
+func (ds *DataSource) getAllClusters(rw http.ResponseWriter, r *http.Request) {
 	bClusters := ds.getBucket("clusters")
 	rows := ds.queryView(bClusters, "clusters", "all", map[string]interface{}{})
 
@@ -111,8 +110,7 @@ func (ds *DataSource) getAllClusters() []byte {
 		clusters = append(clusters, cluster)
 	}
 
-	j, _ := json.Marshal(clusters)
-	return j
+	writeJSON(rw, clusters)
 }
 
 type byBuild [][]interface{}
@@ -136,7 +134,7 @@ func (b byBuild) Less(i, j int) bool {
 	return buildI[0] < buildJ[0]
 }
 
-func (ds *DataSource) getAllTimelines() []byte {
+func (ds *DataSource) getAllTimelines(rw http.ResponseWriter, r *http.Request) {
 	bBenchmarks := ds.getBucket("benchmarks")
 	rows := ds.queryView(bBenchmarks, "benchmarks", "values_by_build_and_metric",
 		map[string]interface{}{})
@@ -157,11 +155,10 @@ func (ds *DataSource) getAllTimelines() []byte {
 		sort.Sort(byBuild(timeline))
 	}
 
-	j, _ := json.Marshal(timelines)
-	return j
+	writeJSON(rw, timelines)
 }
 
-func (ds *DataSource) getAllRuns(metric string, build string) []byte {
+func (ds *DataSource) getAllRuns(metric string, build string) interface{} {
 	bBenchmarks := ds.getBucket("benchmarks")
 	params := map[string]interface{}{
 		"startkey": []string{metric, build},
@@ -196,8 +193,8 @@ func (ds *DataSource) getAllRuns(metric string, build string) []byte {
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
-	j, _ := json.Marshal(benchmarks)
-	return j
+
+	return benchmarks
 }
 
 type Benchmark struct {
@@ -209,7 +206,7 @@ type Benchmark struct {
 	Snapshots []string `json:"snapshots"`
 }
 
-func (ds *DataSource) getAllBenchmarks() []byte {
+func (ds *DataSource) getAllBenchmarks(rw http.ResponseWriter, r *http.Request) {
 	bBenchmarks := ds.getBucket("benchmarks")
 	rows := ds.queryView(bBenchmarks, "benchmarks", "value_and_obsolete_by_build_and_metric",
 		map[string]interface{}{})
@@ -225,8 +222,8 @@ func (ds *DataSource) getAllBenchmarks() []byte {
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
-	j, _ := json.Marshal(benchmarks)
-	return j
+
+	writeJSON(rw, benchmarks)
 }
 
 func (ds *DataSource) deleteBenchmark(id string) {
@@ -254,7 +251,7 @@ func appendIfUnique(slice []string, s string) []string {
 	return append(slice, s)
 }
 
-func (ds *DataSource) getAllReleases() []byte {
+func (ds *DataSource) getAllReleases(rw http.ResponseWriter, r *http.Request) {
 	bBenchmarks := ds.getBucket("benchmarks")
 	rows := ds.queryView(bBenchmarks, "benchmarks", "metrics_by_build",
 		map[string]interface{}{})
@@ -265,11 +262,10 @@ func (ds *DataSource) getAllReleases() []byte {
 		releases = appendIfUnique(releases, release)
 	}
 
-	j, _ := json.Marshal(releases)
-	return j
+	writeJSON(rw, releases)
 }
 
-func (ds *DataSource) getComparison(baseline, target string) []byte {
+func (ds *DataSource) getComparison(baseline, target string) interface{} {
 	bMetrics := ds.getBucket("metrics")
 	bBenchmarks := ds.getBucket("benchmarks")
 	bClusters := ds.getBucket("clusters")
@@ -344,11 +340,11 @@ func (ds *DataSource) getComparison(baseline, target string) []byte {
 			}
 		}
 	}
-	j, _ := json.Marshal(reducedMetrics)
-	return j
+
+	return reducedMetrics
 }
 
-func (ds *DataSource) getAllFeedRecords() []byte {
+func (ds *DataSource) getAllFeedRecords(rw http.ResponseWriter, r *http.Request) {
 	bFeed := ds.getBucket("feed")
 	params := map[string]interface{}{
 		"descending": true,
@@ -361,6 +357,6 @@ func (ds *DataSource) getAllFeedRecords() []byte {
 		record := row.Value.(map[string]interface{})
 		records = append(records, record)
 	}
-	j, _ := json.Marshal(records)
-	return j
+
+	writeJSON(rw, records)
 }

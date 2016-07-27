@@ -4,8 +4,9 @@
 		<thead>
 			<tr>
 				<th class="t-seq">#</th>
-				<th class="t-value">Value</th>
+				<th class="t-report">Value</th>
 				<th class="t-report">HTML reports</th>
+				<th class="t-report">Jenkins build</th>
 				<th class="t-report">Rebalance flows</th>
 				<th class="t-report">Correlation matrices</th>
 			</tr>
@@ -17,7 +18,7 @@
 					{{run.seq}}
 				</td>
 
-				<td class="t-value">
+				<td class="t-report">
 					{{run.value}}
 				</td>
 
@@ -29,7 +30,14 @@
 					</a>
 				</td>
 
-				<td class="t-moves">
+				<td class="t-report">
+					<a href="{{ run.build_url }}"
+						target="_blank">
+						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+					</a>
+				</td>
+
+				<td class="t-report">
 					<a ng-if="run.master_events"
 						href="http://cbmonitor.sc.couchbase.com/reports/movements/?filename={{run.master_events}}"
 						target="_blank">
@@ -37,7 +45,7 @@
 					</a>
 				</td>
 
-				<td class="t-corr">
+				<td class="t-report">
 					<a ng-repeat="snapshot in run.snapshots"
 						href="http://cbmonitor.sc.couchbase.com/reports/corr/?snapshot={{snapshot}}"
 						target="_blank">
