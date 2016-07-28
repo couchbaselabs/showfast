@@ -54,8 +54,6 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "bandr", "title": "Backup"
 		}, {
-			"id": "beam", "title": "beam.smp"
-		}, {
 			"id": "kv", "title": "KV"
 		}, {
 			"id": "reb", "title": "Rebalance"
@@ -147,34 +145,22 @@ function MetricList($scope, $http) {
 			"id": "restore", "title": "Restore"
 		}];
 
-		$scope.beam_categories = [{
-			"id": "all", "title": "All"
-		}, {
-			"id": "kv", "title": "KV"
-		}, {
-			"id": "query", "title": "Views"
-		}, {
-			"id": "xdcr", "title": "XDCR"
-		}];
-
 		$scope.kv_categories = [{
 			"id": "all", "title": "All"
 		}, {
+			"id": "max_ops", "title": "Max Throughput"
+		}, {
 			"id": "latency", "title": "Latency"
 		}, {
-			"id": "observe", "title": "Observe"
-		}, {
 			"id": "durability", "title": "Durability"
+		}, {
+			"id": "observe", "title": "Observe"
 		}, {
 			"id": "subdoc", "title": "Sub Doc"
 		}, {
 			"id": "warmup", "title": "Warmup"
 		}, {
-			"id": "fragmentation", "title": "Memory"
-		}, {
-			"id": "drain", "title": "Flusher"
-		}, {
-			"id": "max_ops", "title": "Max Throughput"
+			"id": "fragmentation", "title": "Fragmentation"
 		}];
 
 		$scope.query_categories = [{
@@ -300,11 +286,6 @@ function MetricList($scope, $http) {
 				case "bandr":
 					if (entryCategory === selectedCategory) {
 						return byBackupRestoreCategory(entry);
-					}
-					break;
-				case "beam":
-					if (entryCategory === selectedCategory) {
-						return byBeamCategory(entry);
 					}
 					break;
 				case "reb":
