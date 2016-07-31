@@ -130,11 +130,11 @@ function MetricList($scope, $http) {
 		$scope.xdcr_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "ongoing", "title": "Ongoing"
-		}, {
 			"id": "init", "title": "Initial"
 		}, {
 			"id": "reb", "title": "Initial+Rebalance"
+		}, {
+			"id": "ongoing", "title": "Ongoing"
 		}];
 
 		$scope.backup_restore_categories = [{
