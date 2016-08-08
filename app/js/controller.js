@@ -98,17 +98,25 @@ function MetricList($scope, $http) {
 		$scope.secondary_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "lat", "title": "Latency"
+			"id": "fdb_lat", "title": "Latency FDB"
 		}, {
-			"id": "thr", "title": "Throughput"
+			"id": "fdb_thr", "title": "Throughput FDB"
 		}, {
-			"id": "init", "title": "Initial"
+			"id": "fdb_init", "title": "Initial FDB"
 		}, {
-			"id": "incr", "title": "Incremental"
+			"id": "fdb_incr", "title": "Incremental FDB"
 		}, {
-			"id": "fdb", "title": "fdb"
+			"id": "moi_lat", "title": "Latency MOI"
 		}, {
-			"id": "memdb", "title": "MOI"
+			"id": "moi_thr", "title": "Throughput MOI"
+		}, {
+			"id": "moi_init", "title": "Initial MOI"
+		}, {
+			"id": "moi_incr", "title": "Incremental MOI"
+		}, {
+			"id": "fdb", "title": "FDB"
+		}, {
+			"id": "moi", "title": "MOI"
 		}];
 
 		$scope.n1ql_categories = [{
@@ -342,10 +350,63 @@ function MetricList($scope, $http) {
 		var bySecondaryCategory = function(entry) {
 			var selectedSecondaryCategory = $scope.selectedSecondaryCategory;
 
-			if (selectedSecondaryCategory === "all") {
-				return true;
+			switch(selectedSecondaryCategory) {
+				case "all":
+					return true;
+				case "fdb_thr":
+					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+						return true;
+					}
+					break;
+				case "fdb_lat":
+					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+						return true;
+					}
+					break;
+				case "fdb_init":
+					if (entry.id.indexOf("_init_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+						return true;
+					}
+					break;
+				case "fdb_incr":
+					if (entry.id.indexOf("_incr_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+						return true;
+					}
+					break;
+				case "moi_thr":
+					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+				case "moi_lat":
+					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+				case "moi_init":
+					if (entry.id.indexOf("_init_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+				case "moi_incr":
+					if (entry.id.indexOf("_incr_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+				case "fdb":
+					if (entry.id.indexOf("_fdb_") !== -1) {
+						return true;
+					}
+					break;
+				case "moi":
+					if (entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+
+				default:
+					return entry.id.indexOf(selectedSecondaryCategory) !== -1;
 			}
-			return entry.id.indexOf(selectedSecondaryCategory) !== -1;
 		};
 
 		var byRebCategory = function(entry) {
