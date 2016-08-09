@@ -152,7 +152,7 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "latency", "title": "Latency"
 		}, {
-			"id": "durability", "title": "Durability"
+			"id": "_io_", "title": "Storage"
 		}, {
 			"id": "observe", "title": "Observe"
 		}, {
