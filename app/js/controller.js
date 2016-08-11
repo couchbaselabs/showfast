@@ -354,42 +354,42 @@ function MetricList($scope, $http) {
 				case "all":
 					return true;
 				case "fdb_thr":
-					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+					if (entry.id.indexOf("_scanthr") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
 						return true;
 					}
 					break;
 				case "fdb_lat":
-					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+					if (entry.id.indexOf("_scanlatency") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
 						return true;
 					}
 					break;
 				case "fdb_init":
-					if (entry.id.indexOf("_init_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+					if (entry.id.indexOf("_initial_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
 						return true;
 					}
 					break;
 				case "fdb_incr":
-					if (entry.id.indexOf("_incr_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+					if (entry.id.indexOf("_incremental_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
 						return true;
 					}
 					break;
 				case "moi_thr":
-					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+					if (entry.id.indexOf("_scanthr") !== -1 && entry.id.indexOf("_moi_") !== -1) {
 						return true;
 					}
 					break;
 				case "moi_lat":
-					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+					if (entry.id.indexOf("_scanlatency") !== -1 && entry.id.indexOf("_moi_") !== -1) {
 						return true;
 					}
 					break;
 				case "moi_init":
-					if (entry.id.indexOf("_init_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+					if (entry.id.indexOf("_initial_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
 						return true;
 					}
 					break;
 				case "moi_incr":
-					if (entry.id.indexOf("_incr_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+					if (entry.id.indexOf("_incremental_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
 						return true;
 					}
 					break;
