@@ -8,12 +8,12 @@ import (
 )
 
 func readJSON(req *http.Request, payload interface{}) error {
-        decoder := json.NewDecoder(req.Body)
-        err := decoder.Decode(payload)
-        if err != nil {
-                log.Error("failed to parse body", "err", err)
-        }
-        return err
+	decoder := json.NewDecoder(req.Body)
+	err := decoder.Decode(payload)
+	if err != nil {
+		log.Error("failed to parse body", "err", err)
+	}
+	return err
 }
 
 func writeJSON(rw http.ResponseWriter, payload interface{}) error {

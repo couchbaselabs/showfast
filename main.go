@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	address   = "0.0.0.0:8000"
+	address = "0.0.0.0:8000"
 )
 
 var (
@@ -109,7 +109,7 @@ func main() {
 	http.Handle("/", router)
 
 	banner := fmt.Sprintf("\n\t.:: Serving http://%s/ ::.\n", address)
-        fmt.Println(banner)
+	fmt.Println(banner)
 
 	http.ListenAndServe(address, accessLog(http.DefaultServeMux))
 }
