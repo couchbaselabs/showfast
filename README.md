@@ -2,13 +2,13 @@
 showfast
 ========
 [![Go Report Card](https://goreportcard.com/badge/github.com/couchbaselabs/showfast)](https://goreportcard.com/report/github.com/couchbaselabs/showfast)
+[![codebeat badge](https://codebeat.co/badges/1fc2a490-a39e-49be-b218-2b9289da5ae7)](https://codebeat.co/projects/github-com-couchbaselabs-showfast)
 
 Couchbase Server performance dashboard.
 
 Prerequisites
 -------------
 
-* go 1.6
 * Couchbase Server 4.x.
 
 Required buckets
