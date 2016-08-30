@@ -190,6 +190,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "workloada", "title": "Workload A"
 		}, {
+			"id": "workloadc", "title": "Workload C"
+		}, {
 			"id": "workloade", "title": "Workload E"
 		}];
 
