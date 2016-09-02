@@ -52,8 +52,6 @@ function MetricList($scope, $http) {
 		$scope.categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "bandr", "title": "Backup"
-		}, {
 			"id": "kv", "title": "KV"
 		}, {
 			"id": "reb", "title": "Rebalance"
@@ -71,6 +69,8 @@ function MetricList($scope, $http) {
 			"id": "fts", "title": "FTS"
 		}, {
 			"id": "ycsb", "title": "YCSB"
+		}, {
+			"id": "bandr", "title": "Tools"
 		}];
 
 		$scope.reb_categories = [{
