@@ -199,11 +199,12 @@ func (ds *DataSource) getAllRuns(metric string, build string) interface{} {
 
 type Benchmark struct {
 	ID        string   `json:"id"`
-	Metric    string   `json:"metric"`
 	Build     string   `json:"build"`
-	Value     float64  `json:"value"`
+	BuildURL  string   `json:"build_url"`
+	Metric    string   `json:"metric"`
 	Obsolete  bool     `json:"obsolete"`
 	Snapshots []string `json:"snapshots"`
+	Value     float64  `json:"value"`
 }
 
 func (ds *DataSource) getAllBenchmarks(rw http.ResponseWriter, r *http.Request) {
