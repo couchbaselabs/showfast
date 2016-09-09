@@ -133,6 +133,8 @@ function MetricList($scope, $http) {
 			"id": "fdb_array", "title": "Array FDB"
 		}, {
 			"id": "moi_array", "title": "Array MOI"
+		}, {
+			"id": "dml", "title": "DML"
 		}];
 
 		$scope.xdcr_categories = [{
@@ -553,7 +555,11 @@ function MetricList($scope, $http) {
 						return true;
 					}
 					break;
-
+				case "dml":
+					if (entry.id.indexOf("IN") !== -1 || entry.id.indexOf("UP") !== -1) {
+						return true;
+					}
+					break;
 				default:
 					return entry.id.indexOf(selectedN1QLCategory) !== -1;
 			}
