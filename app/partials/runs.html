@@ -8,7 +8,6 @@
 				<th class="t-report">HTML reports</th>
 				<th class="t-report">Jenkins build</th>
 				<th class="t-report">Rebalance flows</th>
-				<th class="t-report">Correlation matrices</th>
 			</tr>
 		</thead>
 
@@ -42,14 +41,6 @@
 						href="http://cbmonitor.sc.couchbase.com/reports/movements/?filename={{run.master_events}}"
 						target="_blank">
 						<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-					</a>
-				</td>
-
-				<td class="t-report">
-					<a ng-repeat="snapshot in run.snapshots"
-						href="http://cbmonitor.sc.couchbase.com/reports/corr/?snapshot={{snapshot}}"
-						target="_blank">
-						<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
 					</a>
 				</td>
 			</tr>
