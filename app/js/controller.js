@@ -145,7 +145,10 @@ function MetricList($scope, $http) {
 			"id": "reb", "title": "Initial+Rebalance"
 		}, {
 			"id": "ongoing", "title": "Ongoing"
-		}];
+		}, {
+        	"id": "lww", "title": "LWW"
+        }];
+
 
 		$scope.backup_restore_categories = [{
 			"id": "all", "title": "All"
@@ -171,7 +174,10 @@ function MetricList($scope, $http) {
 			"id": "warmup", "title": "Warmup"
 		}, {
 			"id": "fragmentation", "title": "Fragmentation"
-		}];
+		}, {
+        	"id": "lww", "title": "LWW"
+        }];
+
 
 		$scope.query_categories = [{
 			"id": "all", "title": "All"
@@ -460,8 +466,15 @@ function MetricList($scope, $http) {
 			switch(selectedXdcrCategory) {
 				case "all":
 					return true;
+				case "lww":
+                    if (entry.id.indexOf("lww") !== -1) {
+                        return true;
+                    }
+                    break;
+
 				case "init":
-					if (entry.id.indexOf("init") !== -1) {
+					if (entry.id.indexOf("init") !== -1 &&
+					        entry.id.indexOf("lww_init") === -1) {
 						return true;
 					}
 					break;
@@ -472,10 +485,13 @@ function MetricList($scope, $http) {
 					break;
 				case "ongoing":
 					if (entry.id.indexOf("init") === -1 &&
-							entry.id.indexOf("reb") === -1) {
+							entry.id.indexOf("reb") === -1 &&
+							    entry.id.indexOf("lww") === -1) {
 						return true;
 					}
 					break;
+
+
 				default:
 					return false;
 			}
