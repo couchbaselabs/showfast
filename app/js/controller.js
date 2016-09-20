@@ -146,8 +146,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "ongoing", "title": "Ongoing"
 		}, {
-        	"id": "lww", "title": "LWW"
-        }];
+			"id": "lww", "title": "LWW"
+		}];
 
 
 		$scope.backup_restore_categories = [{
@@ -175,8 +175,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "fragmentation", "title": "Fragmentation"
 		}, {
-        	"id": "lww", "title": "LWW"
-        }];
+			"id": "lww", "title": "LWW"
+		}];
 
 
 		$scope.query_categories = [{
@@ -467,14 +467,13 @@ function MetricList($scope, $http) {
 				case "all":
 					return true;
 				case "lww":
-                    if (entry.id.indexOf("lww") !== -1) {
-                        return true;
-                    }
-                    break;
-
+					if (entry.id.indexOf("lww") !== -1) {
+						return true;
+					}
+					break;
 				case "init":
 					if (entry.id.indexOf("init") !== -1 &&
-					        entry.id.indexOf("lww_init") === -1) {
+							entry.id.indexOf("lww_init") === -1) {
 						return true;
 					}
 					break;
@@ -486,12 +485,10 @@ function MetricList($scope, $http) {
 				case "ongoing":
 					if (entry.id.indexOf("init") === -1 &&
 							entry.id.indexOf("reb") === -1 &&
-							    entry.id.indexOf("lww") === -1) {
+								entry.id.indexOf("lww") === -1) {
 						return true;
 					}
 					break;
-
-
 				default:
 					return false;
 			}
