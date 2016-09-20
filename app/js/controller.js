@@ -149,7 +149,6 @@ function MetricList($scope, $http) {
 			"id": "lww", "title": "LWW"
 		}];
 
-
 		$scope.backup_restore_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -175,7 +174,7 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "fragmentation", "title": "Fragmentation"
 		}, {
-			"id": "lww", "title": "LWW"
+			"id": "compact", "title": "Compaction"
 		}];
 
 
