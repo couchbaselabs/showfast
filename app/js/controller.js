@@ -177,7 +177,6 @@ function MetricList($scope, $http) {
 			"id": "compact", "title": "Compaction"
 		}];
 
-
 		$scope.query_categories = [{
 			"id": "all", "title": "All"
 		}, {
@@ -538,37 +537,49 @@ function MetricList($scope, $http) {
 				case "all":
 					return true;
 				case "fdb_thr":
-					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_moi_") === -1 && entry.id.indexOf("_part") === -1 && entry.id.indexOf("_array_") === -1) {
+					if (entry.id.indexOf("_thr_") !== -1 &&
+						entry.id.indexOf("_moi_") === -1 &&
+						entry.id.indexOf("_part") === -1 &&
+						entry.id.indexOf("_array_") === -1 &&
+						entry.id.indexOf("IN") === -1 &&
+						entry.id.indexOf("UP") === -1) {
 						return true;
 					}
 					break;
 				case "fdb_lat":
-					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_moi_") === -1) {
+					if (entry.id.indexOf("_lat_") !== -1 &&
+						entry.id.indexOf("_moi_") === -1) {
 						return true;
 					}
 					break;
 				case "moi_thr":
-					if (entry.id.indexOf("_thr_") !== -1 && entry.id.indexOf("_moi_") !== -1 && entry.id.indexOf("_array_") === -1) {
+					if (entry.id.indexOf("_thr_") !== -1 &&
+						entry.id.indexOf("_moi_") !== -1 &&
+						entry.id.indexOf("_array_") === -1) {
 						return true;
 					}
 					break;
 				case "moi_lat":
-					if (entry.id.indexOf("_lat_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+					if (entry.id.indexOf("_lat_") !== -1 &&
+						entry.id.indexOf("_moi_") !== -1) {
 						return true;
 					}
 					break;
 				case "fdb_array":
-					if (entry.id.indexOf("_array_") !== -1 && entry.id.indexOf("_moi_") === -1) {
+					if (entry.id.indexOf("_array_") !== -1 &&
+						entry.id.indexOf("_moi_") === -1) {
 						return true;
 					}
 					break;
 				case "moi_array":
-					if (entry.id.indexOf("_array_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+					if (entry.id.indexOf("_array_") !== -1 &&
+					entry.id.indexOf("_moi_") !== -1) {
 						return true;
 					}
 					break;
 				case "dml":
-					if (entry.id.indexOf("IN") !== -1 || entry.id.indexOf("UP") !== -1) {
+					if (entry.id.indexOf("IN") !== -1 ||
+						entry.id.indexOf("UP") !== -1) {
 						return true;
 					}
 					break;
