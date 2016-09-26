@@ -25,12 +25,12 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'bandr'">
+<div class="text-center" ng-if="selectedCategory === 'tools'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in backup_restore_categories"
-			ng-class="{active: category.id === selectedBackupRestoreCategory}"
-			ng-click="setSelectedBackupRestoreCategory(category.id)"
+			ng-repeat="category in tools_categories"
+			ng-class="{active: category.id === selectedToolsCategory}"
+			ng-click="setSelectedToolsCategory(category.id)"
 			class="btn btn-default">
 			<input type="radio">{{category.title}}
 		</label>

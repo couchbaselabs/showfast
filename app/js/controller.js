@@ -70,7 +70,7 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "ycsb", "title": "YCSB"
 		}, {
-			"id": "bandr", "title": "Tools"
+			"id": "tools", "title": "Tools"
 		}];
 
 		$scope.reb_categories = [{
@@ -149,7 +149,7 @@ function MetricList($scope, $http) {
 			"id": "lww", "title": "LWW"
 		}];
 
-		$scope.backup_restore_categories = [{
+		$scope.tools_categories = [{
 			"id": "all", "title": "All"
 		}, {
 			"id": "backup", "title": "Backup"
@@ -214,7 +214,7 @@ function MetricList($scope, $http) {
 		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
 		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || "all";
 		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
-		$scope.selectedBackupRestoreCategory = $.cookie("selectedBackupRestoreCategory") || "all";
+		$scope.selectedToolsCategory = $.cookie("selectedToolsCategory") || "all";
 		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
 		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
 		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
@@ -242,9 +242,9 @@ function MetricList($scope, $http) {
 			$.cookie("selectedXdcrCategory", value);
 		};
 
-		$scope.setSelectedBackupRestoreCategory = function (value) {
-			$scope.selectedBackupRestoreCategory = value;
-			$.cookie("selectedBackupRestoreCategory", value);
+		$scope.setSelectedToolsCategory = function (value) {
+			$scope.selectedToolsCategory = value;
+			$.cookie("selectedToolsCategory", value);
 		};
 
 		$scope.setSelectedBeamCategory = function (value) {
@@ -299,9 +299,9 @@ function MetricList($scope, $http) {
 						return bySecondaryCategory(entry);
 					}
 					break;
-				case "bandr":
+				case "tools":
 					if (entryCategory === selectedCategory) {
-						return byBackupRestoreCategory(entry);
+						return byToolsCategory(entry);
 					}
 					break;
 				case "reb":
@@ -492,14 +492,14 @@ function MetricList($scope, $http) {
 			}
 		};
 
-		var byBackupRestoreCategory = function(entry) {
-			var selectedBackupRestoreCategory = $scope.selectedBackupRestoreCategory;
+		var byToolsCategory = function(entry) {
+			var selectedToolsCategory = $scope.selectedToolsCategory;
 
-			if (selectedBackupRestoreCategory === "all") {
+			if (selectedToolsCategory === "all") {
 				return true;
 			}
 
-			return entry.id.indexOf(selectedBackupRestoreCategory) !== -1;
+			return entry.id.indexOf(selectedToolsCategory) !== -1;
 		};
 
 		var byBeamCategory = function(entry) {
