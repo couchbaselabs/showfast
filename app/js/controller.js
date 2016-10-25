@@ -155,6 +155,10 @@ function MetricList($scope, $http) {
 			"id": "backup", "title": "Backup"
 		}, {
 			"id": "restore", "title": "Restore"
+		}, {
+			"id": "import", "title": "Import"
+		}, {
+			"id": "export", "title": "Export"
 		}];
 
 		$scope.kv_categories = [{
