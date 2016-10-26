@@ -197,9 +197,15 @@ function MetricList($scope, $http) {
 			"id": "latency", "title": "Latency"
 		}, {
 			"id": "throughput", "title": "Throughput"
-		},{
+		}, {
 			"id": "index", "title": "Index"
-		},{
+		}, {
+			"id": "latency3", "title": "3 node Latency"
+       		}, {
+			"id": "throughput3", "title": "3 node Throughput "
+		}, {
+			"id": "index3", "title": "3 node Index"
+		}, {
 			"id": "elastic", "title": "ElasticSearch"
 		}];
 
@@ -592,13 +598,62 @@ function MetricList($scope, $http) {
 			}
 		};
 
+
 		var byFtsCategory = function(entry) {
 			var selectedFtsCategory = $scope.selectedFtsCategory;
+            		switch(selectedFtsCategory) {
+                		case "all":
+                    			return true;
+                		
+				case "elastic":
+                                        if (entry.id.indexOf("elastic") !== -1) {
+                                        return true;
+                                        }
+                                        break;
 
-			if (selectedFtsCategory === "all") {
-				return true;
-			}
-			return entry.id.indexOf(selectedFtsCategory) !== -1;
+				case "latency":
+                    			if (entry.id.indexOf("latency") !== -1 &&
+                          		entry.id.indexOf("3nodes") === -1) {
+                        		return true;
+                    			}
+                    			break;
+
+                		case "throughput":
+                    			if (entry.id.indexOf("throughput") !== -1 &&
+                        		entry.id.indexOf("3nodes") === -1) {
+                        		return true;
+                     			}
+                     			break;
+
+                		case "index":
+                    			if (entry.id.indexOf("index") !== -1 &&
+                        		entry.id.indexOf("3nodes") === -1) {
+                        		return true;
+                     			}
+                     			break;
+
+                		case "latency3":
+                    			if (entry.id.indexOf("latency") !== -1 &&
+                          		entry.id.indexOf("3nodes") !== -1) {
+                        		return true;
+                    			}
+                    			break;
+
+                		case "throughput3":
+                    			if (entry.id.indexOf("throughput") !== -1 &&
+                        		entry.id.indexOf("3nodes") !== -1) {
+                        		return true;
+                     			}
+                     			break;
+
+                		case "index3":
+                    			if (entry.id.indexOf("index") !== -1 &&
+                        		entry.id.indexOf("3nodes") !== -1) {
+                        		return true;
+                     			}
+                    			 break;
+            		}
+			return false;
 		};
 
 		var byYcsbCategory = function(entry) {
