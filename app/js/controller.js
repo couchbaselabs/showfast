@@ -134,6 +134,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "moi_array", "title": "Array MOI"
 		}, {
+			"id": "join_unnest", "title": "JOIN & UNNEST"
+		}, {
 			"id": "dml", "title": "DML"
 		}];
 
@@ -584,6 +586,12 @@ function MetricList($scope, $http) {
 				case "moi_array":
 					if (entry.id.indexOf("_array_") !== -1 &&
 					entry.id.indexOf("_moi_") !== -1) {
+						return true;
+					}
+					break;
+				case "join_unnest":
+					if (entry.id.indexOf("JOIN") !== -1 ||
+						entry.id.indexOf("UNNEST") !== -1) {
 						return true;
 					}
 					break;
