@@ -17,7 +17,6 @@ Required buckets
 
 * benchmarks
 * clusters
-* feed
 * metrics
 
 Usage
