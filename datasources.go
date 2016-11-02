@@ -35,7 +35,7 @@ var ddocs = map[string]string{
 				"map": "function (doc, meta) {if (!doc.obsolete) {emit([doc.metric, doc.build], doc.value);}}"
 			},
 			"value_and_snapshots_by_build_and_metric": {
-				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.snapshots, doc.master_events, doc.build_url || null]);}"
+				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.snapshots, doc.master_events, doc.build_url, doc.datetime]);}"
 			},
 			"value_and_obsolete_by_build_and_metric": {
 				"map": "function (doc, meta) {emit([doc.metric, doc.build], [doc.value, doc.obsolete == true]);}"
@@ -167,29 +167,23 @@ func (ds *DataSource) getAllRuns(metric string, build string) interface{} {
 	rows := ds.queryView(bBenchmarks, "benchmarks", "value_and_snapshots_by_build_and_metric", params)
 
 	benchmarks := []map[string]interface{}{}
-	for i, row := range rows {
-		var masterEvents string
+	for _, row := range rows {
+		var buildURL, dateTime, masterEvents string
 		if str, ok := row.Value.([]interface{})[2].(string); ok {
 			masterEvents = str
-		} else {
-			masterEvents = ""
 		}
-		var buildURL string
-		if val, ok := row.Value.([]interface{}); ok && len(val) > 3 {
-			if str, ok := val[3].(string); ok {
-				buildURL = str
-			} else {
-				buildURL = ""
-			}
-		} else {
-			buildURL = ""
+		if str, ok := row.Value.([]interface{})[3].(string); ok {
+			buildURL = str
+		}
+		if str, ok := row.Value.([]interface{})[4].(string); ok {
+			dateTime = str
 		}
 		benchmark := map[string]interface{}{
-			"seq":           strconv.Itoa(i + 1),
 			"value":         strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
 			"snapshots":     row.Value.([]interface{})[1],
 			"master_events": masterEvents,
 			"build_url":     buildURL,
+			"datetime":      dateTime,
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
@@ -201,6 +195,7 @@ type Benchmark struct {
 	ID        string   `json:"id"`
 	Build     string   `json:"build"`
 	BuildURL  string   `json:"build_url"`
+	DateTime  string   `json:"datetime"`
 	Metric    string   `json:"metric"`
 	Obsolete  bool     `json:"obsolete"`
 	Snapshots []string `json:"snapshots"`

@@ -4,6 +4,7 @@
 		<thead>
 			<tr>
 				<th class="t-seq">#</th>
+				<th class="t-report">Date and time</th>
 				<th class="t-report">Value</th>
 				<th class="t-report">HTML reports</th>
 				<th class="t-report">Jenkins build</th>
@@ -12,9 +13,13 @@
 		</thead>
 
 		<tbody>
-			<tr ng-repeat="run in runs">
+			<tr ng-repeat="run in runs | orderBy:'datetime'">
 				<td class="t-seq">
-					{{run.seq}}
+					{{$index+1}}
+				</td>
+
+				<td class="t-report">
+					{{run.datetime}}
 				</td>
 
 				<td class="t-report">
