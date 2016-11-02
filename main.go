@@ -29,28 +29,11 @@ func admin(rw http.ResponseWriter, r *http.Request) {
 	rw.Write(content)
 }
 
-func release(rw http.ResponseWriter, r *http.Request) {
-	content, _ := ioutil.ReadFile("app/release.html")
-	rw.Write(content)
-}
-
-func feed(rw http.ResponseWriter, r *http.Request) {
-	content, _ := ioutil.ReadFile("app/feed.html")
-	rw.Write(content)
-}
-
 func allRuns(rw http.ResponseWriter, r *http.Request) {
 	metric := r.URL.Query()["metric"][0]
 	build := r.URL.Query()["build"][0]
 
 	writeJSON(rw, dataSource.getAllRuns(metric, build))
-}
-
-func getComparison(rw http.ResponseWriter, r *http.Request) {
-	baseline := r.URL.Query()["baseline"][0]
-	target := r.URL.Query()["target"][0]
-
-	writeJSON(rw, dataSource.getComparison(baseline, target))
 }
 
 func deleteBenchmark(rw http.ResponseWriter, r *http.Request) {
@@ -87,18 +70,13 @@ func main() {
 
 	router.HandleFunc("/", home).Methods("GET")
 	router.HandleFunc("/admin", admin).Methods("GET")
-	router.HandleFunc("/feed", feed).Methods("GET")
-	router.HandleFunc("/release", release).Methods("GET")
 
 	router.HandleFunc("/all_metrics", dataSource.getAllMetrics).Methods("GET")
 	router.HandleFunc("/all_clusters", dataSource.getAllClusters).Methods("GET")
 	router.HandleFunc("/all_timelines", dataSource.getAllTimelines).Methods("GET")
 	router.HandleFunc("/all_benchmarks", dataSource.getAllBenchmarks).Methods("GET")
-	router.HandleFunc("/all_releases", dataSource.getAllReleases).Methods("GET")
-	router.HandleFunc("/all_feed_records", dataSource.getAllFeedRecords).Methods("GET")
 
 	router.HandleFunc("/all_runs", allRuns).Methods("GET")
-	router.HandleFunc("/get_comparison", getComparison).Methods("GET")
 	router.HandleFunc("/delete", deleteBenchmark).Methods("POST")
 	router.HandleFunc("/reverse_obsolete", reverseObsolete).Methods("POST")
 

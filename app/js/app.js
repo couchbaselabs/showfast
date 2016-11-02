@@ -13,9 +13,3 @@ angular.module('sf', ['ngRoute', 'nvd3ChartDirectives'])
 
 angular.module('sf-admin', [])
     .controller("AdminList", AdminList);
-
-angular.module('sf-feed', [])
-    .controller("Feed", Feed);
-
-angular.module('sf-release', [])
-    .controller("ReleaseList", ReleaseList);
