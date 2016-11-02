@@ -122,17 +122,15 @@ function MetricList($scope, $http) {
 		$scope.n1ql_categories = [{
 			"id": "all", "title": "All"
 		}, {
-			"id": "fdb_thr", "title": "Throughput FDB"
+			"id": "Q1_Q3_thr", "title": "Q1-Q3 Throughput"
 		}, {
-			"id": "moi_thr", "title": "Throughput MOI"
+			"id": "Q1_Q3_lat", "title": "Q1-Q3 Latency"
 		}, {
-			"id": "fdb_lat", "title": "Latency FDB"
+			"id": "Q5_Q7_thr", "title": "Q5-Q7 Throughput"
 		}, {
-			"id": "moi_lat", "title": "Latency MOI"
+			"id": "CI_thr", "title": "Covering Indexes"
 		}, {
-			"id": "fdb_array", "title": "Array FDB"
-		}, {
-			"id": "moi_array", "title": "Array MOI"
+			"id": "array", "title": "Array Indexing"
 		}, {
 			"id": "join_unnest", "title": "JOIN & UNNEST"
 		}, {
@@ -548,58 +546,58 @@ function MetricList($scope, $http) {
 			switch(selectedN1QLCategory) {
 				case "all":
 					return true;
-				case "fdb_thr":
+				case "Q1_Q3_thr":
 					if (entry.id.indexOf("_thr_") !== -1 &&
-						entry.id.indexOf("_moi_") === -1 &&
-						entry.id.indexOf("_part") === -1 &&
-						entry.id.indexOf("_array_") === -1 &&
-						entry.id.indexOf("IN") === -1 &&
-						entry.id.indexOf("UP") === -1) {
+						entry.id.indexOf("_array_") === -1 && (
+						entry.id.indexOf("_Q1") !== -1 ||
+						entry.id.indexOf("_Q2_") !== -1 ||
+						entry.id.indexOf("_Q3_") !== -1)) {
 						return true;
 					}
 					break;
-				case "fdb_lat":
-					if (entry.id.indexOf("_lat_") !== -1 &&
-						entry.id.indexOf("_moi_") === -1) {
+				case "Q1_Q3_lat":
+					if (entry.id.indexOf("_lat_") !== -1 && (
+						entry.id.indexOf("_Q1") !== -1 ||
+						entry.id.indexOf("_Q2_") !== -1 ||
+						entry.id.indexOf("_Q3_") !== -1)) {
 						return true;
 					}
 					break;
-				case "moi_thr":
+				case "Q5_Q7_thr":
 					if (entry.id.indexOf("_thr_") !== -1 &&
-						entry.id.indexOf("_moi_") !== -1 &&
-						entry.id.indexOf("_array_") === -1 &&
-						entry.id.indexOf("JOIN") === -1 &&
-						entry.id.indexOf("UNNEST") === -1) {
-						return true;
-					}
-					break;
-				case "moi_lat":
-					if (entry.id.indexOf("_lat_") !== -1 &&
-						entry.id.indexOf("_moi_") !== -1) {
-						return true;
-					}
-					break;
-				case "fdb_array":
-					if (entry.id.indexOf("_array_") !== -1 &&
-						entry.id.indexOf("_moi_") === -1) {
-						return true;
-					}
-					break;
-				case "moi_array":
-					if (entry.id.indexOf("_array_") !== -1 &&
-					entry.id.indexOf("_moi_") !== -1) {
+						entry.id.indexOf("_array_") === -1 && (
+						entry.id.indexOf("_Q5") !== -1 ||
+						entry.id.indexOf("_Q6_") !== -1 ||
+						entry.id.indexOf("_Q7_") !== -1)) {
 						return true;
 					}
 					break;
 				case "join_unnest":
-					if (entry.id.indexOf("JOIN") !== -1 ||
-						entry.id.indexOf("UNNEST") !== -1) {
+					if (entry.id.indexOf("_JOIN_") !== -1 ||
+						entry.id.indexOf("_UNNEST_") !== -1) {
+						return true;
+					}
+					break;
+				case "CI_thr":
+					if (entry.id.indexOf("_thr_") !== -1 &&
+						entry.id.indexOf("_CI") !== -1) {
+						return true;
+					}
+					break;
+				case "CI_lat":
+					if (entry.id.indexOf("_lat_") !== -1 &&
+						entry.id.indexOf("_CI") !== -1) {
+						return true;
+					}
+					break;
+				case "array":
+					if (entry.id.indexOf("_array_") !== -1) {
 						return true;
 					}
 					break;
 				case "dml":
-					if (entry.id.indexOf("IN") !== -1 ||
-						entry.id.indexOf("UP") !== -1) {
+					if (entry.id.indexOf("_IN") !== -1 ||
+						entry.id.indexOf("_UP") !== -1) {
 						return true;
 					}
 					break;
