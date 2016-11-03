@@ -151,7 +151,15 @@ func (ds *DataSource) getAllTimelines(rw http.ResponseWriter, r *http.Request) {
 	writeJSON(rw, timelines)
 }
 
-func (ds *DataSource) getAllRuns(metric string, build string) interface{} {
+type Run struct {
+	BuildURL     string   `json:"build_url"`
+	DateTime     string   `json:"datetime"`
+	MasterEvents string   `json:"master_events"`
+	Snapshots    []string `json:"snapshots"`
+	Value        string   `json:"value"`
+}
+
+func (ds *DataSource) getAllRuns(metric string, build string) []Run {
 	bBenchmarks := ds.getBucket("benchmarks")
 	params := map[string]interface{}{
 		"startkey": []string{metric, build},
@@ -159,28 +167,47 @@ func (ds *DataSource) getAllRuns(metric string, build string) interface{} {
 	}
 	rows := ds.queryView(bBenchmarks, "benchmarks", "value_and_snapshots_by_build_and_metric", params)
 
-	benchmarks := []map[string]interface{}{}
+	benchmarks := []Run{}
 	for _, row := range rows {
+		viewValue, ok := row.Value.([]interface{})
+		if !ok {
+			continue
+		}
+
+		var value float64
+		if v, ok := viewValue[0].(float64); ok {
+			value = v
+		}
+
+		var snapshots []string
+		if v, ok := viewValue[1].([]interface{}); ok {
+			for _, snapshot := range v {
+				if s, ok := snapshot.(string); ok {
+					snapshots = append(snapshots, s)
+				}
+			}
+		}
+
 		var buildURL, dateTime, masterEvents string
-		if str, ok := row.Value.([]interface{})[2].(string); ok {
-			masterEvents = str
+		if v, ok := viewValue[3].(string); ok {
+			buildURL = v
 		}
-		if str, ok := row.Value.([]interface{})[3].(string); ok {
-			buildURL = str
+		if v, ok := viewValue[4].(string); ok {
+			dateTime = v
 		}
-		if str, ok := row.Value.([]interface{})[4].(string); ok {
-			dateTime = str
+		if v, ok := viewValue[2].(string); ok {
+			masterEvents = v
 		}
-		benchmark := map[string]interface{}{
-			"value":         strconv.FormatFloat(row.Value.([]interface{})[0].(float64), 'f', 1, 64),
-			"snapshots":     row.Value.([]interface{})[1],
-			"master_events": masterEvents,
-			"build_url":     buildURL,
-			"datetime":      dateTime,
+
+		benchmark := Run{
+			BuildURL:     buildURL,
+			DateTime:     dateTime,
+			MasterEvents: masterEvents,
+			Snapshots:    snapshots,
+			Value:        strconv.FormatFloat(value, 'f', 1, 64),
 		}
 		benchmarks = append(benchmarks, benchmark)
 	}
-
 	return benchmarks
 }
 
