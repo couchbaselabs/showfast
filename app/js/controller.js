@@ -6,18 +6,19 @@ function MetricList($scope, $http) {
 	'use strict';
 
 	$http.get('/api/v1/metrics').success(function(data) {
+		var metrics = [];
 		if (data.length) {
-			$scope.metrics = data;
+			metrics = data;
 		} else {
 			$scope.error = true;
 			return;
 		}
 
 		$http.get('/api/v1/clusters').success(function(data) {
-			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
-				$scope.metrics[i].cluster = jlinq.from(data)
-					.starts('name', $scope.metrics[i].cluster)
-					.ends('name', $scope.metrics[i].cluster)
+			for (var i = 0, l = metrics.length; i < l; i++ ) {
+				metrics[i].cluster = jlinq.from(data)
+					.starts('name', metrics[i].cluster)
+					.ends('name', metrics[i].cluster)
 					.select()[0];
 			}
 
@@ -42,10 +43,16 @@ function MetricList($scope, $http) {
 		});
 
 		$http.get('/api/v1/timelines').success(function(data) {
-			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
-				var id = $scope.metrics[i].id;
-				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
-				$scope.metrics[i].link = id.replace(".", "_");
+			$scope.metrics = [];
+			var j = 0;
+			for (var i = 0, l = metrics.length; i < l; i++ ) {
+				var id = metrics[i].id;
+				if (id in data) {
+					$scope.metrics[j] = metrics[i];
+					$scope.metrics[j].chartData = [{"key": id, "values": data[id]}];
+					$scope.metrics[j].link = id.replace(".", "_");
+					j++;
+				}
 			}
 		});
 
