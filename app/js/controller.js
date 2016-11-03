@@ -106,6 +106,8 @@ function MetricList($scope, $http) {
 		}, {
 			"id": "fdb_incr", "title": "Incremental FDB"
 		}, {
+			"id": "fdb_standalone", "title": "Standalone FDB"
+		}, {
 			"id": "moi_lat", "title": "Latency MOI"
 		}, {
 			"id": "moi_thr", "title": "Throughput MOI"
@@ -388,6 +390,11 @@ function MetricList($scope, $http) {
 					break;
 				case "fdb_incr":
 					if (entry.id.indexOf("_incremental_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+						return true;
+					}
+					break;
+				case "fdb_standalone":
+					if (entry.id.indexOf("_standalone_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
 						return true;
 					}
 					break;
