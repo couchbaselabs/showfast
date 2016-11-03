@@ -5,7 +5,7 @@
 function MetricList($scope, $http) {
 	'use strict';
 
-	$http.get('/all_metrics').success(function(data) {
+	$http.get('/api/v1/metrics').success(function(data) {
 		if (data.length) {
 			$scope.metrics = data;
 		} else {
@@ -13,11 +13,11 @@ function MetricList($scope, $http) {
 			return;
 		}
 
-		$http.get('/all_clusters').success(function(data) {
+		$http.get('/api/v1/clusters').success(function(data) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
 				$scope.metrics[i].cluster = jlinq.from(data)
-					.starts('Name', $scope.metrics[i].cluster)
-					.ends('Name', $scope.metrics[i].cluster)
+					.starts('name', $scope.metrics[i].cluster)
+					.ends('name', $scope.metrics[i].cluster)
 					.select()[0];
 			}
 
@@ -28,7 +28,7 @@ function MetricList($scope, $http) {
 				$.cookie("selectedOS", value);
 			};
 			$scope.byOS = function(entry) {
-				var entryOS = entry.cluster.OS,
+				var entryOS = entry.cluster.os,
 					selectedOS = $scope.selectedOS;
 				switch(selectedOS) {
 					case "All":
@@ -41,7 +41,7 @@ function MetricList($scope, $http) {
 			};
 		});
 
-		$http.get('/all_timelines').success(function(data) {
+		$http.get('/api/v1/timelines').success(function(data) {
 			for (var i = 0, l = $scope.metrics.length; i < l; i++ ) {
 				var id = $scope.metrics[i].id;
 				$scope.metrics[i].chartData = [{"key": id, "values": data[id]}];
@@ -698,7 +698,7 @@ function MetricList($scope, $http) {
 }
 
 function RunList($scope, $routeParams, $http) {
-	$http({method: 'GET', url: '/all_runs', params: $routeParams})
+	$http({method: 'GET', url: '/api/v1/runs/' + $routeParams.metric + '/' + $routeParams.build})
 	.success(function(data) {
 		$scope.runs = data;
 	});
@@ -706,7 +706,7 @@ function RunList($scope, $routeParams, $http) {
 
 function AdminList($scope, $http) {
 	$scope.deleteBenchmark = function(benchmark) {
-		$http({method: 'POST', url: '/delete', data: {id: benchmark.id}})
+		$http({method: 'DELETE', url: '/api/v1/benchmarks/' + benchmark.id})
 		.success(function(data) {
 			var index = $scope.benchmarks.indexOf(benchmark);
 			$scope.benchmarks.splice(index, 1);
@@ -714,10 +714,10 @@ function AdminList($scope, $http) {
 	};
 
 	$scope.reverseObsolete = function(id) {
-		$http({method: 'POST', url: '/reverse_obsolete', data: {id: id}});
+		$http({method: 'PATCH', url: '/api/v1/benchmarks/' + id});
 	};
 
-	$http.get('/all_benchmarks').success(function(data) {
+	$http.get('/api/v1/benchmarks').success(function(data) {
 		$scope.benchmarks = data;
 	});
 }

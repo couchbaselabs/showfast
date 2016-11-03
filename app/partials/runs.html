@@ -8,18 +8,17 @@
 				<th class="t-report">Value</th>
 				<th class="t-report">HTML reports</th>
 				<th class="t-report">Jenkins build</th>
-				<th class="t-report">Rebalance flows</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<tr ng-repeat="run in runs | orderBy:'datetime'">
+			<tr ng-repeat="run in runs | orderBy:'dateTime'">
 				<td class="t-seq">
 					{{$index+1}}
 				</td>
 
 				<td class="t-report">
-					{{run.datetime}}
+					{{run.dateTime}}
 				</td>
 
 				<td class="t-report">
@@ -35,17 +34,9 @@
 				</td>
 
 				<td class="t-report">
-					<a href="{{ run.build_url }}"
+					<a href="{{ run.buildURL }}"
 						target="_blank">
 						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-					</a>
-				</td>
-
-				<td class="t-report">
-					<a ng-if="run.master_events"
-						href="http://cbmonitor.sc.couchbase.com/reports/movements/?filename={{run.master_events}}"
-						target="_blank">
-						<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
 					</a>
 				</td>
 			</tr>

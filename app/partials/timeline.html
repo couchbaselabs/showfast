@@ -155,18 +155,18 @@
 	</div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory | filter:byOS | orderBy:'orderby' ">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory | filter:byOS | orderBy:'orderBy' ">
 	<hr/>
 	<h4>
 		<span id="{{metric.id}}">
 			<strong>{{metric.title}}</strong>
 		</span>
 	</h4>
-	<span class="text-muted"><strong>Cluster: </strong>{{metric.cluster.Name}}</span>
-	<span class="text-muted"><strong>OS: </strong>{{metric.cluster.OS}}</span>
-	<span class="text-muted"><strong>CPU: </strong>{{metric.cluster.CPU}}</span>
-	<span class="text-muted"><strong>Memory: </strong>{{metric.cluster.Memory}}</span>
-	<span class="text-muted"><strong>Disk: </strong>{{metric.cluster.Disk}}</span>
+	<span class="text-muted"><strong>Cluster: </strong>{{metric.cluster.name}}</span>
+	<span class="text-muted"><strong>OS: </strong>{{metric.cluster.os}}</span>
+	<span class="text-muted"><strong>CPU: </strong>{{metric.cluster.cpu}}</span>
+	<span class="text-muted"><strong>Memory: </strong>{{metric.cluster.memory}}</span>
+	<span class="text-muted"><strong>Disk: </strong>{{metric.cluster.disk}}</span>
 	<div class="column-chart">
 		<nvd3-discrete-bar-chart
 			data="metric.chartData"

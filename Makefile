@@ -10,3 +10,6 @@ docker:
 
 clean:
 	rm -fr showfast
+
+test:
+	go test -v -cover -race
