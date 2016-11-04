@@ -149,10 +149,10 @@ type Benchmark struct {
 	Value     float64  `json:"value"`
 }
 
-func (ds *dataStore) getAllBenchmarks() (*[]Benchmark, error) {
+func (ds *dataStore) getBenchmarks(view string) (*[]Benchmark, error) {
 	bucket := ds.getBucket("benchmarks")
 	queryParams := map[string]interface{}{}
-	rows, err := ds.queryView(bucket, "v1", "all", queryParams)
+	rows, err := ds.queryView(bucket, "v1", view, queryParams)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func (b byBuild) Less(i, j int) bool {
 }
 
 func (ds *dataStore) getAllTimelines() (*map[string][][]interface{}, error) {
-	benchmarks, err := ds.getAllBenchmarks()
+	benchmarks, err := ds.getBenchmarks("all_visible")
 	if err != nil {
 		return nil, err
 	}
