@@ -106,7 +106,7 @@ function DefineCategories($scope) {
 }
 
 function DefineSubCategories($scope) {
-	$scope.reb_categories = [{
+	$scope.rebCategories = [{
 		"id": "empty", "title": "Empty"
 	}, {
 		"id": "kv", "title": "KV"
@@ -118,13 +118,13 @@ function DefineSubCategories($scope) {
 		"id": "failover", "title": "Failover"
 	}];
 
-	$scope.idx_categories = [{
+	$scope.idxCategories = [{
 		"id": "init", "title": "Initial"
 	}, {
 		"id": "incr", "title": "Incremental"
 	}];
 
-	$scope.secondary_categories = [{
+	$scope.secondaryCategories = [{
 		"id": "fdb_lat", "title": "Latency FDB"
 	}, {
 		"id": "fdb_thr", "title": "Throughput FDB"
@@ -148,7 +148,7 @@ function DefineSubCategories($scope) {
 		"id": "moi", "title": "MOI"
 	}];
 
-	$scope.n1ql_categories = [{
+	$scope.n1qlCategories = [{
 		"id": "Q1_Q3_thr", "title": "Q1-Q3 Throughput"
 	}, {
 		"id": "Q1_Q3_lat", "title": "Q1-Q3 Latency"
@@ -164,7 +164,7 @@ function DefineSubCategories($scope) {
 		"id": "dml", "title": "DML"
 	}];
 
-	$scope.xdcr_categories = [{
+	$scope.xdcrCategories = [{
 		"id": "init", "title": "Initial"
 	}, {
 		"id": "reb", "title": "Initial+Rebalance"
@@ -174,7 +174,7 @@ function DefineSubCategories($scope) {
 		"id": "lww", "title": "LWW"
 	}];
 
-	$scope.tools_categories = [{
+	$scope.toolsCategories = [{
 		"id": "backup", "title": "Backup"
 	}, {
 		"id": "restore", "title": "Restore"
@@ -202,7 +202,7 @@ function DefineSubCategories($scope) {
 		"id": "compact", "title": "Compaction"
 	}];
 
-	$scope.query_categories = [{
+	$scope.queryCategories = [{
 		"id": "lat", "title": "Bulk Latency"
 	}, {
 		"id": "dev", "title": "Latency by Query Type"
@@ -210,7 +210,7 @@ function DefineSubCategories($scope) {
 		"id": "thr", "title": "Throughput"
 	}];
 
-	$scope.fts_categories = [{
+	$scope.ftsCategories = [{
 		"id": "latency", "title": "Latency"
 	}, {
 		"id": "throughput", "title": "Throughput"
@@ -226,7 +226,7 @@ function DefineSubCategories($scope) {
 		"id": "elastic", "title": "ElasticSearch"
 	}];
 
-	$scope.ycsb_categories = [{
+	$scope.ycsbCategories = [{
 		"id": "workloada", "title": "Workload A"
 	}, {
 		"id": "workloadc", "title": "Workload C"
@@ -234,16 +234,16 @@ function DefineSubCategories($scope) {
 		"id": "workloade", "title": "Workload E"
 	}];
 
-	$scope.selectedRebCategory = $.cookie("selectedRebCategoryV1") || $scope.reb_categories[0].id;
-	$scope.selectedIdxCategory = $.cookie("selectedIdxCategoryV1") || $scope.idx_categories[0].id;
-	$scope.selectedXDCRCategory = $.cookie("selectedXDCRCategoryV1") || $scope.xdcr_categories[0].id;
-	$scope.selectedToolsCategory = $.cookie("selectedToolsCategoryV1") || $scope.tools_categories[0].id;
+	$scope.selectedRebCategory = $.cookie("selectedRebCategoryV1") || $scope.rebCategories[0].id;
+	$scope.selectedIdxCategory = $.cookie("selectedIdxCategoryV1") || $scope.idxCategories[0].id;
+	$scope.selectedXDCRCategory = $.cookie("selectedXDCRCategoryV1") || $scope.xdcrCategories[0].id;
+	$scope.selectedToolsCategory = $.cookie("selectedToolsCategoryV1") || $scope.toolsCategories[0].id;
 	$scope.selectedKVCategory = $.cookie("selectedKVCategoryV1") || $scope.kv_categories[0].id;
-	$scope.selectedQueryCategory = $.cookie("selectedQueryCategoryV1") || $scope.query_categories[0].id;
-	$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategoryV1") || $scope.n1ql_categories[0].id;
-	$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategoryV1") || $scope.secondary_categories[0].id;
-	$scope.selectedFTSCategory = $.cookie("selectedFTSCategoryV1") || $scope.fts_categories[0].id;
-	$scope.selectedYCSBCategory = $.cookie("selectedYCSBCategoryV1") || $scope.ycsb_categories[0].id;
+	$scope.selectedQueryCategory = $.cookie("selectedQueryCategoryV1") || $scope.queryCategories[0].id;
+	$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategoryV1") || $scope.n1qlCategories[0].id;
+	$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategoryV1") || $scope.secondaryCategories[0].id;
+	$scope.selectedFTSCategory = $.cookie("selectedFTSCategoryV1") || $scope.ftsCategories[0].id;
+	$scope.selectedYCSBCategory = $.cookie("selectedYCSBCategoryV1") || $scope.ycsbCategories[0].id;
 
 	$scope.setSelectedRebCategory = function (value) {
 		$scope.selectedRebCategory = value;

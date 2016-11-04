@@ -25,7 +25,7 @@
 <div class="text-center" ng-if="selectedCategory === 'tools'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in tools_categories"
+			ng-repeat="category in toolsCategories"
 			ng-class="{active: category.id === selectedToolsCategory}"
 			ng-click="setSelectedToolsCategory(category.id)"
 			class="btn btn-default">
@@ -50,7 +50,7 @@
 <div class="text-center" ng-if="selectedCategory === 'index'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in idx_categories"
+			ng-repeat="category in idxCategories"
 			ng-class="{active: category.id === selectedIdxCategory}"
 			ng-click="setSelectedIdxCategory(category.id)"
 			class="btn btn-default">
@@ -62,7 +62,7 @@
 <div class="text-center" ng-if="selectedCategory === 'secondary'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in secondary_categories"
+			ng-repeat="category in secondaryCategories"
 			ng-class="{active: category.id === selectedSecondaryCategory}"
 			ng-click="setSelectedSecondaryCategory(category.id)"
 			class="btn btn-default">
@@ -74,7 +74,7 @@
 <div class="text-center" ng-if="selectedCategory === 'reb'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in reb_categories"
+			ng-repeat="category in rebCategories"
 			ng-class="{active: category.id === selectedRebCategory}"
 			ng-click="setSelectedRebCategory(category.id)"
 			class="btn btn-default">
@@ -86,7 +86,7 @@
 <div class="text-center" ng-if="selectedCategory === 'kv'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in kv_categories"
+			ng-repeat="category in kvCategories"
 			ng-class="{active: category.id === selectedKVCategory}"
 			ng-click="setSelectedKVCategory(category.id)"
 			class="btn btn-default">
@@ -98,7 +98,7 @@
 <div class="text-center" ng-if="selectedCategory === 'query'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in query_categories"
+			ng-repeat="category in queryCategories"
 			ng-class="{active: category.id === selectedQueryCategory}"
 			ng-click="setSelectedQueryCategory(category.id)"
 			class="btn btn-default">
@@ -110,7 +110,7 @@
 <div class="text-center" ng-if="selectedCategory === 'n1ql'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in n1ql_categories"
+			ng-repeat="category in n1qlCategories"
 			ng-class="{active: category.id === selectedN1QLCategory}"
 			ng-click="setSelectedN1QLCategory(category.id)"
 			class="btn btn-default">
@@ -122,9 +122,9 @@
 <div class="text-center" ng-if="selectedCategory === 'xdcr'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in xdcr_categories"
-			ng-class="{active: category.id === selectedXdcrCategory}"
-			ng-click="setSelectedXdcrCategory(category.id)"
+			ng-repeat="category in xdcrCategories"
+			ng-class="{active: category.id === selectedXDCRCategory}"
+			ng-click="setSelectedXDCRCategory(category.id)"
 			class="btn btn-default">
 			<input type="radio">{{category.title}}
 		</label>
@@ -134,7 +134,7 @@
 <div class="text-center" ng-if="selectedCategory === 'fts'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in fts_categories"
+			ng-repeat="category in ftsCategories"
 			ng-class="{active: category.id === selectedFTSCategory}"
 			ng-click="setSelectedFTSCategory(category.id)"
 			class="btn btn-default">
@@ -146,7 +146,7 @@
 <div class="text-center" ng-if="selectedCategory === 'ycsb'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in ycsb_categories"
+			ng-repeat="category in ycsbCategories"
 			ng-class="{active: category.id === selectedYCSBCategory}"
 			ng-click="setSelectedYCSBCategory(category.id)"
 			class="btn btn-default">
