@@ -22,8 +22,8 @@ function MetricList($scope, $http) {
 					.select()[0];
 			}
 
-			$scope.oses = ["All", "Windows", "Linux"];
-			$scope.selectedOS = $.cookie("selectedOS") || "All";
+			$scope.oses = ["Linux", "Windows"];
+			$scope.selectedOS = $.cookie("selectedOS") || "Linux";
 			$scope.setSelectedOS = function (value) {
 				$scope.selectedOS = value;
 				$.cookie("selectedOS", value);
@@ -32,12 +32,10 @@ function MetricList($scope, $http) {
 				var entryOS = entry.cluster.os,
 					selectedOS = $scope.selectedOS;
 				switch(selectedOS) {
-					case "All":
-						return true;
-					case "Windows":
-						return entryOS.substring(0, 7) === "Windows";
 					case "Linux":
 						return entryOS.substring(0, 7) !== "Windows";
+					case "Windows":
+						return entryOS.substring(0, 7) === "Windows";
 				}
 			};
 		});
@@ -57,8 +55,6 @@ function MetricList($scope, $http) {
 		});
 
 		$scope.categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "kv", "title": "KV"
 		}, {
 			"id": "reb", "title": "Rebalance"
@@ -81,8 +77,6 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.reb_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "empty", "title": "Empty"
 		}, {
 			"id": "kv", "title": "KV"
@@ -95,16 +89,12 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.idx_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "init", "title": "Initial"
 		}, {
 			"id": "incr", "title": "Incremental"
 		}];
 
 		$scope.secondary_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "fdb_lat", "title": "Latency FDB"
 		}, {
 			"id": "fdb_thr", "title": "Throughput FDB"
@@ -129,8 +119,6 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.n1ql_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "Q1_Q3_thr", "title": "Q1-Q3 Throughput"
 		}, {
 			"id": "Q1_Q3_lat", "title": "Q1-Q3 Latency"
@@ -147,8 +135,6 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.xdcr_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "init", "title": "Initial"
 		}, {
 			"id": "reb", "title": "Initial+Rebalance"
@@ -159,8 +145,6 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.tools_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "backup", "title": "Backup"
 		}, {
 			"id": "restore", "title": "Restore"
@@ -171,8 +155,6 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.kv_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "max_ops", "title": "Max Throughput"
 		}, {
 			"id": "latency", "title": "Latency"
@@ -191,8 +173,6 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.query_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "lat", "title": "Bulk Latency"
 		}, {
 			"id": "dev", "title": "Latency by Query Type"
@@ -201,8 +181,6 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.fts_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "latency", "title": "Latency"
 		}, {
 			"id": "throughput", "title": "Throughput"
@@ -219,8 +197,6 @@ function MetricList($scope, $http) {
 		}];
 
 		$scope.ycsb_categories = [{
-			"id": "all", "title": "All"
-		}, {
 			"id": "workloada", "title": "Workload A"
 		}, {
 			"id": "workloadc", "title": "Workload C"
@@ -228,18 +204,18 @@ function MetricList($scope, $http) {
 			"id": "workloade", "title": "Workload E"
 		}];
 
-		$scope.selectedCategory = $.cookie("selectedCategory") || "all";
-		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || "all";
-		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || "all";
-		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || "all";
-		$scope.selectedBeamCategory = $.cookie("selectedBeamCategory") || "all";
-		$scope.selectedToolsCategory = $.cookie("selectedToolsCategory") || "all";
-		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || "all";
-		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || "all";
-		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || "all";
-		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || "all";
-		$scope.selectedFtsCategory = $.cookie("selectedFtsCategory") || "all";
-		$scope.selectedYcsbCategory = $.cookie("selectedYcsbCategory") || "all";
+		$scope.selectedCategory = $.cookie("selectedCategory") || $scope.categories[0].id;
+
+		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || $scope.reb_categories[0].id;
+		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || $scope.idx_categories[0].id;
+		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || $scope.xdcr_categories[0].id;
+		$scope.selectedToolsCategory = $.cookie("selectedToolsCategory") || $scope.tools_categories[0].id;
+		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || $scope.kv_categories[0].id;
+		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || $scope.query_categories[0].id;
+		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || $scope.n1ql_categories[0].id;
+		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || $scope.secondary_categories[0].id;
+		$scope.selectedFtsCategory = $.cookie("selectedFtsCategory") || $scope.fts_categories[0].id;
+		$scope.selectedYcsbCategory = $.cookie("selectedYcsbCategory") || $scope.ycsb_categories[0].id;
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
@@ -306,8 +282,6 @@ function MetricList($scope, $http) {
 				entryCategory = entry.id.substring(0, selectedCategory.length);
 
 			switch(selectedCategory) {
-				case "all":
-					return true;
 				case "index":
 					if (entryCategory === selectedCategory) {
 						return byIdxCategory(entry);
@@ -368,9 +342,6 @@ function MetricList($scope, $http) {
 		var byIdxCategory = function(entry) {
 			var selectedIdxCategory = $scope.selectedIdxCategory;
 
-			if (selectedIdxCategory === "all") {
-				return true;
-			}
 			return entry.id.indexOf(selectedIdxCategory) !== -1;
 		};
 
@@ -378,8 +349,6 @@ function MetricList($scope, $http) {
 			var selectedSecondaryCategory = $scope.selectedSecondaryCategory;
 
 			switch(selectedSecondaryCategory) {
-				case "all":
-					return true;
 				case "fdb_thr":
 					if (entry.id.indexOf("_scanthr") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
 						return true;
@@ -445,8 +414,6 @@ function MetricList($scope, $http) {
 			var selectedRebCategory = $scope.selectedRebCategory;
 
 			switch(selectedRebCategory) {
-				case "all":
-					return true;
 				case "failover":
 					if (entry.id.indexOf("failover") !== -1 &&
 							entry.id.indexOf("views") === -1) {
@@ -486,8 +453,6 @@ function MetricList($scope, $http) {
 			var selectedXdcrCategory = $scope.selectedXdcrCategory;
 
 			switch(selectedXdcrCategory) {
-				case "all":
-					return true;
 				case "lww":
 					if (entry.id.indexOf("lww") !== -1) {
 						return true;
@@ -519,19 +484,11 @@ function MetricList($scope, $http) {
 		var byToolsCategory = function(entry) {
 			var selectedToolsCategory = $scope.selectedToolsCategory;
 
-			if (selectedToolsCategory === "all") {
-				return true;
-			}
-
 			return entry.id.indexOf(selectedToolsCategory) !== -1;
 		};
 
 		var byBeamCategory = function(entry) {
 			var selectedBeamCategory = $scope.selectedBeamCategory;
-
-			if (selectedBeamCategory === "all") {
-				return true;
-			}
 
 			return entry.id.indexOf(selectedBeamCategory) !== -1;
 		};
@@ -539,18 +496,12 @@ function MetricList($scope, $http) {
 		var byKVCategory = function(entry) {
 			var selectedKVCategory = $scope.selectedKVCategory;
 
-			if (selectedKVCategory === "all") {
-				return true;
-			}
 			return entry.id.indexOf(selectedKVCategory) !== -1;
 		};
 
 		var byQueryCategory = function(entry) {
 			var selectedQueryCategory = $scope.selectedQueryCategory;
 
-			if (selectedQueryCategory === "all") {
-				return true;
-			}
 			return entry.id.indexOf(selectedQueryCategory) !== -1;
 		};
 
@@ -558,8 +509,6 @@ function MetricList($scope, $http) {
 			var selectedN1QLCategory = $scope.selectedN1QLCategory;
 
 			switch(selectedN1QLCategory) {
-				case "all":
-					return true;
 				case "Q1_Q3_thr":
 					if (entry.id.indexOf("_thr_") !== -1 &&
 						entry.id.indexOf("_array_") === -1 && (
@@ -624,9 +573,6 @@ function MetricList($scope, $http) {
 		var byFtsCategory = function(entry) {
 			var selectedFtsCategory = $scope.selectedFtsCategory;
 			switch(selectedFtsCategory) {
-				case "all":
-					return true;
-
 				case "elastic":
 					if (entry.id.indexOf("elastic") !== -1) {
 						return true;
@@ -681,9 +627,6 @@ function MetricList($scope, $http) {
 		var byYcsbCategory = function(entry) {
 			var selectedYcsbCategory = $scope.selectedYcsbCategory;
 
-			if (selectedYcsbCategory === "all") {
-				return true;
-			}
 			return entry.id.indexOf(selectedYcsbCategory) !== -1;
 		};
 
