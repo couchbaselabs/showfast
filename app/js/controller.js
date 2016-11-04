@@ -256,12 +256,12 @@ function MetricList($scope, $http) {
 			$scope.selectedQueryCategory = value;
 			$.cookie("selectedQueryCategoryV1", value);
 		};
-		
+
 		$scope.setSelectedSecondaryCategory = function (value) {
 			$scope.selectedSecondaryCategory = value;
 			$.cookie("selectedSecondaryCategoryV1", value);
 		};
-		
+
 		$scope.setSelectedN1QLCategory = function (value) {
 			$scope.selectedN1QLCategory = value;
 			$.cookie("selectedN1QLCategoryV1", value);
@@ -485,12 +485,6 @@ function MetricList($scope, $http) {
 			var selectedToolsCategory = $scope.selectedToolsCategory;
 
 			return entry.id.indexOf(selectedToolsCategory) !== -1;
-		};
-
-		var byBeamCategory = function(entry) {
-			var selectedBeamCategory = $scope.selectedBeamCategory;
-
-			return entry.id.indexOf(selectedBeamCategory) !== -1;
 		};
 
 		var byKVCategory = function(entry) {
