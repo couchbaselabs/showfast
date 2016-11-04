@@ -184,7 +184,7 @@ function DefineSubCategories($scope) {
 		"id": "export", "title": "Export"
 	}];
 
-	$scope.kv_categories = [{
+	$scope.kvCategories = [{
 		"id": "max_ops", "title": "Max Throughput"
 	}, {
 		"id": "latency", "title": "Latency"
@@ -238,7 +238,7 @@ function DefineSubCategories($scope) {
 	$scope.selectedIdxCategory = $.cookie("selectedIdxCategoryV1") || $scope.idxCategories[0].id;
 	$scope.selectedXDCRCategory = $.cookie("selectedXDCRCategoryV1") || $scope.xdcrCategories[0].id;
 	$scope.selectedToolsCategory = $.cookie("selectedToolsCategoryV1") || $scope.toolsCategories[0].id;
-	$scope.selectedKVCategory = $.cookie("selectedKVCategoryV1") || $scope.kv_categories[0].id;
+	$scope.selectedKVCategory = $.cookie("selectedKVCategoryV1") || $scope.kvCategories[0].id;
 	$scope.selectedQueryCategory = $.cookie("selectedQueryCategoryV1") || $scope.queryCategories[0].id;
 	$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategoryV1") || $scope.n1qlCategories[0].id;
 	$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategoryV1") || $scope.secondaryCategories[0].id;
