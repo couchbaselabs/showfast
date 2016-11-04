@@ -23,10 +23,10 @@ function MetricList($scope, $http) {
 			}
 
 			$scope.oses = ["Linux", "Windows"];
-			$scope.selectedOS = $.cookie("selectedOS") || "Linux";
+			$scope.selectedOS = $.cookie("selectedOSV1") || "Linux";
 			$scope.setSelectedOS = function (value) {
 				$scope.selectedOS = value;
-				$.cookie("selectedOS", value);
+				$.cookie("selectedOSV1", value);
 			};
 			$scope.byOS = function(entry) {
 				var entryOS = entry.cluster.os,
@@ -204,77 +204,77 @@ function MetricList($scope, $http) {
 			"id": "workloade", "title": "Workload E"
 		}];
 
-		$scope.selectedCategory = $.cookie("selectedCategory") || $scope.categories[0].id;
+		$scope.selectedCategory = $.cookie("selectedCategoryV1") || $scope.categories[0].id;
 
-		$scope.selectedRebCategory = $.cookie("selectedRebCategory") || $scope.reb_categories[0].id;
-		$scope.selectedIdxCategory = $.cookie("selectedIdxCategory") || $scope.idx_categories[0].id;
-		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategory") || $scope.xdcr_categories[0].id;
-		$scope.selectedToolsCategory = $.cookie("selectedToolsCategory") || $scope.tools_categories[0].id;
-		$scope.selectedKVCategory = $.cookie("selectedKVCategory") || $scope.kv_categories[0].id;
-		$scope.selectedQueryCategory = $.cookie("selectedQueryCategory") || $scope.query_categories[0].id;
-		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategory") || $scope.n1ql_categories[0].id;
-		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategory") || $scope.secondary_categories[0].id;
-		$scope.selectedFtsCategory = $.cookie("selectedFtsCategory") || $scope.fts_categories[0].id;
-		$scope.selectedYcsbCategory = $.cookie("selectedYcsbCategory") || $scope.ycsb_categories[0].id;
+		$scope.selectedRebCategory = $.cookie("selectedRebCategoryV1") || $scope.reb_categories[0].id;
+		$scope.selectedIdxCategory = $.cookie("selectedIdxCategoryV1") || $scope.idx_categories[0].id;
+		$scope.selectedXdcrCategory = $.cookie("selectedXdcrCategoryV1") || $scope.xdcr_categories[0].id;
+		$scope.selectedToolsCategory = $.cookie("selectedToolsCategoryV1") || $scope.tools_categories[0].id;
+		$scope.selectedKVCategory = $.cookie("selectedKVCategoryV1") || $scope.kv_categories[0].id;
+		$scope.selectedQueryCategory = $.cookie("selectedQueryCategoryV1") || $scope.query_categories[0].id;
+		$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategoryV1") || $scope.n1ql_categories[0].id;
+		$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategoryV1") || $scope.secondary_categories[0].id;
+		$scope.selectedFtsCategory = $.cookie("selectedFtsCategoryV1") || $scope.fts_categories[0].id;
+		$scope.selectedYcsbCategory = $.cookie("selectedYcsbCategoryV1") || $scope.ycsb_categories[0].id;
 
 		$scope.setSelectedCategory = function (value) {
 			$scope.selectedCategory = value;
-			$.cookie("selectedCategory", value);
+			$.cookie("selectedCategoryV1", value);
 		};
 
 		$scope.setSelectedRebCategory = function (value) {
 			$scope.selectedRebCategory = value;
-			$.cookie("selectedRebCategory", value);
+			$.cookie("selectedRebCategoryV1", value);
 		};
 
 		$scope.setSelectedIdxCategory = function (value) {
 			$scope.selectedIdxCategory = value;
-			$.cookie("selectedIdxCategory", value);
+			$.cookie("selectedIdxCategoryV1", value);
 		};
 
 		$scope.setSelectedXdcrCategory = function (value) {
 			$scope.selectedXdcrCategory = value;
-			$.cookie("selectedXdcrCategory", value);
+			$.cookie("selectedXdcrCategoryV1", value);
 		};
 
 		$scope.setSelectedToolsCategory = function (value) {
 			$scope.selectedToolsCategory = value;
-			$.cookie("selectedToolsCategory", value);
+			$.cookie("selectedToolsCategoryV1", value);
 		};
 
 		$scope.setSelectedBeamCategory = function (value) {
 			$scope.selectedBeamCategory = value;
-			$.cookie("selectedBeamCategory", value);
+			$.cookie("selectedBeamCategoryV1", value);
 		};
 
 		$scope.setSelectedKVCategory = function (value) {
 			$scope.selectedKVCategory = value;
-			$.cookie("selectedKVCategory", value);
+			$.cookie("selectedKVCategoryV1", value);
 		};
 
 		$scope.setSelectedQueryCategory = function (value) {
 			$scope.selectedQueryCategory = value;
-			$.cookie("selectedQueryCategory", value);
+			$.cookie("selectedQueryCategoryV1", value);
 		};
 		
 		$scope.setSelectedSecondaryCategory = function (value) {
 			$scope.selectedSecondaryCategory = value;
-			$.cookie("selectedSecondaryCategory", value);
+			$.cookie("selectedSecondaryCategoryV1", value);
 		};
 		
 		$scope.setSelectedN1QLCategory = function (value) {
 			$scope.selectedN1QLCategory = value;
-			$.cookie("selectedN1QLCategory", value);
+			$.cookie("selectedN1QLCategoryV1", value);
 		};
 
 		$scope.setSelectedFtsCategory = function (value) {
 			$scope.selectedFtsCategory = value;
-			$.cookie("selectedFtsCategory", value);
+			$.cookie("selectedFtsCategoryV1", value);
 		};
 
 		$scope.setSelectedYcsbCategory = function (value) {
 			$scope.selectedYcsbCategory = value;
-			$.cookie("selectedYcsbCategory", value);
+			$.cookie("selectedYcsbCategoryV1", value);
 		};
 
 		$scope.byCategory = function(entry) {
