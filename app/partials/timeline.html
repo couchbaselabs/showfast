@@ -135,8 +135,8 @@
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in fts_categories"
-			ng-class="{active: category.id === selectedFtsCategory}"
-			ng-click="setSelectedFtsCategory(category.id)"
+			ng-class="{active: category.id === selectedFTSCategory}"
+			ng-click="setSelectedFTSCategory(category.id)"
 			class="btn btn-default">
 			<input type="radio">{{category.title}}
 		</label>
@@ -147,8 +147,8 @@
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in ycsb_categories"
-			ng-class="{active: category.id === selectedYcsbCategory}"
-			ng-click="setSelectedYcsbCategory(category.id)"
+			ng-class="{active: category.id === selectedYCSBCategory}"
+			ng-click="setSelectedYCSBCategory(category.id)"
 			class="btn btn-default">
 			<input type="radio">{{category.title}}
 		</label>

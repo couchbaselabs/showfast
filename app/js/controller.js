@@ -242,7 +242,7 @@ function DefineSubCategories($scope) {
 	$scope.selectedQueryCategory = $.cookie("selectedQueryCategoryV1") || $scope.query_categories[0].id;
 	$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategoryV1") || $scope.n1ql_categories[0].id;
 	$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategoryV1") || $scope.secondary_categories[0].id;
-	$scope.selectedFtsCategory = $.cookie("selectedFtsCategoryV1") || $scope.fts_categories[0].id;
+	$scope.selectedFTSCategory = $.cookie("selectedFTSCategoryV1") || $scope.fts_categories[0].id;
 	$scope.selectedYCSBCategory = $.cookie("selectedYCSBCategoryV1") || $scope.ycsb_categories[0].id;
 
 	$scope.setSelectedRebCategory = function (value) {
@@ -291,7 +291,7 @@ function DefineSubCategories($scope) {
 	};
 
 	$scope.setSelectedYCSBCategory = function (value) {
-		$scope.selectedYcsbCategory = value;
+		$scope.selectedYCSBCategory = value;
 		$.cookie("selectedYCSBCategory", value);
 	};
 
