@@ -97,6 +97,15 @@ function DefineCategories($scope) {
 		"id": "tools", "title": "Tools"
 	}];
 
+	$scope.selectedCategory = $.cookie("selectedCategoryV1") || $scope.categories[0].id;
+
+	$scope.setSelectedCategory = function (value) {
+		$scope.selectedCategory = value;
+		$.cookie("selectedCategoryV1", value);
+	};
+}
+
+function DefineSubCategories($scope) {
 	$scope.reb_categories = [{
 		"id": "empty", "title": "Empty"
 	}, {
@@ -225,16 +234,6 @@ function DefineCategories($scope) {
 		"id": "workloade", "title": "Workload E"
 	}];
 
-	$scope.selectedCategory = $.cookie("selectedCategoryV1") || $scope.categories[0].id;
-
-	$scope.setSelectedCategory = function (value) {
-		$scope.selectedCategory = value;
-		$.cookie("selectedCategoryV1", value);
-	};
-
-}
-
-function DefineSubCategories($scope) {
 	$scope.selectedRebCategory = $.cookie("selectedRebCategoryV1") || $scope.reb_categories[0].id;
 	$scope.selectedIdxCategory = $.cookie("selectedIdxCategoryV1") || $scope.idx_categories[0].id;
 	$scope.selectedXDCRCategory = $.cookie("selectedXDCRCategoryV1") || $scope.xdcr_categories[0].id;
@@ -665,5 +664,40 @@ function AdminList($scope, $http) {
 
 	$http.get('/api/v1/benchmarks').success(function(data) {
 		$scope.benchmarks = data;
+
+		$scope.categories = [{
+			"id": "kv", "title": "KV"
+		}, {
+			"id": "reb", "title": "Rebalance"
+		}, {
+			"id": "index", "title": "View Indexing"
+		}, {
+			"id": "query", "title": "View Query"
+		}, {
+			"id": "n1ql", "title": "N1QL"
+		}, {
+			"id": "secondary", "title": "2i"
+		}, {
+			"id": "xdcr", "title": "XDCR"
+		}, {
+			"id": "fts", "title": "FTS"
+		}, {
+			"id": "ycsb", "title": "YCSB"
+		}, {
+			"id": "tools", "title": "Tools"
+		}];
+
+		$scope.selectedCategory = $scope.categories[0].id;
+
+		$scope.setSelectedCategory = function (value) {
+			$scope.selectedCategory = value;
+		};
+
+		$scope.byCategory = function(entry) {
+			if (entry.metric.indexOf($scope.selectedCategory) === 0){
+				return true;
+			}
+			return false;
+		};
 	});
 }

@@ -15,6 +15,19 @@
 <body ng-controller="AdminList">
 	<div class="masthead text-center">
 		<h2>Administration</h2>
+
+		<div class="text-center">
+			<div class="btn-group" data-toggle="buttons">
+				<label
+					ng-repeat="category in categories"
+					ng-class="{active: category.id === selectedCategory}"
+					ng-click="setSelectedCategory(category.id)"
+					class="btn btn-success">
+					<input type="radio">{{category.title}}
+				</label>
+			</div>
+		</div>
+
 		<div>
 			<table class="table-striped table-bordered table-condensed t-inventory">
 				<colgroup>
@@ -38,7 +51,7 @@
 				</thead>
 
 				<tbody class="t-data">
-					<tr ng-repeat="benchmark in benchmarks">
+					<tr ng-repeat="benchmark in benchmarks | filter:byCategory">
 						<td>{{benchmark.id}}</td>
 						<td>{{benchmark.metric}}</td>
 						<td class="col-center">{{benchmark.build}}</td>
