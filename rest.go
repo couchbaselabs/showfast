@@ -6,7 +6,7 @@ import (
 )
 
 func getBenchmarks(c *gin.Context) {
-	benchmarks, err := ds.getBenchmarks("all")
+	benchmarks, err := ds.getBenchmarks("by_metric_and_build")
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
