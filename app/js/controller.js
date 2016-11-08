@@ -524,7 +524,7 @@ function DefineSubCategories($scope) {
 			case "Q1_Q3_thr":
 				if (entry.id.indexOf("_thr_") !== -1 &&
 					entry.id.indexOf("_array_") === -1 && (
-					entry.id.indexOf("_Q1") !== -1 ||
+					entry.id.indexOf("_Q1_") !== -1 ||
 					entry.id.indexOf("_Q2_") !== -1 ||
 					entry.id.indexOf("_Q3_") !== -1)) {
 					return true;
@@ -532,16 +532,15 @@ function DefineSubCategories($scope) {
 				break;
 			case "Q1_Q3_lat":
 				if (entry.id.indexOf("_lat_") !== -1 && (
-					entry.id.indexOf("_Q1") !== -1 ||
+					entry.id.indexOf("_Q1_") !== -1 ||
 					entry.id.indexOf("_Q2_") !== -1 ||
 					entry.id.indexOf("_Q3_") !== -1)) {
 					return true;
 				}
 				break;
 			case "Q5_Q7_thr":
-				if (entry.id.indexOf("_thr_") !== -1 &&
-					entry.id.indexOf("_array_") === -1 && (
-					entry.id.indexOf("_Q5") !== -1 ||
+				if (entry.id.indexOf("_thr_") !== -1 && (
+					entry.id.indexOf("_Q5_") !== -1 ||
 					entry.id.indexOf("_Q6_") !== -1 ||
 					entry.id.indexOf("_Q7_") !== -1)) {
 					return true;
