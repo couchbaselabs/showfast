@@ -87,7 +87,7 @@ func (ds *dataStore) getAllMetrics() (*[]Metric, error) {
 		return nil, err
 	}
 
-	metrics := []Metric{}
+	var metrics []Metric
 	for _, row := range *rows {
 		value, ok := row.Value.(map[string]interface{})
 		if !ok {
@@ -120,7 +120,7 @@ func (ds *dataStore) getAllClusters() (*[]Cluster, error) {
 		return nil, err
 	}
 
-	clusters := []Cluster{}
+	var clusters []Cluster
 	for _, row := range *rows {
 		value, ok := row.Value.(map[string]interface{})
 		if !ok {
@@ -157,7 +157,7 @@ func (ds *dataStore) getBenchmarks(view string) (*[]Benchmark, error) {
 		return nil, err
 	}
 
-	benchmarks := []Benchmark{}
+	var benchmarks []Benchmark
 	for _, row := range *rows {
 		value, ok := row.Value.(map[string]interface{})
 		if !ok {
@@ -230,7 +230,7 @@ func (ds *dataStore) getAllRuns(metric string, build string) (*[]Benchmark, erro
 		return nil, err
 	}
 
-	benchmarks := []Benchmark{}
+	var benchmarks []Benchmark
 	for _, row := range *rows {
 		value, ok := row.Value.(map[string]interface{})
 		if !ok {
