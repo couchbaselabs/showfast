@@ -80,6 +80,15 @@ type Metric struct {
 	Title   string `json:"title"`
 }
 
+func (ds *dataStore) addMetric(m Metric) error {
+	bucket := ds.getBucket("metrics")
+	err := bucket.Set(m.ID, 0, m)
+	if err != nil {
+		log.Error("failed to insert metric", "err", err)
+	}
+	return err
+}
+
 func (ds *dataStore) getAllMetrics() (*[]Metric, error) {
 	bucket := ds.getBucket("metrics")
 	rows, err := ds.queryView(bucket, "v1", "all", map[string]interface{}{})
@@ -111,6 +120,15 @@ type Cluster struct {
 	Memory string `json:"memory"`
 	Name   string `json:"name"`
 	OS     string `json:"os"`
+}
+
+func (ds *dataStore) addCluster(c Cluster) error {
+	bucket := ds.getBucket("clusters")
+	err := bucket.Set(c.Name, 0, c)
+	if err != nil {
+		log.Error("failed to insert cluster", "err", err)
+	}
+	return err
 }
 
 func (ds *dataStore) getAllClusters() (*[]Cluster, error) {
@@ -147,6 +165,27 @@ type Benchmark struct {
 	Obsolete  bool     `json:"obsolete"`
 	Snapshots []string `json:"snapshots"`
 	Value     float64  `json:"value"`
+}
+
+func (ds *dataStore) addBenchmark(b Benchmark) error {
+	bucket := ds.getBucket("benchmarks")
+
+	allBenchmarks, err := ds.getBenchmarks("by_metric_and_build")
+	if err != nil {
+		log.Error("failed to get benchmarks", "err", err)
+		return err
+	}
+	for _, existing := range *allBenchmarks {
+		if existing.Metric == b.Metric && existing.Build == b.Build {
+			ds.reverseObsolete(existing.ID)
+		}
+	}
+
+	err = bucket.Set(b.ID, 0, b)
+	if err != nil {
+		log.Error("failed to insert benchmark", "err", err)
+	}
+	return err
 }
 
 func (ds *dataStore) getBenchmarks(view string) (*[]Benchmark, error) {
