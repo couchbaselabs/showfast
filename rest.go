@@ -3,12 +3,15 @@ package main
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+
+	log "gopkg.in/inconshreveable/log15.v2"
 )
 
 func addBenchmark(c *gin.Context) {
 	var b Benchmark
 	if err := c.BindJSON(&b); err != nil {
 		c.IndentedJSON(400, gin.H{"message": err.Error()})
+		log.Error("error adding benchmark", "err", err)
 		return
 	}
 	err := ds.addBenchmark(b)
@@ -59,6 +62,7 @@ func addCluster(c *gin.Context) {
 	var cluster Cluster
 	if err := c.BindJSON(&cluster); err != nil {
 		c.IndentedJSON(400, gin.H{"message": err.Error()})
+		log.Error("error adding cluster", "err", err)
 		return
 	}
 	err := ds.addCluster(cluster)
@@ -81,6 +85,7 @@ func addMetric(c *gin.Context) {
 	var m Metric
 	if err := c.BindJSON(&m); err != nil {
 		c.IndentedJSON(400, gin.H{"message": err.Error()})
+		log.Error("error adding metric", "err", err)
 		return
 	}
 	err := ds.addMetric(m)
