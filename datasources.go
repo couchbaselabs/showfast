@@ -177,7 +177,12 @@ func (ds *dataStore) addBenchmark(b Benchmark) error {
 	}
 	for _, existing := range *allBenchmarks {
 		if existing.Metric == b.Metric && existing.Build == b.Build {
-			ds.reverseObsolete(existing.ID)
+			existing.Obsolete = true
+			err := bucket.Set(existing.ID, 0, existing)
+			if err != nil {
+				log.Error("update failed", "err", err)
+				return err
+			}
 		}
 	}
 
