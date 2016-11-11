@@ -65,6 +65,7 @@ func (ds *dataStore) getBucket(bucketName string) *couchbase.Bucket {
 }
 
 func (ds *dataStore) queryView(b *couchbase.Bucket, ddoc, view string, params map[string]interface{}) (*[]couchbase.ViewRow, error) {
+	params["stale"] = false
 	viewResult, err := b.View(ddoc, view, params)
 	if err != nil {
 		log.Error("error quering view", "err", err)
