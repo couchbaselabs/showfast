@@ -57,8 +57,8 @@
 						<td class="col-center">{{benchmark.build}}</td>
 						<td class="col-center">{{benchmark.value}}</td>
 						<td class="col-center">
-							<input ng-click="reverseObsolete(benchmark.id)" type="checkbox" checked ng-if="benchmark.obsolete">
-							<input ng-click="reverseObsolete(benchmark.id)" type="checkbox" ng-if="!benchmark.obsolete">
+							<input ng-click="reverseHidden(benchmark.id)" type="checkbox" checked ng-if="benchmark.hidden">
+							<input ng-click="reverseHidden(benchmark.id)" type="checkbox" ng-if="!benchmark.hidden">
 						</td>
 						<td class="col-center">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="deleteBenchmark(benchmark)"></span>

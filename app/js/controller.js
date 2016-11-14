@@ -681,7 +681,7 @@ function AdminList($scope, $http) {
 		});
 	};
 
-	$scope.reverseObsolete = function(id) {
+	$scope.reverseHidden = function(id) {
 		$http({method: 'PATCH', url: '/api/v1/benchmarks/' + id});
 	};
 

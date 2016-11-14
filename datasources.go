@@ -166,7 +166,7 @@ type Benchmark struct {
 	DateTime  string   `json:"dateTime"`
 	ID        string   `json:"id"`
 	Metric    string   `json:"metric"`
-	Obsolete  bool     `json:"obsolete"`
+	Hidden    bool     `json:"hidden"`
 	Snapshots []string `json:"snapshots"`
 	Value     float64  `json:"value"`
 }
@@ -181,7 +181,7 @@ func (ds *dataStore) addBenchmark(b Benchmark) error {
 	}
 	for _, existing := range *allBenchmarks {
 		if existing.Metric == b.Metric && existing.Build == b.Build {
-			existing.Obsolete = true
+			existing.Hidden = true
 			err := bucket.Set(existing.ID, 0, existing)
 			if err != nil {
 				log.Error("update failed", "err", err)
@@ -252,9 +252,6 @@ func (ds *dataStore) getAllTimelines() (*map[string][][]interface{}, error) {
 
 	timelines := map[string][][]interface{}{}
 	for _, benchmark := range *benchmarks {
-		if benchmark.Obsolete {
-			continue
-		}
 		if array, ok := timelines[benchmark.Metric]; ok {
 			timelines[benchmark.Metric] = append(array, []interface{}{benchmark.Build, benchmark.Value})
 		} else {
@@ -304,14 +301,14 @@ func (ds *dataStore) deleteBenchmark(id string) error {
 	return err
 }
 
-func (ds *dataStore) reverseObsolete(id string) error {
+func (ds *dataStore) reverseHidden(id string) error {
 	bucket := ds.getBucket("benchmarks")
 	benchmark := Benchmark{}
 
 	if err := bucket.Get(id, &benchmark); err != nil {
 		return err
 	}
-	benchmark.Obsolete = !benchmark.Obsolete
+	benchmark.Hidden = !benchmark.Hidden
 
 	err := bucket.Set(id, 0, benchmark)
 	if err != nil {

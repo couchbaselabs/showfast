@@ -27,7 +27,6 @@ func getBenchmarks(c *gin.Context) {
 		return
 	}
 	c.IndentedJSON(200, benchmarks)
-
 }
 
 func changeBenchmark(c *gin.Context) {
@@ -36,7 +35,7 @@ func changeBenchmark(c *gin.Context) {
 		c.AbortWithError(400, errors.New("bad arguments"))
 		return
 	}
-	err := ds.reverseObsolete(id)
+	err := ds.reverseHidden(id)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
