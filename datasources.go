@@ -75,10 +75,13 @@ func (ds *dataStore) queryView(b *couchbase.Bucket, ddoc, view string, params ma
 }
 
 type Metric struct {
-	Cluster string `json:"cluster"`
-	ID      string `json:"id"`
-	OrderBy string `json:"orderBy"`
-	Title   string `json:"title"`
+	Cluster     string `json:"cluster"`
+	Category    string `json:"category"`
+	Component   string `json:"component"`
+	ID          string `json:"id"`
+	OrderBy     string `json:"orderBy"`
+	SubCategory string `json:"subCategory"`
+	Title       string `json:"title"`
 }
 
 func (ds *dataStore) addMetric(m Metric) error {
