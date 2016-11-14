@@ -211,6 +211,10 @@ function DefineSubCategories($scope) {
 	}];
 
 	$scope.ftsCategories = [{
+                "id": "kvlatency", "title": "kv Latency"
+        }, {
+                "id": "kvthroughput", "title": "kv Throughput"
+	}, {
 		"id": "latency", "title": "Latency"
 	}, {
 		"id": "throughput", "title": "Throughput"
@@ -591,14 +595,16 @@ function DefineSubCategories($scope) {
 
 			case "latency":
 				if (entry.id.indexOf("latency") !== -1 &&
-					entry.id.indexOf("3nodes") === -1) {
+					entry.id.indexOf("3nodes") === -1 &&
+					entry.id.indexOf("kv") === -1 ){
 					return true;
 				}
 				break;
 
 			case "throughput":
 				if (entry.id.indexOf("throughput") !== -1 &&
-					entry.id.indexOf("3nodes") === -1) {
+					entry.id.indexOf("3nodes") === -1 &&
+					entry.id.indexOf("kv") === -1 ) {
 					return true;
 				}
 				break;
@@ -612,14 +618,16 @@ function DefineSubCategories($scope) {
 
 			case "latency3":
 				if (entry.id.indexOf("latency") !== -1 &&
-					entry.id.indexOf("3nodes") !== -1) {
+					entry.id.indexOf("3nodes") !== -1 &&
+					entry.id.indexOf("kv") === -1 ){
 					return true;
 				}
 				break;
 
 			case "throughput3":
 				if (entry.id.indexOf("throughput") !== -1 &&
-					entry.id.indexOf("3nodes") !== -1) {
+					entry.id.indexOf("3nodes") !== -1 &&
+					entry.id.indexOf("kv") === -1 ){
 					return true;
 				}
 				break;
@@ -630,6 +638,22 @@ function DefineSubCategories($scope) {
 					return true;
 				}
 				 break;
+
+			case "kvlatency":
+                                if (entry.id.indexOf("latency") !== -1 &&
+                                        entry.id.indexOf("3nodes") === -1 &&
+                                        entry.id.indexOf("kv") !== -1 ){
+                                        return true;
+                                }
+                                break;
+
+                        case "kvthroughput":
+                                if (entry.id.indexOf("throughput") !== -1 &&
+                                        entry.id.indexOf("3nodes") === -1 &&
+                                        entry.id.indexOf("kv") !== -1 ){
+                                        return true;
+                                }
+                                break;
 		}
 		return false;
 	};
