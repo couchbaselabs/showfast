@@ -200,6 +200,8 @@ function DefineSubCategories($scope) {
 		"id": "fragmentation", "title": "Fragmentation"
 	}, {
 		"id": "compact", "title": "Compaction"
+	}, {
+		"id": "dcp", "title": "DCP"
 	}];
 
 	$scope.queryCategories = [{
@@ -211,9 +213,9 @@ function DefineSubCategories($scope) {
 	}];
 
 	$scope.ftsCategories = [{
-                "id": "kvlatency", "title": "kv Latency"
-        }, {
-                "id": "kvthroughput", "title": "kv Throughput"
+		"id": "kvlatency", "title": "KV Latency"
+	}, {
+		"id": "kvthroughput", "title": "KV Throughput"
 	}, {
 		"id": "latency", "title": "Latency"
 	}, {
@@ -640,20 +642,20 @@ function DefineSubCategories($scope) {
 				 break;
 
 			case "kvlatency":
-                                if (entry.id.indexOf("latency") !== -1 &&
-                                        entry.id.indexOf("3nodes") === -1 &&
-                                        entry.id.indexOf("kv") !== -1 ){
-                                        return true;
-                                }
-                                break;
+								if (entry.id.indexOf("latency") !== -1 &&
+										entry.id.indexOf("3nodes") === -1 &&
+										entry.id.indexOf("kv") !== -1 ){
+										return true;
+								}
+								break;
 
-                        case "kvthroughput":
-                                if (entry.id.indexOf("throughput") !== -1 &&
-                                        entry.id.indexOf("3nodes") === -1 &&
-                                        entry.id.indexOf("kv") !== -1 ){
-                                        return true;
-                                }
-                                break;
+						case "kvthroughput":
+								if (entry.id.indexOf("throughput") !== -1 &&
+										entry.id.indexOf("3nodes") === -1 &&
+										entry.id.indexOf("kv") !== -1 ){
+										return true;
+								}
+								break;
 		}
 		return false;
 	};
