@@ -639,23 +639,23 @@ function DefineSubCategories($scope) {
 					entry.id.indexOf("3nodes") !== -1) {
 					return true;
 				}
-				 break;
+				break;
 
 			case "kvlatency":
-								if (entry.id.indexOf("latency") !== -1 &&
-										entry.id.indexOf("3nodes") === -1 &&
-										entry.id.indexOf("kv") !== -1 ){
-										return true;
-								}
-								break;
+				if (entry.id.indexOf("latency") !== -1 &&
+					entry.id.indexOf("3nodes") === -1 &&
+					entry.id.indexOf("kv") !== -1 ){
+					return true;
+				}
+				break;
 
-						case "kvthroughput":
-								if (entry.id.indexOf("throughput") !== -1 &&
-										entry.id.indexOf("3nodes") === -1 &&
-										entry.id.indexOf("kv") !== -1 ){
-										return true;
-								}
-								break;
+			case "kvthroughput":
+				if (entry.id.indexOf("throughput") !== -1 &&
+					entry.id.indexOf("3nodes") === -1 &&
+					entry.id.indexOf("kv") !== -1 ){
+					return true;
+				}
+				break;
 		}
 		return false;
 	};
