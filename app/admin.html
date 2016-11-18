@@ -19,11 +19,11 @@
 		<div class="text-center">
 			<div class="btn-group" data-toggle="buttons">
 				<label
-					ng-repeat="category in categories"
-					ng-class="{active: category.id === selectedCategory}"
-					ng-click="setSelectedCategory(category.id)"
+					ng-repeat="component in components"
+					ng-class="{active: component.id === activeComponent}"
+					ng-click="setActiveComponent(component.id)"
 					class="btn btn-success">
-					<input type="radio">{{category.title}}
+					<input type="radio">{{component.title}}
 				</label>
 			</div>
 		</div>

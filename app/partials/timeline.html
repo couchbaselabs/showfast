@@ -4,11 +4,11 @@
 <div class="text-center">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="category in categories"
-			ng-class="{active: category.id === selectedCategory}"
-			ng-click="setSelectedCategory(category.id)"
+			ng-repeat="component in components"
+			ng-class="{active: component.id === activeComponent}"
+			ng-click="setActiveComponent(component.id)"
 			class="btn btn-success">
-			<input type="radio">{{category.title}}
+			<input type="radio">{{component.title}}
 		</label>
 	</div>
 	<div class="btn-group" data-toggle="buttons">
@@ -22,7 +22,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'tools'">
+<div class="text-center" ng-if="activeComponent === 'tools'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in toolsCategories"
@@ -35,7 +35,7 @@
 </div>
 
 
-<div class="text-center" ng-if="selectedCategory === 'beam'">
+<div class="text-center" ng-if="activeComponent === 'beam'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in beam_categories"
@@ -47,7 +47,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'index'">
+<div class="text-center" ng-if="activeComponent === 'index'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in idxCategories"
@@ -59,7 +59,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'secondary'">
+<div class="text-center" ng-if="activeComponent === 'secondary'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in secondaryCategories"
@@ -71,7 +71,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'reb'">
+<div class="text-center" ng-if="activeComponent === 'reb'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in rebCategories"
@@ -83,7 +83,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'kv'">
+<div class="text-center" ng-if="activeComponent === 'kv'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in kvCategories"
@@ -95,7 +95,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'query'">
+<div class="text-center" ng-if="activeComponent === 'query'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in queryCategories"
@@ -107,7 +107,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'n1ql'">
+<div class="text-center" ng-if="activeComponent === 'n1ql'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in n1qlCategories"
@@ -119,7 +119,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'xdcr'">
+<div class="text-center" ng-if="activeComponent === 'xdcr'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in xdcrCategories"
@@ -131,7 +131,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'fts'">
+<div class="text-center" ng-if="activeComponent === 'fts'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in ftsCategories"
@@ -143,7 +143,7 @@
 	</div>
 </div>
 
-<div class="text-center" ng-if="selectedCategory === 'ycsb'">
+<div class="text-center" ng-if="activeComponent === 'ycsb'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="category in ycsbCategories"
@@ -155,7 +155,7 @@
 	</div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byCategory | filter:byOS | orderBy:'orderBy' ">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byComponent | filter:byOS | orderBy:'orderBy' ">
 	<hr/>
 	<h4>
 		<span id="{{metric.id}}">

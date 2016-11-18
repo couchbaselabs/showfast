@@ -54,8 +54,8 @@ function Timeline($scope, $http) {
 			}
 		});
 
+		DefineComponents($scope);
 		DefineCategories($scope);
-		DefineSubCategories($scope);
 
 		var format = d3.format(',');
 		$scope.valueFormatFunction = function(){
@@ -74,8 +74,8 @@ function Timeline($scope, $http) {
 	});
 }
 
-function DefineCategories($scope) {
-	$scope.categories = [{
+function DefineComponents($scope) {
+	$scope.components = [{
 		"id": "kv", "title": "KV"
 	}, {
 		"id": "reb", "title": "Rebalance"
@@ -97,15 +97,15 @@ function DefineCategories($scope) {
 		"id": "tools", "title": "Tools"
 	}];
 
-	$scope.selectedCategory = $.cookie("selectedCategoryV1") || $scope.categories[0].id;
+	$scope.activeComponent = $.cookie("activeComponent") || $scope.components[0].id;
 
-	$scope.setSelectedCategory = function (value) {
-		$scope.selectedCategory = value;
-		$.cookie("selectedCategoryV1", value);
+	$scope.setActiveComponent = function (value) {
+		$scope.activeComponent = value;
+		$.cookie("activeComponent", value);
 	};
 }
 
-function DefineSubCategories($scope) {
+function DefineCategories($scope) {
 	$scope.rebCategories = [{
 		"id": "empty", "title": "Empty"
 	}, {
@@ -301,72 +301,70 @@ function DefineSubCategories($scope) {
 		$.cookie("selectedYCSBCategory", value);
 	};
 
-	var byIdxCategory = function(entry) {
-		var selectedIdxCategory = $scope.selectedIdxCategory;
+	$scope.byComponent = function(entry) {
+		var activeComponent = $scope.activeComponent,
+			entryComponent = entry.id.substring(0, activeComponent.length);
 
-		return entry.id.indexOf(selectedIdxCategory) !== -1;
-	};
-
-	$scope.byCategory = function(entry) {
-		var selectedCategory = $scope.selectedCategory,
-			entryCategory = entry.id.substring(0, selectedCategory.length);
-
-		switch(selectedCategory) {
+		switch(activeComponent) {
 			case "index":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byIdxCategory(entry);
 				}
 				break;
 			case "secondary":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return bySecondaryCategory(entry);
 				}
 				break;
 			case "tools":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byToolsCategory(entry);
 				}
 				break;
 			case "reb":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byRebCategory(entry);
 				}
 				break;
 			case "kv":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byKVCategory(entry);
 				}
 				break;
 			case "query":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byQueryCategory(entry);
 				}
 				break;
 			case "n1ql":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byN1QLCategory(entry);
 				}
 				break;
 			case "xdcr":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byXDCRCategory(entry);
 				}
 				break;
 			case "fts":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byFTSCategory(entry);
 				}
 				break;
 			case "ycsb":
-				if (entryCategory === selectedCategory) {
+				if (entryComponent === activeComponent) {
 					return byYCSBCategory(entry);
 				}
 				break;
-			case entryCategory:
-				return true;
 			default:
 				return false;
 		}
+	};
+
+	var byIdxCategory = function(entry) {
+		var selectedIdxCategory = $scope.selectedIdxCategory;
+
+		return entry.id.indexOf(selectedIdxCategory) !== -1;
 	};
 
 	var bySecondaryCategory = function(entry) {
@@ -690,7 +688,7 @@ function AdminList($scope, $http) {
 	$http.get('/api/v1/benchmarks').success(function(data) {
 		$scope.benchmarks = data;
 
-		$scope.categories = [{
+		$scope.components = [{
 			"id": "kv", "title": "KV"
 		}, {
 			"id": "reb", "title": "Rebalance"
@@ -712,14 +710,14 @@ function AdminList($scope, $http) {
 			"id": "tools", "title": "Tools"
 		}];
 
-		$scope.selectedCategory = $scope.categories[0].id;
+		$scope.activeComponent = $scope.components[0].id;
 
-		$scope.setSelectedCategory = function (value) {
-			$scope.selectedCategory = value;
+		$scope.setActiveComponent = function (value) {
+			$scope.activeComponent = value;
 		};
 
-		$scope.byCategory = function(entry) {
-			if (entry.metric.indexOf($scope.selectedCategory) === 0){
+		$scope.byComponent = function(entry) {
+			if (entry.metric.indexOf($scope.activeComponent) === 0){
 				return true;
 			}
 			return false;
