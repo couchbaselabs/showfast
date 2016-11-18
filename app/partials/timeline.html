@@ -35,18 +35,6 @@
 </div>
 
 
-<div class="text-center" ng-if="activeComponent === 'beam'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in beam_categories"
-			ng-class="{active: category.id === selectedBeamCategory}"
-			ng-click="setSelectedBeamCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
 <div class="text-center" ng-if="activeComponent === 'index'">
 	<div class="btn-group" data-toggle="buttons">
 		<label
