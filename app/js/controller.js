@@ -287,7 +287,7 @@ function DefineCategories($scope, $location) {
 				break;
 			case "xdcr":
 				if (entryComponent === $scope.activeComponent) {
-					return byXDCRCategory(entry);
+					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "fts":
@@ -363,36 +363,6 @@ function DefineCategories($scope, $location) {
 				}
 				break;
 
-			default:
-				return false;
-		}
-	};
-
-	var byXDCRCategory = function(entry) {
-		switch($scope.activeCategory) {
-			case "lww":
-				if (entry.id.indexOf("lww") !== -1) {
-					return true;
-				}
-				break;
-			case "init":
-				if (entry.id.indexOf("init") !== -1 &&
-						entry.id.indexOf("lww_init") === -1) {
-					return true;
-				}
-				break;
-			case "reb":
-				if (entry.id.indexOf("reb") !== -1) {
-					return true;
-				}
-				break;
-			case "ongoing":
-				if (entry.id.indexOf("init") === -1 &&
-						entry.id.indexOf("reb") === -1 &&
-							entry.id.indexOf("lww") === -1) {
-					return true;
-				}
-				break;
 			default:
 				return false;
 		}
