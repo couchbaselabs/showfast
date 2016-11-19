@@ -252,7 +252,7 @@ function DefineCategories($scope, $location) {
 		switch($scope.activeComponent) {
 			case "index":
 				if (entryComponent === $scope.activeComponent) {
-					return byIdxCategory(entry);
+					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			case "secondary":
@@ -262,7 +262,7 @@ function DefineCategories($scope, $location) {
 				break;
 			case "tools":
 				if (entryComponent === $scope.activeComponent) {
-					return byToolsCategory(entry);
+					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			case "reb":
@@ -272,7 +272,7 @@ function DefineCategories($scope, $location) {
 				break;
 			case "kv":
 				if (entryComponent === $scope.activeComponent) {
-					return byKVCategory(entry);
+					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			case "query":
@@ -297,16 +297,12 @@ function DefineCategories($scope, $location) {
 				break;
 			case "ycsb":
 				if (entryComponent === $scope.activeComponent) {
-					return byYCSBCategory(entry);
+					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			default:
 				return false;
 		}
-	};
-
-	var byIdxCategory = function(entry) {
-		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 
 	var bySecondaryCategory = function(entry) {
@@ -400,14 +396,6 @@ function DefineCategories($scope, $location) {
 			default:
 				return false;
 		}
-	};
-
-	var byToolsCategory = function(entry) {
-		return entry.id.indexOf($scope.activeCategory) !== -1;
-	};
-
-	var byKVCategory = function(entry) {
-		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 
 	var byN1QLCategory = function(entry) {
@@ -543,10 +531,6 @@ function DefineCategories($scope, $location) {
 			default:
 				return false;
 		}
-	};
-
-	var byYCSBCategory = function(entry) {
-		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 }
 
