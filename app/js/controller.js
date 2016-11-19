@@ -272,7 +272,7 @@ function DefineCategories($scope, $location) {
 				break;
 			case "kv":
 				if (entryComponent === $scope.activeComponent) {
-					return entry.id.indexOf($scope.activeCategory) !== -1;
+					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "query":
