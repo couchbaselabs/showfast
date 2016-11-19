@@ -267,7 +267,7 @@ function DefineCategories($scope, $location) {
 				break;
 			case "reb":
 				if (entryComponent === $scope.activeComponent) {
-					return byRebCategory(entry);
+					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "kv":
@@ -367,43 +367,6 @@ function DefineCategories($scope, $location) {
 				}
 				break;
 
-			default:
-				return false;
-		}
-	};
-
-	var byRebCategory = function(entry) {
-		switch($scope.activeCategory) {
-			case "failover":
-				if (entry.id.indexOf("failover") !== -1 &&
-						entry.id.indexOf("views") === -1) {
-					return true;
-				}
-				break;
-			case "empty":
-				if (entry.id.indexOf("0_kv_") !== -1) {
-					return true;
-				}
-				break;
-			case "views":
-				if (entry.id.indexOf("views") !== -1 &&
-						entry.id.indexOf("failover") === -1) {
-					return true;
-				}
-				break;
-			case "xdcr":
-				if (entry.id.indexOf("xdcr") !== -1) {
-					return true;
-				}
-				break;
-			case "kv":
-				if (entry.id.indexOf("0_kv_") === -1 &&
-						entry.id.indexOf("views") === -1 &&
-						entry.id.indexOf("failover") === -1 &&
-						entry.id.indexOf("xdcr") === -1) {
-					return true;
-				}
-				break;
 			default:
 				return false;
 		}
