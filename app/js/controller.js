@@ -1,6 +1,3 @@
-/*jshint jquery: true, browser: true*/
-/*global jlinq, d3: true*/
-
 function MainDashboard($scope, $http, $routeParams, $location) {
 	'use strict';
 

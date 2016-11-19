@@ -1,6 +1,3 @@
-/*global angular, Timeline, RunList: true*/
-
-
 angular.module('sf', ['ngRoute', 'nvd3ChartDirectives'])
 	.config([
 	    '$routeProvider', function($routeProvider) {
