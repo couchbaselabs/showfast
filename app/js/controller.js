@@ -137,9 +137,9 @@ function DefineComponents($scope, $location) {
 			categories: [{
 				id: "lat", title: "Bulk Latency"
 			}, {
-				id: "dev", title: "Latency by Query Type"
+				id: "by_type", title: "Latency by Query Type"
 			}, {
-				id: "thr", title: "Throughput"
+				id: "throughput", title: "Throughput"
 			}]
 		},
 		n1ql: {
@@ -277,7 +277,7 @@ function DefineCategories($scope, $location) {
 				break;
 			case "query":
 				if (entryComponent === $scope.activeComponent) {
-					return byQueryCategory(entry);
+					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "n1ql":
@@ -407,10 +407,6 @@ function DefineCategories($scope, $location) {
 	};
 
 	var byKVCategory = function(entry) {
-		return entry.id.indexOf($scope.activeCategory) !== -1;
-	};
-
-	var byQueryCategory = function(entry) {
 		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 
