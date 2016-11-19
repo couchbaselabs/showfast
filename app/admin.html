@@ -19,11 +19,11 @@
 		<div class="text-center">
 			<div class="btn-group" data-toggle="buttons">
 				<label
-					ng-repeat="component in components"
-					ng-class="{active: component.id === activeComponent}"
-					ng-click="setActiveComponent(component.id)"
+					ng-repeat="(id, title) in components"
+					ng-class="{active: id === activeComponent}"
+					ng-click="setActiveComponent(id)"
 					class="btn btn-success">
-					<input type="radio">{{component.title}}
+					<input type="radio">{{title}}
 				</label>
 			</div>
 		</div>
@@ -51,7 +51,7 @@
 				</thead>
 
 				<tbody class="t-data">
-					<tr ng-repeat="benchmark in benchmarks | filter:byCategory">
+					<tr ng-repeat="benchmark in benchmarks | filter:byComponent">
 						<td>{{benchmark.id}}</td>
 						<td>{{benchmark.metric}}</td>
 						<td class="col-center">{{benchmark.build}}</td>

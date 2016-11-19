@@ -4,9 +4,9 @@
 <div class="text-center">
 	<div class="btn-group" data-toggle="buttons">
 		<label
-			ng-repeat="component in components"
-			ng-class="{active: component.id === activeComponent}"
-			ng-click="setActiveComponent(component.id)"
+			ng-repeat="(id, component) in components"
+			ng-class="{active: id === activeComponent}"
+			ng-click="setActiveComponent(id)"
 			class="btn btn-success">
 			<input type="radio">{{component.title}}
 		</label>
@@ -14,132 +14,25 @@
 	<div class="btn-group" data-toggle="buttons">
 		<label
 			ng-repeat="os in oses"
-			ng-class="{active: os == selectedOS}"
-			ng-click="setSelectedOS(os)"
+			ng-class="{active: os == activeOS}"
+			ng-click="setActiveOS(os)"
 			class="btn btn-warning">
 			<input type="radio">{{os}}
 		</label>
 	</div>
 </div>
 
-<div class="text-center" ng-if="activeComponent === 'tools'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in toolsCategories"
-			ng-class="{active: category.id === selectedToolsCategory}"
-			ng-click="setSelectedToolsCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-
-<div class="text-center" ng-if="activeComponent === 'index'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in idxCategories"
-			ng-class="{active: category.id === selectedIdxCategory}"
-			ng-click="setSelectedIdxCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="activeComponent === 'secondary'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in secondaryCategories"
-			ng-class="{active: category.id === selectedSecondaryCategory}"
-			ng-click="setSelectedSecondaryCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="activeComponent === 'reb'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in rebCategories"
-			ng-class="{active: category.id === selectedRebCategory}"
-			ng-click="setSelectedRebCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="activeComponent === 'kv'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in kvCategories"
-			ng-class="{active: category.id === selectedKVCategory}"
-			ng-click="setSelectedKVCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="activeComponent === 'query'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in queryCategories"
-			ng-class="{active: category.id === selectedQueryCategory}"
-			ng-click="setSelectedQueryCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="activeComponent === 'n1ql'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in n1qlCategories"
-			ng-class="{active: category.id === selectedN1QLCategory}"
-			ng-click="setSelectedN1QLCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="activeComponent === 'xdcr'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in xdcrCategories"
-			ng-class="{active: category.id === selectedXDCRCategory}"
-			ng-click="setSelectedXDCRCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="activeComponent === 'fts'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in ftsCategories"
-			ng-class="{active: category.id === selectedFTSCategory}"
-			ng-click="setSelectedFTSCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
-	</div>
-</div>
-
-<div class="text-center" ng-if="activeComponent === 'ycsb'">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="category in ycsbCategories"
-			ng-class="{active: category.id === selectedYCSBCategory}"
-			ng-click="setSelectedYCSBCategory(category.id)"
-			class="btn btn-default">
-			<input type="radio">{{category.title}}
-		</label>
+<div ng-repeat="(id, component) in components">
+	<div class="text-center" ng-if="activeComponent === id">
+		<div class="btn-group" data-toggle="buttons">
+			<label
+				ng-repeat="category in component.categories"
+				ng-class="{active: category.id === activeCategory}"
+				ng-click="setActiveCategory(category.id)"
+				class="btn btn-default">
+				<input type="radio">{{category.title}}
+			</label>
+		</div>
 	</div>
 </div>
 

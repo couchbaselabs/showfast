@@ -1,8 +1,7 @@
 /*jshint jquery: true, browser: true*/
 /*global jlinq, d3: true*/
 
-
-function Timeline($scope, $http) {
+function MainDashboard($scope, $http, $routeParams, $location) {
 	'use strict';
 
 	$http.get('/api/v1/metrics').success(function(data) {
@@ -21,23 +20,6 @@ function Timeline($scope, $http) {
 					.ends('name', metrics[i].cluster)
 					.select()[0];
 			}
-
-			$scope.oses = ["Linux", "Windows"];
-			$scope.selectedOS = $.cookie("selectedOSV1") || "Linux";
-			$scope.setSelectedOS = function (value) {
-				$scope.selectedOS = value;
-				$.cookie("selectedOSV1", value);
-			};
-			$scope.byOS = function(entry) {
-				var entryOS = entry.cluster.os,
-					selectedOS = $scope.selectedOS;
-				switch(selectedOS) {
-					case "Linux":
-						return entryOS.substring(0, 7) !== "Windows";
-					case "Windows":
-						return entryOS.substring(0, 7) === "Windows";
-				}
-			};
 		});
 
 		$http.get('/api/v1/timelines').success(function(data) {
@@ -53,9 +35,6 @@ function Timeline($scope, $http) {
 				}
 			}
 		});
-
-		DefineComponents($scope);
-		DefineCategories($scope);
 
 		var format = d3.format(',');
 		$scope.valueFormatFunction = function(){
@@ -74,285 +53,253 @@ function Timeline($scope, $http) {
 	});
 }
 
-function DefineComponents($scope) {
-	$scope.components = [{
-		"id": "kv", "title": "KV"
-	}, {
-		"id": "reb", "title": "Rebalance"
-	}, {
-		"id": "index", "title": "View Indexing"
-	}, {
-		"id": "query", "title": "View Query"
-	}, {
-		"id": "n1ql", "title": "N1QL"
-	}, {
-		"id": "secondary", "title": "2i"
-	}, {
-		"id": "xdcr", "title": "XDCR"
-	}, {
-		"id": "fts", "title": "FTS"
-	}, {
-		"id": "ycsb", "title": "YCSB"
-	}, {
-		"id": "tools", "title": "Tools"
-	}];
+function MenuRouter($scope, $routeParams, $location) {
+	$scope.activeOS = $routeParams.os;
+	$scope.activeComponent = $routeParams.component;
+	$scope.activeCategory = $routeParams.category;
 
-	$scope.activeComponent = $.cookie("activeComponent") || $scope.components[0].id;
+	$scope.setActiveOS = function (os) {
+		$location.path("/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory);
+	};
 
-	$scope.setActiveComponent = function (value) {
-		$scope.activeComponent = value;
-		$.cookie("activeComponent", value);
+	$scope.setActiveComponent = function (component) {
+		$location.path("/timeline/" + $scope.activeOS + "/" + component + "/" + $scope.components[component].categories[0].id);
+	};
+
+	$scope.setActiveCategory = function (category) {
+		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category);
+	};
+
+	DefineComponents($scope, $location);
+	DefineCategories($scope, $location);
+	DefineOS($scope, $location);
+}
+
+function DefineOS($scope, $location) {
+	$scope.oses = ["Linux", "Windows"];
+
+	$scope.byOS = function(entry) {
+		var entryOS = entry.cluster.os;
+		switch($scope.activeOS) {
+			case "Linux":
+				return entryOS.substring(0, 7) !== "Windows";
+			case "Windows":
+				return entryOS.substring(0, 7) === "Windows";
+		}
 	};
 }
 
-function DefineCategories($scope) {
-	$scope.rebCategories = [{
-		"id": "empty", "title": "Empty"
-	}, {
-		"id": "kv", "title": "KV"
-	}, {
-		"id": "views", "title": "Views"
-	}, {
-		"id": "xdcr", "title": "XDCR"
-	}, {
-		"id": "failover", "title": "Failover"
-	}];
-
-	$scope.idxCategories = [{
-		"id": "init", "title": "Initial"
-	}, {
-		"id": "incr", "title": "Incremental"
-	}];
-
-	$scope.secondaryCategories = [{
-		"id": "fdb_lat", "title": "Latency FDB"
-	}, {
-		"id": "fdb_thr", "title": "Throughput FDB"
-	}, {
-		"id": "fdb_init", "title": "Initial FDB"
-	}, {
-		"id": "fdb_incr", "title": "Incremental FDB"
-	}, {
-		"id": "fdb_standalone", "title": "Standalone FDB"
-	}, {
-		"id": "moi_lat", "title": "Latency MOI"
-	}, {
-		"id": "moi_thr", "title": "Throughput MOI"
-	}, {
-		"id": "moi_init", "title": "Initial MOI"
-	}, {
-		"id": "moi_incr", "title": "Incremental MOI"
-	}, {
-		"id": "fdb", "title": "FDB"
-	}, {
-		"id": "moi", "title": "MOI"
-	}];
-
-	$scope.n1qlCategories = [{
-		"id": "Q1_Q3_thr", "title": "Q1-Q3 Throughput"
-	}, {
-		"id": "Q1_Q3_lat", "title": "Q1-Q3 Latency"
-	}, {
-		"id": "Q5_Q7_thr", "title": "Q5-Q7 Throughput"
-	}, {
-		"id": "CI_thr", "title": "Covering Indexes"
-	}, {
-		"id": "array", "title": "Array Indexing"
-	}, {
-		"id": "join_unnest", "title": "JOIN & UNNEST"
-	}, {
-		"id": "dml", "title": "DML"
-	}];
-
-	$scope.xdcrCategories = [{
-		"id": "init", "title": "Initial"
-	}, {
-		"id": "reb", "title": "Initial+Rebalance"
-	}, {
-		"id": "ongoing", "title": "Ongoing"
-	}, {
-		"id": "lww", "title": "LWW"
-	}];
-
-	$scope.toolsCategories = [{
-		"id": "backup", "title": "Backup"
-	}, {
-		"id": "restore", "title": "Restore"
-	}, {
-		"id": "import", "title": "Import"
-	}, {
-		"id": "export", "title": "Export"
-	}];
-
-	$scope.kvCategories = [{
-		"id": "max_ops", "title": "Max Throughput"
-	}, {
-		"id": "latency", "title": "Latency"
-	}, {
-		"id": "_io_", "title": "Storage"
-	}, {
-		"id": "observe", "title": "Observe"
-	}, {
-		"id": "subdoc", "title": "Sub Doc"
-	}, {
-		"id": "warmup", "title": "Warmup"
-	}, {
-		"id": "fragmentation", "title": "Fragmentation"
-	}, {
-		"id": "compact", "title": "Compaction"
-	}, {
-		"id": "dcp", "title": "DCP"
-	}];
-
-	$scope.queryCategories = [{
-		"id": "lat", "title": "Bulk Latency"
-	}, {
-		"id": "dev", "title": "Latency by Query Type"
-	}, {
-		"id": "thr", "title": "Throughput"
-	}];
-
-	$scope.ftsCategories = [{
-		"id": "kvlatency", "title": "KV Latency"
-	}, {
-		"id": "kvthroughput", "title": "KV Throughput"
-	}, {
-		"id": "latency", "title": "Latency"
-	}, {
-		"id": "throughput", "title": "Throughput"
-	}, {
-		"id": "index", "title": "Index"
-	}, {
-		"id": "latency3", "title": "3 node Latency"
-	}, {
-		"id": "throughput3", "title": "3 node Throughput "
-	}, {
-		"id": "index3", "title": "3 node Index"
-	}, {
-		"id": "elastic", "title": "ElasticSearch"
-	}];
-
-	$scope.ycsbCategories = [{
-		"id": "workloada", "title": "Workload A"
-	}, {
-		"id": "workloadc", "title": "Workload C"
-	}, {
-		"id": "workloade", "title": "Workload E"
-	}];
-
-	$scope.selectedRebCategory = $.cookie("selectedRebCategoryV1") || $scope.rebCategories[0].id;
-	$scope.selectedIdxCategory = $.cookie("selectedIdxCategoryV1") || $scope.idxCategories[0].id;
-	$scope.selectedXDCRCategory = $.cookie("selectedXDCRCategoryV1") || $scope.xdcrCategories[0].id;
-	$scope.selectedToolsCategory = $.cookie("selectedToolsCategoryV1") || $scope.toolsCategories[0].id;
-	$scope.selectedKVCategory = $.cookie("selectedKVCategoryV1") || $scope.kvCategories[0].id;
-	$scope.selectedQueryCategory = $.cookie("selectedQueryCategoryV1") || $scope.queryCategories[0].id;
-	$scope.selectedN1QLCategory = $.cookie("selectedN1QLCategoryV1") || $scope.n1qlCategories[0].id;
-	$scope.selectedSecondaryCategory = $.cookie("selectedSecondaryCategoryV1") || $scope.secondaryCategories[0].id;
-	$scope.selectedFTSCategory = $.cookie("selectedFTSCategoryV1") || $scope.ftsCategories[0].id;
-	$scope.selectedYCSBCategory = $.cookie("selectedYCSBCategoryV1") || $scope.ycsbCategories[0].id;
-
-	$scope.setSelectedRebCategory = function (value) {
-		$scope.selectedRebCategory = value;
-		$.cookie("selectedRebCategoryV1", value);
+function DefineComponents($scope, $location) {
+	$scope.components = {
+		kv: {
+			title: "KV",
+			categories: [{
+				id: "max_ops", title: "Max Throughput"
+			}, {
+				id: "latency", title: "Latency"
+			}, {
+				id: "_io_", title: "Storage"
+			}, {
+				id: "observe", title: "Observe"
+			}, {
+				id: "subdoc", title: "Sub Doc"
+			}, {
+				id: "warmup", title: "Warmup"
+			}, {
+				id: "fragmentation", title: "Fragmentation"
+			}, {
+				id: "compact", title: "Compaction"
+			}, {
+				id: "dcp", title: "DCP"
+			}]
+		},
+		reb: {
+			title: "Rebalance",
+			categories: [{
+				id: "empty", title: "Empty"
+			}, {
+				id: "kv", title: "KV"
+			}, {
+				id: "views", title: "Views"
+			}, {
+				id: "xdcr", title: "XDCR"
+			}, {
+				id: "failover", title: "Failover"
+			}]
+		},
+		index: {
+			title: "View Indexing",
+			categories: [{
+				id: "init", title: "Initial"
+			}, {
+				id: "incr", title: "Incremental"
+			}]
+		},
+		query: {
+			title: "View Query",
+			categories: [{
+				id: "lat", title: "Bulk Latency"
+			}, {
+				id: "dev", title: "Latency by Query Type"
+			}, {
+				id: "thr", title: "Throughput"
+			}]
+		},
+		n1ql: {
+			title: "N1QL",
+			categories: [{
+				id: "Q1_Q3_thr", title: "Q1-Q3 Throughput"
+			}, {
+				id: "Q1_Q3_lat", title: "Q1-Q3 Latency"
+			}, {
+				id: "Q5_Q7_thr", title: "Q5-Q7 Throughput"
+			}, {
+				id: "CI_thr", title: "Covering Indexes"
+			}, {
+				id: "array", title: "Array Indexing"
+			}, {
+				id: "join_unnest", title: "JOIN & UNNEST"
+			}, {
+				id: "dml", title: "DML"
+			}]
+		},
+		secondary: {
+			title: "2i",
+			categories: [{
+				id: "fdb_lat", title: "Latency FDB"
+			}, {
+				id: "fdb_thr", title: "Throughput FDB"
+			}, {
+				id: "fdb_init", title: "Initial FDB"
+			}, {
+				id: "fdb_incr", title: "Incremental FDB"
+			}, {
+				id: "fdb_standalone", title: "Standalone FDB"
+			}, {
+				id: "moi_lat", title: "Latency MOI"
+			}, {
+				id: "moi_thr", title: "Throughput MOI"
+			}, {
+				id: "moi_init", title: "Initial MOI"
+			}, {
+				id: "moi_incr", title: "Incremental MOI"
+			}, {
+				id: "fdb", title: "FDB"
+			}, {
+				id: "moi", title: "MOI"
+			}]
+		},
+		xdcr: {
+			title: "XDCR",
+			categories: [{
+				id: "init", title: "Initial"
+			}, {
+				id: "reb", title: "Initial+Rebalance"
+			}, {
+				id: "ongoing", title: "Ongoing"
+			}, {
+				id: "lww", title: "LWW"
+			}]
+		},
+		fts: {
+			title: "FTS",
+			categories: [{
+				id: "kvlatency", title: "KV Latency"
+			}, {
+				id: "kvthroughput", title: "KV Throughput"
+			}, {
+				id: "latency", title: "Latency"
+			}, {
+				id: "throughput", title: "Throughput"
+			}, {
+				id: "index", title: "Index"
+			}, {
+				id: "latency3", title: "3 Node Latency"
+			}, {
+				id: "throughput3", title: "3 Node Throughput "
+			}, {
+				id: "index3", title: "3 Node Index"
+			}, {
+				id: "elastic", title: "ElasticSearch"
+			}]
+		},
+		ycsb: {
+			title: "YCSB",
+			categories: [{
+				id: "workloada", title: "Workload A"
+			}, {
+				id: "workloadc", title: "Workload C"
+			}, {
+				id: "workloade", title: "Workload E"
+			}]
+		},
+		tools: {
+			title: "Tools",
+			categories: [{
+				id: "backup", title: "Backup"
+			}, {
+				id: "restore", title: "Restore"
+			}, {
+				id: "import", title: "Import"
+			}, {
+				id: "export", title: "Export"
+			}]
+		}
 	};
+}
 
-	$scope.setSelectedIdxCategory = function (value) {
-		$scope.selectedIdxCategory = value;
-		$.cookie("selectedIdxCategoryV1", value);
-	};
-
-	$scope.setSelectedXDCRCategory = function (value) {
-		$scope.selectedXDCRCategory = value;
-		$.cookie("selectedXDCRCategoryV1", value);
-	};
-
-	$scope.setSelectedToolsCategory = function (value) {
-		$scope.selectedToolsCategory = value;
-		$.cookie("selectedToolsCategoryV1", value);
-	};
-
-	$scope.setSelectedKVCategory = function (value) {
-		$scope.selectedKVCategory = value;
-		$.cookie("selectedKVCategoryV1", value);
-	};
-
-	$scope.setSelectedQueryCategory = function (value) {
-		$scope.selectedQueryCategory = value;
-		$.cookie("selectedQueryCategoryV1", value);
-	};
-
-	$scope.setSelectedSecondaryCategory = function (value) {
-		$scope.selectedSecondaryCategory = value;
-		$.cookie("selectedSecondaryCategoryV1", value);
-	};
-
-	$scope.setSelectedN1QLCategory = function (value) {
-		$scope.selectedN1QLCategory = value;
-		$.cookie("selectedN1QLCategoryV1", value);
-	};
-
-	$scope.setSelectedFTSCategory = function (value) {
-		$scope.selectedFTSCategory = value;
-		$.cookie("selectedFTSCategoryV1", value);
-	};
-
-	$scope.setSelectedYCSBCategory = function (value) {
-		$scope.selectedYCSBCategory = value;
-		$.cookie("selectedYCSBCategory", value);
-	};
-
+function DefineCategories($scope, $location) {
 	$scope.byComponent = function(entry) {
-		var activeComponent = $scope.activeComponent,
-			entryComponent = entry.id.substring(0, activeComponent.length);
+		var entryComponent = entry.id.substring(0, $scope.activeComponent.length);
 
-		switch(activeComponent) {
+		switch($scope.activeComponent) {
 			case "index":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byIdxCategory(entry);
 				}
 				break;
 			case "secondary":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return bySecondaryCategory(entry);
 				}
 				break;
 			case "tools":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byToolsCategory(entry);
 				}
 				break;
 			case "reb":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byRebCategory(entry);
 				}
 				break;
 			case "kv":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byKVCategory(entry);
 				}
 				break;
 			case "query":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byQueryCategory(entry);
 				}
 				break;
 			case "n1ql":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byN1QLCategory(entry);
 				}
 				break;
 			case "xdcr":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byXDCRCategory(entry);
 				}
 				break;
 			case "fts":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byFTSCategory(entry);
 				}
 				break;
 			case "ycsb":
-				if (entryComponent === activeComponent) {
+				if (entryComponent === $scope.activeComponent) {
 					return byYCSBCategory(entry);
 				}
 				break;
@@ -362,15 +309,11 @@ function DefineCategories($scope) {
 	};
 
 	var byIdxCategory = function(entry) {
-		var selectedIdxCategory = $scope.selectedIdxCategory;
-
-		return entry.id.indexOf(selectedIdxCategory) !== -1;
+		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 
 	var bySecondaryCategory = function(entry) {
-		var selectedSecondaryCategory = $scope.selectedSecondaryCategory;
-
-		switch(selectedSecondaryCategory) {
+		switch($scope.activeCategory) {
 			case "fdb_thr":
 				if (entry.id.indexOf("_scanthr") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
 					return true;
@@ -428,14 +371,12 @@ function DefineCategories($scope) {
 				break;
 
 			default:
-				return entry.id.indexOf(selectedSecondaryCategory) !== -1;
+				return false;
 		}
 	};
 
 	var byRebCategory = function(entry) {
-		var selectedRebCategory = $scope.selectedRebCategory;
-
-		switch(selectedRebCategory) {
+		switch($scope.activeCategory) {
 			case "failover":
 				if (entry.id.indexOf("failover") !== -1 &&
 						entry.id.indexOf("views") === -1) {
@@ -472,9 +413,7 @@ function DefineCategories($scope) {
 	};
 
 	var byXDCRCategory = function(entry) {
-		var selectedXDCRCategory = $scope.selectedXDCRCategory;
-
-		switch(selectedXDCRCategory) {
+		switch($scope.activeCategory) {
 			case "lww":
 				if (entry.id.indexOf("lww") !== -1) {
 					return true;
@@ -504,27 +443,19 @@ function DefineCategories($scope) {
 	};
 
 	var byToolsCategory = function(entry) {
-		var selectedToolsCategory = $scope.selectedToolsCategory;
-
-		return entry.id.indexOf(selectedToolsCategory) !== -1;
+		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 
 	var byKVCategory = function(entry) {
-		var selectedKVCategory = $scope.selectedKVCategory;
-
-		return entry.id.indexOf(selectedKVCategory) !== -1;
+		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 
 	var byQueryCategory = function(entry) {
-		var selectedQueryCategory = $scope.selectedQueryCategory;
-
-		return entry.id.indexOf(selectedQueryCategory) !== -1;
+		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 
 	var byN1QLCategory = function(entry) {
-		var selectedN1QLCategory = $scope.selectedN1QLCategory;
-
-		switch(selectedN1QLCategory) {
+		switch($scope.activeCategory) {
 			case "Q1_Q3_thr":
 				if (entry.id.indexOf("_thr_") !== -1 &&
 					entry.id.indexOf("_array_") === -1 && (
@@ -580,13 +511,12 @@ function DefineCategories($scope) {
 				}
 				break;
 			default:
-				return entry.id.indexOf(selectedN1QLCategory) !== -1;
+				return false;
 		}
 	};
 
 	var byFTSCategory = function(entry) {
-		var selectedFTSCategory = $scope.selectedFTSCategory;
-		switch(selectedFTSCategory) {
+		switch($scope.activeCategory) {
 			case "elastic":
 				if (entry.id.indexOf("elastic") !== -1) {
 					return true;
@@ -654,14 +584,13 @@ function DefineCategories($scope) {
 					return true;
 				}
 				break;
+			default:
+				return false;
 		}
-		return false;
 	};
 
 	var byYCSBCategory = function(entry) {
-		var selectedYCSBCategory = $scope.selectedYCSBCategory;
-
-		return entry.id.indexOf(selectedYCSBCategory) !== -1;
+		return entry.id.indexOf($scope.activeCategory) !== -1;
 	};
 }
 
@@ -688,29 +617,20 @@ function AdminList($scope, $http) {
 	$http.get('/api/v1/benchmarks').success(function(data) {
 		$scope.benchmarks = data;
 
-		$scope.components = [{
-			"id": "kv", "title": "KV"
-		}, {
-			"id": "reb", "title": "Rebalance"
-		}, {
-			"id": "index", "title": "View Indexing"
-		}, {
-			"id": "query", "title": "View Query"
-		}, {
-			"id": "n1ql", "title": "N1QL"
-		}, {
-			"id": "secondary", "title": "2i"
-		}, {
-			"id": "xdcr", "title": "XDCR"
-		}, {
-			"id": "fts", "title": "FTS"
-		}, {
-			"id": "ycsb", "title": "YCSB"
-		}, {
-			"id": "tools", "title": "Tools"
-		}];
+		$scope.components = {
+			kv:        "KV",
+			reb:       "Rebalance",
+			index:     "View Indexing",
+			query:     "View Query",
+			n1ql:      "N1QL",
+			secondary: "2i",
+			xdcr:      "XDCR",
+			fts:       "FTS",
+			ycsb:      "YCSB",
+			tools:     "Tools"
+		};
 
-		$scope.activeComponent = $scope.components[0].id;
+		$scope.activeComponent = "kv";
 
 		$scope.setActiveComponent = function (value) {
 			$scope.activeComponent = value;
