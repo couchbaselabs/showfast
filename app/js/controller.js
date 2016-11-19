@@ -250,19 +250,9 @@ function DefineCategories($scope, $location) {
 		var entryComponent = entry.id.substring(0, $scope.activeComponent.length);
 
 		switch($scope.activeComponent) {
-			case "index":
+			case "kv":
 				if (entryComponent === $scope.activeComponent) {
-					return entry.id.indexOf($scope.activeCategory) !== -1;
-				}
-				break;
-			case "secondary":
-				if (entryComponent === $scope.activeComponent) {
-					return bySecondaryCategory(entry);
-				}
-				break;
-			case "tools":
-				if (entryComponent === $scope.activeComponent) {
-					return entry.id.indexOf($scope.activeCategory) !== -1;
+					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "reb":
@@ -270,9 +260,9 @@ function DefineCategories($scope, $location) {
 					return entry.category === $scope.activeCategory;
 				}
 				break;
-			case "kv":
+			case "index":
 				if (entryComponent === $scope.activeComponent) {
-					return entry.category === $scope.activeCategory;
+					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			case "query":
@@ -283,6 +273,11 @@ function DefineCategories($scope, $location) {
 			case "n1ql":
 				if (entryComponent === $scope.activeComponent) {
 					return entry.category === $scope.activeCategory;
+				}
+				break;
+			case "secondary":
+				if (entryComponent === $scope.activeComponent) {
+					return bySecondaryCategory(entry);
 				}
 				break;
 			case "xdcr":
@@ -296,6 +291,11 @@ function DefineCategories($scope, $location) {
 				}
 				break;
 			case "ycsb":
+				if (entryComponent === $scope.activeComponent) {
+					return entry.id.indexOf($scope.activeCategory) !== -1;
+				}
+				break;
+			case "tools":
 				if (entryComponent === $scope.activeComponent) {
 					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
