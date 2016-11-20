@@ -246,57 +246,55 @@ function DefineComponents($scope, $location) {
 }
 
 function DefineCategories($scope, $location) {
-	$scope.byComponent = function(entry) {
-		var entryComponent = entry.id.substring(0, $scope.activeComponent.length);
-
+	$scope.byComponentAndCategory = function(entry) {
 		switch($scope.activeComponent) {
 			case "kv":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "reb":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "index":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			case "query":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "n1ql":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "secondary":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return bySecondaryCategory(entry);
 				}
 				break;
 			case "xdcr":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "fts":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return byFTSCategory(entry);
 				}
 				break;
 			case "ycsb":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			case "tools":
-				if (entryComponent === $scope.activeComponent) {
+				if (entry.component === $scope.activeComponent) {
 					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;

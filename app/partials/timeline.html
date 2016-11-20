@@ -36,7 +36,7 @@
 	</div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byComponent | filter:byOS | orderBy:'orderBy' ">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byComponentAndCategory | filter:byOS | orderBy:'orderBy' ">
 	<hr/>
 	<h4>
 		<span id="{{metric.id}}">
