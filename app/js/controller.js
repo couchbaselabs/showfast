@@ -249,28 +249,19 @@ function DefineCategories($scope, $location) {
 	$scope.byComponentAndCategory = function(entry) {
 		switch($scope.activeComponent) {
 			case "kv":
-				if (entry.component === $scope.activeComponent) {
-					return entry.category === $scope.activeCategory;
-				}
-				break;
 			case "reb":
+			case "query":
+			case "n1ql":
+			case "xdcr":
+			case "ycsb":
 				if (entry.component === $scope.activeComponent) {
 					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "index":
+			case "tools":
 				if (entry.component === $scope.activeComponent) {
 					return entry.id.indexOf($scope.activeCategory) !== -1;
-				}
-				break;
-			case "query":
-				if (entry.component === $scope.activeComponent) {
-					return entry.category === $scope.activeCategory;
-				}
-				break;
-			case "n1ql":
-				if (entry.component === $scope.activeComponent) {
-					return entry.category === $scope.activeCategory;
 				}
 				break;
 			case "secondary":
@@ -278,24 +269,9 @@ function DefineCategories($scope, $location) {
 					return bySecondaryCategory(entry);
 				}
 				break;
-			case "xdcr":
-				if (entry.component === $scope.activeComponent) {
-					return entry.category === $scope.activeCategory;
-				}
-				break;
 			case "fts":
 				if (entry.component === $scope.activeComponent) {
 					return byFTSCategory(entry);
-				}
-				break;
-			case "ycsb":
-				if (entry.component === $scope.activeComponent) {
-					return entry.id.indexOf($scope.activeCategory) !== -1;
-				}
-				break;
-			case "tools":
-				if (entry.component === $scope.activeComponent) {
-					return entry.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			default:
