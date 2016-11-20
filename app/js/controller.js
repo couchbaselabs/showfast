@@ -95,7 +95,7 @@ function DefineComponents($scope, $location) {
 			}, {
 				id: "latency", title: "Latency"
 			}, {
-				id: "_io_", title: "Storage"
+				id: "storage", title: "Storage"
 			}, {
 				id: "observe", title: "Observe"
 			}, {
