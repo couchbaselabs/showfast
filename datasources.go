@@ -199,8 +199,7 @@ func (ds *dataStore) addBenchmark(b Benchmark) error {
 
 func (ds *dataStore) getBenchmarks(view string) (*[]Benchmark, error) {
 	bucket := ds.getBucket("benchmarks")
-	queryParams := map[string]interface{}{}
-	rows, err := ds.queryView(bucket, "v1", view, queryParams)
+	rows, err := ds.queryView(bucket, "v1", view, map[string]interface{}{})
 	if err != nil {
 		return nil, err
 	}
