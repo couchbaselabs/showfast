@@ -1,4 +1,4 @@
-function MainDashboard($scope, $http, $routeParams, $location) {
+function MainDashboard($scope, $http, $routeParams) {
 	'use strict';
 
 	$http.get('/api/v1/metrics').success(function(data) {
@@ -67,12 +67,12 @@ function MenuRouter($scope, $routeParams, $location) {
 		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category);
 	};
 
-	DefineComponents($scope, $location);
-	DefineCategories($scope, $location);
-	DefineOS($scope, $location);
+	DefineComponentsAndCategories($scope);
+	DefineFilters($scope);
+	DefineOS($scope);
 }
 
-function DefineOS($scope, $location) {
+function DefineOS($scope) {
 	$scope.oses = ["Linux", "Windows"];
 
 	$scope.byOS = function(entry) {
@@ -86,7 +86,7 @@ function DefineOS($scope, $location) {
 	};
 }
 
-function DefineComponents($scope, $location) {
+function DefineComponentsAndCategories($scope) {
 	$scope.components = {
 		kv: {
 			title: "KV",
@@ -245,7 +245,7 @@ function DefineComponents($scope, $location) {
 	};
 }
 
-function DefineCategories($scope, $location) {
+function DefineFilters($scope) {
 	$scope.byComponentAndCategory = function(entry) {
 		switch($scope.activeComponent) {
 			case "kv":
