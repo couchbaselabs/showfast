@@ -222,9 +222,9 @@ function DefineFilters($scope) {
 	$scope.byOS = function(metric) {
 		switch($scope.activeOS) {
 			case "Linux":
-				return metric.cluster.os.substring(0, 7) !== "Windows";
+				return metric.cluster.os.indexOf("Windows") === -1;
 			case "Windows":
-				return metric.cluster.os.substring(0, 7) === "Windows";
+				return metric.cluster.os.indexOf("Windows") === 0;
 		}
 	};
 
