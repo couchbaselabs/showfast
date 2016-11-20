@@ -242,6 +242,7 @@ function DefineFilters($scope) {
 			case "n1ql":
 			case "xdcr":
 			case "ycsb":
+			case "fts":
 				if (metric.component === $scope.activeComponent) {
 					return metric.category === $scope.activeCategory;
 				}
@@ -255,11 +256,6 @@ function DefineFilters($scope) {
 			case "secondary":
 				if (metric.component === $scope.activeComponent) {
 					return bySecondaryCategory(metric);
-				}
-				break;
-			case "fts":
-				if (metric.component === $scope.activeComponent) {
-					return byFTSCategory(metric);
 				}
 				break;
 			default:
@@ -289,80 +285,6 @@ function DefineFilters($scope) {
 			case "moi_incr":
 				if (metric.id.indexOf("_incremental_") !== -1 &&
 					metric.id.indexOf($scope.activeCategory) !== -1) {
-					return true;
-				}
-				break;
-			default:
-				return false;
-		}
-	};
-
-	var byFTSCategory = function(metric) {
-		switch($scope.activeCategory) {
-			case "elastic":
-				if (metric.id.indexOf("elastic") !== -1) {
-					return true;
-				}
-				break;
-
-			case "latency":
-				if (metric.id.indexOf("latency") !== -1 &&
-					metric.id.indexOf("3nodes") === -1 &&
-					metric.id.indexOf("kv") === -1 ){
-					return true;
-				}
-				break;
-
-			case "throughput":
-				if (metric.id.indexOf("throughput") !== -1 &&
-					metric.id.indexOf("3nodes") === -1 &&
-					metric.id.indexOf("kv") === -1 ) {
-					return true;
-				}
-				break;
-
-			case "index":
-				if (metric.id.indexOf("index") !== -1 &&
-					metric.id.indexOf("3nodes") === -1) {
-					return true;
-				}
-				break;
-
-			case "latency3":
-				if (metric.id.indexOf("latency") !== -1 &&
-					metric.id.indexOf("3nodes") !== -1 &&
-					metric.id.indexOf("kv") === -1 ){
-					return true;
-				}
-				break;
-
-			case "throughput3":
-				if (metric.id.indexOf("throughput") !== -1 &&
-					metric.id.indexOf("3nodes") !== -1 &&
-					metric.id.indexOf("kv") === -1 ){
-					return true;
-				}
-				break;
-
-			case "index3":
-				if (metric.id.indexOf("index") !== -1 &&
-					metric.id.indexOf("3nodes") !== -1) {
-					return true;
-				}
-				break;
-
-			case "kvlatency":
-				if (metric.id.indexOf("latency") !== -1 &&
-					metric.id.indexOf("3nodes") === -1 &&
-					metric.id.indexOf("kv") !== -1 ){
-					return true;
-				}
-				break;
-
-			case "kvthroughput":
-				if (metric.id.indexOf("throughput") !== -1 &&
-					metric.id.indexOf("3nodes") === -1 &&
-					metric.id.indexOf("kv") !== -1 ){
 					return true;
 				}
 				break;
