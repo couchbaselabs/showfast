@@ -1,15 +1,7 @@
 function MainDashboard($scope, $http, $routeParams) {
 	'use strict';
 
-	$http.get('/api/v1/metrics').success(function(data) {
-		var metrics = [];
-		if (data.length) {
-			metrics = data;
-		} else {
-			$scope.error = true;
-			return;
-		}
-
+	$http.get('/api/v1/metrics').success(function(metrics) {
 		$http.get('/api/v1/clusters').success(function(data) {
 			for (var i = 0, l = metrics.length; i < l; i++ ) {
 				metrics[i].cluster = jlinq.from(data)
@@ -34,7 +26,7 @@ function MainDashboard($scope, $http, $routeParams) {
 		});
 
 		var format = d3.format(',');
-		$scope.valueFormatFunction = function(){
+		$scope.valueFormatFunction = function() {
 			return function(d) {
 				return format(d);
 			};
@@ -55,38 +47,25 @@ function MenuRouter($scope, $routeParams, $location) {
 	$scope.activeComponent = $routeParams.component;
 	$scope.activeCategory = $routeParams.category;
 
-	$scope.setActiveOS = function (os) {
+	$scope.setActiveOS = function(os) {
 		$location.path("/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory);
 	};
 
-	$scope.setActiveComponent = function (component) {
+	$scope.setActiveComponent = function(component) {
 		$location.path("/timeline/" + $scope.activeOS + "/" + component + "/" + $scope.components[component].categories[0].id);
 	};
 
-	$scope.setActiveCategory = function (category) {
+	$scope.setActiveCategory = function(category) {
 		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category);
 	};
 
-	DefineComponentsAndCategories($scope);
+	DefineMenu($scope);
 	DefineFilters($scope);
-	DefineOS($scope);
 }
 
-function DefineOS($scope) {
+function DefineMenu($scope) {
 	$scope.oses = ["Linux", "Windows"];
 
-	$scope.byOS = function(entry) {
-		var entryOS = entry.cluster.os;
-		switch($scope.activeOS) {
-			case "Linux":
-				return entryOS.substring(0, 7) !== "Windows";
-			case "Windows":
-				return entryOS.substring(0, 7) === "Windows";
-		}
-	};
-}
-
-function DefineComponentsAndCategories($scope) {
 	$scope.components = {
 		kv: {
 			title: "KV",
@@ -246,7 +225,16 @@ function DefineComponentsAndCategories($scope) {
 }
 
 function DefineFilters($scope) {
-	$scope.byComponentAndCategory = function(entry) {
+	$scope.byOS = function(metric) {
+		switch($scope.activeOS) {
+			case "Linux":
+				return metric.cluster.os.substring(0, 7) !== "Windows";
+			case "Windows":
+				return metric.cluster.os.substring(0, 7) === "Windows";
+		}
+	};
+
+	$scope.byComponentAndCategory = function(metric) {
 		switch($scope.activeComponent) {
 			case "kv":
 			case "reb":
@@ -254,24 +242,24 @@ function DefineFilters($scope) {
 			case "n1ql":
 			case "xdcr":
 			case "ycsb":
-				if (entry.component === $scope.activeComponent) {
-					return entry.category === $scope.activeCategory;
+				if (metric.component === $scope.activeComponent) {
+					return metric.category === $scope.activeCategory;
 				}
 				break;
 			case "index":
 			case "tools":
-				if (entry.component === $scope.activeComponent) {
-					return entry.id.indexOf($scope.activeCategory) !== -1;
+				if (metric.component === $scope.activeComponent) {
+					return metric.id.indexOf($scope.activeCategory) !== -1;
 				}
 				break;
 			case "secondary":
-				if (entry.component === $scope.activeComponent) {
-					return bySecondaryCategory(entry);
+				if (metric.component === $scope.activeComponent) {
+					return bySecondaryCategory(metric);
 				}
 				break;
 			case "fts":
-				if (entry.component === $scope.activeComponent) {
-					return byFTSCategory(entry);
+				if (metric.component === $scope.activeComponent) {
+					return byFTSCategory(metric);
 				}
 				break;
 			default:
@@ -279,60 +267,60 @@ function DefineFilters($scope) {
 		}
 	};
 
-	var bySecondaryCategory = function(entry) {
+	var bySecondaryCategory = function(metric) {
 		switch($scope.activeCategory) {
 			case "fdb_thr":
-				if (entry.id.indexOf("_scanthr") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+				if (metric.id.indexOf("_scanthr") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
 					return true;
 				}
 				break;
 			case "fdb_lat":
-				if (entry.id.indexOf("_scanlatency") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+				if (metric.id.indexOf("_scanlatency") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
 					return true;
 				}
 				break;
 			case "fdb_init":
-				if (entry.id.indexOf("_initial_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+				if (metric.id.indexOf("_initial_") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
 					return true;
 				}
 				break;
 			case "fdb_incr":
-				if (entry.id.indexOf("_incremental_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+				if (metric.id.indexOf("_incremental_") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
 					return true;
 				}
 				break;
 			case "fdb_standalone":
-				if (entry.id.indexOf("_standalone_") !== -1 && entry.id.indexOf("_fdb_") !== -1) {
+				if (metric.id.indexOf("_standalone_") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
 					return true;
 				}
 				break;
 			case "moi_thr":
-				if (entry.id.indexOf("_scanthr") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+				if (metric.id.indexOf("_scanthr") !== -1 && metric.id.indexOf("_moi_") !== -1) {
 					return true;
 				}
 				break;
 			case "moi_lat":
-				if (entry.id.indexOf("_scanlatency") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+				if (metric.id.indexOf("_scanlatency") !== -1 && metric.id.indexOf("_moi_") !== -1) {
 					return true;
 				}
 				break;
 			case "moi_init":
-				if (entry.id.indexOf("_initial_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+				if (metric.id.indexOf("_initial_") !== -1 && metric.id.indexOf("_moi_") !== -1) {
 					return true;
 				}
 				break;
 			case "moi_incr":
-				if (entry.id.indexOf("_incremental_") !== -1 && entry.id.indexOf("_moi_") !== -1) {
+				if (metric.id.indexOf("_incremental_") !== -1 && metric.id.indexOf("_moi_") !== -1) {
 					return true;
 				}
 				break;
 			case "fdb":
-				if (entry.id.indexOf("_fdb_") !== -1) {
+				if (metric.id.indexOf("_fdb_") !== -1) {
 					return true;
 				}
 				break;
 			case "moi":
-				if (entry.id.indexOf("_moi_") !== -1) {
+				if (metric.id.indexOf("_moi_") !== -1) {
 					return true;
 				}
 				break;
@@ -342,72 +330,72 @@ function DefineFilters($scope) {
 		}
 	};
 
-	var byFTSCategory = function(entry) {
+	var byFTSCategory = function(metric) {
 		switch($scope.activeCategory) {
 			case "elastic":
-				if (entry.id.indexOf("elastic") !== -1) {
+				if (metric.id.indexOf("elastic") !== -1) {
 					return true;
 				}
 				break;
 
 			case "latency":
-				if (entry.id.indexOf("latency") !== -1 &&
-					entry.id.indexOf("3nodes") === -1 &&
-					entry.id.indexOf("kv") === -1 ){
+				if (metric.id.indexOf("latency") !== -1 &&
+					metric.id.indexOf("3nodes") === -1 &&
+					metric.id.indexOf("kv") === -1 ){
 					return true;
 				}
 				break;
 
 			case "throughput":
-				if (entry.id.indexOf("throughput") !== -1 &&
-					entry.id.indexOf("3nodes") === -1 &&
-					entry.id.indexOf("kv") === -1 ) {
+				if (metric.id.indexOf("throughput") !== -1 &&
+					metric.id.indexOf("3nodes") === -1 &&
+					metric.id.indexOf("kv") === -1 ) {
 					return true;
 				}
 				break;
 
 			case "index":
-				if (entry.id.indexOf("index") !== -1 &&
-					entry.id.indexOf("3nodes") === -1) {
+				if (metric.id.indexOf("index") !== -1 &&
+					metric.id.indexOf("3nodes") === -1) {
 					return true;
 				}
 				break;
 
 			case "latency3":
-				if (entry.id.indexOf("latency") !== -1 &&
-					entry.id.indexOf("3nodes") !== -1 &&
-					entry.id.indexOf("kv") === -1 ){
+				if (metric.id.indexOf("latency") !== -1 &&
+					metric.id.indexOf("3nodes") !== -1 &&
+					metric.id.indexOf("kv") === -1 ){
 					return true;
 				}
 				break;
 
 			case "throughput3":
-				if (entry.id.indexOf("throughput") !== -1 &&
-					entry.id.indexOf("3nodes") !== -1 &&
-					entry.id.indexOf("kv") === -1 ){
+				if (metric.id.indexOf("throughput") !== -1 &&
+					metric.id.indexOf("3nodes") !== -1 &&
+					metric.id.indexOf("kv") === -1 ){
 					return true;
 				}
 				break;
 
 			case "index3":
-				if (entry.id.indexOf("index") !== -1 &&
-					entry.id.indexOf("3nodes") !== -1) {
+				if (metric.id.indexOf("index") !== -1 &&
+					metric.id.indexOf("3nodes") !== -1) {
 					return true;
 				}
 				break;
 
 			case "kvlatency":
-				if (entry.id.indexOf("latency") !== -1 &&
-					entry.id.indexOf("3nodes") === -1 &&
-					entry.id.indexOf("kv") !== -1 ){
+				if (metric.id.indexOf("latency") !== -1 &&
+					metric.id.indexOf("3nodes") === -1 &&
+					metric.id.indexOf("kv") !== -1 ){
 					return true;
 				}
 				break;
 
 			case "kvthroughput":
-				if (entry.id.indexOf("throughput") !== -1 &&
-					entry.id.indexOf("3nodes") === -1 &&
-					entry.id.indexOf("kv") !== -1 ){
+				if (metric.id.indexOf("throughput") !== -1 &&
+					metric.id.indexOf("3nodes") === -1 &&
+					metric.id.indexOf("kv") !== -1 ){
 					return true;
 				}
 				break;
@@ -455,15 +443,12 @@ function AdminList($scope, $http) {
 
 		$scope.activeComponent = "kv";
 
-		$scope.setActiveComponent = function (value) {
-			$scope.activeComponent = value;
+		$scope.setActiveComponent = function(component) {
+			$scope.activeComponent = component;
 		};
 
-		$scope.byComponent = function(entry) {
-			if (entry.metric.indexOf($scope.activeComponent) === 0){
-				return true;
-			}
-			return false;
+		$scope.byComponent = function(benchmark) {
+			return benchmark.metric.indexOf($scope.activeComponent) === 0;
 		};
 	});
 }
