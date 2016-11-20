@@ -70,7 +70,7 @@ function DefineMenu($scope) {
 		kv: {
 			title: "KV",
 			categories: [{
-				id: "max_ops", title: "Max Throughput"
+				id: "max_ops", title: "Throughput"
 			}, {
 				id: "latency", title: "Latency"
 			}, {
