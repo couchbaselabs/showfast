@@ -159,10 +159,6 @@ function DefineMenu($scope) {
 				id: "moi_init", title: "Initial MOI"
 			}, {
 				id: "moi_incr", title: "Incremental MOI"
-			}, {
-				id: "fdb", title: "FDB"
-			}, {
-				id: "moi", title: "MOI"
 			}]
 		},
 		xdcr: {
@@ -195,8 +191,6 @@ function DefineMenu($scope) {
 				id: "throughput3", title: "3 Node Throughput "
 			}, {
 				id: "index3", title: "3 Node Index"
-			}, {
-				id: "elastic", title: "ElasticSearch"
 			}]
 		},
 		ycsb: {
@@ -271,9 +265,6 @@ function DefineFilters($scope) {
 			case "moi_thr":
 			case "moi_lat":
 				return metric.category === $scope.activeCategory;
-			case "fdb":
-			case "moi":
-				return metric.id.indexOf($scope.activeCategory) !== -1;
 			case "fdb_init":
 			case "moi_init":
 				if (metric.id.indexOf("_initial_") !== -1 &&
