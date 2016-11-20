@@ -270,61 +270,28 @@ function DefineFilters($scope) {
 	var bySecondaryCategory = function(metric) {
 		switch($scope.activeCategory) {
 			case "fdb_thr":
-				if (metric.id.indexOf("_scanthr") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
-					return true;
-				}
-				break;
 			case "fdb_lat":
-				if (metric.id.indexOf("_scanlatency") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
-					return true;
-				}
-				break;
+			case "fdb_standalone":
+			case "moi_thr":
+			case "moi_lat":
+				return metric.category === $scope.activeCategory;
+			case "fdb":
+			case "moi":
+				return metric.id.indexOf($scope.activeCategory) !== -1;
 			case "fdb_init":
-				if (metric.id.indexOf("_initial_") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
+			case "moi_init":
+				if (metric.id.indexOf("_initial_") !== -1 &&
+					metric.id.indexOf($scope.activeCategory) !== -1) {
 					return true;
 				}
 				break;
 			case "fdb_incr":
-				if (metric.id.indexOf("_incremental_") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
-					return true;
-				}
-				break;
-			case "fdb_standalone":
-				if (metric.id.indexOf("_standalone_") !== -1 && metric.id.indexOf("_fdb_") !== -1) {
-					return true;
-				}
-				break;
-			case "moi_thr":
-				if (metric.id.indexOf("_scanthr") !== -1 && metric.id.indexOf("_moi_") !== -1) {
-					return true;
-				}
-				break;
-			case "moi_lat":
-				if (metric.id.indexOf("_scanlatency") !== -1 && metric.id.indexOf("_moi_") !== -1) {
-					return true;
-				}
-				break;
-			case "moi_init":
-				if (metric.id.indexOf("_initial_") !== -1 && metric.id.indexOf("_moi_") !== -1) {
-					return true;
-				}
-				break;
 			case "moi_incr":
-				if (metric.id.indexOf("_incremental_") !== -1 && metric.id.indexOf("_moi_") !== -1) {
+				if (metric.id.indexOf("_incremental_") !== -1 &&
+					metric.id.indexOf($scope.activeCategory) !== -1) {
 					return true;
 				}
 				break;
-			case "fdb":
-				if (metric.id.indexOf("_fdb_") !== -1) {
-					return true;
-				}
-				break;
-			case "moi":
-				if (metric.id.indexOf("_moi_") !== -1) {
-					return true;
-				}
-				break;
-
 			default:
 				return false;
 		}
