@@ -42,7 +42,7 @@ function MainDashboard($scope, $http, $routeParams) {
 	});
 }
 
-function MenuRouter($scope, $routeParams, $location) {
+function MenuRouter($scope, $http, $routeParams, $location) {
 	$scope.activeOS = $routeParams.os;
 	$scope.activeComponent = $routeParams.component;
 	$scope.activeCategory = $routeParams.category;
@@ -59,163 +59,16 @@ function MenuRouter($scope, $routeParams, $location) {
 		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category);
 	};
 
-	DefineMenu($scope);
+	DefineMenu($scope, $http);
 	DefineFilters($scope);
 }
 
-function DefineMenu($scope) {
+function DefineMenu($scope, $http) {
 	$scope.oses = ["Linux", "Windows"];
 
-	$scope.components = {
-		kv: {
-			title: "KV",
-			categories: [{
-				id: "max_ops", title: "Throughput"
-			}, {
-				id: "latency", title: "Latency"
-			}, {
-				id: "storage", title: "Storage"
-			}, {
-				id: "observe", title: "Observe"
-			}, {
-				id: "subdoc", title: "Sub Doc"
-			}, {
-				id: "warmup", title: "Warmup"
-			}, {
-				id: "fragmentation", title: "Fragmentation"
-			}, {
-				id: "compact", title: "Compaction"
-			}, {
-				id: "dcp", title: "DCP"
-			}]
-		},
-		reb: {
-			title: "Rebalance",
-			categories: [{
-				id: "empty", title: "Empty"
-			}, {
-				id: "kv", title: "KV"
-			}, {
-				id: "views", title: "Views"
-			}, {
-				id: "xdcr", title: "XDCR"
-			}, {
-				id: "failover", title: "Failover"
-			}]
-		},
-		index: {
-			title: "View Indexing",
-			categories: [{
-				id: "init", title: "Initial"
-			}, {
-				id: "incr", title: "Incremental"
-			}]
-		},
-		query: {
-			title: "View Query",
-			categories: [{
-				id: "lat", title: "Bulk Latency"
-			}, {
-				id: "by_type", title: "Latency by Query Type"
-			}, {
-				id: "throughput", title: "Throughput"
-			}]
-		},
-		n1ql: {
-			title: "N1QL",
-			categories: [{
-				id: "Q1_Q3_thr", title: "Q1-Q3 Throughput"
-			}, {
-				id: "Q1_Q3_lat", title: "Q1-Q3 Latency"
-			}, {
-				id: "Q5_Q7_thr", title: "Q5-Q7 Throughput"
-			}, {
-				id: "CI_thr", title: "Covering Indexes"
-			}, {
-				id: "array", title: "Array Indexing"
-			}, {
-				id: "join_unnest", title: "JOIN & UNNEST"
-			}, {
-				id: "dml", title: "DML"
-			}]
-		},
-		secondary: {
-			title: "2i",
-			categories: [{
-				id: "fdb_lat", title: "Latency FDB"
-			}, {
-				id: "fdb_thr", title: "Throughput FDB"
-			}, {
-				id: "fdb_init", title: "Initial FDB"
-			}, {
-				id: "fdb_incr", title: "Incremental FDB"
-			}, {
-				id: "fdb_standalone", title: "Standalone FDB"
-			}, {
-				id: "moi_lat", title: "Latency MOI"
-			}, {
-				id: "moi_thr", title: "Throughput MOI"
-			}, {
-				id: "moi_init", title: "Initial MOI"
-			}, {
-				id: "moi_incr", title: "Incremental MOI"
-			}]
-		},
-		xdcr: {
-			title: "XDCR",
-			categories: [{
-				id: "init", title: "Initial"
-			}, {
-				id: "reb", title: "Initial+Rebalance"
-			}, {
-				id: "ongoing", title: "Ongoing"
-			}, {
-				id: "lww", title: "LWW"
-			}]
-		},
-		fts: {
-			title: "FTS",
-			categories: [{
-				id: "kvlatency", title: "KV Latency"
-			}, {
-				id: "kvthroughput", title: "KV Throughput"
-			}, {
-				id: "latency", title: "Latency"
-			}, {
-				id: "throughput", title: "Throughput"
-			}, {
-				id: "index", title: "Index"
-			}, {
-				id: "latency3", title: "3 Node Latency"
-			}, {
-				id: "throughput3", title: "3 Node Throughput "
-			}, {
-				id: "index3", title: "3 Node Index"
-			}]
-		},
-		ycsb: {
-			title: "YCSB",
-			categories: [{
-				id: "workloada", title: "Workload A"
-			}, {
-				id: "workloadc", title: "Workload C"
-			}, {
-				id: "workloade", title: "Workload E"
-			}]
-		},
-		tools: {
-			title: "Tools",
-			categories: [{
-				id: "backup", title: "Backup"
-			}, {
-				id: "restore", title: "Restore"
-			}, {
-				id: "import", title: "Import"
-			}, {
-				id: "export", title: "Export"
-			}]
-		}
-	};
+	$http.get('/static/menu.json').success(function(menu) {
+		$scope.components = menu;
+	});
 }
 
 function DefineFilters($scope) {
