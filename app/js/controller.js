@@ -64,10 +64,9 @@ function MenuRouter($scope, $http, $routeParams, $location) {
 }
 
 function DefineMenu($scope, $http) {
-	$scope.oses = ["Linux", "Windows"];
-
 	$http.get('/static/menu.json').success(function(menu) {
-		$scope.components = menu;
+		$scope.components = menu.components;
+		$scope.oses =  menu.oses;
 	});
 }
 
