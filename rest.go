@@ -131,10 +131,7 @@ func httpEngine() *gin.Engine {
 
 	router.StaticFile("/", "./app/index.html")
 	router.StaticFile("/admin", "./app/admin.html")
-
-	router.Static("/css", "./app/css")
-	router.Static("/js", "./app/js")
-	router.Static("/partials", "./app/partials")
+	router.Static("/static", "./app")
 
 	v1 := router.Group("/api/v1")
 
