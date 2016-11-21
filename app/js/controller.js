@@ -158,23 +158,17 @@ function AdminList($scope, $http) {
 		$http({method: 'PATCH', url: '/api/v1/benchmarks/' + id});
 	};
 
+	$http.get('/static/menu.json').success(function(menu) {
+		$scope.components = {};
+		for (component in menu.components) {
+			$scope.components[component] = menu.components[component].title;
+		}
+
+		$scope.activeComponent = Object.keys($scope.components)[0];
+	});
+
 	$http.get('/api/v1/benchmarks').success(function(data) {
 		$scope.benchmarks = data;
-
-		$scope.components = {
-			kv:        "KV",
-			reb:       "Rebalance",
-			index:     "View Indexing",
-			query:     "View Query",
-			n1ql:      "N1QL",
-			secondary: "2i",
-			xdcr:      "XDCR",
-			fts:       "FTS",
-			ycsb:      "YCSB",
-			tools:     "Tools"
-		};
-
-		$scope.activeComponent = "kv";
 
 		$scope.setActiveComponent = function(component) {
 			$scope.activeComponent = component;
