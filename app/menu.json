@@ -69,6 +69,8 @@
 			"id": "join_unnest", "title": "JOIN & UNNEST"
 		}, {
 			"id": "dml", "title": "DML"
+		}, {
+			"id": "count", "title": "COUNT"
 		}]
 	},
 	"secondary": {
