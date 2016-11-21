@@ -25,6 +25,8 @@ function MainDashboard($scope, $http, $routeParams) {
 			}
 		});
 
+		DefineMenu($scope, $http);
+
 		var format = d3.format(',');
 		$scope.valueFormatFunction = function() {
 			return function(d) {
@@ -42,7 +44,7 @@ function MainDashboard($scope, $http, $routeParams) {
 	});
 }
 
-function MenuRouter($scope, $http, $routeParams, $location) {
+function MenuRouter($scope, $routeParams, $location) {
 	$scope.activeOS = $routeParams.os;
 	$scope.activeComponent = $routeParams.component;
 	$scope.activeCategory = $routeParams.category;
@@ -59,7 +61,6 @@ function MenuRouter($scope, $http, $routeParams, $location) {
 		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category);
 	};
 
-	DefineMenu($scope, $http);
 	DefineFilters($scope);
 }
 
