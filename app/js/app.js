@@ -9,5 +9,5 @@ angular.module('sf', ['ngRoute', 'nvd3ChartDirectives'])
     ])
 	.controller('MainDashboard', MainDashboard);
 
-angular.module('sf-admin', [])
+angular.module('sf-admin', ['tableSort'])
     .controller("AdminList", AdminList);
