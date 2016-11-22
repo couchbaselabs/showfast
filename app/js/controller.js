@@ -1,6 +1,27 @@
 function MainDashboard($scope, $http, $routeParams) {
 	'use strict';
 
+	DefineMenu($scope, $http);
+
+	GetData($scope, $http);
+
+	var format = d3.format(',');
+	$scope.valueFormatFunction = function() {
+		return function(d) {
+			return format(d);
+		};
+	};
+
+	$scope.$on('elementClick.directive', function(event, data) {
+		var build = data.data[0],
+			metric = event.targetScope.id,
+			a = $("#run_"  + metric);
+		a.attr("href", "/#/runs/" + metric + "/" + build);
+		a[0].click();
+	});
+}
+
+function GetData($scope, $http) {
 	$http.get('/api/v1/metrics').success(function(metrics) {
 		$http.get('/api/v1/clusters').success(function(data) {
 			for (var i = 0, l = metrics.length; i < l; i++ ) {
@@ -23,23 +44,6 @@ function MainDashboard($scope, $http, $routeParams) {
 					j++;
 				}
 			}
-		});
-
-		DefineMenu($scope, $http);
-
-		var format = d3.format(',');
-		$scope.valueFormatFunction = function() {
-			return function(d) {
-				return format(d);
-			};
-		};
-
-		$scope.$on('elementClick.directive', function(event, data) {
-			var build = data.data[0],
-				metric = event.targetScope.id,
-				a = $("#run_"  + metric);
-			a.attr("href", "/#/runs/" + metric + "/" + build);
-			a[0].click();
 		});
 	});
 }
