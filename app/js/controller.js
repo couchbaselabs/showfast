@@ -86,28 +86,8 @@ function DefineFilters($scope) {
 	};
 
 	$scope.byComponentAndCategory = function(metric) {
-		switch($scope.activeComponent) {
-			case "kv":
-			case "reb":
-			case "index":
-			case "query":
-			case "n1ql":
-			case "secondary":
-			case "xdcr":
-			case "ycsb":
-			case "fts":
-				if (metric.component === $scope.activeComponent) {
-					return metric.category === $scope.activeCategory;
-				}
-				break;
-			case "tools":
-				if (metric.component === $scope.activeComponent) {
-					return metric.id.indexOf($scope.activeCategory) !== -1;
-				}
-				break;
-			default:
-				return false;
-		}
+		return metric.component === $scope.activeComponent &&
+			metric.category === $scope.activeCategory;
 	};
 }
 
