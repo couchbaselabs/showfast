@@ -89,6 +89,7 @@ function DefineFilters($scope) {
 		switch($scope.activeComponent) {
 			case "kv":
 			case "reb":
+			case "index":
 			case "query":
 			case "n1ql":
 			case "xdcr":
@@ -98,7 +99,6 @@ function DefineFilters($scope) {
 					return metric.category === $scope.activeCategory;
 				}
 				break;
-			case "index":
 			case "tools":
 				if (metric.component === $scope.activeComponent) {
 					return metric.id.indexOf($scope.activeCategory) !== -1;
