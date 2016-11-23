@@ -42,9 +42,9 @@
 		"index": {
 			"title": "View Indexing",
 			"categories": [{
-				"id": "init", "title": "Initial"
+				"id": "initial", "title": "Initial"
 			}, {
-				"id": "incr", "title": "Incremental"
+				"id": "incremental", "title": "Incremental"
 			}]
 		},
 		"query": {
@@ -84,9 +84,9 @@
 			}, {
 				"id": "fdb_thr", "title": "Throughput FDB"
 			}, {
-				"id": "fdb_init", "title": "Initial FDB"
+				"id": "initial_fdb", "title": "Initial FDB"
 			}, {
-				"id": "fdb_incr", "title": "Incremental FDB"
+				"id": "incremental_fdb", "title": "Incremental FDB"
 			}, {
 				"id": "fdb_standalone", "title": "Standalone FDB"
 			}, {
@@ -94,9 +94,9 @@
 			}, {
 				"id": "moi_thr", "title": "Throughput MOI"
 			}, {
-				"id": "moi_init", "title": "Initial MOI"
+				"id": "initial_moi", "title": "Initial MOI"
 			}, {
-				"id": "moi_incr", "title": "Incremental MOI"
+				"id": "incremental_moi", "title": "Incremental MOI"
 			}]
 		},
 		"xdcr": {

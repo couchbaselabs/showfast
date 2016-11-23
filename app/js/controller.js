@@ -92,6 +92,7 @@ function DefineFilters($scope) {
 			case "index":
 			case "query":
 			case "n1ql":
+			case "secondary":
 			case "xdcr":
 			case "ycsb":
 			case "fts":
@@ -102,38 +103,6 @@ function DefineFilters($scope) {
 			case "tools":
 				if (metric.component === $scope.activeComponent) {
 					return metric.id.indexOf($scope.activeCategory) !== -1;
-				}
-				break;
-			case "secondary":
-				if (metric.component === $scope.activeComponent) {
-					return bySecondaryCategory(metric);
-				}
-				break;
-			default:
-				return false;
-		}
-	};
-
-	var bySecondaryCategory = function(metric) {
-		switch($scope.activeCategory) {
-			case "fdb_thr":
-			case "fdb_lat":
-			case "fdb_standalone":
-			case "moi_thr":
-			case "moi_lat":
-				return metric.category === $scope.activeCategory;
-			case "fdb_init":
-			case "moi_init":
-				if (metric.id.indexOf("_initial_") !== -1 &&
-					metric.id.indexOf($scope.activeCategory) !== -1) {
-					return true;
-				}
-				break;
-			case "fdb_incr":
-			case "moi_incr":
-				if (metric.id.indexOf("_incremental_") !== -1 &&
-					metric.id.indexOf($scope.activeCategory) !== -1) {
-					return true;
 				}
 				break;
 			default:
