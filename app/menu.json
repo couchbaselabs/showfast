@@ -37,6 +37,8 @@
 				"id": "xdcr", "title": "XDCR"
 			}, {
 				"id": "failover", "title": "Failover"
+			}, {
+				"id": "recovery", "title": "Recovery"
 			}]
 		},
 		"index": {
