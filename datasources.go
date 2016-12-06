@@ -3,118 +3,106 @@ package main
 import (
 	"fmt"
 	"os"
-	"sort"
-	"strconv"
-	"strings"
 
-	"github.com/couchbase/go-couchbase"
-	"github.com/mitchellh/mapstructure"
+	"gopkg.in/couchbase/gocb.v1"
 	log "gopkg.in/inconshreveable/log15.v2"
 )
 
+var couchbaseBuckets = []string{"benchmarks", "clusters", "metrics"}
+
 type dataStore struct {
-	buckets map[string]*couchbase.Bucket
-}
-
-func newBucket(baseURL, bucketName, password string) (*couchbase.Bucket, error) {
-	client, err := couchbase.ConnectWithAuthCreds(baseURL, bucketName, password)
-	if err != nil {
-		log.Error("error connecting to server", "err", err)
-		return nil, err
-	}
-
-	pool, err := client.GetPool("default")
-	if err != nil {
-		log.Error("error getting pool", "err", err)
-		return nil, err
-	}
-
-	bucket, err := pool.GetBucket(bucketName)
-	if err != nil {
-		log.Error("error getting bucket", "err", err)
-		return nil, err
-	}
-
-	return bucket, nil
+	cluster *gocb.Cluster
+	buckets map[string]*gocb.Bucket
 }
 
 func newDataStore() *dataStore {
 	hostname := os.Getenv("CB_HOST")
-	password := os.Getenv("CB_PASS")
-	if hostname == "" || password == "" {
-		log.Error("missing Couchbase Server settings", "hostname", hostname, "pass", password)
+	if hostname == "" {
+		log.Error("missing Couchbase Server hostname")
 		os.Exit(1)
 	}
 
-	baseURL := fmt.Sprintf("http://%s:8091/", hostname)
-
-	buckets := map[string]*couchbase.Bucket{}
-	for _, bucketName := range []string{"benchmarks", "clusters", "metrics"} {
-		bucket, err := newBucket(baseURL, bucketName, password)
-		if err != nil {
-			os.Exit(1)
-		}
-		buckets[bucketName] = bucket
+	connSpecStr := fmt.Sprintf("couchbase://%s", hostname)
+	cluster, err := gocb.Connect(connSpecStr)
+	if err != nil {
+		log.Error("failed to connect to Couchbase Server", "err", err)
+		os.Exit(1)
 	}
 
-	return &dataStore{buckets}
+	return &dataStore{cluster, map[string]*gocb.Bucket{}}
 }
 
-func (ds *dataStore) getBucket(bucketName string) *couchbase.Bucket {
+func (ds *dataStore) auth() {
+	password := os.Getenv("CB_PASS")
+	if password == "" {
+		log.Error("missing password")
+		os.Exit(1)
+	}
+
+	authMap := gocb.BucketAuthenticatorMap{}
+	for _, bucketName := range couchbaseBuckets {
+		bucket, err := ds.cluster.OpenBucket(bucketName, password)
+		if err != nil {
+			log.Error("failed to open bucket", "err", err)
+			os.Exit(1)
+		}
+		ds.buckets[bucketName] = bucket
+		authMap[bucketName] = gocb.BucketAuthenticator{Password: password}
+	}
+
+	auth := gocb.ClusterAuthenticator{
+		Username: "Administrator",
+		Password: password,
+		Buckets:  authMap,
+	}
+	if err := ds.cluster.Authenticate(auth); err != nil {
+		log.Error("authentication failed", "err", err)
+		os.Exit(1)
+	}
+}
+
+func (ds *dataStore) getBucket(bucketName string) *gocb.Bucket {
 	return ds.buckets[bucketName]
 }
 
-func (ds *dataStore) queryView(b *couchbase.Bucket, ddoc, view string, params map[string]interface{}) (*[]couchbase.ViewRow, error) {
-	params["stale"] = false
-	viewResult, err := b.View(ddoc, view, params)
-	if err != nil {
-		log.Error("error quering view", "err", err)
-		return nil, err
-	}
-	return &viewResult.Rows, nil
-}
-
 type Metric struct {
-	Cluster     string `json:"cluster"`
-	Category    string `json:"category"`
-	Component   string `json:"component"`
-	ID          string `json:"id"`
-	OrderBy     string `json:"orderBy"`
-	SubCategory string `json:"subCategory"`
-	Title       string `json:"title"`
+	Cluster     Cluster `json:"cluster"`
+	Category    string  `json:"category"`
+	Component   string  `json:"component"`
+	ID          string  `json:"id"`
+	OrderBy     string  `json:"orderBy"`
+	SubCategory string  `json:"subCategory"`
+	Title       string  `json:"title"`
 }
 
-func (ds *dataStore) addMetric(m Metric) error {
+func (ds *dataStore) addMetric(metric Metric) error {
 	bucket := ds.getBucket("metrics")
-	err := bucket.Set(m.ID, 0, m)
+
+	_, err := bucket.Upsert(metric.ID, metric, 0)
 	if err != nil {
 		log.Error("failed to insert metric", "err", err)
 	}
 	return err
 }
 
-func (ds *dataStore) getAllMetrics() (*[]Metric, error) {
-	bucket := ds.getBucket("metrics")
-	rows, err := ds.queryView(bucket, "v1", "all", map[string]interface{}{})
-	if err != nil {
-		return nil, err
-	}
-
+func (ds *dataStore) getMetrics(component, category string) (*[]Metric, error) {
 	var metrics []Metric
-	for _, row := range *rows {
-		value, ok := row.Value.(map[string]interface{})
-		if !ok {
-			log.Error("assertion failed", "value", row.Value)
-			continue
-		}
-		var metric Metric
-		if err := mapstructure.Decode(value, &metric); err != nil {
-			log.Error("conversion failed", "err", err)
-			continue
-		}
-		metrics = append(metrics, metric)
+
+	query := gocb.NewN1qlQuery(
+		"SELECT m.id, m.title, m.component, m.category, m.orderBy, c AS `cluster` " +
+			"FROM metrics m JOIN clusters c ON KEYS m.`cluster`" +
+			"WHERE m.component = $1 AND m.category = $2;")
+	params := []interface{}{component, category}
+
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
+	if err != nil {
+		return &metrics, err
 	}
 
+	var row Metric
+	for rows.Next(&row) {
+		metrics = append(metrics, row)
+	}
 	return &metrics, nil
 }
 
@@ -126,38 +114,14 @@ type Cluster struct {
 	OS     string `json:"os"`
 }
 
-func (ds *dataStore) addCluster(c Cluster) error {
+func (ds *dataStore) addCluster(cluster Cluster) error {
 	bucket := ds.getBucket("clusters")
-	err := bucket.Set(c.Name, 0, c)
+
+	_, err := bucket.Upsert(cluster.Name, cluster, 0)
 	if err != nil {
 		log.Error("failed to insert cluster", "err", err)
 	}
 	return err
-}
-
-func (ds *dataStore) getAllClusters() (*[]Cluster, error) {
-	bucket := ds.getBucket("clusters")
-	rows, err := ds.queryView(bucket, "v1", "all", map[string]interface{}{})
-	if err != nil {
-		return nil, err
-	}
-
-	var clusters []Cluster
-	for _, row := range *rows {
-		value, ok := row.Value.(map[string]interface{})
-		if !ok {
-			log.Error("assertion failed", "value", row.Value)
-			continue
-		}
-		var cluster Cluster
-		if err := mapstructure.Decode(value, &cluster); err != nil {
-			log.Error("conversion failed", "err", err)
-			continue
-		}
-		clusters = append(clusters, cluster)
-	}
-
-	return &clusters, nil
 }
 
 type Benchmark struct {
@@ -171,147 +135,159 @@ type Benchmark struct {
 	Value     float64  `json:"value"`
 }
 
-func (ds *dataStore) addBenchmark(b Benchmark) error {
-	bucket := ds.getBucket("benchmarks")
+func (ds *dataStore) findExisting(benchmark Benchmark) ([]Benchmark, error) {
+	existing := []Benchmark{}
 
-	allBenchmarks, err := ds.getBenchmarks("by_metric_and_build")
+	query := gocb.NewN1qlQuery(
+		"SELECT `build`, buildURL, dateTime, id, metric, hidden, snapshots, `value` " +
+			"FROM benchmarks " +
+			"WHERE metric = $1 AND `build` = $2;")
+	params := []interface{}{benchmark.Metric, benchmark.Build}
+
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
 	if err != nil {
-		log.Error("failed to get benchmarks", "err", err)
+		return existing, err
+	}
+
+	var row Benchmark
+	for rows.Next(&row) {
+		existing = append(existing, row)
+	}
+
+	return existing, nil
+}
+
+func (ds *dataStore) hideExisting(benchmark Benchmark) error {
+	existing, err := ds.findExisting(benchmark)
+	if err != nil {
+		log.Error("failed to find existing benchmarks", "err", err)
 		return err
 	}
-	for _, existing := range *allBenchmarks {
-		if existing.Metric == b.Metric && existing.Build == b.Build {
-			existing.Hidden = true
-			err := bucket.Set(existing.ID, 0, existing)
-			if err != nil {
-				log.Error("update failed", "err", err)
-				return err
-			}
+
+	bucket := ds.getBucket("benchmarks")
+
+	for _, b := range existing {
+		b.Hidden = true
+		if _, err := bucket.Upsert(b.ID, b, 0); err != nil {
+			log.Error("update failed", "err", err)
+			return err
 		}
 	}
+	return nil
+}
 
-	err = bucket.Set(b.ID, 0, b)
+func (ds *dataStore) addBenchmark(benchmark Benchmark) error {
+	if err := ds.hideExisting(benchmark); err != nil {
+		return err
+	}
+
+	bucket := ds.getBucket("benchmarks")
+
+	_, err := bucket.Upsert(benchmark.ID, benchmark, 0)
 	if err != nil {
 		log.Error("failed to insert benchmark", "err", err)
 	}
 	return err
 }
 
-func (ds *dataStore) getBenchmarks(view string) (*[]Benchmark, error) {
-	bucket := ds.getBucket("benchmarks")
-	rows, err := ds.queryView(bucket, "v1", view, map[string]interface{}{})
+func (ds *dataStore) getBenchmarks(component, category string) (*[]Benchmark, error) {
+	benchmarks := []Benchmark{}
+
+	query := gocb.NewN1qlQuery(
+		"SELECT b.`build`, b.id, b.hidden, b.metric, b.`value` " +
+			"FROM metrics m " +
+			"JOIN benchmarks b " +
+			"ON KEY b.metric FOR m " +
+			"WHERE m.component = $1 AND m.category = $2;")
+	params := []interface{}{component, category}
+
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
 	if err != nil {
-		return nil, err
+		return &benchmarks, err
 	}
 
-	var benchmarks []Benchmark
-	for _, row := range *rows {
-		value, ok := row.Value.(map[string]interface{})
-		if !ok {
-			log.Error("assertion failed", "value", row.Value)
-			continue
-		}
-		var benchmark Benchmark
-		if err := mapstructure.Decode(value, &benchmark); err != nil {
-			log.Error("conversion failed", "err", err)
-			continue
-		}
-		benchmarks = append(benchmarks, benchmark)
+	var row Benchmark
+	for rows.Next(&row) {
+		benchmarks = append(benchmarks, row)
 	}
 
 	return &benchmarks, nil
 }
 
-type byBuild [][]interface{}
-
-func (b byBuild) Len() int {
-	return len(b)
+type Run struct {
+	Build string  `json:"build"`
+	Value float64 `json:"value"`
 }
 
-func (b byBuild) Swap(i, j int) {
-	b[i], b[j] = b[j], b[i]
-}
+func (ds *dataStore) getTimeline(metric string) (*[][]interface{}, error) {
+	runs := [][]interface{}{}
 
-func (b byBuild) Less(i, j int) bool {
-	buildI := strings.Split(b[i][0].(string), "-")
-	buildJ := strings.Split(b[j][0].(string), "-")
-	if buildI[0] == buildJ[0] {
-		intBuildI, _ := strconv.ParseInt(buildI[1], 10, 16)
-		intBuildJ, _ := strconv.ParseInt(buildJ[1], 10, 16)
-		return intBuildI < intBuildJ
-	}
-	return buildI[0] < buildJ[0]
-}
+	query := gocb.NewN1qlQuery(
+		"SELECT `build`, `value` " +
+			"FROM benchmarks " +
+			"WHERE metric = $1 AND hidden = false " +
+			"ORDER BY `build`;")
+	params := []interface{}{metric}
 
-func (ds *dataStore) getAllTimelines() (*map[string][][]interface{}, error) {
-	benchmarks, err := ds.getBenchmarks("all_visible")
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
 	if err != nil {
-		return nil, err
+		return &runs, err
 	}
 
-	timelines := map[string][][]interface{}{}
-	for _, benchmark := range *benchmarks {
-		if array, ok := timelines[benchmark.Metric]; ok {
-			timelines[benchmark.Metric] = append(array, []interface{}{benchmark.Build, benchmark.Value})
-		} else {
-			timelines[benchmark.Metric] = [][]interface{}{{benchmark.Build, benchmark.Value}}
-		}
+	var row Run
+	for rows.Next(&row) {
+		run := []interface{}{row.Build, row.Value}
+		runs = append(runs, run)
 	}
-	for _, timeline := range timelines {
-		sort.Sort(byBuild(timeline))
-	}
-	return &timelines, nil
+
+	return &runs, nil
 }
 
 func (ds *dataStore) getAllRuns(metric string, build string) (*[]Benchmark, error) {
-	bucket := ds.getBucket("benchmarks")
-	params := map[string]interface{}{
-		"startkey": []string{metric, build},
-		"endkey":   []string{metric, build},
-	}
-	rows, err := ds.queryView(bucket, "v1", "by_metric_and_build", params)
+	benchmarks := []Benchmark{}
+
+	query := gocb.NewN1qlQuery(
+		"SELECT `build`, buildURL, dateTime, snapshots, `value` " +
+			"FROM benchmarks " +
+			"WHERE metric = $1 AND `build` = $2;")
+	params := []interface{}{metric, build}
+
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
 	if err != nil {
-		return nil, err
+		return &benchmarks, err
 	}
 
-	var benchmarks []Benchmark
-	for _, row := range *rows {
-		value, ok := row.Value.(map[string]interface{})
-		if !ok {
-			log.Error("assertion failed", "value", row.Value)
-			continue
-		}
-		var benchmark Benchmark
-		if err := mapstructure.Decode(value, &benchmark); err != nil {
-			log.Error("conversion failed", "err", err)
-			continue
-		}
-		benchmarks = append(benchmarks, benchmark)
+	var row Benchmark
+	for rows.Next(&row) {
+		benchmarks = append(benchmarks, row)
 	}
 	return &benchmarks, nil
 }
 
-func (ds *dataStore) deleteBenchmark(id string) error {
+func (ds *dataStore) deleteBenchmark(key string) error {
 	bucket := ds.getBucket("benchmarks")
-	err := bucket.Delete(id)
+
+	_, err := bucket.Remove(key, 0)
 	if err != nil {
-		log.Error("deletion failed", "err", err)
+		log.Error("benchmark deletion failed", "err", err)
 	}
 	return err
 }
 
-func (ds *dataStore) reverseHidden(id string) error {
+func (ds *dataStore) reverseHidden(key string) error {
 	bucket := ds.getBucket("benchmarks")
-	benchmark := Benchmark{}
 
-	if err := bucket.Get(id, &benchmark); err != nil {
+	benchmark := Benchmark{}
+	if _, err := bucket.Get(key, &benchmark); err != nil {
+		log.Error("failed to get benchmark", "err", err)
 		return err
 	}
 	benchmark.Hidden = !benchmark.Hidden
 
-	err := bucket.Set(id, 0, benchmark)
-	if err != nil {
-		log.Error("update failed", "err", err)
+	if _, err := bucket.Upsert(key, benchmark, 0); err != nil {
+		log.Error("benchmark update failed", "err", err)
+		return err
 	}
-	return err
+
+	return nil
 }

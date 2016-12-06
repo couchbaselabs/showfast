@@ -3,8 +3,6 @@ function MainDashboard($scope, $http, $routeParams) {
 
 	DefineMenu($scope, $http);
 
-	GetData($scope, $http);
-
 	var format = d3.format(',');
 	$scope.valueFormatFunction = function() {
 		return function(d) {
@@ -21,37 +19,20 @@ function MainDashboard($scope, $http, $routeParams) {
 	});
 }
 
-function GetData($scope, $http) {
-	$http.get('/api/v1/metrics').success(function(metrics) {
-		$http.get('/api/v1/clusters').success(function(data) {
-			for (var i = 0, l = metrics.length; i < l; i++ ) {
-				metrics[i].cluster = jlinq.from(data)
-					.starts('name', metrics[i].cluster)
-					.ends('name', metrics[i].cluster)
-					.select()[0];
-			}
-		});
-
-		$http.get('/api/v1/timelines').success(function(data) {
-			$scope.metrics = [];
-			var j = 0;
-			for (var i = 0, l = metrics.length; i < l; i++ ) {
-				var id = metrics[i].id;
-				if (id in data) {
-					$scope.metrics[j] = metrics[i];
-					$scope.metrics[j].chartData = [{"key": id, "values": data[id]}];
-					$scope.metrics[j].link = id.replace(".", "_");
-					j++;
-				}
-			}
-		});
-	});
-}
-
-function MenuRouter($scope, $routeParams, $location) {
+function MenuRouter($scope, $http, $routeParams, $location) {
 	$scope.activeOS = $routeParams.os;
 	$scope.activeComponent = $routeParams.component;
 	$scope.activeCategory = $routeParams.category;
+
+	$http.get('/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory).success(function(metrics) {
+		$scope.metrics = metrics;
+
+		$.each(metrics, function(i, metric) {
+			$http.get('/api/v1/timeline/' + metric.id).success(function(data) {
+				$scope.metrics[i].chartData = [{key: metric.id, values: data}];
+			});
+		});
+	});
 
 	$scope.setActiveOS = function(os) {
 		$location.path("/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory);
@@ -84,17 +65,18 @@ function DefineFilters($scope) {
 				return metric.cluster.os.indexOf("Windows") === 0;
 		}
 	};
-
-	$scope.byComponentAndCategory = function(metric) {
-		return metric.component === $scope.activeComponent &&
-			metric.category === $scope.activeCategory;
-	};
 }
 
 function RunList($scope, $routeParams, $http) {
 	$http({method: 'GET', url: '/api/v1/runs/' + $routeParams.metric + '/' + $routeParams.build})
 	.success(function(data) {
 		$scope.runs = data;
+	});
+}
+
+function GetBenchmarks($scope, $http) {
+	$http.get('/api/v1/benchmarks/' + $scope.activeComponent + '/' + $scope.activeCategory).success(function(data) {
+		$scope.benchmarks = data;
 	});
 }
 
@@ -112,23 +94,23 @@ function AdminList($scope, $http) {
 	};
 
 	$http.get('/static/menu.json').success(function(menu) {
-		$scope.components = {};
-		for (component in menu.components) {
-			$scope.components[component] = menu.components[component].title;
-		}
-
+		$scope.components = menu.components;
 		$scope.activeComponent = Object.keys($scope.components)[0];
+		$scope.activeCategory = $scope.components[$scope.activeComponent].categories[0].id;
+
+		GetBenchmarks($scope, $http);
 	});
 
-	$http.get('/api/v1/benchmarks').success(function(data) {
-		$scope.benchmarks = data;
+	$scope.setActiveComponent = function(component) {
+		$scope.activeComponent = component;
+		$scope.activeCategory = $scope.components[component].categories[0].id;
 
-		$scope.setActiveComponent = function(component) {
-			$scope.activeComponent = component;
-		};
+		GetBenchmarks($scope, $http);
+	};
 
-		$scope.byComponent = function(benchmark) {
-			return benchmark.metric.indexOf($scope.activeComponent) === 0;
-		};
-	});
+	$scope.setActiveCategory = function(category) {
+		$scope.activeCategory = category;
+
+		GetBenchmarks($scope, $http)
+	};
 }

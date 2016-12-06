@@ -36,7 +36,7 @@
 	</div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byComponentAndCategory | filter:byOS | orderBy:'orderBy' ">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS | orderBy:'orderBy' ">
 	<hr/>
 	<h4>
 		<span id="{{metric.id}}">
@@ -51,7 +51,7 @@
 	<div class="column-chart">
 		<nvd3-discrete-bar-chart
 			data="metric.chartData"
-			id="{{metric.link}}"
+			id="{{metric.id}}"
 			margin="{left: 70, top: 5, bottom: 15, right: 0}"
 			color="['#50aa43']"
 			showXAxis="true"
@@ -61,5 +61,5 @@
 			forceY="[0]"
 		><svg></svg></nvd3-discrete-bar-chart>
 	</div>
-	<a id="run_{{metric.link}}"></a>
+	<a id="run_{{metric.id}}"></a>
 </div>

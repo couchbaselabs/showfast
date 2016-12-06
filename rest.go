@@ -21,7 +21,10 @@ func addBenchmark(c *gin.Context) {
 }
 
 func getBenchmarks(c *gin.Context) {
-	benchmarks, err := ds.getBenchmarks("by_metric_and_build")
+	component := c.Param("component")
+	category := c.Param("category")
+
+	benchmarks, err := ds.getBenchmarks(component, category)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
@@ -70,16 +73,6 @@ func addCluster(c *gin.Context) {
 	}
 }
 
-func getClusters(c *gin.Context) {
-	clusters, err := ds.getAllClusters()
-	if err != nil {
-		c.AbortWithError(500, err)
-		return
-	}
-	c.IndentedJSON(200, clusters)
-
-}
-
 func addMetric(c *gin.Context) {
 	var m Metric
 	if err := c.BindJSON(&m); err != nil {
@@ -94,7 +87,10 @@ func addMetric(c *gin.Context) {
 }
 
 func getMetrics(c *gin.Context) {
-	metrics, err := ds.getAllMetrics()
+	component := c.Param("component")
+	category := c.Param("category")
+
+	metrics, err := ds.getMetrics(component, category)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
@@ -117,13 +113,15 @@ func getRuns(c *gin.Context) {
 	c.IndentedJSON(200, runs)
 }
 
-func getTimelines(c *gin.Context) {
-	timelines, err := ds.getAllTimelines()
+func getTimeline(c *gin.Context) {
+	metric := c.Param("metric")
+
+	timeline, err := ds.getTimeline(metric)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
 	}
-	c.IndentedJSON(200, timelines)
+	c.IndentedJSON(200, timeline)
 }
 
 func httpEngine() *gin.Engine {
@@ -133,21 +131,21 @@ func httpEngine() *gin.Engine {
 	router.StaticFile("/admin", "./app/admin.html")
 	router.Static("/static", "./app")
 
-	v1 := router.Group("/api/v1")
+	rg := router.Group("/api/v1")
 
-	v1.POST("benchmarks", addBenchmark)
-	v1.GET("benchmarks", getBenchmarks)
-	v1.PATCH("benchmarks/:id", changeBenchmark)
-	v1.DELETE("benchmarks/:id", deleteBenchmark)
+	rg.POST("benchmarks", addBenchmark)
+	rg.GET("benchmarks/:component/:category", getBenchmarks)
+	rg.PATCH("benchmarks/:id", changeBenchmark)
+	rg.DELETE("benchmarks/:id", deleteBenchmark)
 
-	v1.POST("clusters", addCluster)
-	v1.GET("clusters", getClusters)
+	rg.POST("clusters", addCluster)
 
-	v1.POST("metrics", addMetric)
-	v1.GET("metrics", getMetrics)
+	rg.POST("metrics", addMetric)
+	rg.GET("metrics/:component/:category", getMetrics)
 
-	v1.GET("timelines", getTimelines)
-	v1.GET("runs/:metric/:build", getRuns)
+	rg.GET("timeline/:metric", getTimeline)
+
+	rg.GET("runs/:metric/:build", getRuns)
 
 	return router
 }

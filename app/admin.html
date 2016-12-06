@@ -18,15 +18,31 @@
 	<div class="masthead text-center">
 		<h2>Administration</h2>
 
-		<div class="text-center">
+		<div>
 			<div class="btn-group" data-toggle="buttons">
 				<label
-					ng-repeat="(id, title) in components"
+					ng-repeat="(id, component) in components"
 					ng-class="{active: id === activeComponent}"
 					ng-click="setActiveComponent(id)"
 					class="btn btn-success">
-					<input type="radio">{{title}}
+					<input type="radio">{{component.title}}
 				</label>
+			</div>
+		</div>
+
+		<div>
+			<div ng-repeat="(id, component) in components">
+				<div ng-if="activeComponent === id">
+					<div class="btn-group" data-toggle="buttons">
+						<label
+							ng-repeat="category in component.categories"
+							ng-class="{active: category.id === activeCategory}"
+							ng-click="setActiveCategory(category.id)"
+							class="btn btn-default">
+							<input type="radio">{{category.title}}
+						</label>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -53,7 +69,7 @@
 				</thead>
 
 				<tbody class="t-data">
-					<tr ng-repeat="benchmark in benchmarks | filter:byComponent" ts-repeat>
+					<tr ng-repeat="benchmark in benchmarks" ts-repeat>
 						<td>{{benchmark.id}}</td>
 						<td>{{benchmark.metric}}</td>
 						<td class="col-center">{{benchmark.build}}</td>

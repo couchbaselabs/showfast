@@ -40,7 +40,7 @@ func TestStatic(t *testing.T) {
 	ts := httptest.NewServer(httpEngine())
 	defer ts.Close()
 
-	resp, err := http.Get(ts.URL + "/js/app.js")
+	resp, err := http.Get(ts.URL + "/static/js/app.js")
 	defer resp.Body.Close()
 	if err != nil {
 		t.Fatal(err)
