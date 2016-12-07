@@ -1,6 +1,16 @@
-function MainDashboard($scope, $http, $routeParams) {
-	'use strict';
+angular
+	.module('showfast', ['ngRoute', 'nvd3ChartDirectives'])
+	.config([
+	    '$routeProvider', function($routeProvider) {
+	        $routeProvider.
+		        when('/timeline/:os/:component/:category', {templateUrl: '/static/timeline.html', controller: MenuRouter}).
+		        when('/runs/:metric/:build', {templateUrl: '/static/runs.html', controller: RunList}).
+		        otherwise({redirectTo: 'timeline/Linux/kv/max_ops'});
+        }
+    ])
+	.controller('MainDashboard', MainDashboard);
 
+function MainDashboard($scope, $http, $routeParams) {
 	DefineMenu($scope, $http);
 
 	var format = d3.format(',');
@@ -71,45 +81,4 @@ function RunList($scope, $routeParams, $http) {
 	$http.get('/api/v1/runs/' + $routeParams.metric + '/' + $routeParams.build).success(function(data) {
 		$scope.runs = data;
 	});
-}
-
-function GetBenchmarks($scope, $http) {
-	$http.get('/api/v1/benchmarks/' + $scope.activeComponent + '/' + $scope.activeCategory).success(function(data) {
-		$scope.benchmarks = data;
-	});
-}
-
-function AdminList($scope, $http) {
-	$scope.deleteBenchmark = function(benchmark) {
-		$http({method: 'DELETE', url: '/api/v1/benchmarks/' + benchmark.id})
-		.success(function(data) {
-			var index = $scope.benchmarks.indexOf(benchmark);
-			$scope.benchmarks.splice(index, 1);
-		});
-	};
-
-	$scope.reverseHidden = function(id) {
-		$http({method: 'PATCH', url: '/api/v1/benchmarks/' + id});
-	};
-
-	$http.get('/static/menu.json').success(function(menu) {
-		$scope.components = menu.components;
-		$scope.activeComponent = Object.keys($scope.components)[0];
-		$scope.activeCategory = $scope.components[$scope.activeComponent].categories[0].id;
-
-		GetBenchmarks($scope, $http);
-	});
-
-	$scope.setActiveComponent = function(component) {
-		$scope.activeComponent = component;
-		$scope.activeCategory = $scope.components[component].categories[0].id;
-
-		GetBenchmarks($scope, $http);
-	};
-
-	$scope.setActiveCategory = function(category) {
-		$scope.activeCategory = category;
-
-		GetBenchmarks($scope, $http)
-	};
 }
