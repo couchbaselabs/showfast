@@ -1,6 +1,6 @@
 angular
 	.module('showfast', ['tableSort'])
-    .controller("AdminList", AdminList);
+	.controller("AdminList", AdminList);
 
 function GetBenchmarks($scope, $http) {
 	$http.get('/api/v1/benchmarks/' + $scope.activeComponent + '/' + $scope.activeCategory).success(function(data) {
