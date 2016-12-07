@@ -68,8 +68,7 @@ function DefineFilters($scope) {
 }
 
 function RunList($scope, $routeParams, $http) {
-	$http({method: 'GET', url: '/api/v1/runs/' + $routeParams.metric + '/' + $routeParams.build})
-	.success(function(data) {
+	$http.get('/api/v1/runs/' + $routeParams.metric + '/' + $routeParams.build).success(function(data) {
 		$scope.runs = data;
 	});
 }
