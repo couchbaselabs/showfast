@@ -198,7 +198,8 @@ func (ds *dataStore) getBenchmarks(component, category string) (*[]Benchmark, er
 			"FROM metrics m " +
 			"JOIN benchmarks b " +
 			"ON KEY b.metric FOR m " +
-			"WHERE m.component = $1 AND m.category = $2;")
+			"WHERE m.component = $1 AND m.category = $2 " +
+			"ORDER BY b.metric, b.`build` DESC, b.hidden;")
 	params := []interface{}{component, category}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
