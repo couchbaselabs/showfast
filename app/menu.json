@@ -12,8 +12,6 @@
 			}, {
 				"id": "storage", "title": "Storage"
 			}, {
-				"id": "observe", "title": "Observe"
-			}, {
 				"id": "subdoc", "title": "Sub Doc"
 			}, {
 				"id": "warmup", "title": "Warmup"
