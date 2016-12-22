@@ -66,13 +66,18 @@ func (ds *dataStore) getBucket(bucketName string) *gocb.Bucket {
 }
 
 type Metric struct {
-	Cluster     Cluster `json:"cluster"`
-	Category    string  `json:"category"`
-	Component   string  `json:"component"`
-	ID          string  `json:"id"`
-	OrderBy     string  `json:"orderBy"`
-	SubCategory string  `json:"subCategory"`
-	Title       string  `json:"title"`
+	Cluster     string `json:"cluster"`
+	Category    string `json:"category"`
+	Component   string `json:"component"`
+	ID          string `json:"id"`
+	OrderBy     string `json:"orderBy"`
+	SubCategory string `json:"subCategory"`
+	Title       string `json:"title"`
+}
+
+type MetricWithCluster struct {
+	Metric
+	Cluster Cluster `json:"cluster"`
 }
 
 func (ds *dataStore) addMetric(metric Metric) error {
@@ -85,8 +90,8 @@ func (ds *dataStore) addMetric(metric Metric) error {
 	return err
 }
 
-func (ds *dataStore) getMetrics(component, category string) (*[]Metric, error) {
-	var metrics []Metric
+func (ds *dataStore) getMetrics(component, category string) (*[]MetricWithCluster, error) {
+	var metrics []MetricWithCluster
 
 	query := gocb.NewN1qlQuery(
 		"SELECT m.id, m.title, m.component, m.category, m.orderBy, c AS `cluster` " +
@@ -99,7 +104,7 @@ func (ds *dataStore) getMetrics(component, category string) (*[]Metric, error) {
 		return &metrics, err
 	}
 
-	var row Metric
+	var row MetricWithCluster
 	for rows.Next(&row) {
 		metrics = append(metrics, row)
 	}
