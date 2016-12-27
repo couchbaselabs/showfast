@@ -157,6 +157,7 @@ func (ds *dataStore) findExisting(benchmark Benchmark) ([]Benchmark, error) {
 	var row Benchmark
 	for rows.Next(&row) {
 		existing = append(existing, row)
+		row = Benchmark{}
 	}
 
 	return existing, nil
@@ -215,6 +216,7 @@ func (ds *dataStore) getBenchmarks(component, category string) (*[]Benchmark, er
 	var row Benchmark
 	for rows.Next(&row) {
 		benchmarks = append(benchmarks, row)
+		row = Benchmark{}
 	}
 
 	return &benchmarks, nil
@@ -266,6 +268,7 @@ func (ds *dataStore) getAllRuns(metric string, build string) (*[]Benchmark, erro
 	var row Benchmark
 	for rows.Next(&row) {
 		benchmarks = append(benchmarks, row)
+		row = Benchmark{}
 	}
 	return &benchmarks, nil
 }
