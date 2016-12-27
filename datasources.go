@@ -65,6 +65,30 @@ func (ds *dataStore) getBucket(bucketName string) *gocb.Bucket {
 	return ds.buckets[bucketName]
 }
 
+type Build struct {
+	Build string `json:"build"`
+}
+
+func (ds *dataStore) getBuilds() (*[]string, error) {
+	var builds []string
+
+	query := gocb.NewN1qlQuery(
+		"SELECT DISTINCT `build` " +
+			"FROM benchmarks " +
+			"WHERE hidden = False;")
+
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, []interface{}{})
+	if err != nil {
+		return &builds, err
+	}
+
+	var row Build
+	for rows.Next(&row) {
+		builds = append(builds, row.Build)
+	}
+	return &builds, nil
+}
+
 type Metric struct {
 	Cluster     string `json:"cluster"`
 	Category    string `json:"category"`

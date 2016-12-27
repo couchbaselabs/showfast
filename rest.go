@@ -7,6 +7,15 @@ import (
 	log "gopkg.in/inconshreveable/log15.v2"
 )
 
+func getBuilds(c *gin.Context) {
+	builds, err := ds.getBuilds()
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+	c.IndentedJSON(200, builds)
+}
+
 func addBenchmark(c *gin.Context) {
 	var b Benchmark
 	if err := c.BindJSON(&b); err != nil {
@@ -132,6 +141,8 @@ func httpEngine() *gin.Engine {
 	router.Static("/static", "./app")
 
 	rg := router.Group("/api/v1")
+
+	rg.GET("builds", getBuilds)
 
 	rg.POST("benchmarks", addBenchmark)
 	rg.GET("benchmarks/:component/:category", getBenchmarks)
