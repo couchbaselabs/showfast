@@ -133,6 +133,21 @@ func getTimeline(c *gin.Context) {
 	c.IndentedJSON(200, timeline)
 }
 
+func compare(c *gin.Context) {
+	build1 := c.Param("build1")
+	build2 := c.Param("build2")
+	if build1 == "" || build2 == "" {
+		c.AbortWithError(400, errors.New("bad arguments"))
+		return
+	}
+	comparison, err := ds.compare(build1, build2)
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+	c.IndentedJSON(200, comparison)
+}
+
 func httpEngine() *gin.Engine {
 	router := gin.Default()
 
@@ -157,6 +172,8 @@ func httpEngine() *gin.Engine {
 	rg.GET("timeline/:metric", getTimeline)
 
 	rg.GET("runs/:metric/:build", getRuns)
+
+	rg.GET("comparison/:build1/:build2", compare)
 
 	return router
 }

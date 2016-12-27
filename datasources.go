@@ -297,6 +297,38 @@ func (ds *dataStore) getAllRuns(metric string, build string) (*[]Benchmark, erro
 	return &benchmarks, nil
 }
 
+type Comparison struct {
+	Category  string `json:"category"`
+	Component string `json:"component"`
+	ID        string `json:"id"`
+	Title     string `json:"title"`
+	Results   []Run  `json:"results"`
+}
+
+func (ds *dataStore) compare(build1, build2 string) (*[]Comparison, error) {
+	comparison := []Comparison{}
+
+	query := gocb.NewN1qlQuery(
+		"SELECT m.id, m.component, m.category, m.title, ARRAY_AGG({\"build\": b.`build`, \"value\": b.`value`}) AS results " +
+			"FROM benchmarks b USE INDEX (benchmarks_comparison) " +
+			"JOIN metrics m ON KEYS b.metric " +
+			"WHERE b.hidden = False " +
+			"AND (b.`build` = $1 OR b.`build` = $2) " +
+			"GROUP BY m.id, m.component, m.category, m.title " +
+			"HAVING COUNT(m.id) > 1;")
+	params := []interface{}{build1, build2}
+
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
+	if err != nil {
+		return &comparison, err
+	}
+	var row Comparison
+	for rows.Next(&row) {
+		comparison = append(comparison, row)
+	}
+	return &comparison, nil
+}
+
 func (ds *dataStore) deleteBenchmark(key string) error {
 	bucket := ds.getBucket("benchmarks")
 
