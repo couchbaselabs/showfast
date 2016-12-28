@@ -153,6 +153,7 @@ func httpEngine() *gin.Engine {
 
 	router.StaticFile("/", "./app/index.html")
 	router.StaticFile("/admin", "./app/admin.html")
+	router.StaticFile("/comparison", "./app/comparison.html")
 	router.Static("/static", "./app")
 
 	rg := router.Group("/api/v1")

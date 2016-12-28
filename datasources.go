@@ -300,7 +300,7 @@ func (ds *dataStore) getAllRuns(metric string, build string) (*[]Benchmark, erro
 type Comparison struct {
 	Category  string `json:"category"`
 	Component string `json:"component"`
-	ID        string `json:"id"`
+	OS        string `json:"os"`
 	Title     string `json:"title"`
 	Results   []Run  `json:"results"`
 }
@@ -309,13 +309,15 @@ func (ds *dataStore) compare(build1, build2 string) (*[]Comparison, error) {
 	comparison := []Comparison{}
 
 	query := gocb.NewN1qlQuery(
-		"SELECT m.id, m.component, m.category, m.title, ARRAY_AGG({\"build\": b.`build`, \"value\": b.`value`}) AS results " +
+		"SELECT m.component, m.category, m.title, c.os, ARRAY_AGG({\"build\": b.`build`, \"value\": b.`value`}) AS results " +
 			"FROM benchmarks b USE INDEX (benchmarks_comparison) " +
 			"JOIN metrics m ON KEYS b.metric " +
+			"JOIN clusters c ON KEYS m.`cluster` " +
 			"WHERE b.hidden = False " +
 			"AND (b.`build` = $1 OR b.`build` = $2) " +
-			"GROUP BY m.id, m.component, m.category, m.title " +
-			"HAVING COUNT(m.id) > 1;")
+			"GROUP BY m.component, m.category, m.title, m.`cluster`, c.os " +
+			"HAVING COUNT(*) > 1 " +
+			"ORDER BY c.os, m.title;")
 	params := []interface{}{build1, build2}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
@@ -325,6 +327,7 @@ func (ds *dataStore) compare(build1, build2 string) (*[]Comparison, error) {
 	var row Comparison
 	for rows.Next(&row) {
 		comparison = append(comparison, row)
+		row = Comparison{}
 	}
 	return &comparison, nil
 }

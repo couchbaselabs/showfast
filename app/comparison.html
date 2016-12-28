@@ -1,0 +1,65 @@
+<html ng-app="showfast">
+
+<head>
+	<title>ShowFast</title>
+	<link rel="stylesheet" href="/static/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/comparison.css" />
+
+	<script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/js/vendor/angular.min.js"></script>
+	<script type="text/javascript" src="/static/js/comparison.js"></script>
+</head>
+
+<body ng-controller="ComparisonCtrl">
+    <div class="container-fluid">
+        <div class="masthead text-center">
+            <h2>Build Comparison</h2>
+        </div>
+
+        <div class="row" >
+            <div class="col-md-1 col-md-offset-5">
+                <select class="form-control" ng-model="lhb" ng-options="build for build in builds">
+                </select>
+            </div>
+
+            <div class="col-md-1 col-md-offset-0">
+                <select class="form-control" ng-model="rhb" ng-options="build for build in builds">
+                </select>
+            </div>
+        </div>
+
+        <div class="row" id="view">
+            <div class="col-md-8 col-md-offset-2">
+                <div ng-repeat="(id, component) in components">
+                    <div ng-repeat="category in component.categories">
+                        <h3>{{ component.title }} | {{ category.title }}</h3>
+                        <hr>
+
+                        <div ng-repeat="comparison in comparisons">
+                            <div ng-if="comparison.component === id && comparison.category === category.id">
+                                <p>{{ comparison.title }} | {{ comparison.os }}</p>
+                                <div class="row bars">
+                                    <div class="col-md-1 col-md-offset-1">
+                                        <strong>{{ comparison.results[0].value.toLocaleString() }}</strong>
+                                    </div>
+
+                                    <div class="{{ calcWidthClass(comparison.results) }} bar1">
+                                        <strong>{{ fmtDiff(comparison.results)}} %</strong>
+                                    </div>
+
+                                    <div class="{{ calcOffsetClass(comparison.results) }}">
+                                        <strong>{{ comparison.results[1].value.toLocaleString() }}</strong>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

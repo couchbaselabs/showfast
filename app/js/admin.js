@@ -1,6 +1,6 @@
 angular
 	.module('showfast', ['tableSort'])
-	.controller("AdminList", AdminList);
+	.controller("AdminCtrl", AdminCtrl);
 
 function GetBenchmarks($scope, $http) {
 	$http.get('/api/v1/benchmarks/' + $scope.activeComponent + '/' + $scope.activeCategory).success(function(data) {
@@ -18,7 +18,7 @@ function InitMenu($scope, $http) {
 	});
 }
 
-function AdminList($scope, $http) {
+function AdminCtrl($scope, $http) {
 	InitMenu($scope, $http);
 
 	$scope.deleteBenchmark = function(benchmark) {

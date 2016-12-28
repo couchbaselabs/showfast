@@ -1,0 +1,14 @@
+.bar-neg, .bar-pos {
+	color: white;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.bar-neg {
+	background-color: #337ab7;
+	text-align: right;
+}
+
+.bar-pos {
+	background-color: #c9302c;
+}
