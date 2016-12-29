@@ -102,13 +102,13 @@
 		"xdcr": {
 			"title": "XDCR",
 			"categories": [{
-				"id": "init", "title": "Initial"
+				"id": "init_single", "title": "Initial Single-Node"
+			}, {
+				"id": "init_multi", "title": "Initial Multi-Node"
 			}, {
 				"id": "reb", "title": "Initial+Rebalance"
 			}, {
 				"id": "ongoing", "title": "Ongoing"
-			}, {
-				"id": "lww", "title": "LWW"
 			}]
 		},
 		"fts": {
