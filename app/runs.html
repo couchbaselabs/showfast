@@ -14,20 +14,20 @@
 		<tbody>
 			<tr ng-repeat="run in runs | orderBy:'dateTime'">
 				<td class="t-seq">
-					{{$index+1}}
+					{{ $index+1 }}
 				</td>
 
 				<td class="t-report">
-					{{run.dateTime}}
+					{{ run.dateTime }}
 				</td>
 
 				<td class="t-report">
-					{{run.value}}
+					{{ run.value.toLocaleString() }}
 				</td>
 
 				<td class="t-report">
 					<a ng-repeat="snapshot in run.snapshots"
-						href="http://cbmonitor.sc.couchbase.com/reports/html/?snapshot={{snapshot}}"
+						href="http://cbmonitor.sc.couchbase.com/reports/html/?snapshot={{ snapshot }}"
 						target="_blank">
 							<span class="glyphicon glyphicon-file" aria-hidden="true"></span>
 					</a>
