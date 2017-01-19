@@ -70,7 +70,7 @@
 			}, {
 				"id": "join_unnest", "title": "JOIN & UNNEST"
 			}, {
-				"id": "dml", "title": "DML"
+				"id": "iud", "title": "IUD"
 			}, {
 				"id": "count", "title": "COUNT"
 			}]
