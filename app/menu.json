@@ -26,8 +26,6 @@
 		"reb": {
 			"title": "Rebalance",
 			"categories": [{
-				"id": "empty", "title": "Empty"
-			}, {
 				"id": "kv", "title": "KV"
 			}, {
 				"id": "views", "title": "Views"
