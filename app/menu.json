@@ -76,7 +76,7 @@
 			}]
 		},
 		"secondary": {
-			"title": "2i",
+			"title": "GSI",
 			"categories": [{
 				"id": "fdb_lat", "title": "Latency FDB"
 			}, {
