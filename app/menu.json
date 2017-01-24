@@ -125,16 +125,6 @@
 				"id": "index3", "title": "3 Node Index"
 			}]
 		},
-		"ycsb": {
-			"title": "YCSB",
-			"categories": [{
-				"id": "workloada", "title": "Workload A"
-			}, {
-				"id": "workloadc", "title": "Workload C"
-			}, {
-				"id": "workloade", "title": "Workload E"
-			}]
-		},
 		"tools": {
 			"title": "Tools",
 			"categories": [{
@@ -145,6 +135,16 @@
 				"id": "import", "title": "Import"
 			}, {
 				"id": "export", "title": "Export"
+			}]
+		},
+		"ycsb": {
+			"title": "YCSB",
+			"categories": [{
+				"id": "workloada", "title": "Workload A"
+			}, {
+				"id": "workloadc", "title": "Workload C"
+			}, {
+				"id": "workloade", "title": "Workload E"
 			}]
 		}
 	}
