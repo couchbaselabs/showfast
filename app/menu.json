@@ -37,17 +37,13 @@
 				"id": "recovery", "title": "Recovery"
 			}]
 		},
-		"index": {
-			"title": "View Indexing",
+		"views": {
+			"title": "Views",
 			"categories": [{
-				"id": "initial", "title": "Initial"
+				"id": "initial", "title": "Initial Index"
 			}, {
-				"id": "incremental", "title": "Incremental"
-			}]
-		},
-		"query": {
-			"title": "View Query",
-			"categories": [{
+				"id": "incremental", "title": "Incremental Index"
+			}, {
 				"id": "lat", "title": "Bulk Latency"
 			}, {
 				"id": "by_type", "title": "Latency by Query Type"
