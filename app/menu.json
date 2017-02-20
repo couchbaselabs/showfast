@@ -93,6 +93,14 @@
 				"id": "initial_moi", "title": "Initial MOI"
 			}, {
 				"id": "incremental_moi", "title": "Incremental MOI"
+			}, {
+				"id": "plasma_lat", "title": "Latency PLASMA"
+			}, {
+				"id": "plasma_thr", "title": "Throughput PLASMA"
+			}, {
+				"id": "initial_plasma", "title": "Initial PLASMA"
+			}, {
+				"id": "incremental_plasma", "title": "Incremental PLASMA"
 			}]
 		},
 		"xdcr": {
