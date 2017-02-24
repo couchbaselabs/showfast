@@ -16,7 +16,7 @@
 			}, {
 				"id": "warmup", "title": "Warmup"
 			}, {
-				"id": "fragmentation", "title": "Fragmentation"
+				"id": "memory", "title": "Memory"
 			}, {
 				"id": "compact", "title": "Compaction"
 			}, {
