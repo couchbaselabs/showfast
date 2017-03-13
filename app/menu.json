@@ -133,6 +133,8 @@
 				"id": "throughput3", "title": "3 Node Throughput "
 			}, {
 				"id": "index3", "title": "3 Node Index"
+			}, {
+				"id": "rebalance", "title": "Rebalance"
 			}]
 		},
 		"tools": {
