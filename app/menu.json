@@ -71,6 +71,10 @@
 				"id": "count", "title": "COUNT"
 			}, {
 				"id": "tokens", "title": "TOKENS"
+			}, {
+				"id": "pagination", "title": "Pagination"
+			}, {
+				"id": "API2", "title": "API2"
 			}]
 		},
 		"secondary": {
