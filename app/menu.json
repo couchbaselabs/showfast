@@ -98,6 +98,8 @@
 			}, {
 				"id": "incremental_moi", "title": "Incremental MOI"
 			}, {
+				"id": "recovery_moi", "title": "Recovery MOI"
+			}, {
 				"id": "plasma_lat", "title": "Latency PLASMA"
 			}, {
 				"id": "plasma_thr", "title": "Throughput PLASMA"
@@ -105,6 +107,8 @@
 				"id": "initial_plasma", "title": "Initial PLASMA"
 			}, {
 				"id": "incremental_plasma", "title": "Incremental PLASMA"
+			}, {
+				"id": "recovery_plasma", "title": "Recovery PLASMA"
 			}]
 		},
 		"xdcr": {
