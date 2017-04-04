@@ -80,32 +80,19 @@
 		"secondary": {
 			"title": "GSI",
 			"categories": [{
-				"id": "fdb_lat", "title": "Latency FDB"
+				"id": "lat", "title": "Latency"
 			}, {
-				"id": "fdb_thr", "title": "Throughput FDB"
+				"id": "thr", "title": "Throughput"
 			}, {
-				"id": "initial_fdb", "title": "Initial FDB"
+				"id": "initial", "title": "Initial"
 			}, {
-				"id": "incremental_fdb", "title": "Incremental FDB"
+				"id": "incremental", "title": "Incremental"
 			}, {
-				"id": "fdb_standalone", "title": "Standalone FDB"
+				"id": "recovery", "title": "Recovery"
 			}, {
-				"id": "moi_lat", "title": "Latency MOI"
-			}, {
-				"id": "moi_thr", "title": "Throughput MOI"
-			}, {
-				"id": "initial_moi", "title": "Initial MOI"
-			}, {
-				"id": "incremental_moi", "title": "Incremental MOI"
-			}, {
-				"id": "plasma_lat", "title": "Latency PLASMA"
-			}, {
-				"id": "plasma_thr", "title": "Throughput PLASMA"
-			}, {
-				"id": "initial_plasma", "title": "Initial PLASMA"
-			}, {
-				"id": "incremental_plasma", "title": "Incremental PLASMA"
-			}]
+				"id": "standalone", "title": "Standalone"
+			}],
+			"sub_categories": ["moi", "plasma", "fdb"]
 		},
 		"xdcr": {
 			"title": "XDCR",
