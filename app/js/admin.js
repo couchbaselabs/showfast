@@ -13,6 +13,7 @@ function InitMenu($scope, $http) {
 		$scope.components = menu.components;
 		$scope.activeComponent = Object.keys($scope.components)[0];
 		$scope.activeCategory = $scope.components[$scope.activeComponent].categories[0].id;
+		$scope.activeSubCategory = $scope.components[$scope.activeComponent].sub_categories[0];
 
 		GetBenchmarks($scope, $http);
 	});
@@ -36,12 +37,19 @@ function AdminCtrl($scope, $http) {
 	$scope.setActiveComponent = function(component) {
 		$scope.activeComponent = component;
 		$scope.activeCategory = $scope.components[component].categories[0].id;
+		$scope.activeSubCategory = $scope.components[component].sub_categories[0];
 
 		GetBenchmarks($scope, $http);
 	};
 
 	$scope.setActiveCategory = function(category) {
 		$scope.activeCategory = category;
+
+		GetBenchmarks($scope, $http)
+	};
+
+	$scope.setActiveSubCategory = function(sub_category) {
+		$scope.activeSubCategory = sub_category;
 
 		GetBenchmarks($scope, $http)
 	};

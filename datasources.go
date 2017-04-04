@@ -114,14 +114,14 @@ func (ds *dataStore) addMetric(metric Metric) error {
 	return err
 }
 
-func (ds *dataStore) getMetrics(component, category string) (*[]MetricWithCluster, error) {
+func (ds *dataStore) getMetrics(component, category string, sub_category string) (*[]MetricWithCluster, error) {
 	var metrics []MetricWithCluster
 
 	query := gocb.NewN1qlQuery(
-		"SELECT m.id, m.title, m.component, m.category, m.orderBy, c AS `cluster` " +
+		"SELECT m.id, m.title, m.component, m.category, m.orderBy, m.subCategory, c AS `cluster` " +
 			"FROM metrics m JOIN clusters c ON KEYS m.`cluster`" +
-			"WHERE m.component = $1 AND m.category = $2;")
-	params := []interface{}{component, category}
+			"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3;")
+	params := []interface{}{component, category, sub_category}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
 	if err != nil {
@@ -220,7 +220,7 @@ func (ds *dataStore) addBenchmark(benchmark Benchmark) error {
 	return err
 }
 
-func (ds *dataStore) getBenchmarks(component, category string) (*[]Benchmark, error) {
+func (ds *dataStore) getBenchmarks(component, category string, sub_category string) (*[]Benchmark, error) {
 	benchmarks := []Benchmark{}
 
 	query := gocb.NewN1qlQuery(
@@ -228,9 +228,9 @@ func (ds *dataStore) getBenchmarks(component, category string) (*[]Benchmark, er
 			"FROM metrics m " +
 			"JOIN benchmarks b " +
 			"ON KEY b.metric FOR m " +
-			"WHERE m.component = $1 AND m.category = $2 " +
+			"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3" +
 			"ORDER BY b.metric, b.`build` DESC, b.hidden;")
-	params := []interface{}{component, category}
+	params := []interface{}{component, category, sub_category}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
 	if err != nil {

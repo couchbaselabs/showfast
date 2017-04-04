@@ -32,8 +32,12 @@ func addBenchmark(c *gin.Context) {
 func getBenchmarks(c *gin.Context) {
 	component := c.Param("component")
 	category := c.Param("category")
+	sub_category := c.Param("sub_category")
+	if sub_category == "all" {
+		sub_category = ""
+	}
 
-	benchmarks, err := ds.getBenchmarks(component, category)
+	benchmarks, err := ds.getBenchmarks(component, category, sub_category)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
@@ -98,8 +102,12 @@ func addMetric(c *gin.Context) {
 func getMetrics(c *gin.Context) {
 	component := c.Param("component")
 	category := c.Param("category")
+	sub_category := c.Param("sub_category")
+	if sub_category == "all"{
+		sub_category = ""
+	}
 
-	metrics, err := ds.getMetrics(component, category)
+	metrics, err := ds.getMetrics(component, category, sub_category)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
@@ -161,14 +169,14 @@ func httpEngine() *gin.Engine {
 	rg.GET("builds", getBuilds)
 
 	rg.POST("benchmarks", addBenchmark)
-	rg.GET("benchmarks/:component/:category", getBenchmarks)
+	rg.GET("benchmarks/:component/:category/:sub_category", getBenchmarks)
 	rg.PATCH("benchmarks/:id", changeBenchmark)
 	rg.DELETE("benchmarks/:id", deleteBenchmark)
 
 	rg.POST("clusters", addCluster)
 
 	rg.POST("metrics", addMetric)
-	rg.GET("metrics/:component/:category", getMetrics)
+	rg.GET("metrics/:component/:category/:sub_category", getMetrics)
 
 	rg.GET("timeline/:metric", getTimeline)
 
