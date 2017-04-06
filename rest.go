@@ -169,6 +169,7 @@ func httpEngine() *gin.Engine {
 	rg.GET("builds", getBuilds)
 
 	rg.POST("benchmarks", addBenchmark)
+	rg.GET("benchmarks/:component/:category", getBenchmarks)
 	rg.GET("benchmarks/:component/:category/:subCategory", getBenchmarks)
 	rg.PATCH("benchmarks/:id", changeBenchmark)
 	rg.DELETE("benchmarks/:id", deleteBenchmark)
@@ -176,6 +177,7 @@ func httpEngine() *gin.Engine {
 	rg.POST("clusters", addCluster)
 
 	rg.POST("metrics", addMetric)
+	rg.GET("metrics/:component/:category", getMetrics)
 	rg.GET("metrics/:component/:category/:subCategory", getMetrics)
 
 	rg.GET("timeline/:metric", getTimeline)
