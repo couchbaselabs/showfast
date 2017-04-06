@@ -3,9 +3,9 @@ angular
 	.config([
 		'$routeProvider', function($routeProvider) {
 			$routeProvider.
-				when('/timeline/:os/:component/:category', {templateUrl: '/static/timeline.html', controller: MenuRouter}).
+				when('/timeline/:os/:component/:category/:subCategory', {templateUrl: '/static/timeline.html', controller: MenuRouter}).
 				when('/runs/:metric/:build', {templateUrl: '/static/runs.html', controller: RunList}).
-				otherwise({redirectTo: 'timeline/Linux/kv/max_ops'});
+				otherwise({redirectTo: 'timeline/Linux/kv/max_ops/all'});
 		}
 	])
 	.controller('MainDashboard', MainDashboard);
@@ -33,8 +33,10 @@ function MenuRouter($scope, $http, $routeParams, $location) {
 	$scope.activeOS = $routeParams.os;
 	$scope.activeComponent = $routeParams.component;
 	$scope.activeCategory = $routeParams.category;
+	$scope.activeSubCategory = $routeParams.subCategory;
 
-	$http.get('/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory).success(function(metrics) {
+	$http.get('/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory + "/"
+	+ $scope.activeSubCategory).success(function(metrics) {
 		$scope.metrics = metrics;
 
 		$.each(metrics, function(i, metric) {
@@ -45,15 +47,28 @@ function MenuRouter($scope, $http, $routeParams, $location) {
 	});
 
 	$scope.setActiveOS = function(os) {
-		$location.path("/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory);
+		$location.path("/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory
+		+ "/" + $scope.activeSubCategory);
 	};
 
 	$scope.setActiveComponent = function(component) {
-		$location.path("/timeline/" + $scope.activeOS + "/" + component + "/" + $scope.components[component].categories[0].id);
+		if ($scope.components[component].subCategories) {
+			$scope.activeSubCategory = $scope.components[component].subCategories[0]
+		} else {
+			$scope.activeSubCategory = "all"
+		}
+		$location.path("/timeline/" + $scope.activeOS + "/" + component + "/"
+		+ $scope.components[component].categories[0].id + "/" + $scope.activeSubCategory);
 	};
 
 	$scope.setActiveCategory = function(category) {
-		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category);
+		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category
+		+ "/" + $scope.activeSubCategory);
+	};
+
+	$scope.setActiveSubCategory = function(subCategory) {
+		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/"
+		+ $scope.activeCategory + "/" + subCategory);
 	};
 
 	DefineFilters($scope);

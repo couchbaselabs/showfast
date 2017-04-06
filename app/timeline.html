@@ -38,10 +38,19 @@
 				<input type="radio">{{category.title}}
 			</label>
 		</div>
+		<div class="btn-group" data-toggle="buttons">
+			<label
+				ng-repeat="subCategory in component.subCategories"
+				ng-class="{active: subCategory == activeSubCategory}"
+				ng-click="setActiveSubCategory(subCategory)"
+				class="btn btn-warning">
+				<input type="radio">{{subCategory}}
+			</label>
+		</div>
 	</div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS | orderBy:'orderBy' ">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS |  filter:bySubCategory | orderBy:'orderBy' ">
 	<hr/>
 	<h4>
 		<span id="{{metric.id}}">
