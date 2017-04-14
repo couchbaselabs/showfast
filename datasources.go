@@ -223,14 +223,28 @@ func (ds *dataStore) addBenchmark(benchmark Benchmark) error {
 func (ds *dataStore) getBenchmarks(component, category string, subCategory string) (*[]Benchmark, error) {
 	benchmarks := []Benchmark{}
 
-	query := gocb.NewN1qlQuery(
-		"SELECT b.`build`, b.id, b.hidden, b.metric, b.`value` " +
-			"FROM metrics m " +
-			"JOIN benchmarks b " +
-			"ON KEY b.metric FOR m " +
-			"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3" +
-			"ORDER BY b.metric, b.`build` DESC, b.hidden;")
-	params := []interface{}{component, category, subCategory}
+	var query *gocb.N1qlQuery
+	var params []interface{}
+
+	if subCategory == "" {
+		query = gocb.NewN1qlQuery(
+			"SELECT b.`build`, b.id, b.hidden, b.metric, b.`value` " +
+				"FROM metrics m " +
+				"JOIN benchmarks b " +
+				"ON KEY b.metric FOR m " +
+				"WHERE m.component = $1 AND m.category = $2" +
+				"ORDER BY b.metric, b.`build` DESC, b.hidden;")
+		params = []interface{}{component, category}
+	} else {
+		query = gocb.NewN1qlQuery(
+			"SELECT b.`build`, b.id, b.hidden, b.metric, b.`value` " +
+				"FROM metrics m " +
+				"JOIN benchmarks b " +
+				"ON KEY b.metric FOR m " +
+				"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3" +
+				"ORDER BY b.metric, b.`build` DESC, b.hidden;")
+		params = []interface{}{component, category, subCategory}
+	}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
 	if err != nil {
