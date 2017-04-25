@@ -75,6 +75,8 @@
 				"id": "pagination", "title": "Pagination"
 			}, {
 				"id": "API2", "title": "API2"
+			}, {
+				"id": "dgm", "title": "DGM"
 			}]
 		},
 		"secondary": {
