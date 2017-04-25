@@ -12,7 +12,7 @@
 			}, {
 				"id": "storage", "title": "Storage"
 			}, {
-				"id": "subdoc", "title": "Sub Doc"
+				"id": "subdoc", "title": "Sub-Doc & XATTR"
 			}, {
 				"id": "warmup", "title": "Warmup"
 			}, {
