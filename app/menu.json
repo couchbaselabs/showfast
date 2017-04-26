@@ -21,6 +21,8 @@
 				"id": "compact", "title": "Compaction"
 			}, {
 				"id": "dcp", "title": "DCP"
+			}, {
+				"id": "cache", "title": "Cache"
 			}]
 		},
 		"reb": {
