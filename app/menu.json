@@ -10,9 +10,9 @@
 			}, {
 				"id": "latency", "title": "Latency"
 			}, {
-				"id": "storage", "title": "Storage"
-			}, {
 				"id": "subdoc", "title": "Sub-Doc & XATTR"
+			}, {
+				"id": "storage", "title": "Storage"
 			}, {
 				"id": "warmup", "title": "Warmup"
 			}, {
