@@ -113,23 +113,35 @@
 		"fts": {
 			"title": "FTS",
 			"categories": [{
-				"id": "kvlatency", "title": "KV Latency"
+				"id": "kvlatency", "title": "Benchmark: Latency (kv)"
 			}, {
-				"id": "kvthroughput", "title": "KV Throughput"
+				"id": "kvthroughput", "title": "Benchmark: Throughput (kv)"
 			}, {
-				"id": "latency", "title": "Latency"
+				"id": "latency", "title": "Benchmark: Latency"
 			}, {
-				"id": "throughput", "title": "Throughput"
+				"id": "throughput", "title": "Benchmark: Throughput"
 			}, {
-				"id": "index", "title": "Index"
+				"id": "index", "title": "Benchmark: Index"
 			}, {
-				"id": "latency3", "title": "3 Node Latency"
+				"id": "latency3", "title": "Benchmark: Latency (3 nodes)"
 			}, {
-				"id": "throughput3", "title": "3 Node Throughput "
+				"id": "throughput3", "title": "Benchmark: Throughput (3 nodes)"
 			}, {
-				"id": "index3", "title": "3 Node Index"
+				"id": "index3", "title": "Benchmark: Index (3 nodes)"
 			}, {
-				"id": "rebalance", "title": "Rebalance"
+				"id": "rebalance", "title": "Benchmark: Rebalance"
+			}, {
+				"id": "dgmlatency", "title": "EndUser: Latency (DGM)"
+			}, {
+				"id": "dgmthroughput", "title": "EndUser: Throughput (DGM)"
+			}, {
+				"id": "dgmindex", "title": "EndUser: Index (DGM)"
+			}, {
+				"id": "nondgmlatency", "title": "EndUser: Latency (non-DGM)"
+			}, {
+				"id": "nondgmthroughput", "title": "EndUser: Throughput (non-DGM)"
+			}, {
+				"id": "nondgmindex", "title": "EndUser: Index (non-DGM)"
 			}]
 		},
 		"tools": {
