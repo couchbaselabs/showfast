@@ -49,16 +49,34 @@
 			"revisionTime": "2015-12-11T00:06:21Z"
 		},
 		{
-			"checksumSHA1": "4hQNaJUg67lF/QcO0NKzUeqlaew=",
-			"path": "golang.org/x/net/context",
-			"revision": "569280fa63be4e201b975e5411e30a92178f0118",
-			"revisionTime": "2016-11-03T00:14:07Z"
-		},
-		{
-			"checksumSHA1": "8fD/im5Kwvy3JgmxulDTambmE8w=",
+			"checksumSHA1": "Q4W6H1AocwvqFV/MNxSPsO1StcU=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "a646d33e2ee3172a661fc09bca23bb4889a41bc8",
 			"revisionTime": "2016-07-15T05:43:45Z"
+		},
+		{
+			"checksumSHA1": "eCTnaZ6/iDI6/x+mS/F4HGuLsUs=",
+			"path": "gopkg.in/couchbase/gocb.v1",
+			"revision": "bf740f17ea6cd6a1bbd5ca3583266c8f74692524",
+			"revisionTime": "2017-05-17T19:00:17Z"
+		},
+		{
+			"checksumSHA1": "yTCU3a0XKaj2K5fnz8km6BkeJgY=",
+			"path": "gopkg.in/couchbase/gocbcore.v7",
+			"revision": "0dfef9335fa13e903afb34eec66471f1ba48fce2",
+			"revisionTime": "2017-05-26T07:03:05Z"
+		},
+		{
+			"checksumSHA1": "tfUd9t3X/+Omuy4DWq64zwi7oKQ=",
+			"path": "gopkg.in/couchbaselabs/gocbconnstr.v1",
+			"revision": "f601f521a1ab1c99260c63441e1bbdbbc48b1bd9",
+			"revisionTime": "2017-02-03T22:39:13Z"
+		},
+		{
+			"checksumSHA1": "F4pFTVdjF0XZVWbdFHIPJKdVPFM=",
+			"path": "gopkg.in/couchbaselabs/jsonx.v1",
+			"revision": "5b7baa20429a46a5543ee259664cc86502738cad",
+			"revisionTime": "2016-12-13T19:40:16Z"
 		},
 		{
 			"checksumSHA1": "39V1idWER42Lmcmg2Uy40wMzOlo=",
