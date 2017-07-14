@@ -156,7 +156,7 @@
 				"id": "export", "title": "Export"
 			}]
 		},
-		"ycsb": {
+		"YCSB": {
 			"title": "YCSB",
 			"categories": [{
 				"id": "workloada", "title": "Workload A"
