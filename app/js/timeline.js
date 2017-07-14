@@ -35,8 +35,7 @@ function MenuRouter($scope, $http, $routeParams, $location) {
 	$scope.activeCategory = $routeParams.category;
 	$scope.activeSubCategory = $routeParams.subCategory;
 
-	$http.get('/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory + "/"
-	+ $scope.activeSubCategory).success(function(metrics) {
+	$http.get('/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory).success(function(metrics) {
 		$scope.metrics = metrics;
 
 		$.each(metrics, function(i, metric) {
@@ -47,28 +46,36 @@ function MenuRouter($scope, $http, $routeParams, $location) {
 	});
 
 	$scope.setActiveOS = function(os) {
-		$location.path("/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory
-		+ "/" + $scope.activeSubCategory);
+		$location.path("/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory);
 	};
 
 	$scope.setActiveComponent = function(component) {
-		if ($scope.components[component].subCategories) {
-			$scope.activeSubCategory = $scope.components[component].subCategories[0]
+		var category = $scope.components[component].categories[0];
+		if (category.subCategories.length > 0) {
+			$scope.activeSubCategory = category.subCategories[0];
 		} else {
-			$scope.activeSubCategory = "all"
+			$scope.activeSubCategory = "all";
 		}
-		$location.path("/timeline/" + $scope.activeOS + "/" + component + "/"
-		+ $scope.components[component].categories[0].id + "/" + $scope.activeSubCategory);
+		$location.path("/timeline/" + $scope.activeOS + "/" + component + "/" + category.id + "/" + $scope.activeSubCategory);
 	};
 
 	$scope.setActiveCategory = function(category) {
-		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category
-		+ "/" + $scope.activeSubCategory);
+		var categories = $scope.components[$scope.activeComponent].categories;
+		for (var i in categories) {
+			if (category === categories[i].id) {
+				if ( categories[i].subCategories.length > 0 ) {
+					$scope.activeSubCategory = categories[i].subCategories[0];
+				} else {
+					$scope.activeSubCategory = "all";
+				}
+				break;
+			}
+		}
+		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category + "/" + $scope.activeSubCategory);
 	};
 
 	$scope.setActiveSubCategory = function(subCategory) {
-		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/"
-		+ $scope.activeCategory + "/" + subCategory);
+		$location.path("/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + $scope.activeCategory + "/" + subCategory);
 	};
 
 	DefineFilters($scope);

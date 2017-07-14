@@ -6,164 +6,163 @@
 		"kv": {
 			"title": "KV",
 			"categories": [{
-				"id": "max_ops", "title": "Throughput"
+				"id": "max_ops", "title": "Throughput", "subCategories": []
 			}, {
-				"id": "latency", "title": "Latency"
+				"id": "latency", "title": "Latency", "subCategories": []
 			}, {
-				"id": "subdoc", "title": "Sub-Doc & XATTR"
+				"id": "subdoc", "title": "Sub-Doc & XATTR", "subCategories": []
 			}, {
-				"id": "storage", "title": "Storage"
+				"id": "storage", "title": "Storage", "subCategories": []
 			}, {
-				"id": "warmup", "title": "Warmup"
+				"id": "warmup", "title": "Warmup", "subCategories": []
 			}, {
-				"id": "memory", "title": "Memory"
+				"id": "memory", "title": "Memory", "subCategories": []
 			}, {
-				"id": "compact", "title": "Compaction"
+				"id": "compact", "title": "Compaction", "subCategories": []
 			}, {
-				"id": "dcp", "title": "DCP"
+				"id": "dcp", "title": "DCP", "subCategories": []
 			}, {
-				"id": "cache", "title": "Cache"
+				"id": "cache", "title": "Cache", "subCategories": []
 			}]
 		},
 		"reb": {
 			"title": "Rebalance",
 			"categories": [{
-				"id": "kv", "title": "KV"
+				"id": "kv", "title": "KV", "subCategories": []
 			}, {
-				"id": "views", "title": "Views"
+				"id": "views", "title": "Views", "subCategories": []
 			}, {
-				"id": "xdcr", "title": "XDCR"
+				"id": "xdcr", "title": "XDCR", "subCategories": []
 			}, {
-				"id": "failover", "title": "Failover"
+				"id": "failover", "title": "Failover", "subCategories": []
 			}, {
-				"id": "recovery", "title": "Recovery"
+				"id": "recovery", "title": "Recovery", "subCategories": []
 			}]
 		},
 		"views": {
 			"title": "Views",
 			"categories": [{
-				"id": "initial", "title": "Initial Index"
+				"id": "initial", "title": "Initial Index", "subCategories": []
 			}, {
-				"id": "incremental", "title": "Incremental Index"
+				"id": "incremental", "title": "Incremental Index", "subCategories": []
 			}, {
-				"id": "lat", "title": "Bulk Latency"
+				"id": "lat", "title": "Bulk Latency", "subCategories": []
 			}, {
-				"id": "by_type", "title": "Latency by Query Type"
+				"id": "by_type", "title": "Latency by Query Type", "subCategories": []
 			}, {
-				"id": "throughput", "title": "Throughput"
+				"id": "throughput", "title": "Throughput", "subCategories": []
 			}]
 		},
 		"n1ql": {
 			"title": "N1QL",
 			"categories": [{
-				"id": "Q1_Q3_thr", "title": "Q1-Q3 Throughput"
+				"id": "Q1_Q3_thr", "title": "Q1-Q3 Throughput", "subCategories": []
 			}, {
-				"id": "Q1_Q3_lat", "title": "Q1-Q3 Latency"
+				"id": "Q1_Q3_lat", "title": "Q1-Q3 Latency", "subCategories": []
 			}, {
-				"id": "Q5_Q7_thr", "title": "Q5-Q7 Throughput"
+				"id": "Q5_Q7_thr", "title": "Q5-Q7 Throughput", "subCategories": []
 			}, {
-				"id": "CI_thr", "title": "Covering Indexes"
+				"id": "CI_thr", "title": "Covering Indexes", "subCategories": []
 			}, {
-				"id": "array", "title": "Array Indexing"
+				"id": "array", "title": "Array Indexing", "subCategories": []
 			}, {
-				"id": "join_unnest", "title": "JOIN & UNNEST"
+				"id": "join_unnest", "title": "JOIN & UNNEST", "subCategories": []
 			}, {
-				"id": "iud", "title": "IUD"
+				"id": "iud", "title": "IUD", "subCategories": []
 			}, {
-				"id": "count", "title": "COUNT"
+				"id": "count", "title": "COUNT", "subCategories": []
 			}, {
-				"id": "tokens", "title": "TOKENS"
+				"id": "tokens", "title": "TOKENS", "subCategories": []
 			}, {
-				"id": "pagination", "title": "Pagination"
+				"id": "pagination", "title": "Pagination", "subCategories": []
 			}, {
-				"id": "API2", "title": "API2"
+				"id": "API2", "title": "API2", "subCategories": []
 			}, {
-				"id": "dgm", "title": "DGM"
+				"id": "dgm", "title": "DGM", "subCategories": []
 			}]
 		},
 		"secondary": {
 			"title": "GSI",
 			"categories": [{
-				"id": "lat", "title": "Latency"
+				"id": "lat", "title": "Latency", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
 			}, {
-				"id": "thr", "title": "Throughput"
+				"id": "thr", "title": "Throughput", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
 			}, {
-				"id": "initial", "title": "Initial"
+				"id": "initial", "title": "Initial", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
 			}, {
-				"id": "incremental", "title": "Incremental"
+				"id": "incremental", "title": "Incremental", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
 			}, {
-				"id": "recovery", "title": "Recovery"
+				"id": "recovery", "title": "Recovery", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
 			}, {
-				"id": "standalone", "title": "Standalone"
-			}],
-			"subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
+				"id": "standalone", "title": "Standalone", "subCategories": ["ForestDB"]
+			}]
 		},
 		"xdcr": {
 			"title": "XDCR",
 			"categories": [{
-				"id": "init_single", "title": "Initial Single-Node"
+				"id": "init_single", "title": "Initial Single-Node", "subCategories": []
 			}, {
-				"id": "init_multi", "title": "Initial Multi-Node"
+				"id": "init_multi", "title": "Initial Multi-Node", "subCategories": []
 			}, {
-				"id": "reb", "title": "Initial+Rebalance"
+				"id": "reb", "title": "Initial+Rebalance", "subCategories": []
 			}, {
-				"id": "ongoing", "title": "Ongoing"
+				"id": "ongoing", "title": "Ongoing", "subCategories": []
 			}]
 		},
 		"fts": {
 			"title": "FTS",
 			"categories": [{
-				"id": "kvlatency", "title": "Benchmark: Latency (kv)"
+				"id": "kvlatency", "title": "Benchmark: Latency (kv)", "subCategories": []
 			}, {
-				"id": "kvthroughput", "title": "Benchmark: Throughput (kv)"
+				"id": "kvthroughput", "title": "Benchmark: Throughput (kv)", "subCategories": []
 			}, {
-				"id": "latency", "title": "Benchmark: Latency"
+				"id": "latency", "title": "Benchmark: Latency", "subCategories": []
 			}, {
-				"id": "throughput", "title": "Benchmark: Throughput"
+				"id": "throughput", "title": "Benchmark: Throughput", "subCategories": []
 			}, {
-				"id": "index", "title": "Benchmark: Index"
+				"id": "index", "title": "Benchmark: Index", "subCategories": []
 			}, {
-				"id": "latency3", "title": "Benchmark: Latency (3 nodes)"
+				"id": "latency3", "title": "Benchmark: Latency (3 nodes)", "subCategories": []
 			}, {
-				"id": "throughput3", "title": "Benchmark: Throughput (3 nodes)"
+				"id": "throughput3", "title": "Benchmark: Throughput (3 nodes)", "subCategories": []
 			}, {
-				"id": "index3", "title": "Benchmark: Index (3 nodes)"
+				"id": "index3", "title": "Benchmark: Index (3 nodes)", "subCategories": []
 			}, {
-				"id": "rebalance", "title": "Benchmark: Rebalance"
+				"id": "rebalance", "title": "Benchmark: Rebalance", "subCategories": []
 			}, {
-				"id": "dgmlatency", "title": "EndUser: Latency (DGM)"
+				"id": "dgmlatency", "title": "EndUser: Latency (DGM)", "subCategories": []
 			}, {
-				"id": "dgmthroughput", "title": "EndUser: Throughput (DGM)"
+				"id": "dgmthroughput", "title": "EndUser: Throughput (DGM)", "subCategories": []
 			}, {
-				"id": "dgmindex", "title": "EndUser: Index (DGM)"
+				"id": "dgmindex", "title": "EndUser: Index (DGM)", "subCategories": []
 			}, {
-				"id": "nondgmlatency", "title": "EndUser: Latency (non-DGM)"
+				"id": "nondgmlatency", "title": "EndUser: Latency (non-DGM)", "subCategories": []
 			}, {
-				"id": "nondgmthroughput", "title": "EndUser: Throughput (non-DGM)"
+				"id": "nondgmthroughput", "title": "EndUser: Throughput (non-DGM)", "subCategories": []
 			}, {
-				"id": "nondgmindex", "title": "EndUser: Index (non-DGM)"
+				"id": "nondgmindex", "title": "EndUser: Index (non-DGM)", "subCategories": []
 			}]
 		},
 		"tools": {
 			"title": "Tools",
 			"categories": [{
-				"id": "backup", "title": "Backup"
+				"id": "backup", "title": "Backup", "subCategories": []
 			}, {
-				"id": "restore", "title": "Restore"
+				"id": "restore", "title": "Restore", "subCategories": []
 			}, {
-				"id": "import", "title": "Import"
+				"id": "import", "title": "Import", "subCategories": []
 			}, {
-				"id": "export", "title": "Export"
+				"id": "export", "title": "Export", "subCategories": []
 			}]
 		},
 		"YCSB": {
 			"title": "YCSB",
 			"categories": [{
-				"id": "workloada", "title": "Workload A"
+				"id": "workloada", "title": "Workload A", "subCategories": []
 			}, {
-				"id": "workloadc", "title": "Workload C"
+				"id": "workloadc", "title": "Workload C", "subCategories": []
 			}, {
-				"id": "workloade", "title": "Workload E"
+				"id": "workloade", "title": "Workload E", "subCategories": []
 			}]
 		}
 	}
