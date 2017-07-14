@@ -1,85 +1,85 @@
 <div class="links">
-	<a target="_blank" href="/comparison">Build Comparison</a> | <a target="_blank" href="/daily">Daily</a>
+    <a target="_blank" href="/comparison">Build Comparison</a> | <a target="_blank" href="/daily">Daily</a>
 </div>
 
 <div class="masthead text-center">
-	<h2>Performance Dashboard</h2>
+    <h2>Performance Dashboard</h2>
 </div>
 
 <div class="text-center">
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="(id, component) in components"
-			ng-class="{active: id === activeComponent}"
-			ng-click="setActiveComponent(id)"
-			class="btn btn-success">
-			<input type="radio">{{component.title}}
-		</label>
-	</div>
-	<div class="btn-group" data-toggle="buttons">
-		<label
-			ng-repeat="os in oses"
-			ng-class="{active: os == activeOS}"
-			ng-click="setActiveOS(os)"
-			class="btn btn-warning">
-			<input type="radio">{{os}}
-		</label>
-	</div>
+    <div class="btn-group" data-toggle="buttons">
+        <label
+            ng-repeat="(id, component) in components"
+            ng-class="{active: id === activeComponent}"
+            ng-click="setActiveComponent(id)"
+            class="btn btn-success">
+            <input type="radio">{{component.title}}
+        </label>
+    </div>
+    <div class="btn-group" data-toggle="buttons">
+        <label
+            ng-repeat="os in oses"
+            ng-class="{active: os == activeOS}"
+            ng-click="setActiveOS(os)"
+            class="btn btn-warning">
+            <input type="radio">{{os}}
+        </label>
+    </div>
 </div>
 
 <div class="text-center">
-	<div ng-repeat="(id, component) in components">
-		<div ng-if="activeComponent === id">
-			<div class="btn-group" data-toggle="buttons">
-				<label
-					ng-repeat="category in component.categories"
-					ng-class="{active: category.id === activeCategory}"
-					ng-click="setActiveCategory(category.id)"
-					class="btn btn-default">
-					<input type="radio">{{category.title}}
-				</label>
-			</div>
-			<div ng-repeat="category in component.categories" class="sub-menu">
-				<div ng-if="category.id === activeCategory">
-					<div class="btn-group" data-toggle="buttons">
-						<label
-							ng-repeat="subCategory in category.subCategories"
-							ng-class="{active: subCategory == activeSubCategory}"
-							ng-click="setActiveSubCategory(subCategory)"
-							class="btn btn-warning">
-							<input type="radio">{{subCategory}}
-						</label>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div ng-repeat="(id, component) in components">
+        <div ng-if="activeComponent === id">
+            <div class="btn-group" data-toggle="buttons">
+                <label
+                    ng-repeat="category in component.categories"
+                    ng-class="{active: category.id === activeCategory}"
+                    ng-click="setActiveCategory(category.id)"
+                    class="btn btn-default">
+                    <input type="radio">{{category.title}}
+                </label>
+            </div>
+            <div ng-repeat="category in component.categories" class="sub-menu">
+                <div ng-if="category.id === activeCategory">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label
+                            ng-repeat="subCategory in category.subCategories"
+                            ng-class="{active: subCategory == activeSubCategory}"
+                            ng-click="setActiveSubCategory(subCategory)"
+                            class="btn btn-warning">
+                            <input type="radio">{{subCategory}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS | filter:bySubCategory | orderBy:'orderBy' ">
-	<hr/>
-	<h4>
-		<span id="{{metric.id}}">
-			<strong>{{metric.title}}</strong>
-		</span>
-	</h4>
-	<span class="text-muted"><strong>Cluster: </strong>{{metric.cluster.name}}</span>
-	<span class="text-muted"><strong>OS: </strong>{{metric.cluster.os}}</span>
-	<span class="text-muted"><strong>CPU: </strong>{{metric.cluster.cpu}}</span>
-	<span class="text-muted"><strong>Memory: </strong>{{metric.cluster.memory}}</span>
-	<span class="text-muted"><strong>Disk: </strong>{{metric.cluster.disk}}</span>
-	<div class="column-chart">
-		<nvd3-discrete-bar-chart
-			data="metric.chartData"
-			id="{{metric.id}}"
-			margin="{left: 70, top: 5, bottom: 15, right: 0}"
-			color="['#50aa43']"
-			showXAxis="true"
-			showYAxis="true"
-			showValues="true"
-			valueFormat="valueFormatFunction()"
-			forceY="[0]"
-		><svg></svg></nvd3-discrete-bar-chart>
-	</div>
-	<a id="run_{{metric.id}}"></a>
+    <hr/>
+    <h4>
+        <span id="{{metric.id}}">
+            <strong>{{metric.title}}</strong>
+        </span>
+    </h4>
+    <span class="text-muted"><strong>Cluster: </strong>{{metric.cluster.name}}</span>
+    <span class="text-muted"><strong>OS: </strong>{{metric.cluster.os}}</span>
+    <span class="text-muted"><strong>CPU: </strong>{{metric.cluster.cpu}}</span>
+    <span class="text-muted"><strong>Memory: </strong>{{metric.cluster.memory}}</span>
+    <span class="text-muted"><strong>Disk: </strong>{{metric.cluster.disk}}</span>
+    <div class="column-chart">
+        <nvd3-discrete-bar-chart
+            data="metric.chartData"
+            id="{{metric.id}}"
+            margin="{left: 70, top: 5, bottom: 15, right: 0}"
+            color="['#50aa43']"
+            showXAxis="true"
+            showYAxis="true"
+            showValues="true"
+            valueFormat="valueFormatFunction()"
+            forceY="[0]"
+        ><svg></svg></nvd3-discrete-bar-chart>
+    </div>
+    <a id="run_{{metric.id}}"></a>
 </div>

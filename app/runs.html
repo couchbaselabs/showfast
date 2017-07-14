@@ -1,45 +1,45 @@
 <div class="masthead text-center">
-	<h2>All test runs</h2>
-	<table class="table-striped table-bordered table-condensed t-all-runs t-data">
-		<thead>
-			<tr>
-				<th class="t-seq">#</th>
-				<th class="t-report">Date and time</th>
-				<th class="t-report">Value</th>
-				<th class="t-report">HTML reports</th>
-				<th class="t-report">Jenkins build</th>
-			</tr>
-		</thead>
+    <h2>All test runs</h2>
+    <table class="table-striped table-bordered table-condensed t-all-runs t-data">
+        <thead>
+            <tr>
+                <th class="t-seq">#</th>
+                <th class="t-report">Date and time</th>
+                <th class="t-report">Value</th>
+                <th class="t-report">HTML reports</th>
+                <th class="t-report">Jenkins build</th>
+            </tr>
+        </thead>
 
-		<tbody>
-			<tr ng-repeat="run in runs | orderBy:'dateTime'">
-				<td class="t-seq">
-					{{ $index+1 }}
-				</td>
+        <tbody>
+            <tr ng-repeat="run in runs | orderBy:'dateTime'">
+                <td class="t-seq">
+                    {{ $index+1 }}
+                </td>
 
-				<td class="t-report">
-					{{ run.dateTime }}
-				</td>
+                <td class="t-report">
+                    {{ run.dateTime }}
+                </td>
 
-				<td class="t-report">
-					{{ run.value.toLocaleString() }}
-				</td>
+                <td class="t-report">
+                    {{ run.value.toLocaleString() }}
+                </td>
 
-				<td class="t-report">
-					<a ng-repeat="snapshot in run.snapshots"
-						href="http://cbmonitor.sc.couchbase.com/reports/html/?snapshot={{ snapshot }}"
-						target="_blank">
-							<span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-					</a>
-				</td>
+                <td class="t-report">
+                    <a ng-repeat="snapshot in run.snapshots"
+                        href="http://cbmonitor.sc.couchbase.com/reports/html/?snapshot={{ snapshot }}"
+                        target="_blank">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    </a>
+                </td>
 
-				<td class="t-report">
-					<a href="{{ run.buildURL }}"
-						target="_blank">
-						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-					</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+                <td class="t-report">
+                    <a href="{{ run.buildURL }}"
+                        target="_blank">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

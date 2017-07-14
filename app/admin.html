@@ -1,90 +1,90 @@
 <html ng-app="showfast">
 
 <head>
-	<title>ShowFast</title>
-	<link rel="stylesheet" href="/static/css/vendor/bootstrap.min.css" />
-	<link rel="stylesheet" href="/static/css/admin.css" />
-	<link rel="stylesheet" href="/static/css/tablesort.css" />
+    <title>ShowFast</title>
+    <link rel="stylesheet" href="/static/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/admin.css" />
+    <link rel="stylesheet" href="/static/css/tablesort.css" />
 
-	<script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
-	<script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/static/js/vendor/angular.min.js"></script>
-	<script type="text/javascript" src="/static/js/vendor/angular-tablesort.js"></script>
-	<script type="text/javascript" src="/static/js/admin.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/angular-tablesort.js"></script>
+    <script type="text/javascript" src="/static/js/admin.js"></script>
 </head>
 
 <body ng-controller="AdminCtrl">
-	<div class="masthead text-center">
-		<h2>Administration</h2>
+    <div class="masthead text-center">
+        <h2>Administration</h2>
 
-		<div>
-			<div class="btn-group" data-toggle="buttons">
-				<label
-					ng-repeat="(id, component) in components"
-					ng-class="{active: id === activeComponent}"
-					ng-click="setActiveComponent(id)"
-					class="btn btn-success">
-					<input type="radio">{{component.title}}
-				</label>
-			</div>
-		</div>
+        <div>
+            <div class="btn-group" data-toggle="buttons">
+                <label
+                    ng-repeat="(id, component) in components"
+                    ng-class="{active: id === activeComponent}"
+                    ng-click="setActiveComponent(id)"
+                    class="btn btn-success">
+                    <input type="radio">{{component.title}}
+                </label>
+            </div>
+        </div>
 
-		<div>
-			<div ng-repeat="(id, component) in components">
-				<div ng-if="activeComponent === id">
-					<div class="btn-group" data-toggle="buttons">
-						<label
-							ng-repeat="category in component.categories"
-							ng-class="{active: category.id === activeCategory}"
-							ng-click="setActiveCategory(category.id)"
-							class="btn btn-default">
-							<input type="radio">{{category.title}}
-						</label>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div>
+            <div ng-repeat="(id, component) in components">
+                <div ng-if="activeComponent === id">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label
+                            ng-repeat="category in component.categories"
+                            ng-class="{active: category.id === activeCategory}"
+                            ng-click="setActiveCategory(category.id)"
+                            class="btn btn-default">
+                            <input type="radio">{{category.title}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div>
-			<table class="table-striped table-bordered table-condensed t-inventory" ts-wrapper>
-				<colgroup>
-					<col span="1" style="width: 22%;">
-					<col span="1" style="width: 43%;">
-					<col span="1" style="width: 17%;">
-					<col span="1" style="width: 8%;">
-					<col span="1" style="width: 7%;">
-					<col span="1" style="width: 3%;">
-				</colgroup>
+        <div>
+            <table class="table-striped table-bordered table-condensed t-inventory" ts-wrapper>
+                <colgroup>
+                    <col span="1" style="width: 22%;">
+                    <col span="1" style="width: 43%;">
+                    <col span="1" style="width: 17%;">
+                    <col span="1" style="width: 8%;">
+                    <col span="1" style="width: 7%;">
+                    <col span="1" style="width: 3%;">
+                </colgroup>
 
-				<thead class="t-header">
-					<tr>
-						<th ts-criteria="id">ID</th>
-						<th ts-criteria="metric" ts-default>Metric</th>
-						<th ts-criteria="build" ts-default class="col-center">Build</th>
-						<th ts-criteria="value" class="col-center">Value</th>
-						<th ts-criteria="hidden" class="col-center">Hidden</th>
-						<th></th>
-					</tr>
-				</thead>
+                <thead class="t-header">
+                    <tr>
+                        <th ts-criteria="id">ID</th>
+                        <th ts-criteria="metric" ts-default>Metric</th>
+                        <th ts-criteria="build" ts-default class="col-center">Build</th>
+                        <th ts-criteria="value" class="col-center">Value</th>
+                        <th ts-criteria="hidden" class="col-center">Hidden</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-				<tbody class="t-data">
-					<tr ng-repeat="benchmark in benchmarks" ts-repeat>
-						<td>{{benchmark.id}}</td>
-						<td>{{benchmark.metric}}</td>
-						<td class="col-center">{{benchmark.build}}</td>
-						<td class="col-center">{{benchmark.value}}</td>
-						<td class="col-center">
-							<input ng-click="reverseHidden(benchmark.id)" type="checkbox" checked ng-if="benchmark.hidden">
-							<input ng-click="reverseHidden(benchmark.id)" type="checkbox" ng-if="!benchmark.hidden">
-						</td>
-						<td class="col-center">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="deleteBenchmark(benchmark)"></span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+                <tbody class="t-data">
+                    <tr ng-repeat="benchmark in benchmarks" ts-repeat>
+                        <td>{{benchmark.id}}</td>
+                        <td>{{benchmark.metric}}</td>
+                        <td class="col-center">{{benchmark.build}}</td>
+                        <td class="col-center">{{benchmark.value}}</td>
+                        <td class="col-center">
+                            <input ng-click="reverseHidden(benchmark.id)" type="checkbox" checked ng-if="benchmark.hidden">
+                            <input ng-click="reverseHidden(benchmark.id)" type="checkbox" ng-if="!benchmark.hidden">
+                        </td>
+                        <td class="col-center">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="deleteBenchmark(benchmark)"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>
