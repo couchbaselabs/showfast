@@ -160,8 +160,6 @@
             "categories": [{
                 "id": "workloada", "title": "Workload A", "subCategories": []
             }, {
-                "id": "workloadc", "title": "Workload C", "subCategories": []
-            }, {
                 "id": "workloade", "title": "Workload E", "subCategories": []
             }]
         }
