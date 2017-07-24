@@ -23,6 +23,8 @@
                 "id": "dcp", "title": "DCP", "subCategories": []
             }, {
                 "id": "cache", "title": "Cache", "subCategories": []
+            }, {
+                "id": "ycsb", "title": "YCSB", "subCategories": []
             }]
         },
         "reb": {
@@ -79,6 +81,8 @@
                 "id": "API2", "title": "API2", "subCategories": []
             }, {
                 "id": "dgm", "title": "DGM", "subCategories": []
+            }, {
+                "id": "ycsb", "title": "YCSB", "subCategories": []
             }]
         },
         "secondary": {
@@ -153,14 +157,6 @@
                 "id": "import", "title": "Import", "subCategories": []
             }, {
                 "id": "export", "title": "Export", "subCategories": []
-            }]
-        },
-        "YCSB": {
-            "title": "YCSB",
-            "categories": [{
-                "id": "workloada", "title": "Workload A", "subCategories": []
-            }, {
-                "id": "workloade", "title": "Workload E", "subCategories": []
             }]
         }
     }
