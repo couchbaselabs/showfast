@@ -10,8 +10,6 @@
             }, {
                 "id": "latency", "title": "Latency", "subCategories": []
             }, {
-                "id": "subdoc", "title": "Sub-Doc & XATTR", "subCategories": []
-            }, {
                 "id": "dgm", "title": "DGM", "subCategories": []
             }, {
                 "id": "warmup", "title": "Warmup", "subCategories": []
