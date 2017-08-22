@@ -79,6 +79,8 @@
                 "id": "dgm", "title": "DGM", "subCategories": []
             }, {
                 "id": "ycsb", "title": "YCSB", "subCategories": []
+            }, {
+                "id": "soe", "title": "SOE", "subCategories": []
             }]
         },
         "secondary": {
