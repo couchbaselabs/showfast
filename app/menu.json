@@ -68,17 +68,17 @@
             }, {
                 "id": "iud", "title": "IUD", "subCategories": []
             }, {
-                "id": "count", "title": "COUNT", "subCategories": []
+                "id": "count", "title": "COUNT", "subCategories": ["MOI", "Plasma"]
             }, {
                 "id": "tokens", "title": "TOKENS", "subCategories": []
             }, {
-                "id": "pagination", "title": "Pagination", "subCategories": []
+                "id": "pagination", "title": "Pagination", "subCategories": ["MOI", "Plasma"]
             }, {
-                "id": "API2", "title": "API2", "subCategories": []
+                "id": "API2", "title": "API2", "subCategories": ["MOI", "Plasma"]
             }, {
                 "id": "dgm", "title": "DGM", "subCategories": []
             }, {
-                "id": "ycsb", "title": "YCSB", "subCategories": []
+                "id": "ycsb", "title": "YCSB", "subCategories": ["MOI", "Plasma"]
             }, {
                 "id": "soe", "title": "SOE", "subCategories": []
             }]
