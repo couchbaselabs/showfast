@@ -156,6 +156,14 @@
             }, {
                 "id": "export", "title": "Export", "subCategories": []
             }]
+        },
+        "eventing": {
+            "title": "Eventing",
+            "categories": [{
+                "id": "lat", "title": "Latency", "subCategories": ["Function", "Timer"]
+            }, {
+                "id": "thr", "title": "Throughput", "subCategories": ["Function", "Timer"]
+            }]
         }
     }
 }
