@@ -114,35 +114,15 @@
         "fts": {
             "title": "FTS",
             "categories": [{
-                "id": "kvlatency", "title": "Benchmark: Latency (kv)", "subCategories": []
+                "id": "benchmark", "title": "Benchmark", "subCategories": ["Latency", "Throughput", "Index", "Rebalance"]
             }, {
-                "id": "kvthroughput", "title": "Benchmark: Throughput (kv)", "subCategories": []
+                "id": "benchmark_3_nodes", "title": "Benchmark (3 nodes)", "subCategories": ["Latency", "Throughput", "Index"]
             }, {
-                "id": "latency", "title": "Benchmark: Latency", "subCategories": []
+                "id": "benchmark_kv", "title": "Benchmark (KV)", "subCategories": ["Latency", "Throughput"]
             }, {
-                "id": "throughput", "title": "Benchmark: Throughput", "subCategories": []
+                "id": "end_user_non_dgm", "title": "EndUser (non-DGM)", "subCategories": ["Latency", "Throughput", "Index"]
             }, {
-                "id": "index", "title": "Benchmark: Index", "subCategories": []
-            }, {
-                "id": "latency3", "title": "Benchmark: Latency (3 nodes)", "subCategories": []
-            }, {
-                "id": "throughput3", "title": "Benchmark: Throughput (3 nodes)", "subCategories": []
-            }, {
-                "id": "index3", "title": "Benchmark: Index (3 nodes)", "subCategories": []
-            }, {
-                "id": "rebalance", "title": "Benchmark: Rebalance", "subCategories": []
-            }, {
-                "id": "dgmlatency", "title": "EndUser: Latency (DGM)", "subCategories": []
-            }, {
-                "id": "dgmthroughput", "title": "EndUser: Throughput (DGM)", "subCategories": []
-            }, {
-                "id": "dgmindex", "title": "EndUser: Index (DGM)", "subCategories": []
-            }, {
-                "id": "nondgmlatency", "title": "EndUser: Latency (non-DGM)", "subCategories": []
-            }, {
-                "id": "nondgmthroughput", "title": "EndUser: Throughput (non-DGM)", "subCategories": []
-            }, {
-                "id": "nondgmindex", "title": "EndUser: Index (non-DGM)", "subCategories": []
+                "id": "end_user_dgm", "title": "EndUser (DGM)", "subCategories": ["Latency", "Throughput", "Index"]
             }]
         },
         "tools": {
