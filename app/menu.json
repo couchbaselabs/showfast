@@ -95,8 +95,6 @@
                 "id": "incremental", "title": "Incremental", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
             }, {
                 "id": "recovery", "title": "Recovery", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
-            }, {
-                "id": "standalone", "title": "Standalone", "subCategories": ["ForestDB"]
             }]
         },
         "xdcr": {
