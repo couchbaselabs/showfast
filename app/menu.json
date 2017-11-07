@@ -142,6 +142,16 @@
             }, {
                 "id": "thr", "title": "Throughput", "subCategories": ["Function", "Timer"]
             }]
+        },
+        "syncgateway": {
+            "title": "Sync Gateway",
+            "categories": [{
+                "id": "read", "title": "Reads", "subCategories": []
+            }, {
+                "id": "write", "title": "Writes", "subCategories": []
+            }, {
+                "id": "sync", "title": "Sync", "subCategories": []
+            }]
         }
     }
 }
