@@ -28,11 +28,9 @@
         "reb": {
             "title": "Rebalance",
             "categories": [{
-                "id": "kv", "title": "KV", "subCategories": []
+                "id": "kv", "title": "KV", "subCategories": ["DGM", "Non-DGM", "Sanity"]
             }, {
                 "id": "views", "title": "Views", "subCategories": []
-            }, {
-                "id": "xdcr", "title": "XDCR", "subCategories": []
             }, {
                 "id": "failover", "title": "Failover", "subCategories": []
             }, {
@@ -107,6 +105,12 @@
                 "id": "reb", "title": "Initial+Rebalance", "subCategories": []
             }, {
                 "id": "ongoing", "title": "Ongoing", "subCategories": []
+            }]
+        },
+        "cbas": {
+            "title": "CBAS",
+            "categories": [{
+                "id": "latency", "title": "Latency for bigfun dataset", "subCategories": []
             }]
         },
         "fts": {
