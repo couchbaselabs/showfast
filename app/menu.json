@@ -110,7 +110,7 @@
         "cbas": {
             "title": "CBAS",
             "categories": [{
-                "id": "latency", "title": "Latency for bigfun dataset", "subCategories": []
+                "id": "latency", "title": "Latency (BigFUN)", "subCategories": []
             }]
         },
         "fts": {
