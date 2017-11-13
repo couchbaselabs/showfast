@@ -107,6 +107,12 @@
                 "id": "ongoing", "title": "Ongoing", "subCategories": []
             }]
         },
+        "cbas": {
+            "title": "CBAS",
+            "categories": [{
+                "id": "latency", "title": "Latency (BigFUN)", "subCategories": []
+            }]
+        },
         "fts": {
             "title": "FTS",
             "categories": [{
