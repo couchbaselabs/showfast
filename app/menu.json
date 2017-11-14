@@ -110,8 +110,6 @@
         "cbas": {
             "title": "CBAS",
             "categories": [{
-                "id": "bigfun_10k", "title": "10K (BigFUN)", "subCategories": ["Sync", "Query", "QueryBg", "QueryBgFO", "QueryBgREB", "SyncFO", "SyncREB"]
-            },{
                 "id": "bigfun_1M", "title": "1M (BigFUN)", "subCategories": ["Sync", "Query", "QueryBg", "QueryBgFO", "QueryBgREB", "SyncFO", "SyncREB"]
             },{
                 "id": "bigfun_10M", "title": "10M (BigFUN)", "subCategories": ["Sync", "Query", "QueryBg", "QueryBgFO", "QueryBgREB", "SyncFO", "SyncREB"]
