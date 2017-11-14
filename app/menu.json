@@ -107,22 +107,22 @@
                 "id": "ongoing", "title": "Ongoing", "subCategories": []
             }]
         },
-        "cbas": {
-            "title": "CBAS",
+        "analytics": {
+            "title": "Analytics",
             "categories": [{
-                "id": "Query", "title": "Query", "subCategories": ["bigfun_1M", "bigfun_10M"]
+                "id": "Query", "title": "Query", "subCategories": ["BigFun 1M", "BigFun 10M"]
             },{
-                "id": "QueryBg", "title": "QueryBg", "subCategories": ["bigfun_1M", "bigfun_10M"]
+                "id": "QueryBg", "title": "QueryBg", "subCategories": ["BigFun 1M", "BigFun 10M"]
             },{
-                "id": "QueryBgRecovery", "title": "QueryBgRecovery", "subCategories": ["bigfun_1M", "bigfun_10M"]
+                "id": "QueryBgRecovery", "title": "QueryBg (Recovery)", "subCategories": ["BigFun 1M", "BigFun 10M"]
             },{
-                "id": "QueryBgREB", "title": "QueryBgREB", "subCategories": ["bigfun_1M", "bigfun_10M"]
+                "id": "QueryBgREB", "title": "QueryBg (Rebalance)", "subCategories": ["BigFun 1M", "BigFun 10M"]
             },{
-                "id": "Sync", "title": "Sync", "subCategories": ["bigfun_1M", "bigfun_10M"]
+                "id": "Sync", "title": "Sync", "subCategories": ["BigFun 1M", "BigFun 10M"]
             },{
-                "id": "SyncRecovery", "title": "SyncRecovery", "subCategories": ["bigfun_1M", "bigfun_10M"]
+                "id": "SyncRecovery", "title": "Sync (Recovery)", "subCategories": ["BigFun 1M", "BigFun 10M"]
             },{
-                "id": "SyncREB", "title": "SyncREB", "subCategories": ["bigfun_1M", "bigfun_10M"]
+                "id": "SyncREB", "title": "Sync (Rebalance)", "subCategories": ["BigFun 1M", "BigFun 10M"]
             }]
         },
         "fts": {
