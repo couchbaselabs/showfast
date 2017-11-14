@@ -110,9 +110,19 @@
         "cbas": {
             "title": "CBAS",
             "categories": [{
-                "id": "bigfun_1M", "title": "1M (BigFUN)", "subCategories": ["Sync", "Query", "QueryBg", "QueryBgFO", "QueryBgREB", "SyncFO", "SyncREB"]
+                "id": "Sync", "title": "Sync", "subCategories": ["bigfun_1M", "bigfun_10M"]
             },{
-                "id": "bigfun_10M", "title": "10M (BigFUN)", "subCategories": ["Sync", "Query", "QueryBg", "QueryBgFO", "QueryBgREB", "SyncFO", "SyncREB"]
+                "id": "Query", "title": "Query", "subCategories": ["bigfun_1M", "bigfun_10M"]
+            },{
+                "id": "QueryBg", "title": "QueryBg", "subCategories": ["bigfun_1M", "bigfun_10M"]
+            },{
+                "id": "QueryBgRecovery", "title": "QueryBgRecovery", "subCategories": ["bigfun_1M", "bigfun_10M"]
+            },{
+                "id": "QueryBgREB", "title": "QueryBgREB", "subCategories": ["bigfun_1M", "bigfun_10M"]
+            },{
+                "id": "SyncRecovery", "title": "SyncRecovery", "subCategories": ["bigfun_1M", "bigfun_10M"]
+            },{
+                "id": "SyncREB", "title": "SyncREB", "subCategories": ["bigfun_1M", "bigfun_10M"]
             }]
         },
         "fts": {
