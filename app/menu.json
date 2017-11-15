@@ -51,6 +51,18 @@
                 "id": "throughput", "title": "Throughput", "subCategories": []
             }]
         },
+        "xdcr": {
+            "title": "XDCR",
+            "categories": [{
+                "id": "init_single", "title": "Initial Single-Node", "subCategories": []
+            }, {
+                "id": "init_multi", "title": "Initial Multi-Node", "subCategories": []
+            }, {
+                "id": "reb", "title": "Initial+Rebalance", "subCategories": []
+            }, {
+                "id": "ongoing", "title": "Ongoing", "subCategories": []
+            }]
+        },
         "n1ql": {
             "title": "N1QL",
             "categories": [{
@@ -95,36 +107,6 @@
                 "id": "recovery", "title": "Recovery", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }]
         },
-        "xdcr": {
-            "title": "XDCR",
-            "categories": [{
-                "id": "init_single", "title": "Initial Single-Node", "subCategories": []
-            }, {
-                "id": "init_multi", "title": "Initial Multi-Node", "subCategories": []
-            }, {
-                "id": "reb", "title": "Initial+Rebalance", "subCategories": []
-            }, {
-                "id": "ongoing", "title": "Ongoing", "subCategories": []
-            }]
-        },
-        "analytics": {
-            "title": "Analytics",
-            "categories": [{
-                "id": "Query", "title": "Query", "subCategories": ["BigFun 1M", "BigFun 10M"]
-            },{
-                "id": "QueryBg", "title": "QueryBg", "subCategories": ["BigFun 1M", "BigFun 10M"]
-            },{
-                "id": "QueryBgRecovery", "title": "QueryBg (Recovery)", "subCategories": ["BigFun 1M", "BigFun 10M"]
-            },{
-                "id": "QueryBgREB", "title": "QueryBg (Rebalance)", "subCategories": ["BigFun 1M", "BigFun 10M"]
-            },{
-                "id": "Sync", "title": "Sync", "subCategories": ["BigFun 1M", "BigFun 10M"]
-            },{
-                "id": "SyncRecovery", "title": "Sync (Recovery)", "subCategories": ["BigFun 1M", "BigFun 10M"]
-            },{
-                "id": "SyncREB", "title": "Sync (Rebalance)", "subCategories": ["BigFun 1M", "BigFun 10M"]
-            }]
-        },
         "fts": {
             "title": "FTS",
             "categories": [{
@@ -139,6 +121,32 @@
                 "id": "end_user_dgm", "title": "EndUser (DGM)", "subCategories": ["Latency", "Throughput", "Index"]
             }]
         },
+        "eventing": {
+            "title": "Eventing",
+            "categories": [{
+                "id": "lat", "title": "Latency", "subCategories": ["Function", "Timer"]
+            }, {
+                "id": "thr", "title": "Throughput", "subCategories": ["Function", "Timer"]
+            }]
+        },
+        "analytics": {
+            "title": "Analytics",
+            "categories": [{
+                "id": "Query", "title": "Query", "subCategories": ["BigFun 1M", "BigFun 10M"]
+            }, {
+                "id": "QueryBg", "title": "QueryBg", "subCategories": ["BigFun 1M", "BigFun 10M"]
+            }, {
+                "id": "QueryBgRecovery", "title": "QueryBg (Recovery)", "subCategories": ["BigFun 1M", "BigFun 10M"]
+            }, {
+                "id": "QueryBgREB", "title": "QueryBg (Rebalance)", "subCategories": ["BigFun 1M", "BigFun 10M"]
+            }, {
+                "id": "Sync", "title": "Sync", "subCategories": ["BigFun 1M", "BigFun 10M"]
+            }, {
+                "id": "SyncRecovery", "title": "Sync (Recovery)", "subCategories": ["BigFun 1M", "BigFun 10M"]
+            }, {
+                "id": "SyncREB", "title": "Sync (Rebalance)", "subCategories": ["BigFun 1M", "BigFun 10M"]
+            }]
+        },
         "tools": {
             "title": "Tools",
             "categories": [{
@@ -149,14 +157,6 @@
                 "id": "import", "title": "Import", "subCategories": []
             }, {
                 "id": "export", "title": "Export", "subCategories": []
-            }]
-        },
-        "eventing": {
-            "title": "Eventing",
-            "categories": [{
-                "id": "lat", "title": "Latency", "subCategories": ["Function", "Timer"]
-            }, {
-                "id": "thr", "title": "Throughput", "subCategories": ["Function", "Timer"]
             }]
         },
         "syncgateway": {
