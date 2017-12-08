@@ -12,6 +12,8 @@
             }, {
                 "id": "dgm", "title": "DGM", "subCategories": []
             }, {
+                "id": "hidd", "title": "HiDD", "subCategories": ["Ingestion", "Steady"]
+            }, {
                 "id": "warmup", "title": "Warmup", "subCategories": []
             }, {
                 "id": "memory", "title": "Memory", "subCategories": []
