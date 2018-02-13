@@ -74,6 +74,8 @@
             }, {
                 "id": "Q5_Q7_thr", "title": "Q5-Q7 Throughput", "subCategories": []
             }, {
+                "id": "aggregation", "title": "Aggregation", "subCategories": []
+            }, {
                 "id": "array", "title": "Array Indexing", "subCategories": []
             }, {
                 "id": "join_unnest", "title": "JOIN & UNNEST", "subCategories": []
