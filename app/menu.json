@@ -68,13 +68,11 @@
         "n1ql": {
             "title": "N1QL",
             "categories": [{
-                "id": "Q1_Q3_thr", "title": "Q1-Q3 Throughput", "subCategories": ["KV", "MOI", "Plasma", "ForestDB"]
+                "id": "Q1_Q3", "title": "Q1-Q3", "subCategories": ["KV", "MOI", "Plasma", "ForestDB"]
             }, {
-                "id": "Q1_Q3_lat", "title": "Q1-Q3 Latency", "subCategories": ["KV", "MOI", "ForestDB"]
+                "id": "Q5_Q7", "title": "Q5-Q7", "subCategories": []
             }, {
-                "id": "Q5_Q7_thr", "title": "Q5-Q7 Throughput", "subCategories": []
-            }, {
-                "id": "aggregation", "title": "Aggregation", "subCategories": []
+                "id": "aggregation", "title": "Aggregation", "subCategories": ["Latency", "Throughput"]
             }, {
                 "id": "array", "title": "Array Indexing", "subCategories": []
             }, {
