@@ -74,6 +74,8 @@
             }, {
                 "id": "aggregation", "title": "Aggregation", "subCategories": ["Latency", "Throughput"]
             }, {
+                "id": "partitioned", "title": "Partitioning", "subCategories": []
+            }, {
                 "id": "array", "title": "Array Indexing", "subCategories": []
             }, {
                 "id": "join_unnest", "title": "JOIN & UNNEST", "subCategories": []
