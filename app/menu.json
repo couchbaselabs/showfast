@@ -177,6 +177,8 @@
                 "id": "write", "title": "Writes", "subCategories": []
             }, {
                 "id": "sync", "title": "Sync", "subCategories": []
+            }, {
+                "id": "query", "title": "Query", "subCategories": []
             }]
         }
     }
