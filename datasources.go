@@ -165,7 +165,7 @@ type Benchmark struct {
 }
 
 func (ds *dataStore) findExisting(benchmark Benchmark) ([]Benchmark, error) {
-	var existing []Benchmark
+	existing := []Benchmark{}
 
 	query := gocb.NewN1qlQuery(
 		"SELECT `build`, buildURL, dateTime, id, metric, hidden, snapshots, `value` " +
@@ -221,7 +221,7 @@ func (ds *dataStore) addBenchmark(benchmark Benchmark) error {
 }
 
 func (ds *dataStore) getBenchmarks(component, category string, subCategory string) (*[]Benchmark, error) {
-	var benchmarks []Benchmark
+	benchmarks := []Benchmark{}
 
 	var query *gocb.N1qlQuery
 	var params []interface{}
@@ -266,7 +266,7 @@ type Run struct {
 }
 
 func (ds *dataStore) getTimeline(metric string) (*[][]interface{}, error) {
-	var runs [][]interface{}
+	runs := [][]interface{}{}
 
 	query := gocb.NewN1qlQuery(
 		"SELECT `build`, `value` " +
@@ -290,7 +290,7 @@ func (ds *dataStore) getTimeline(metric string) (*[][]interface{}, error) {
 }
 
 func (ds *dataStore) getAllRuns(metric string, build string) (*[]Benchmark, error) {
-	var benchmarks []Benchmark
+	benchmarks := []Benchmark{}
 
 	query := gocb.NewN1qlQuery(
 		"SELECT `build`, buildURL, dateTime, snapshots, `value` " +
@@ -320,7 +320,7 @@ type Comparison struct {
 }
 
 func (ds *dataStore) compare(build1, build2 string) (*[]Comparison, error) {
-	var comparison []Comparison
+	comparison := []Comparison{}
 
 	query := gocb.NewN1qlQuery(
 		"SELECT m.component, m.category, m.title, c.os, ARRAY_AGG({\"build\": b.`build`, \"value\": b.`value`}) AS results " +
