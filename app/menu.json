@@ -128,6 +128,8 @@
         "jts": {
             "title": "Search",
             "categories": [{
+                "id": "1M", "title": "1M", "subCategories": ["Latency", "Throughput", "Index"]
+            }, {
                 "id": "benchmark", "title": "Benchmark", "subCategories": ["Latency", "Throughput", "Index", "Rebalance"]
             }, {
                 "id": "benchmark_3_nodes", "title": "Benchmark (3 nodes)", "subCategories": ["Latency", "Throughput", "Index"]
