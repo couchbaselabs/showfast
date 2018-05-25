@@ -174,13 +174,13 @@
         "syncgateway": {
             "title": "Sync Gateway",
             "categories": [{
-                "id": "read", "title": "Reads", "subCategories": []
+                "id": "read", "title": "Reads", "subCategories": ["xattr", "non-xattr"]
             }, {
-                "id": "write", "title": "Writes", "subCategories": []
+                "id": "write", "title": "Writes", "subCategories": ["xattr", "non-xattr"]
             }, {
-                "id": "sync", "title": "Sync", "subCategories": []
+                "id": "sync", "title": "Sync", "subCategories": ["xattr", "non-xattr"]
             }, {
-                "id": "query", "title": "Query", "subCategories": []
+                "id": "query", "title": "Query", "subCategories": ["xattr", "non-xattr"]
             }]
         }
     }
