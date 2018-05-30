@@ -152,11 +152,11 @@
         "analytics": {
             "title": "Analytics",
             "categories": [{
-                "id": "sync", "title": "Sync", "subCategories": ["BigFUN 20M"]
+                "id": "sync", "title": "Sync", "subCategories": ["Initial", "Incremental"]
             }, {
-                "id": "latency", "title": "Latency", "subCategories": ["BigFUN 20M"]
+                "id": "latency", "title": "Latency", "subCategories": ["With Index", "Without Index"]
             }, {
-                "id": "rebalance", "title": "Rebalance", "subCategories": ["BigFUN 20M"]
+                "id": "rebalance", "title": "Rebalance", "subCategories": []
             }]
         },
         "tools": {
