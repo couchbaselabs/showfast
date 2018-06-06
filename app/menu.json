@@ -92,6 +92,8 @@
             }, {
                 "id": "dgm", "title": "DGM", "subCategories": []
             }, {
+                "id": "bigfun", "title": "BigFUN", "subCategories": []
+            }, {
                 "id": "ycsb", "title": "YCSB", "subCategories": ["MOI", "Plasma"]
             }, {
                 "id": "soe", "title": "SOE", "subCategories": []
