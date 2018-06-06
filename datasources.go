@@ -272,7 +272,7 @@ func (ds *dataStore) getTimeline(metric string) (*[][]interface{}, error) {
 		"SELECT `build`, `value` " +
 			"FROM benchmarks " +
 			"WHERE metric = $1 AND hidden = false " +
-			"ORDER BY `build`;")
+			"ORDER BY SPLIT(`build`, '-')[0], TONUMBER(SPLIT(`build`, '-')[1]);")
 	params := []interface{}{metric}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
