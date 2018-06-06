@@ -72,7 +72,7 @@
             }, {
                 "id": "Q5_Q7", "title": "Q5-Q7", "subCategories": []
             }, {
-                "id": "aggregation", "title": "Aggregation", "subCategories": ["Latency", "Throughput"]
+                "id": "aggregation", "title": "Aggregation", "subCategories": ["Latency", "Throughput", "Indexing"]
             }, {
                 "id": "partitioned", "title": "Partitioning", "subCategories": []
             }, {
