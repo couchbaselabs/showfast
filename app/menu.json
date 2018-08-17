@@ -131,6 +131,8 @@
                 "id": "lat", "title": "Latency", "subCategories": ["Function", "Timer"]
             }, {
                 "id": "thr", "title": "Throughput", "subCategories": ["Function", "Timer"]
+            }, {
+                "id": "scaling", "title": "Scaling", "subCategories": ["Function", "Timer"]
             }]
         },
         "analytics": {
