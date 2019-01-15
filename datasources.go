@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"gopkg.in/couchbase/gocb.v1"
 	log "gopkg.in/inconshreveable/log15.v2"
 )
 
-var couchbaseBuckets = []string{"benchmarks", "clusters", "metrics"}
+var couchbaseBuckets = []string{"benchmarks", "clusters", "metrics", "impressive"}
 
 type dataStore struct {
 	cluster *gocb.Cluster
@@ -120,7 +121,8 @@ func (ds *dataStore) getMetrics(component, category string, subCategory string) 
 	query := gocb.NewN1qlQuery(
 		"SELECT m.id, m.title, m.component, m.category, m.orderBy, m.subCategory, c AS `cluster` " +
 			"FROM metrics m JOIN clusters c ON KEYS m.`cluster`" +
-			"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3;")
+			"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3 " +
+			"ORDER BY m.category;")
 	params := []interface{}{component, category, subCategory}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
@@ -162,6 +164,20 @@ type Benchmark struct {
 	Hidden    bool     `json:"hidden"`
 	Snapshots []string `json:"snapshots"`
 	Value     float64  `json:"value"`
+}
+
+type Test struct {
+	Category string  `json:"category"`
+	Title    string  `json:"title"`
+	Metric   string  `json:"metric"`
+	Active   bool    `json:"active"`
+	Windows  bool    `json:"windows"`
+	B1       string  `json:"b1"`
+	B2       string  `json:"b2"`
+	V1       float64 `json:"v1"`
+	V2       float64 `json:"v2"`
+	JobUrl1  string  `json:"jobUrl1"`
+	JobUrl2  string  `json:"jobUrl2"`
 }
 
 func (ds *dataStore) findExisting(benchmark Benchmark) ([]Benchmark, error) {
@@ -218,6 +234,112 @@ func (ds *dataStore) addBenchmark(benchmark Benchmark) error {
 		log.Error("failed to insert benchmark", "err", err)
 	}
 	return err
+}
+
+func getJobLink(metric string, build string) (string, error) {
+	var url string
+	var query *gocb.N1qlQuery
+	var params []interface{}
+
+	query = gocb.NewN1qlQuery(
+		"SELECT RAW url FROM jenkins WHERE " +
+			"SPLIT(SPLIT(test_config,'/')[-1], '.')[0] = $1 and version=$2")
+
+	params = []interface{}{metric, build}
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
+	if err != nil {
+		log.Error(err.Error())
+		return url, err
+	}
+	var row string
+	for rows.Next(&row) {
+		url = row
+	}
+
+	return url, err
+}
+
+func getClusterNames() *[]string {
+	clusterNames := []string{}
+	query := gocb.NewN1qlQuery("SELECT RAW meta().id from clusters")
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, nil)
+	if err != nil {
+		log.Error(err.Error())
+		return &clusterNames
+	}
+
+	var row string
+	for rows.Next(&row) {
+		clusterNames = append(clusterNames, row)
+	}
+	return &clusterNames
+}
+
+func cutoffClusterName(fullName string, clusterNames *[]string) string {
+	for _, v := range *clusterNames {
+		tokens := strings.Split(fullName, "_"+v)
+		if len(tokens) > 1 {
+			return tokens[0]
+		}
+	}
+	return fullName
+}
+
+func (ds *dataStore) getImpressiveTests(component string, build1 string, build2 string, active bool) (*[]Test, error) {
+	tests := []Test{}
+	var query *gocb.N1qlQuery
+	var params []interface{}
+	isActivePredicate := ""
+	if active {
+		isActivePredicate = "AND i.active = True "
+	}
+
+	query = gocb.NewN1qlQuery(
+		"SELECT i.category, i.title, i.active, i.windows, i.metric, " +
+			"ARRAY_AGG({b.`value`, b.`build`})[0].`build` as `b1`, " +
+			"ARRAY_AGG({b.`value`, b.`build`})[0].`value` as `v1`, " +
+			"ARRAY_AGG({b.`value`, b.`build`})[1].`build` as `b2`, " +
+			"ARRAY_AGG({b.`value`, b.`build`})[1].`value` as `v2` " +
+			"FROM impressive i LEFT JOIN benchmarks b ON i.metric = b.metric AND b.hidden = false AND b.`build` IN [$3, $4] " +
+			"WHERE i.type = $1 AND i.component = $2 " + isActivePredicate +
+			"GROUP BY i.category, i.title, i.active, i.windows, i.metric " +
+			"ORDER BY i.category")
+
+	params = []interface{}{"test", component, build1, build2}
+	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
+	if err != nil {
+		log.Error(err.Error())
+		return &tests, err
+	}
+	var row Test
+	for rows.Next(&row) {
+		if row.B1 == build2 || row.B2 == build1 {
+			tmpB := row.B1
+			tmpV := row.V1
+			row.B1 = row.B2
+			row.V1 = row.V2
+			row.B2 = tmpB
+			row.V2 = tmpV
+		}
+
+		tests = append(tests, row)
+		row = Test{}
+	}
+
+	clusterNames := getClusterNames()
+
+	for k, v := range tests {
+		if v.B2 == "" {
+			url, _ := getJobLink(cutoffClusterName(v.Metric, clusterNames), build2)
+			tests[k].JobUrl2 = url
+		}
+		if v.B1 == "" {
+			url, _ := getJobLink(cutoffClusterName(v.Metric, clusterNames), build1)
+			tests[k].JobUrl1 = url
+		}
+	}
+
+	return &tests, nil
 }
 
 func (ds *dataStore) getBenchmarks(component, category string, subCategory string) (*[]Benchmark, error) {
