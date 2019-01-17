@@ -168,7 +168,7 @@
             }, {
                 "id": "query", "title": "Query", "subCategories": ["xattr", "non-xattr"]
             }, {
-                "id": "replicate", "title": "Replicate", "sunCategories": ["Pull", "Push"]
+                "id": "replicate", "title": "Replicate", "subCategories": ["Pull", "Push"]
             }]
         }
     }
