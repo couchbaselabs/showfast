@@ -183,6 +183,8 @@
                 "id": "sync", "title": "Sync", "subCategories": ["xattr", "non-xattr"]
             }, {
                 "id": "query", "title": "Query", "subCategories": ["xattr", "non-xattr"]
+            }, {
+                "id": "replicate", "title": "Replicate", "subCategories": ["Pull", "Push"]
             }]
         }
     }
