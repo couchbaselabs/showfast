@@ -185,6 +185,8 @@
                 "id": "query", "title": "Query", "subCategories": ["xattr", "non-xattr"]
             }, {
                 "id": "replicate", "title": "Replicate", "subCategories": ["Pull", "Push"]
+            }, {
+                "id": "import", "title": "Import", "subCategories": ["Throughput", "Latency"]
             }]
         }
     }
