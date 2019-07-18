@@ -163,6 +163,8 @@
                 "id": "import", "title": "Import", "subCategories": []
             },{
                 "id": "export", "title": "Export", "subCategories": []
+            },{
+                "id": "hdd_pipeline", "title": "HDD Pipeline", "subCategories": ["ForestDB", "SQLite"]
             }]
         },
         "syncgateway": {
