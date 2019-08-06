@@ -141,6 +141,8 @@
                 "id": "end_user_non_dgm", "title": "EndUser (non-DGM)", "subCategories": ["Latency", "Throughput", "Index"]
             }, {
                 "id": "end_user_dgm", "title": "EndUser (DGM)", "subCategories": ["Latency", "Throughput", "Index"]
+            }, {
+                "id": "N1FTY", "title": "N1FTY", "subCategories": ["Throughput", "Latency"]
             }]
         },
         "eventing": {
