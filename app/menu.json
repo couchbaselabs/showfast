@@ -68,7 +68,7 @@
         "n1ql": {
             "title": "N1QL",
             "categories": [{
-                "id": "Q1_Q3", "title": "Q1-Q3", "subCategories": ["KV", "MOI", "Plasma", "ForestDB", "UDF"]
+                "id": "Q1_Q3", "title": "Q1-Q3", "subCategories": ["KV", "MOI", "Plasma", "ForestDB"]
             }, {
                 "id": "Q5_Q7", "title": "Q5-Q7", "subCategories": []
             }, {
@@ -99,6 +99,8 @@
                 "id": "ycsb", "title": "YCSB", "subCategories": ["MOI", "Plasma"]
             }, {
                 "id": "soe", "title": "SOE", "subCategories": []
+            }, {
+                "id": "UDF", "title": "UDF", "subCategories": ["Other", "MOI", "Plasma"]
             }]
         },
         "secondary": {
