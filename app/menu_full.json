@@ -168,7 +168,7 @@
             "categories": [{
                 "id": "backup", "title": "Backup", "subCategories": ["ForestDB", "SQLite", "Blackhole"]
             },{
-                "id": "restore", "title": "Restore", "subCategories": ["ForestDB", "SQLite"]
+                "id": "restore", "title": "Restore", "subCategories": ["ForestDB", "SQLite", "Blackhole"]
             },{
                 "id": "compact", "title": "Compact", "subCategories": ["ForestDB", "SQLite"]
             },{
