@@ -188,6 +188,16 @@
             }, {
                 "id": "import", "title": "Import", "subCategories": ["Throughput", "Latency"]
             }]
+        },
+        "sdk": {
+            "title": "SDK",
+            "categories": [{
+                "id": "java", "title": "Java", "subCategories": ["mad-hatter", "alice"]
+            }, {
+                "id": "libc", "title": "C", "subCategories": ["mad-hatter", "alice"]
+            }, {
+                "id": "python", "title": "Python", "subCategories": ["mad-hatter", "alice"]
+            }]
         }
     }
 }
