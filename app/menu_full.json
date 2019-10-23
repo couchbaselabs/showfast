@@ -26,7 +26,7 @@
             }, {
                 "id": "ycsb", "title": "YCSB", "subCategories": []
             }, {
-                "id": "durability", "title": "Durability", "subCategories": ["Latency", "Throughput"]
+                "id": "durability", "title": "Durability", "subCategories": ["Latency", "Throughput", "SLO"]
             }, {
                 "id": "ssl", "title": "SSL", "subCategories": ["TLS-Default"]
             }]
