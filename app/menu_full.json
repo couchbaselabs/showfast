@@ -8,6 +8,8 @@
             "categories": [{
                 "id": "max_ops", "title": "Throughput", "subCategories": []
             }, {
+                "id": "max_ops_ssl", "title": "Throughput-SSL", "subCategories": []
+            }, {
                 "id": "latency", "title": "Latency", "subCategories": []
             }, {
                 "id": "dgm", "title": "DGM", "subCategories": []
@@ -29,8 +31,6 @@
                 "id": "durability", "title": "Durability", "subCategories": ["Latency", "Throughput", "SLO"]
             }, {
                 "id": "transaction", "title": "Transaction", "subCategories": ["Throughput", "Latency"]
-            }, {
-                "id": "ssl", "title": "SSL", "subCategories": ["TLS-Default"]
             }]
         },
         "reb": {
