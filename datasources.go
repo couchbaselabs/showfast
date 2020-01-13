@@ -98,6 +98,7 @@ type Metric struct {
 	OrderBy     string `json:"orderBy"`
 	SubCategory string `json:"subCategory"`
 	Title       string `json:"title"`
+	Chirality   int    `json:"chirality"`
 }
 
 type MetricWithCluster struct {
