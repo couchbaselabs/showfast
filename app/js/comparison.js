@@ -11,8 +11,8 @@ function ComparisonCtrl($scope, $http) {
 
     $http.get('/api/v1/builds').success(function(builds) {
         $scope.builds = builds;
-        $scope.lhb = '4.6.3-4136';
-        $scope.rhb = '5.0.0-3519';
+        $scope.lhb = '6.0.0-1693';
+        $scope.rhb = '6.0.0-1697';
     });
 
     $scope.$watch('lhb', function() {
