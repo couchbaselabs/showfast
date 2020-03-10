@@ -160,13 +160,13 @@
         "tools": {
             "title": "Tools",
             "categories": [{
-                "id": "backup", "title": "Backup", "subCategories": ["SQLite", "Blackhole", "ForestDB"]
+                "id": "backup", "title": "Backup", "subCategories": ["Rift", "SQLite", "Blackhole", "ForestDB"]
             },{
-                "id": "restore", "title": "Restore", "subCategories": ["SQLite", "Blackhole", "ForestDB"]
+                "id": "restore", "title": "Restore", "subCategories": ["Rift", "SQLite", "Blackhole", "ForestDB"]
             },{
                 "id": "compact", "title": "Compact", "subCategories": ["SQLite", "ForestDB"]
             },{
-                "id": "merge", "title": "Merge", "subCategories": ["SQLite", "ForestDB"]
+                "id": "merge", "title": "Merge", "subCategories": ["Rift", "SQLite", "ForestDB"]
             },{
                 "id": "list", "title": "List", "subCategories": ["SQLite", "ForestDB"]
             },{
