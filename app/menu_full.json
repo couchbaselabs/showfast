@@ -176,7 +176,9 @@
             }, {
                 "id": "end_user_dgm", "title": "EndUser (DGM)", "subCategories": ["Latency", "Throughput", "Index"]
             }, {
-                "id": "N1FTY", "title": "N1FTY", "subCategories": ["Throughput", "Latency"]
+                "id": "N1FTY", "title": "N1FTY", "subCategories": [ "Latency","Throughput"]
+            },{
+                "id": "Geo", "title": "Geo Queries", "subCategories": [ "Latency","Throughput"]
             }]
         },
         "eventing": {

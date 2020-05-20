@@ -162,7 +162,9 @@
             }, {
                 "id": "benchmark_kv", "title": "Benchmark (KV)", "subCategories": ["Latency", "Throughput"]
             }, {
-                "id": "N1FTY", "title": "N1FTY", "subCategories": ["Throughput", "Latency"]
+                "id": "N1FTY", "title": "N1FTY", "subCategories": ["Latency","Throughput"]
+            },{
+                "id": "Geo", "title": "Geo Queries", "subCategories": ["Latency", "Throughput"]
             }]
         },
         "eventing": {
