@@ -235,6 +235,8 @@
                 "id": "replicate", "title": "Replicate", "subCategories": ["Pull", "Push"]
             }, {
                 "id": "import", "title": "Import", "subCategories": ["Throughput", "Latency"]
+            }, {
+                "id": "sgreplicate", "title": "SGReplicate", "subCategories": ["Pull", "Push"]
             }]
         },
         "sdk": {
