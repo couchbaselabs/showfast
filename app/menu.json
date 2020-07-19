@@ -24,7 +24,7 @@
             }, {
                 "id": "cache", "title": "Cache", "subCategories": []
             }, {
-                "id": "ycsb", "title": "YCSB", "subCategories": []
+                "id": "ycsb", "title": "YCSB", "subCategories": ["ycsb3", "ycsb2"]
             }, {
                 "id": "durability", "title": "Durability", "subCategories": ["Latency", "Throughput", "SLO"]
             }, {
