@@ -56,6 +56,8 @@
             }, {
                 "id": "tools", "title": "Tools", "subCategories": ["Backup"]
             }, {
+                "id": "compress", "title": "Compression", "subCategories": []
+            }, {
                 "id": "single", "title": "Single Node", "subCategories": []
             }, {
                 "id": "ingestion", "title": "Ingestion", "subCategories": []
