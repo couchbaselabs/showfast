@@ -200,7 +200,7 @@
             "categories": [{
                 "id": "sync", "title": "Sync", "subCategories": ["Initial", "Incremental"]
             }, {
-                "id": "latency", "title": "Latency", "subCategories": ["With Index", "Without Index"]
+                "id": "latency", "title": "Latency", "subCategories": ["With Index", "Without Index", "Window Functions"]
             }, {
                 "id": "rebalance", "title": "Rebalance", "subCategories": []
             }]
