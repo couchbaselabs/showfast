@@ -58,6 +58,8 @@
             }, {
                 "id": "compress", "title": "Compression", "subCategories": []
             }, {
+                "id": "S0", "title": "S0", "subCategories": []
+            }, {
                 "id": "single", "title": "Single Node", "subCategories": []
             }, {
                 "id": "ingestion", "title": "Ingestion", "subCategories": []
