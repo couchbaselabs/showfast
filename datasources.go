@@ -40,9 +40,14 @@ func (ds *dataStore) auth() {
 		os.Exit(1)
 	}
 
+	ds.cluster.Authenticate(gocb.PasswordAuthenticator{
+     Username: "Administrator",
+     Password: password,
+     })
+
 	authMap := gocb.BucketAuthenticatorMap{}
 	for _, bucketName := range couchbaseBuckets {
-		bucket, err := ds.cluster.OpenBucket(bucketName, password)
+		bucket, err := ds.cluster.OpenBucket(bucketName, "")
 		if err != nil {
 			log.Error("failed to open bucket", "err", err)
 			os.Exit(1)
@@ -51,15 +56,15 @@ func (ds *dataStore) auth() {
 		authMap[bucketName] = gocb.BucketAuthenticator{Password: password}
 	}
 
-	auth := gocb.ClusterAuthenticator{
-		Username: "Administrator",
-		Password: password,
-		Buckets:  authMap,
-	}
-	if err := ds.cluster.Authenticate(auth); err != nil {
-		log.Error("authentication failed", "err", err)
-		os.Exit(1)
-	}
+	// auth := gocb.ClusterAuthenticator{
+		// Username: "Administrator",
+		// Password: password,
+		// Buckets:  authMap,
+	// }
+	// if err := ds.cluster.Authenticate(auth); err != nil {
+		// log.Error("authentication failed", "err", err)
+		// os.Exit(1)
+	// }
 }
 
 func (ds *dataStore) getBucket(bucketName string) *gocb.Bucket {
