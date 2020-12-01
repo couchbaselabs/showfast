@@ -54,9 +54,20 @@
             </div>
         </div>
     </div>
+    <div class="btn-group" data-toggle="buttons">
+        <label
+            ng-repeat="choice in bucket_collection"
+            ng-class="{active: choice == testType}"
+            ng-click="setTestType(choice)"
+            class="btn btn-info">
+            <input type="radio">{{choice}}
+        </label>
+    </div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS | filter:bySubCategory | orderBy:'orderBy' ">
+
+
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS  | filter:bySubCategory | filter:byTestType | orderBy:'orderBy' ">
     <hr/>
     <h4>
         <span id="{{metric.id}}">

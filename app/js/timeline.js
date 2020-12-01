@@ -34,6 +34,7 @@ function MenuRouter($scope, $http, $routeParams, $location) {
     $scope.activeComponent = $routeParams.component;
     $scope.activeCategory = $routeParams.category;
     $scope.activeSubCategory = $routeParams.subCategory;
+    $scope.testType = "All";
 
     var url = '/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory;
     $http.get(url).success(function(metrics) {
@@ -49,6 +50,10 @@ function MenuRouter($scope, $http, $routeParams, $location) {
     $scope.setActiveOS = function(os) {
         var url = "/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory;
         $location.path(url);
+    };
+
+    $scope.setTestType = function(testType) {
+        $scope.testType = testType;
     };
 
     $scope.setActiveComponent = function(component) {
@@ -90,6 +95,7 @@ function DefineMenu($scope, $http) {
     $http.get('/static/menu.json').success(function(menu) {
         $scope.components = menu.components;
         $scope.oses = menu.oses;
+        $scope.bucket_collection = menu.bucket_collection;
     });
 }
 
@@ -101,6 +107,18 @@ function DefineFilters($scope) {
             case "Windows":
                 return metric.cluster.os.indexOf("Windows") === 0;
         }
+    };
+    $scope.byTestType = function(metric) {
+        
+        switch($scope.testType){
+            case "Collection":
+                return (metric.title.indexOf("c=") != -1 || metric.title.indexOf("collection") != -1 || (metric.title.indexOf("Collection") != -1));
+            case "Bucket":
+                return metric.title.indexOf("c=") === -1 && metric.title.indexOf("collection") === -1 && metric.title.indexOf("Collection") === -1;
+            case "All":
+                return true;
+        }
+        
     };
 }
 

@@ -2,6 +2,9 @@
     "oses": [
         "Linux", "Windows"
     ],
+    "bucket_collection":[
+        "All","Bucket", "Collection"
+    ],
     "components": {
         "kv": {
             "title": "KV",
