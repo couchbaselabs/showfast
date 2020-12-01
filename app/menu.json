@@ -161,6 +161,8 @@
             "title": "Search",
             "categories": [{
                 "id": "1M", "title": "1M", "subCategories": ["Latency", "Throughput", "Index"]
+            },{
+                "id": "Rebalance", "title": "Rebalance", "subCategories": ["default"]
             }, {
                 "id": "benchmark", "title": "Benchmark", "subCategories": ["Latency", "Throughput", "Index", "Rebalance"]
             }, {
