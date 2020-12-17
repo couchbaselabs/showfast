@@ -65,9 +65,7 @@
             }, {
                 "id": "single", "title": "Single Node", "subCategories": []
             }, {
-                "id": "ingestion", "title": "Ingestion", "subCategories": []
-            }, {
-                "id": "steady", "title": "Steady", "subCategories": []
+                "id": "benchmark", "title": "Benchmark", "subCategories": []
             }]
         },
         "reb": {
