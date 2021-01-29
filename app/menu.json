@@ -196,6 +196,8 @@
                 "id": "latency", "title": "Latency", "subCategories": ["With Index", "Without Index", "Window Functions"]
             }, {
                 "id": "rebalance", "title": "Rebalance", "subCategories": []
+            }, {
+                "id": "drop", "title": "Drop", "subCategories": []
             }]
         },
         "tools": {
