@@ -198,6 +198,8 @@
                 "id": "rebalance", "title": "Rebalance", "subCategories": []
             }, {
                 "id": "drop", "title": "Drop", "subCategories": []
+            }, {
+                "id": "connect", "title": "Connect", "subCategories": []
             }]
         },
         "tools": {
