@@ -138,6 +138,8 @@
                 "id": "ycsb", "title": "YCSB", "subCategories": ["MOI", "Plasma"]
             }, {
                 "id": "soe", "title": "SOE", "subCategories": []
+            }, {
+                "id": "pytpcc", "title": "PYTPCC", "subCategories": ["MOI", "Plasma"]
             }]
         },
         "secondary": {
