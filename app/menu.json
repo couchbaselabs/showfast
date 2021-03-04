@@ -143,7 +143,7 @@
             }, {
                 "id": "UDF", "title": "UDF", "subCategories": ["Other", "MOI", "Plasma"]
             },{
-                "id": "pytpcc", "title": "PYTPCC", "subCategories": ["MOI", "Plasma"]
+                "id": "pytpcc", "title": "PYTPCC", "subCategories": ["Plasma", "MOI"]
             }]
         },
         "secondary": {
