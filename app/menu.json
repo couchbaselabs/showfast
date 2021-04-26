@@ -254,6 +254,16 @@
             }, {
                 "id": "python", "title": "Python", "subCategories": ["mad-hatter", "alice"]
             }]
+        },
+        "cloud": {
+            "title": "Cloud",
+            "categories": [{
+                "id": "backup", "title": "Backup", "subCategories": []
+            }, {
+                "id": "autoscaling", "title": "Autoscaling", "subCategories": []
+            }, {
+                "id": "ycsb", "title": "YCSB", "subCategories": []
+            }]
         }
     }
 }
