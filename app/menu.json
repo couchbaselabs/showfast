@@ -263,6 +263,8 @@
                 "id": "autoscaling", "title": "Autoscaling", "subCategories": []
             }, {
                 "id": "ycsb", "title": "YCSB", "subCategories": []
+            }, {
+                "id": "lowend", "title": "Low-End", "subCategories": ["kv", "n1ql", "fts", "mixed"]
             }]
         }
     }
