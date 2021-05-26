@@ -155,7 +155,9 @@
             }, {
                 "id": "recovery", "title": "Recovery", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }, {
-                "id": "rebalance", "title": "Rebalance", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+                "id": "rebalance", "title": "Rebalance", "subCategories": ["MOI", "Plasma", "PlasmaDGM"],
+            }, {
+                "id": "ddl", "title": "DDL", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }]
         },
         "fts": {
