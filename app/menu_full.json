@@ -155,7 +155,7 @@
             }, {
                 "id": "recovery", "title": "Recovery", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }, {
-                "id": "rebalance", "title": "Rebalance", "subCategories": ["MOI", "Plasma", "PlasmaDGM"],
+                "id": "rebalance", "title": "Rebalance", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }, {
                 "id": "ddl", "title": "DDL", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }]
@@ -179,7 +179,7 @@
             "categories": [{
                 "id": "1M", "title": "1M", "subCategories": ["Latency", "Throughput", "Index"]
             }, {
-                "id": "Rebalance", "title": "Rebalance", "subCategories": ["default"]
+                "id": "Rebalance", "title": "Rebalance", "subCategories": ["In","Out","Swap"]
             },{
                 "id": "benchmark", "title": "Benchmark", "subCategories": ["Latency", "Throughput", "Index", "Rebalance"]
             }, {
