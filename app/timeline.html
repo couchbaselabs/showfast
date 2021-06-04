@@ -77,8 +77,9 @@
     <span class="text-muted"><strong>Cluster: </strong>{{metric.cluster.name}}</span>
     <span class="text-muted"><strong>OS: </strong>{{metric.cluster.os}}</span>
     <span class="text-muted"><strong>CPU: </strong>{{metric.cluster.cpu}}</span>
-    <span class="text-muted"><strong>Memory: </strong>{{metric.cluster.memory}}</span>
+    <span class="text-muted"><strong>Total Memory: </strong>{{metric.cluster.memory}}</span>
     <span class="text-muted"><strong>Disk: </strong>{{metric.cluster.disk}}</span>
+    <span class="text-muted" ng-show="metric.memquota" ><strong>Memory Quota: </strong>{{metric.memquota}} MB</span>
     <div class="column-chart">
         <nvd3-discrete-bar-chart
             data="metric.chartData"

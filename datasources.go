@@ -104,6 +104,7 @@ type Metric struct {
 	SubCategory string `json:"subCategory"`
 	Title       string `json:"title"`
 	Chirality   int    `json:"chirality"`
+	MemQuota    int64  `json:"memquota"`
 }
 
 type MetricWithCluster struct {
@@ -121,11 +122,11 @@ func (ds *dataStore) addMetric(metric Metric) error {
 	return err
 }
 
-func (ds *dataStore) getMetrics(component, category string, subCategory string) (*[]MetricWithCluster, error) {
-	var metrics []MetricWithCluster
+func (ds *dataStore) getMetrics(component, category string, subCategory string) (*[]interface{}, error) {
+	var metrics []interface{}
 
 	query := gocb.NewN1qlQuery(
-		"SELECT m.id, m.title, m.component, m.category, m.orderBy, m.subCategory, c AS `cluster` " +
+		"SELECT m.id, m.title, m.component, m.category, m.orderBy, m.subCategory,  m.memquota, c AS `cluster` " +
 			"FROM metrics m JOIN clusters c ON KEYS m.`cluster`" +
 			"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3 " +
 			"ORDER BY m.category;")
@@ -136,7 +137,7 @@ func (ds *dataStore) getMetrics(component, category string, subCategory string) 
 		return &metrics, err
 	}
 
-	var row MetricWithCluster
+	var row interface{}
 	for rows.Next(&row) {
 		metrics = append(metrics, row)
 	}
