@@ -49,9 +49,9 @@
             }, {
                 "id": "dcp", "title": "DCP", "subCategories": []
             }, {
-                "id": "ycsb", "title": "YCSB", "subCategories": []
+                "id": "ycsb", "title": "YCSB", "subCategories": ["Throughput", "Latency"]
             }, {
-                "id": "durability", "title": "Durability", "subCategories": ["Latency", "Throughput", "SLO"]
+                "id": "durability", "title": "Durability", "subCategories": ["Latency", "Throughput"]
             }, {
                 "id": "transaction", "title": "Transaction", "subCategories": ["Throughput", "Latency"]
             }, {
