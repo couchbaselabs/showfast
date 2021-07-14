@@ -245,6 +245,8 @@
             }, {
                 "id": "sgreplicate", "title": "SGReplicate", "subCategories": ["Pull", "Push",
                     "Bidirectional", "Multi-cluster"]
+            }, {
+                "id": "e2e", "title": "E2E", "subCategories": ["Push", "Pull", "Bidirectional"]
             }]
         },
         "sdk": {
