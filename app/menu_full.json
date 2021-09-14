@@ -59,6 +59,10 @@
             }, {
                 "id": "tools", "title": "Tools", "subCategories": ["Backup"]
             }, {
+                "id": "gsi", "title": "GSI", "subCategories": []
+            }, {
+                "id": "n1ql", "title": "N1QL", "subCategories": []
+            }, {
                 "id": "compress", "title": "Compression", "subCategories": []
             }, {
                 "id": "S0", "title": "S0", "subCategories": []
