@@ -210,6 +210,8 @@
                 "id": "drop", "title": "Drop", "subCategories": []
             }, {
                 "id": "connect", "title": "Connect", "subCategories": []
+            }, {
+                "id": "ch2", "title": "CH2", "subCategories": []
             }]
         },
         "tools": {
