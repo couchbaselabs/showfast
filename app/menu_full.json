@@ -270,11 +270,11 @@
         "sdk": {
             "title": "SDK",
             "categories": [{
-                "id": "java", "title": "Java", "subCategories": ["mad-hatter", "alice"]
+                "id": "java", "title": "Java", "subCategories": ["cheshire-cat", "mad-hatter", "alice"]
             }, {
-                "id": "libc", "title": "C", "subCategories": ["mad-hatter", "alice"]
+                "id": "libc", "title": "C", "subCategories": ["cheshire-cat", "mad-hatter", "alice"]
             }, {
-                "id": "python", "title": "Python", "subCategories": ["mad-hatter", "alice"]
+                "id": "python", "title": "Python", "subCategories": ["cheshire-cat", "mad-hatter", "alice"]
             }]
         },
         "cloud": {
