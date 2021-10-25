@@ -280,6 +280,20 @@
         "cloud": {
             "title": "Cloud",
             "categories": [{
+                "id": "kv", "title": "KV", "subCategories": []
+            }, {
+                "id": "n1ql", "title": "N1QL", "subCategories": []
+            }, {
+                "id": "gsi", "title": "GSI", "subCategories": []
+            }, {
+                "id": "eventing", "title": "Eventing", "subCategories": []
+            }, {
+                "id": "analytics", "title": "Analytics", "subCategories": []
+            }, {
+                "id": "tools", "title": "Tools", "subCategories": []
+            }, {
+                "id": "xdcr", "title": "XDCR", "subCategories": []
+            }, {
                 "id": "backup", "title": "Backup", "subCategories": []
             }, {
                 "id": "autoscaling", "title": "Autoscaling", "subCategories": []
@@ -289,6 +303,5 @@
                 "id": "lowend", "title": "Low-End", "subCategories": ["kv", "n1ql", "fts", "reb", "mixed", "idle"]
             }]
         }
-
     }
 }
