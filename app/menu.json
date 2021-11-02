@@ -15,6 +15,8 @@
             }, {
                 "id": "latency", "title": "Latency", "subCategories": []
             }, {
+                "id": "latency_ssl", "title": "Latency-SSL", "subCategories": []
+            }, {
                 "id": "dgm", "title": "DGM", "subCategories": []
             }, {
                 "id": "warmup", "title": "Warmup", "subCategories": []
