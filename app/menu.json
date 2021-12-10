@@ -155,11 +155,11 @@
         "secondary": {
             "title": "GSI",
             "categories": [{
-                "id": "lat", "title": "Latency", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
+                "id": "lat", "title": "Latency", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB", "Compression"]
             }, {
-                "id": "thr", "title": "Throughput", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
+                "id": "thr", "title": "Throughput", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB", "Compression"]
             }, {
-                "id": "initial", "title": "Initial", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
+                "id": "initial", "title": "Initial", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB", "Compression"]
             }, {
                 "id": "incremental", "title": "Incremental", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "ForestDB"]
             }, {
