@@ -168,8 +168,6 @@
                 "id": "rebalance", "title": "Rebalance", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }, {
                 "id": "ddl", "title": "DDL", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
-            }, {
-                "id": "comp", "title": "Compression", "subCategories": ["PlasmaDGM"]
             }]
         },
         "jts": {
