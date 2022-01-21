@@ -41,9 +41,9 @@ func (ds *dataStore) auth() {
 	}
 
 	ds.cluster.Authenticate(gocb.PasswordAuthenticator{
-     Username: "Administrator",
-     Password: password,
-     })
+		Username: "Administrator",
+		Password: password,
+	})
 
 	authMap := gocb.BucketAuthenticatorMap{}
 	for _, bucketName := range couchbaseBuckets {
@@ -57,13 +57,13 @@ func (ds *dataStore) auth() {
 	}
 
 	// auth := gocb.ClusterAuthenticator{
-		// Username: "Administrator",
-		// Password: password,
-		// Buckets:  authMap,
+	// Username: "Administrator",
+	// Password: password,
+	// Buckets:  authMap,
 	// }
 	// if err := ds.cluster.Authenticate(auth); err != nil {
-		// log.Error("authentication failed", "err", err)
-		// os.Exit(1)
+	// log.Error("authentication failed", "err", err)
+	// os.Exit(1)
 	// }
 }
 
@@ -402,6 +402,16 @@ func (ds *dataStore) getTimeline(metric string) (*[][]interface{}, error) {
 			"FROM benchmarks " +
 			"WHERE metric = $1 AND hidden = false " +
 			"ORDER BY SPLIT(`build`, '-')[0], TONUMBER(SPLIT(`build`, '-')[1]);")
+
+	//this is a heck to show average of gsi rebalance tests for smart batching
+	if strings.Contains(metric, "aether_5indexes") {
+		query = gocb.NewN1qlQuery(
+			"SELECT `build`, ROUND(AVG(`value`),3) as `value` " +
+				"FROM benchmarks " +
+				"WHERE metric = $1 " +
+				"Group by `build`" +
+				"ORDER BY SPLIT(`build`, '-')[0], TONUMBER(SPLIT(`build`, '-')[1]);")
+	}
 	params := []interface{}{metric}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
