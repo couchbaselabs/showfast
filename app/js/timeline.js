@@ -3,12 +3,46 @@ angular
     .config([
         '$routeProvider', function($routeProvider) {
             $routeProvider.
-                when('/timeline/:os/:component/:category/:subCategory', {templateUrl: '/static/timeline.html', controller: MenuRouter}).
+                when('/timeline/:os/:component/:category/:subCategory', {templateUrl: '/static/timeline.html', controller: MenuRouter, reloadOnSearch: false}).
                 when('/runs/:metric/:build', {templateUrl: '/static/runs.html', controller: RunList}).
                 otherwise({redirectTo: 'timeline/Linux/kv/max_ops/all'});
         }
     ])
-    .controller('MainDashboard', MainDashboard);
+    .controller('MainDashboard', MainDashboard)
+    .directive('ngAnchor', function anchorDirective($location, $anchorScroll) {
+        // Based on Ben Nadel's blog post:
+        // https://www.bennadel.com/blog/2869-using-anchor-tags-and-url-fragment-links-in-angularjs.htm
+
+        return ({
+            link: link,
+            restrict: "A"
+        });
+
+        function link(scope, element, attributes) {
+            attributes.$observe("ngAnchor", configureHref);
+            scope.$on("$locationChangeSuccess", configureHref);
+
+            function configureHref() {
+                var fragment = (attributes.ngAnchor || "");
+
+                if (fragment.charAt(0) === "#") {
+                    fragment = fragment.slice(1);
+                }
+
+                var routeValue = ("#" + $location.url().split("#").shift());
+                var fragmentValue = ("#" + fragment);
+
+                attributes.$set("href", (routeValue + fragmentValue));
+
+                if ($location.hash() === fragment) {
+                    element.addClass("active-anchor");
+                    $anchorScroll();
+                } else {
+                    element.removeClass("active-anchor");
+                }
+            }
+        }
+    });
 
 function MainDashboard($scope, $http, $routeParams) {
     DefineMenu($scope, $http);
@@ -49,7 +83,7 @@ function MenuRouter($scope, $http, $routeParams, $location) {
 
     $scope.setActiveOS = function(os) {
         var url = "/timeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory;
-        $location.path(url);
+        $location.url(url);
     };
 
     $scope.setTestType = function(testType) {
@@ -64,14 +98,14 @@ function MenuRouter($scope, $http, $routeParams, $location) {
             $scope.activeSubCategory = "all";
         }
         var url = "/timeline/" + $scope.activeOS + "/" + component + "/" + category.id + "/" + $scope.activeSubCategory;
-        $location.path(url);
+        $location.url(url);
     };
 
     $scope.setActiveCategory = function(category) {
         var categories = $scope.components[$scope.activeComponent].categories;
         for (var i in categories) {
             if (category === categories[i].id) {
-                if ( categories[i].subCategories.length > 0 ) {
+                if (categories[i].subCategories.length > 0) {
                     $scope.activeSubCategory = categories[i].subCategories[0];
                 } else {
                     $scope.activeSubCategory = "all";
@@ -80,12 +114,12 @@ function MenuRouter($scope, $http, $routeParams, $location) {
             }
         }
         var url = "/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category + "/" + $scope.activeSubCategory;
-        $location.path(url);
+        $location.url(url);
     };
 
     $scope.setActiveSubCategory = function(subCategory) {
         var url = "/timeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + $scope.activeCategory + "/" + subCategory;
-        $location.path(url);
+        $location.url(url);
     };
 
     DefineFilters($scope);
@@ -109,8 +143,7 @@ function DefineFilters($scope) {
         }
     };
     $scope.byTestType = function(metric) {
-        
-        switch($scope.testType){
+        switch($scope.testType) {
             case "Collection":
                 return (metric.title.indexOf("c=") != -1 || metric.title.indexOf("collection") != -1 || (metric.title.indexOf("Collection") != -1));
             case "Bucket":
@@ -118,7 +151,6 @@ function DefineFilters($scope) {
             case "All":
                 return true;
         }
-        
     };
 }
 

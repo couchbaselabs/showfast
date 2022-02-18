@@ -65,12 +65,11 @@
     </div>
 </div>
 
-
-
 <div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS  | filter:bySubCategory | filter:byTestType | orderBy:'orderBy' ">
     <hr/>
-    <h4>
+    <h4 class="metric-title">
         <span id="{{metric.id}}">
+            <a class="anchor-link" ng-anchor="#{{metric.id}}">¶</a>
             <strong>{{metric.title}}</strong>
         </span>
     </h4>

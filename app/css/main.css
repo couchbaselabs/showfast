@@ -66,3 +66,27 @@ hr {
     font-size: 93%;
     margin-bottom: -20px;
 }
+
+.metric-title:hover .anchor-link {
+    color: #333;
+}
+
+.anchor-link {
+    cursor: pointer;
+    display: inline-block;
+    width: 10px;
+    margin-left: -15px;
+    color: transparent;
+    text-decoration: none;
+}
+
+.anchor-link:link,
+.anchor-link:hover,
+.anchor-link:active,
+.anchor-link:visited {
+    text-decoration: none;
+}
+
+.active-anchor {
+    color: #333 !important;
+}
