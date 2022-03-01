@@ -286,6 +286,8 @@
             }, {
                 "id": "backup", "title": "Backup", "subCategories": []
             }, {
+                "id": "search", "title": "Search", "subCategories": []
+            }, {
                 "id": "autoscaling", "title": "Autoscaling", "subCategories": []
             }, {
                 "id": "ycsb", "title": "YCSB", "subCategories": []
