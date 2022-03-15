@@ -257,6 +257,20 @@
                 "id": "e2e", "title": "E2E", "subCategories": ["Push", "Pull", "Bidirectional"]
             }]
         },
+        "lite": {
+            "title": "Couchbase Lite",
+            "categories": [{
+                "id": "core", "title": "Core", "subCategories": ["macOS", "Windows", "Linux"]
+            }, {
+                "id": "java", "title": "Java", "subCategories": ["Android", "macOS", "Windows", "Linux"]
+            }, {
+                "id": "csharp", "title": "C# ", "subCategories": ["Android", "iOS", "macOS", "Windows", "Linux"]
+            }, {
+                "id": "c", "title": "C", "subCategories": ["Android", "iOS","macOS", "Windows", "Linux", "Embedded Linux"]
+            }, {
+                "id": "swift", "title": "Swift", "subCategories": ["iOS","macOS"]
+            }]
+        },
         "sdk": {
             "title": "SDK",
             "categories": [{
