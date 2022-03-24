@@ -279,6 +279,8 @@
                 "id": "libc", "title": "C", "subCategories": ["neo", "cheshire-cat", "mad-hatter", "alice"]
             }, {
                 "id": "python", "title": "Python", "subCategories": ["neo", "cheshire-cat", "mad-hatter", "alice"]
+            }, {
+                "id": "tableau", "title": "Tableau Connector", "subCategories": ["Control", "Couchbase", "CData"]
             }]
         },
         "cloud": {
