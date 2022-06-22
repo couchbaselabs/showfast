@@ -298,25 +298,25 @@
         "cloud": {
             "title": "Cloud",
             "categories": [{
-                "id": "kv", "title": "KV", "subCategories": []
+                "id": "kv", "title": "KV", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "n1ql", "title": "N1QL", "subCategories": []
+                "id": "n1ql", "title": "N1QL", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "gsi", "title": "GSI", "subCategories": []
+                "id": "gsi", "title": "GSI", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "eventing", "title": "Eventing", "subCategories": []
+                "id": "eventing", "title": "Eventing", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "analytics", "title": "Analytics", "subCategories": []
+                "id": "analytics", "title": "Analytics", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "tools", "title": "Tools", "subCategories": []
+                "id": "tools", "title": "Tools", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "xdcr", "title": "XDCR", "subCategories": []
+                "id": "xdcr", "title": "XDCR", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "backup", "title": "Backup", "subCategories": []
+                "id": "backup", "title": "Backup", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "search", "title": "Search", "subCategories": []
+                "id": "search", "title": "Search", "subCategories": ["AWS", "GCP"]
             }, {
-                "id": "autoscaling", "title": "Autoscaling", "subCategories": []
+                "id": "autoscaling", "title": "Autoscaling", "subCategories": ["AWS", "GCP"]
             }, {
                 "id": "ycsb", "title": "YCSB", "subCategories": []
             }, {
