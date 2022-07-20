@@ -63,6 +63,8 @@
             }, {
                 "id": "gsi", "title": "GSI", "subCategories": []
             }, {
+                "id": "search", "title": "Search", "subCategories": ["Latency","Throughput"]
+            }, {
                 "id": "n1ql", "title": "N1QL", "subCategories": []
             }, {
                 "id": "compress", "title": "Compression", "subCategories": []
