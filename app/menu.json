@@ -216,6 +216,8 @@
                 "id": "connect", "title": "Connect", "subCategories": []
             }, {
                 "id": "ch2", "title": "CH2", "subCategories": []
+            }, {
+                "id": "ch3", "title": "CH3", "subCategories": []
             }]
         },
         "tools": {
