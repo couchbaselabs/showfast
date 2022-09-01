@@ -3,7 +3,7 @@ showfast
 ========
 [![Go Report Card](https://goreportcard.com/badge/github.com/couchbaselabs/showfast)](https://goreportcard.com/report/github.com/couchbaselabs/showfast)
 [![codebeat badge](https://codebeat.co/badges/1fc2a490-a39e-49be-b218-2b9289da5ae7)](https://codebeat.co/projects/github-com-couchbaselabs-showfast)
-[![Docker image](https://images.microbadger.com/badges/image/perflab/showfast.svg)](http://microbadger.com/images/perflab/showfast)
+[![Docker Hub package](https://img.shields.io/badge/Docker-Docker%20Image-blue)](https://hub.docker.com/r/perflab/showfast/tags)
 
 Couchbase Server performance dashboard.
 
