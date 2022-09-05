@@ -326,7 +326,7 @@
             }, {
                 "id": "lowend", "title": "Low-End", "subCategories": ["kv", "n1ql", "fts", "reb", "mixed", "idle"]
             },{
-                "id": "elixir", "title": "Elixir", "subCategories": ["kv", "n1ql", "gsi", "fts", "mobile"]
+                "id": "elixir", "title": "Elixir", "subCategories": ["KV", "N1QL", "GSI", "FTS", "Mobile"]
             }]
         }
     }
