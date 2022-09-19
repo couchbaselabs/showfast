@@ -175,19 +175,19 @@
         "secondarycloud": {
             "title": "GSI Cloud",
             "categories": [{
-                "id": "lat", "title": "Latency", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "Compression"]
+                "id": "lat", "title": "Latency", "subCategories": ["PlasmaDGM", "Plasma"]
             }, {
-                "id": "thr", "title": "Throughput", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "Compression"]
+                "id": "thr", "title": "Throughput", "subCategories": ["PlasmaDGM", "Plasma"]
             }, {
-                "id": "initial", "title": "Initial", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "Compression"]
+                "id": "initial", "title": "Initial", "subCategories": ["PlasmaDGM", "Plasma"]
             }, {
-                "id": "incremental", "title": "Incremental", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+                "id": "incremental", "title": "Incremental", "subCategories": ["PlasmaDGM", "Plasma"]
             }, {
-                "id": "recovery", "title": "Recovery", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+                "id": "recovery", "title": "Recovery", "subCategories": ["PlasmaDGM", "Plasma"]
             }, {
-                "id": "rebalance", "title": "Rebalance", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+                "id": "rebalance", "title": "Rebalance", "subCategories": ["PlasmaDGM", "Plasma"]
             }, {
-                "id": "ddl", "title": "DDL", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+                "id": "ddl", "title": "DDL", "subCategories": ["PlasmaDGM", "Plasma"]
             }]
         },
         "jts": {
