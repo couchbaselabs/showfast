@@ -172,6 +172,24 @@
                 "id": "ddl", "title": "DDL", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }]
         },
+        "secondarycloud": {
+            "title": "GSI Cloud",
+            "categories": [{
+                "id": "lat", "title": "Latency", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "Compression"]
+            }, {
+                "id": "thr", "title": "Throughput", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "Compression"]
+            }, {
+                "id": "initial", "title": "Initial", "subCategories": ["MOI", "Plasma", "PlasmaDGM", "Compression"]
+            }, {
+                "id": "incremental", "title": "Incremental", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+            }, {
+                "id": "recovery", "title": "Recovery", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+            }, {
+                "id": "rebalance", "title": "Rebalance", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+            }, {
+                "id": "ddl", "title": "DDL", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+            }]
+        },
         "jts": {
             "title": "Search",
             "categories": [{
