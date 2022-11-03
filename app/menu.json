@@ -208,6 +208,8 @@
                 "id": "Geo", "title": "Geo Queries", "subCategories": ["Latency", "Throughput"]
             },{
                 "id": "Flex", "title": "Flex", "subCategories": ["Latency", "Throughput"]
+            },{
+                "id": "elixir", "title": "Elixir", "subCategories": ["Latency", "Throughput", "Index"]
             }]
         },
         "eventing": {
