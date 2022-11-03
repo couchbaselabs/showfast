@@ -209,7 +209,7 @@
             },{
                 "id": "Flex", "title": "Flex", "subCategories": ["Latency", "Throughput"]
             },{
-                "id": "elixir", "title": "Elixir", "subCategories": ["Latency", "Throughput", "Index"]
+                "id": "capella", "title": "Capella", "subCategories": ["Latency", "Throughput", "Index"]
             }]
         },
         "eventing": {
