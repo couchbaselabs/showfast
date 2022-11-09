@@ -98,12 +98,12 @@
                         <td class="{{ GetRowStyle(test.active, test.windows) }}">{{test.category}}</td>
                         <td class="{{ GetRowStyle(test.active, test.windows) }}">{{test.title}} <br/> <font color="#ABB2B9">{{test.metric}}</font> </td>
                         
-                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b1 != ''">{{test.v1}}</td>
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b1 != ''"><a target="_blank" href="/#/runs/{{ test.metric }}/{{ test.b1 }}">{{test.v1}}</a></td>
                         <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b1 == '' && (test.jobUrl1 == '' || test.windows)"><font color="red"><strong>NONE</strong></font></td>
                         <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b1 == '' && test.jobUrl1 != '' && !test.windows">
                                 <a href="{{ test.jobUrl1 }}"> <font color="red"><strong>Failed </strong></font></td></a>     
                         
-                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b2 != ''">{{test.v2}}</td>
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b2 != ''"><a target="_blank" href="/#/runs/{{ test.metric }}/{{ test.b2 }}">{{test.v2}}</a></td>
                         <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b2 == '' && (test.jobUrl2 == '' || test.windows)"><font color="red"><strong>NONE</strong></font></td>
                         <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b2 == '' && test.jobUrl2 != '' && !test.windows ">
                                 <a href="{{ test.jobUrl2 }}"> <font color="red"><strong>Failed </strong></font></td></a>      

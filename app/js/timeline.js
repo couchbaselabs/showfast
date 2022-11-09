@@ -5,6 +5,7 @@ angular
             $routeProvider.
                 when('/timeline/:os/:component/:category/:subCategory', {templateUrl: '/static/timeline.html', controller: MenuRouter, reloadOnSearch: false}).
                 when('/runs/:metric/:build', {templateUrl: '/static/runs.html', controller: RunList}).
+                when('/cloudTimeline/:os/:component/:category/:subCategory', {templateUrl: '/static/timeline.html', controller: CloudMenuRouter, reloadOnSearch: false}).
                 otherwise({redirectTo: 'timeline/Linux/kv/max_ops/all'});
         }
     ])
@@ -122,6 +123,73 @@ function MenuRouter($scope, $http, $routeParams, $location) {
         $location.url(url);
     };
 
+    DefineFilters($scope);
+}
+
+function CloudMenuRouter($scope, $http, $routeParams, $location) {
+    $scope.activeOS = $routeParams.os;
+    $scope.activeComponent = $routeParams.component;
+    $scope.activeCategory = $routeParams.category;
+    $scope.activeSubCategory = $routeParams.subCategory;
+    $scope.testType = "All";
+
+    $http.get('/static/cloud_menu.json').success(function(menu) {
+        $scope.components = menu.components;
+        $scope.oses = menu.oses;
+        $scope.bucket_collection = menu.bucket_collection;
+    });
+
+    var url = '/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory;
+    $http.get(url).success(function(metrics) {
+        $scope.metrics = metrics;
+
+        $.each(metrics, function(i, metric) {
+            $http.get('/api/v1/timeline/' + metric.id).success(function(data) {
+                $scope.metrics[i].chartData = [{key: metric.id, values: data}];
+            });
+        });
+    });
+
+    $scope.setActiveOS = function(os) {
+        var url = "/cloudtimeline/" + os + "/" + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory;
+        $location.url(url);
+    };
+
+    $scope.setTestType = function(testType) {
+        $scope.testType = testType;
+    };
+
+    $scope.setActiveComponent = function(component) {
+        var category = $scope.components[component].categories[0];
+        if (category.subCategories.length > 0) {
+            $scope.activeSubCategory = category.subCategories[0];
+        } else {
+            $scope.activeSubCategory = "all";
+        }
+        var url = "/cloudTimeline/" + $scope.activeOS + "/" + component + "/" + category.id + "/" + $scope.activeSubCategory;
+        $location.url(url);
+    };
+
+    $scope.setActiveCategory = function(category) {
+        var categories = $scope.components[$scope.activeComponent].categories;
+        for (var i in categories) {
+            if (category === categories[i].id) {
+                if (categories[i].subCategories.length > 0) {
+                    $scope.activeSubCategory = categories[i].subCategories[0];
+                } else {
+                    $scope.activeSubCategory = "all";
+                }
+                break;
+            }
+        }
+        var url = "/cloudTimeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + category + "/" + $scope.activeSubCategory;
+        $location.url(url);
+    };
+
+    $scope.setActiveSubCategory = function(subCategory) {
+        var url = "/cloudTimeline/" + $scope.activeOS + "/" + $scope.activeComponent + "/" + $scope.activeCategory + "/" + subCategory;
+        $location.url(url);
+    };
     DefineFilters($scope);
 }
 
