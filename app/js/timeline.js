@@ -5,7 +5,7 @@ angular
             $routeProvider.
                 when('/timeline/:os/:component/:category/:subCategory', {templateUrl: '/static/timeline.html', controller: MenuRouter, reloadOnSearch: false}).
                 when('/runs/:metric/:build', {templateUrl: '/static/runs.html', controller: RunList}).
-                when('/cloudTimeline/:os/:component/:category/:subCategory', {templateUrl: '/static/timeline.html', controller: CloudMenuRouter, reloadOnSearch: false}).
+                when('/cloudTimeline/:os/:component/:category/:subCategory', {templateUrl: '/static/cloud_timeline.html', controller: CloudMenuRouter, reloadOnSearch: false}).
                 otherwise({redirectTo: 'timeline/Linux/kv/max_ops/all'});
         }
     ])

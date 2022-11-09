@@ -1,9 +1,9 @@
 <div class="links">
-    <a target="_blank" href="/comparison">Build Comparison</a> | <a target="_blank" href="/daily">Daily</a> | <a target="_blank" href="/weekly">Weekly</a> | <a target="_blank" href="/impressive">Impressive</a> | <a target="_blank" href="https://hub.internal.couchbase.com/confluence/display/PERF/Clusters+Info">Clusters Info</a> | <a href="#/cloudTimeline/Linux/cloud/kv/AWS"> <strong>Cloud Dashboard</strong></a>
+    <a target="_blank" href="/comparison">Build Comparison</a> | <a target="_blank" href="/daily">Daily</a> | <a target="_blank" href="/weekly">Weekly</a> | <a target="_blank" href="/impressive">Impressive</a> | <a target="_blank" href="https://hub.internal.couchbase.com/confluence/display/PERF/Clusters+Info">Clusters Info</a> | <a href="#/"><strong>On-prem Dashboard</strong></a>
 </div>
 
 <div class="masthead text-center">
-    <h2>Performance Dashboard</h2>
+    <h2>Performance Cloud Dashboard</h2>
 </div>
 
 <div class="text-center">
@@ -20,7 +20,6 @@
         <label
             ng-repeat="os in oses"
             ng-class="{active: os == activeOS}"
-            ng-click="setActiveOS(os)"
             class="btn btn-warning">
             <input type="radio">{{os}}
         </label>
