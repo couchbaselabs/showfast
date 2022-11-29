@@ -13,6 +13,80 @@
         "Serverless"
     ],
     "components": {
+        "kvcloud": {
+            "title": "KV",
+            "categories": [
+                {
+                    "id": "max_ops",
+                    "title": "Throughput",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "latency",
+                    "title": "Latency",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
+        "rebcloud": {
+            "title": "Rebalance",
+            "categories": [
+                {
+                    "id": "kv",
+                    "title": "KV",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
+        "xdcrcloud": {
+            "title": "XDCR",
+            "categories": [
+                {
+                    "id": "init_multi",
+                    "title": "Initial Multi-Node",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "ongoing",
+                    "title": "Ongoing",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
+        "n1qlcloud": {
+            "title": "N1QL",
+            "categories": [
+                {
+                    "id": "ycsb",
+                    "title": "YCSB",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
         "secondarycloud": {
             "title": "GSI",
             "categories": [
@@ -70,6 +144,210 @@
                     "subCategories": [
                         "PlasmaDGM",
                         "Plasma"
+                    ]
+                }
+            ]
+        },
+        "jtscloud": {
+            "title": "Search",
+            "categories": [
+                {
+                    "id": "Latency",
+                    "title": "Latency",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "Throughput",
+                    "title": "Throughput",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "Index",
+                    "title": "Index",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "Rebalance",
+                    "title": "Rebalance",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
+        "eventingcloud": {
+            "title": "Eventing",
+            "categories": [
+                {
+                    "id": "lat",
+                    "title": "Latency",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "thr",
+                    "title": "Throughput",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "scaling",
+                    "title": "Scaling",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
+        "analyticscloud": {
+            "title": "Analytics",
+            "categories": [
+                {
+                    "id": "sync",
+                    "title": "Sync",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "latency",
+                    "title": "Latency",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "rebalance",
+                    "title": "Rebalance",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
+        "toolscloud": {
+            "title": "Tools",
+            "categories": [
+                {
+                    "id": "backup",
+                    "title": "Backup",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "restore",
+                    "title": "Restore",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
+        "syncgatewaycloud": {
+            "title": "Sync Gateway",
+            "categories": [
+                {
+                    "id": "read",
+                    "title": "Reads",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "write",
+                    "title": "Writes",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "sync",
+                    "title": "Sync",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "query",
+                    "title": "Query",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "replicate",
+                    "title": "Replicate",
+                    "subCategories": [
+                        "Pull",
+                        "Push"
+                    ]
+                },
+                {
+                    "id": "import",
+                    "title": "Import",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "sgreplicate",
+                    "title": "SGReplicate",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "e2e",
+                    "title": "E2E",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 }
             ]
@@ -197,684 +475,6 @@
                         "GSI",
                         "FTS",
                         "Mobile"
-                    ]
-                }
-            ]
-        },
-        "jtscloud": {
-            "title": "Search",
-            "categories": [
-                {
-                    "id": "Latency",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "Throughput",
-                    "title": "Throughput",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "Index",
-                    "title": "Index",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "Rebalance",
-                    "title": "Rebalance",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "kvcloud": {
-            "title": "KV",
-            "categories": [
-                {
-                    "id": "max_ops",
-                    "title": "Throughput",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "max_ops_ssl",
-                    "title": "Throughput-SSL",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "latency",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "latency_ssl",
-                    "title": "Latency-SSL",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "dgm",
-                    "title": "DGM",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "warmup",
-                    "title": "Warmup",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "memory",
-                    "title": "Memory",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "compact",
-                    "title": "Compaction",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "dcp",
-                    "title": "DCP",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "cache",
-                    "title": "Cache",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "ycsb",
-                    "title": "YCSB",
-                    "subCategories": [
-                        "ycsb3",
-                        "ycsb2"
-                    ]
-                },
-                {
-                    "id": "durability",
-                    "title": "Durability",
-                    "subCategories": [
-                        "Latency",
-                        "Throughput",
-                        "SLO"
-                    ]
-                },
-                {
-                    "id": "transaction",
-                    "title": "Transaction",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "xdcrcloud": {
-            "title": "XDCR",
-            "categories": [
-                {
-                    "id": "init_single",
-                    "title": "Initial Single-Node",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "init_multi",
-                    "title": "Initial Multi-Node",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "reb",
-                    "title": "Initial+Rebalance",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "ongoing",
-                    "title": "Ongoing",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "n1qlcloud": {
-            "title": "N1QL",
-            "categories": [
-                {
-                    "id": "Q1_Q3",
-                    "title": "Q1-Q3",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "Q5_Q7",
-                    "title": "Q5-Q7",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "aggregation",
-                    "title": "Aggregation",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "windowing",
-                    "title": "Windowing",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "partitioned",
-                    "title": "Partitioning",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "array",
-                    "title": "Array Indexing",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "join_unnest",
-                    "title": "JOIN & UNNEST",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "iud",
-                    "title": "IUD",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "count",
-                    "title": "COUNT",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "tokens",
-                    "title": "TOKENS",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "pagination",
-                    "title": "Pagination",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "API2",
-                    "title": "API2",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "dgm",
-                    "title": "DGM",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "bigfun",
-                    "title": "BigFUN",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "ycsb",
-                    "title": "YCSB",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "soe",
-                    "title": "SOE",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "UDF",
-                    "title": "UDF",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "pytpcc",
-                    "title": "PYTPCC",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "eventingcloud": {
-            "title": "Eventing",
-            "categories": [
-                {
-                    "id": "lat",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "thr",
-                    "title": "Throughput",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "scaling",
-                    "title": "Scaling",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "analyticscloud": {
-            "title": "Analytics",
-            "categories": [
-                {
-                    "id": "sync",
-                    "title": "Sync",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "latency",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "rebalance",
-                    "title": "Rebalance",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "drop",
-                    "title": "Drop",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "connect",
-                    "title": "Connect",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "ch2",
-                    "title": "CH2",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "ch3",
-                    "title": "CH3",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "toolscloud": {
-            "title": "Tools",
-            "categories": [
-                {
-                    "id": "backup",
-                    "title": "Backup",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "restore",
-                    "title": "Restore",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "compact",
-                    "title": "Compact",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "merge",
-                    "title": "Merge",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "list",
-                    "title": "List",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "import",
-                    "title": "Import",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "export",
-                    "title": "Export",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "hdd_pipeline",
-                    "title": "HDD Pipeline",
-                    "subCategories": [
-                        "SQLite",
-                        "ForestDB"
-                    ]
-                }
-            ]
-        },
-        "syncgatewaycloud": {
-            "title": "Sync Gateway",
-            "categories": [
-                {
-                    "id": "read",
-                    "title": "Reads",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "write",
-                    "title": "Writes",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "sync",
-                    "title": "Sync",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "query",
-                    "title": "Query",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "replicate",
-                    "title": "Replicate",
-                    "subCategories": [
-                        "Pull",
-                        "Push"
-                    ]
-                },
-                {
-                    "id": "import",
-                    "title": "Import",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "sgreplicate",
-                    "title": "SGReplicate",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "e2e",
-                    "title": "E2E",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "backupcloud": {
-            "title": "Backup",
-            "categories": [
-                {
-                    "id": "Latency",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "elixircloud": {
-            "title": "Elixir",
-            "categories": [
-                {
-                    "id": "Latency",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "lowendcloud": {
-            "title": "Low-End",
-            "categories": [
-                {
-                    "id": "Latency",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "ycsbcloud": {
-            "title": "YCSB",
-            "categories": [
-                {
-                    "id": "Latency",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
                     ]
                 }
             ]
