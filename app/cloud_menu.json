@@ -9,7 +9,8 @@
     ],
     "providers": [
         "Simulated",
-        "Capella"
+        "Provisioned",
+        "Serverless"
     ],
     "components": {
         "secondarycloud": {
@@ -354,264 +355,6 @@
                 {
                     "id": "transaction",
                     "title": "Transaction",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "hiddcloud": {
-            "title": "HiDD",
-            "categories": [
-                {
-                    "id": "ops",
-                    "title": "Throughput",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "latency",
-                    "title": "Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "reb",
-                    "title": "Rebalance",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "warmup",
-                    "title": "Warmup",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "compact",
-                    "title": "Compaction",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "dcp",
-                    "title": "DCP",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "ycsb",
-                    "title": "YCSB",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "durability",
-                    "title": "Durability",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "transaction",
-                    "title": "Transaction",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "xdcr",
-                    "title": "XDCR",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "tools",
-                    "title": "Tools",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "gsi",
-                    "title": "GSI",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "search",
-                    "title": "Search",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "n1ql",
-                    "title": "N1QL",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "compress",
-                    "title": "Compression",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "S0",
-                    "title": "S0",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "single",
-                    "title": "Single Node",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "benchmark",
-                    "title": "Benchmark",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "rebcloud": {
-            "title": "Rebalance",
-            "categories": [
-                {
-                    "id": "kv",
-                    "title": "KV",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "views",
-                    "title": "Views",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "failover",
-                    "title": "Failover",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "recovery",
-                    "title": "Recovery",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                }
-            ]
-        },
-        "viewscloud": {
-            "title": "Views",
-            "categories": [
-                {
-                    "id": "initial",
-                    "title": "Initial Index",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "incremental",
-                    "title": "Incremental Index",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "lat",
-                    "title": "Bulk Latency",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "by_type",
-                    "title": "Latency by Query Type",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "throughput",
-                    "title": "Throughput",
                     "subCategories": [
                         "AWS",
                         "GCP",
@@ -1080,48 +823,12 @@
                 }
             ]
         },
-        "litecloud": {
-            "title": "Couchbase Lite",
+        "backupcloud": {
+            "title": "Backup",
             "categories": [
                 {
-                    "id": "core",
-                    "title": "Core",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "java",
-                    "title": "Java",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "csharp",
-                    "title": "C# ",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "c",
-                    "title": "C",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "swift",
-                    "title": "Swift",
+                    "id": "Latency",
+                    "title": "Latency",
                     "subCategories": [
                         "AWS",
                         "GCP",
@@ -1130,39 +837,40 @@
                 }
             ]
         },
-        "sdkcloud": {
-            "title": "SDK",
+        "elixircloud": {
+            "title": "Elixir",
             "categories": [
                 {
-                    "id": "java",
-                    "title": "Java",
+                    "id": "Latency",
+                    "title": "Latency",
                     "subCategories": [
                         "AWS",
                         "GCP",
                         "AZURE"
                     ]
-                },
+                }
+            ]
+        },
+        "lowendcloud": {
+            "title": "Low-End",
+            "categories": [
                 {
-                    "id": "libc",
-                    "title": "C",
+                    "id": "Latency",
+                    "title": "Latency",
                     "subCategories": [
                         "AWS",
                         "GCP",
                         "AZURE"
                     ]
-                },
+                }
+            ]
+        },
+        "ycsbcloud": {
+            "title": "YCSB",
+            "categories": [
                 {
-                    "id": "python",
-                    "title": "Python",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
-                },
-                {
-                    "id": "tableau",
-                    "title": "Tableau Connector",
+                    "id": "Latency",
+                    "title": "Latency",
                     "subCategories": [
                         "AWS",
                         "GCP",

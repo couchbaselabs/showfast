@@ -46,7 +46,7 @@ angular
     });
 
 function MainDashboard($scope, $http, $routeParams) {
-
+    DefineMenu($scope, $http);
     var format = d3.format(',');
     $scope.valueFormatFunction = function() {
         return function(d) {
@@ -69,7 +69,6 @@ function MenuRouter($scope, $http, $routeParams, $location) {
     $scope.activeCategory = $routeParams.category;
     $scope.activeSubCategory = $routeParams.subCategory;
     $scope.testType = "All";
-    DefineMenu($scope, $http);
 
     var url = '/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory;
     $http.get(url).success(function(metrics) {
@@ -230,8 +229,10 @@ function DefineFilters($scope) {
         switch($scope.activeProvider) {
             case "Simulated":
                 return metric.cluster.name.toLowerCase().indexOf("capella") === -1;
-            case "Capella":
+            case "Provisioned":
                 return metric.cluster.name.toLowerCase().indexOf("capella") != -1;
+            case "Serverless":
+                return false;
         }
     };
 }
