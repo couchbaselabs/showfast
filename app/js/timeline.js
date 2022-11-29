@@ -46,7 +46,6 @@ angular
     });
 
 function MainDashboard($scope, $http, $routeParams) {
-    DefineMenu($scope, $http);
 
     var format = d3.format(',');
     $scope.valueFormatFunction = function() {
@@ -70,6 +69,7 @@ function MenuRouter($scope, $http, $routeParams, $location) {
     $scope.activeCategory = $routeParams.category;
     $scope.activeSubCategory = $routeParams.subCategory;
     $scope.testType = "All";
+    DefineMenu($scope, $http);
 
     var url = '/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory;
     $http.get(url).success(function(metrics) {
@@ -131,12 +131,14 @@ function CloudMenuRouter($scope, $http, $routeParams, $location) {
     $scope.activeComponent = $routeParams.component;
     $scope.activeCategory = $routeParams.category;
     $scope.activeSubCategory = $routeParams.subCategory;
+    $scope.activeProvider = "Simulated";
     $scope.testType = "All";
 
     $http.get('/static/cloud_menu.json').success(function(menu) {
         $scope.components = menu.components;
         $scope.oses = menu.oses;
         $scope.bucket_collection = menu.bucket_collection;
+        $scope.providers = menu.providers;
     });
 
     var url = '/api/v1/metrics/' + $scope.activeComponent + "/" + $scope.activeCategory + "/" + $scope.activeSubCategory;
@@ -159,6 +161,10 @@ function CloudMenuRouter($scope, $http, $routeParams, $location) {
         $scope.testType = testType;
     };
 
+    $scope.setActiveProvider = function(provider) {
+        $scope.activeProvider = provider;
+    };
+    
     $scope.setActiveComponent = function(component) {
         var category = $scope.components[component].categories[0];
         if (category.subCategories.length > 0) {
@@ -218,6 +224,14 @@ function DefineFilters($scope) {
                 return metric.title.indexOf("c=") === -1 && metric.title.indexOf("collection") === -1 && metric.title.indexOf("Collection") === -1;
             case "All":
                 return true;
+        }
+    };
+    $scope.byProvider = function(metric) {
+        switch($scope.activeProvider) {
+            case "Simulated":
+                return metric.cluster.name.toLowerCase().indexOf("capella") === -1;
+            case "Capella":
+                return metric.cluster.name.toLowerCase().indexOf("capella") != -1;
         }
     };
 }

@@ -18,10 +18,11 @@
     </div>
     <div class="btn-group" data-toggle="buttons">
         <label
-            ng-repeat="os in oses"
-            ng-class="{active: os == activeOS}"
+            ng-repeat="provider in providers"
+            ng-class="{active: provider == activeProvider}"
+            ng-click="setActiveProvider(provider)"
             class="btn btn-warning">
-            <input type="radio">{{os}}
+            <input type="radio">{{provider}}
         </label>
     </div>
 </div>
@@ -64,7 +65,7 @@
     </div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS  | filter:bySubCategory | filter:byTestType | orderBy:'orderBy' ">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS  | filter:bySubCategory | filter:byTestType | filter:byProvider | orderBy:'orderBy' ">
     <hr/>
     <h4 class="metric-title">
         <span id="{{metric.id}}">
