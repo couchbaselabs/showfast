@@ -8,9 +8,9 @@
         "Collection"
     ],
     "providers": [
-        "Simulated",
         "Provisioned",
-        "Serverless"
+        "Serverless",
+        "Simulated"
     ],
     "components": {
         "kvcloud": {

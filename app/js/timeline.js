@@ -130,7 +130,7 @@ function CloudMenuRouter($scope, $http, $routeParams, $location) {
     $scope.activeComponent = $routeParams.component;
     $scope.activeCategory = $routeParams.category;
     $scope.activeSubCategory = $routeParams.subCategory;
-    $scope.activeProvider = "Simulated";
+    $scope.activeProvider = "Provisioned";
     $scope.testType = "All";
 
     $http.get('/static/cloud_menu.json').success(function(menu) {
