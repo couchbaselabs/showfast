@@ -228,11 +228,11 @@ function DefineFilters($scope) {
     $scope.byProvider = function(metric) {
         switch($scope.activeProvider) {
             case "Simulated":
-                return metric.cluster.name.toLowerCase().indexOf("capella") === -1;
+                return 'provider' in metric == false || (metric.provider.toLowerCase().indexOf("capella") === -1 && metric.provider.toLowerCase().indexOf("serverless") === -1);
             case "Provisioned":
-                return metric.cluster.name.toLowerCase().indexOf("capella") != -1;
+                return 'provider' in metric && metric.provider.toLowerCase().indexOf("capella") != -1;
             case "Serverless":
-                return false;
+                return 'provider' in metric && metric.provider.toLowerCase().indexOf("serverless") != -1;
         }
     };
 }
