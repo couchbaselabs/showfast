@@ -196,9 +196,8 @@
                     "id": "lat",
                     "title": "Latency",
                     "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
+                        "Timer",
+                        "Function"
                     ]
                 },
                 {
