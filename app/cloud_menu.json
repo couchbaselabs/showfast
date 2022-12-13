@@ -196,26 +196,24 @@
                     "id": "lat",
                     "title": "Latency",
                     "subCategories": [
-                        "Timer",
-                        "Function"
+                        "Function",
+                        "Timer"
                     ]
                 },
                 {
                     "id": "thr",
                     "title": "Throughput",
                     "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
+                        "Function",
+                        "Timer"
                     ]
                 },
                 {
                     "id": "scaling",
                     "title": "Scaling",
                     "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
+                        "Function",
+                        "Timer"
                     ]
                 }
             ]
