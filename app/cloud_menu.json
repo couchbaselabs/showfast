@@ -94,56 +94,63 @@
                     "id": "lat",
                     "title": "Latency",
                     "subCategories": [
-                        "PlasmaDGM",
-                        "Plasma"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 },
                 {
                     "id": "thr",
                     "title": "Throughput",
                     "subCategories": [
-                        "PlasmaDGM",
-                        "Plasma"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 },
                 {
                     "id": "initial",
                     "title": "Initial",
                     "subCategories": [
-                        "PlasmaDGM",
-                        "Plasma"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 },
                 {
                     "id": "incremental",
                     "title": "Incremental",
                     "subCategories": [
-                        "PlasmaDGM",
-                        "Plasma"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 },
                 {
                     "id": "recovery",
                     "title": "Recovery",
                     "subCategories": [
-                        "PlasmaDGM",
-                        "Plasma"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 },
                 {
                     "id": "rebalance",
                     "title": "Rebalance",
                     "subCategories": [
-                        "PlasmaDGM",
-                        "Plasma"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 },
                 {
                     "id": "ddl",
                     "title": "DDL",
                     "subCategories": [
-                        "PlasmaDGM",
-                        "Plasma"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 }
             ]
@@ -196,24 +203,27 @@
                     "id": "lat",
                     "title": "Latency",
                     "subCategories": [
-                        "Function",
-                        "Timer"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 },
                 {
                     "id": "thr",
                     "title": "Throughput",
                     "subCategories": [
-                        "Function",
-                        "Timer"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 },
                 {
                     "id": "scaling",
                     "title": "Scaling",
                     "subCategories": [
-                        "Function",
-                        "Timer"
+                        "AWS",
+                        "GCP",
+                        "AZURE"
                     ]
                 }
             ]
