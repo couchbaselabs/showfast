@@ -191,7 +191,7 @@
             },{
                 "id": "Flex", "title": "Flex", "subCategories": ["Latency", "Throughput"]
             },{
-                "id": "elixir", "title": "Elixir", "subCategories": ["Latency", "Throughput", "Index"]
+                "id": "serverless", "title": "Serverless", "subCategories": ["Latency", "Throughput", "Index"]
             }]
         },
         "eventing": {
