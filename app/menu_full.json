@@ -34,6 +34,8 @@
                 "id": "durability", "title": "Durability", "subCategories": ["Latency", "Throughput", "SLO"]
             }, {
                 "id": "transaction", "title": "Transaction", "subCategories": ["Throughput", "Latency"]
+            }, {
+                "id": "cdc", "title": "CDC", "subCategories": ["Throughput", "Latency", "Rebalance"]
             }]
         },
         "hidd": {
