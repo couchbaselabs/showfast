@@ -77,8 +77,17 @@
             "title": "N1QL",
             "categories": [
                 {
-                    "id": "ycsb",
-                    "title": "YCSB",
+                    "id": "thr",
+                    "title": "Throughput",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "lat",
+                    "title": "Latency",
                     "subCategories": [
                         "AWS",
                         "GCP",
