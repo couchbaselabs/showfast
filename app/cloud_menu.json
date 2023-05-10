@@ -369,7 +369,7 @@
             ]
         },
         "cloud": {
-            "title": "Cloud",
+            "title": "Deprecated",
             "categories": [
                 {
                     "id": "kv",
