@@ -96,16 +96,16 @@ func (ds *dataStore) getBuilds() (*[]string, error) {
 }
 
 type Metric struct {
-	Cluster      string `json:"cluster"`
-	Category     string `json:"category"`
-	Component    string `json:"component"`
-	ID           string `json:"id"`
-	OrderBy      string `json:"orderBy"`
-	SubCategory  string `json:"subCategory"`
-	Title        string `json:"title"`
-	Chirality    int    `json:"chirality"`
-	MemQuota     int64  `json:"memquota"`
-	Provider     string `json:"provider"`
+	Cluster     string `json:"cluster"`
+	Category    string `json:"category"`
+	Component   string `json:"component"`
+	ID          string `json:"id"`
+	OrderBy     string `json:"orderBy"`
+	SubCategory string `json:"subCategory"`
+	Title       string `json:"title"`
+	Chirality   int    `json:"chirality"`
+	MemQuota    int64  `json:"memquota"`
+	Provider    string `json:"provider"`
 }
 
 type MetricWithCluster struct {
@@ -405,14 +405,14 @@ func (ds *dataStore) getTimeline(metric string) (*[][]interface{}, error) {
 			"ORDER BY SPLIT(`build`, '-')[0], TONUMBER(SPLIT(`build`, '-')[1]);")
 
 	//this is a heck to show average of gsi rebalance tests for smart batching
-	if strings.Contains(metric, "aether_5indexes") {
-		query = gocb.NewN1qlQuery(
-			"SELECT `build`, ROUND(AVG(`value`),3) as `value` " +
-				"FROM benchmarks " +
-				"WHERE metric = $1 " +
-				"Group by `build`" +
-				"ORDER BY SPLIT(`build`, '-')[0], TONUMBER(SPLIT(`build`, '-')[1]);")
-	}
+	// if strings.Contains(metric, "aether_5indexes") {
+	// 	query = gocb.NewN1qlQuery(
+	// 		"SELECT `build`, ROUND(AVG(`value`),3) as `value` " +
+	// 			"FROM benchmarks " +
+	// 			"WHERE metric = $1 " +
+	// 			"Group by `build`" +
+	// 			"ORDER BY SPLIT(`build`, '-')[0], TONUMBER(SPLIT(`build`, '-')[1]);")
+	// }
 	params := []interface{}{metric}
 
 	rows, err := ds.cluster.ExecuteN1qlQuery(query, params)
