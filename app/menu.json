@@ -88,6 +88,8 @@
                 "id": "failover", "title": "Failover", "subCategories": []
             }, {
                 "id": "recovery", "title": "Recovery", "subCategories": []
+            }, {
+                "id": "migration", "title": "Migration", "subCategories": []
             }]
         },
         "views": {
