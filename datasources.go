@@ -23,7 +23,7 @@ func newDataStore() *dataStore {
 		os.Exit(1)
 	}
 
-	connSpecStr := fmt.Sprintf("couchbase://%s", hostname)
+	connSpecStr := fmt.Sprintf("couchbases://%s", hostname)
 	cluster, err := gocb.Connect(connSpecStr)
 	if err != nil {
 		log.Error("failed to connect to Couchbase Server", "err", err)
@@ -40,8 +40,14 @@ func (ds *dataStore) auth() {
 		os.Exit(1)
 	}
 
+    username := os.Getenv("CB_USER")
+	if username == "" {
+		log.Error("missing username")
+		os.Exit(1)
+	}
+
 	ds.cluster.Authenticate(gocb.PasswordAuthenticator{
-		Username: "Administrator",
+		Username: username,
 		Password: password,
 	})
 
@@ -57,7 +63,7 @@ func (ds *dataStore) auth() {
 	}
 
 	// auth := gocb.ClusterAuthenticator{
-	// Username: "Administrator",
+	// Username: Username,
 	// Password: password,
 	// Buckets:  authMap,
 	// }
