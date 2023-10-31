@@ -191,7 +191,7 @@
             }, {
                 "id": "N1FTY", "title": "N1FTY", "subCategories": ["Latency","Throughput"]
             },{
-                "id": "Geo", "title": "Geo Queries", "subCategories": ["Latency", "Throughput"]
+                "id": "Geo", "title": "Geo Queries", "subCategories": ["Latency", "Throughput", "Index"]
             },{
                 "id": "Flex", "title": "Flex", "subCategories": ["Latency", "Throughput"]
             },{
