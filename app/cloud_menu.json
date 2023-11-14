@@ -368,6 +368,29 @@
                 }
             ]
         },
+        "infracloud": {
+            "title": "Infrastructure",
+            "categories": [
+                {
+                    "id": "clusterdeployment",
+                    "title": "Cluster Deployment",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "sgwdeployment",
+                    "title": "SGW Deployment",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
         "cloud": {
             "title": "Deprecated",
             "categories": [
