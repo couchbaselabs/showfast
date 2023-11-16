@@ -373,7 +373,7 @@
             "categories": [
                 {
                     "id": "clusterdeployment",
-                    "title": "Cluster Deployment",
+                    "title": "Cluster",
                     "subCategories": [
                         "AWS",
                         "GCP",
@@ -382,7 +382,7 @@
                 },
                 {
                     "id": "sgwdeployment",
-                    "title": "SGW Deployment",
+                    "title": "Sync Gateway",
                     "subCategories": [
                         "AWS",
                         "GCP",
