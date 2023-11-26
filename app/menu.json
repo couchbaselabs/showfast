@@ -196,6 +196,8 @@
                 "id": "Flex", "title": "Flex", "subCategories": ["Latency", "Throughput"]
             },{
                 "id": "serverless", "title": "Serverless", "subCategories": ["Latency", "Throughput", "Index"]
+            },{
+                "id": "vector", "title": "Vector", "subCategories": ["Latency", "Throughput", "Index"]
             }]
         },
         "eventing": {
