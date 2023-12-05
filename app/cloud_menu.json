@@ -391,6 +391,38 @@
                 }
             ]
         },
+        "cpapicloud": {
+            "title": "CP-API",
+            "categories": [
+                {
+                    "id": "latency",
+                    "title": "Latency",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "cpuutil",
+                    "title": "CPU Utilisation",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "memutil",
+                    "title": "Memory Utilisation",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                }
+            ]
+        },
         "cloud": {
             "title": "Deprecated",
             "categories": [
