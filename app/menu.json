@@ -226,6 +226,8 @@
                 "id": "ch2", "title": "CH2", "subCategories": []
             }, {
                 "id": "ch3", "title": "CH3", "subCategories": []
+            }, {
+                "id": "sql", "title": "SQL", "subCategories": []
             }]
         },
         "tools": {
