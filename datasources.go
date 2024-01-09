@@ -314,7 +314,7 @@ func (ds *dataStore) getImpressiveTests(component string, build1 string, build2 
 			"ARRAY_AGG({b.`value`, b.`build`})[0].`value` as `v1`, " +
 			"ARRAY_AGG({b.`value`, b.`build`})[1].`build` as `b2`, " +
 			"ARRAY_AGG({b.`value`, b.`build`})[1].`value` as `v2` " +
-			"FROM impressive i LEFT JOIN benchmarks b ON i.metric = b.metric AND b.hidden = false AND b.`build` IN [$3, $4] " +
+			"FROM impressive i LEFT JOIN benchmarks b ON i.metric = b.metric AND b.`build` IN [$3, $4] " +
 			"WHERE i.type = $1 AND i.component = $2 " + isActivePredicate +
 			"GROUP BY i.category, i.title, i.active, i.windows, i.metric " +
 			"ORDER BY i.category")
