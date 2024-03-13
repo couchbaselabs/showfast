@@ -198,6 +198,8 @@
                 "id": "serverless", "title": "Serverless", "subCategories": ["Latency", "Throughput", "Index"]
             },{
                 "id": "vector", "title": "Vector", "subCategories": ["Latency", "Throughput", "Index", "Recall", "Accuracy"]
+            },{
+                "id": "vectordb", "title": "VectorDBBench", "subCategories": []
             }]
         },
         "eventing": {

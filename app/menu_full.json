@@ -228,6 +228,8 @@
                 "id": "Flex", "title": "Flex", "subCategories": ["Latency", "Throughput"]
             },{
                 "id": "capella", "title": "Capella", "subCategories": ["Latency", "Throughput", "Index"]
+            },{
+                "id": "vectordb", "title": "VectorDBBench", "subCategories": []
             }]
         },
         "eventing": {
