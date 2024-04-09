@@ -1,0 +1,46 @@
+
+.t-nonactivetest {
+    background-color:#E5E8E8;
+}
+
+.t-activetest {
+    background-color:white;
+}
+
+.t-windowstest {
+    background-color:rgb(255, 255, 239);
+}
+
+.bar-good, .bar-bad {
+    color: white;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+}
+
+.bar-good {
+    background-color: #337ab7;
+    align-content: "left";
+}
+
+.bar-bad {
+    background-color: #c9302c;
+    align-content: "left";
+}
+
+.text-total {
+    font-weight: bold;
+    font-size: 100%;
+}
+
+.text-missing {
+    font-weight: bold;
+    color: rgb(230, 158, 3);
+    font-size: 100%;
+}
+
+.text-completed {
+    font-weight: bold;
+    color: rgb(1, 104, 1);
+    font-size: 100%;
+}
