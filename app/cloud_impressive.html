@@ -1,0 +1,123 @@
+<html ng-app="showfast">
+
+<head>
+    <title>ShowFast</title>
+    <link rel="stylesheet" href="/static/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/admin.css" />
+    <link rel="stylesheet" href="/static/css/cloud_impressive.css" />
+    <link rel="stylesheet" href="/static/css/tablesort.css" />
+
+    <script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/angular-tablesort.js"></script>
+    <script type="text/javascript" src="/static/js/cloud_impressive.js"></script>
+</head>
+
+<body ng-controller="ImpressiveCtrl">
+    <div class="masthead text-center">
+        <h2>Cloud Impressive</h2>
+
+
+        <div class="text-center">
+            <div class="btn-group" data-toggle="buttons">
+                <label
+                    ng-repeat="(id, component) in components"
+                    ng-class="{active: id === activeComponent}"
+                    ng-click="setActiveComponent(id)"
+                    class="btn btn-success">
+                    <input type="radio">{{component.title}}
+                </label>
+            </div>
+
+            <div class="btn-group" data-toggle="buttons">
+                    <label
+                        ng-repeat="mode in ['Active','All']"
+                        ng-class="{active: mode === activeMode}"
+                        ng-click="setActiveMode(mode)"
+                        class="btn btn-warning">
+                        <input type="radio">{{mode}}
+                    </label>
+                </div>
+
+        </div>
+
+        <div>
+            <table style="width:200px" class="table-borderless t-inventory">
+                <colgroup>
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                </colgroup>
+
+                <tbody class="t-data">
+                        <tr>
+                            <td class=text-total>Total:</td>
+                            <td class=text-total>{{summaryTotal}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-completed">Completed:</td>
+                            <td class="text-completed">{{summaryCompleted}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-missing">Missing:</td>
+                            <td class="text-missing">{{summaryMissing}}</td>
+                        </tr>
+                 </tbody>
+            </table>
+        </div>
+
+
+        <div>
+            <table class="table-striped table-bordered table-condensed t-inventory" ts-wrapper>
+                <colgroup>
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 60%;">
+                    <col span="1" style="width: 8%;">
+                    <col span="1" style="width: 8%;">
+                    <col span="1" style="width: 14%;">
+                </colgroup>
+
+                <thead class="t-header">
+                    <tr>
+                        <th ts-criteria="category">Category</th>
+                        <th ts-criteria="title" ts-default>Test</th>
+                        <th ts-criteria="b1" ts-default>
+                            <select class="form-control" ng-model="lhb" ng-options="build for build in builds"></select>
+                        </th>
+                        <th ts-criteria="b2" ts-default>
+                            <select class="form-control" ng-model="rhb" ng-options="build for build in builds"></select>
+                        </th>
+                        <th ts-criteria="b2" ts-default>Delta</th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody class="t-data">
+                    <tr ng-repeat="test in tests" ts-repeat>
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}">{{test.category}}</td>
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}">{{test.title}} <br/> <font color="#ABB2B9">{{test.metric}}</font> </td>
+
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b1 != ''"><a target="_blank" href="/#/runs/{{ test.metric }}/{{ test.b1 }}">{{test.v1}}</a></td>
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b1 == '' && (test.jobUrl1 == '' || test.windows)"><font color="red"><strong>NONE</strong></font></td>
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b1 == '' && test.jobUrl1 != '' && !test.windows">
+                                <a href="{{ test.jobUrl1 }}"> <font color="red"><strong>Failed </strong></font></td></a>
+
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b2 != ''"><a target="_blank" href="/#/runs/{{ test.metric }}/{{ test.b2 }}">{{test.v2}}</a></td>
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b2 == '' && (test.jobUrl2 == '' || test.windows)"><font color="red"><strong>NONE</strong></font></td>
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b2 == '' && test.jobUrl2 != '' && !test.windows ">
+                                <a href="{{ test.jobUrl2 }}"> <font color="red"><strong>Failed </strong></font></td></a>
+
+                        <td class="{{ GetRowStyle(test.active, test.windows) }}" ng-if="test.b1 != '' && test.b2 != ''">
+                                <div class="{{ calcWidthClass(test.v1, test.v2) }} bar1">{{ fmtDiff(test.v1, test.v2) }} % </div>
+                        </td>
+                        <td class="{{ GetRowStyle(test.active) }}" ng-if="test.b1 == '' || test.b2 == ''"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
+
