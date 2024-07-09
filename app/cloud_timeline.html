@@ -63,9 +63,12 @@
             <input type="radio">{{choice}}
         </label>
     </div>
+    <div class="search-container">
+        <input type="text" placeholder="Search from titles..." ng-model="searchQuery" />
+    </div>
 </div>
 
-<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS  | filter:bySubCategory | filter:byTestType | filter:byProvider | orderBy:'orderBy' ">
+<div class="masthead metric" id="cont_{{metric.id}}" ng-repeat="metric in metrics | filter:byOS  | filter:bySubCategory | filter:byTestType | filter:byProvider | filter:searchFilter(searchQuery) | orderBy:'orderBy' ">
     <hr/>
     <h4 class="metric-title">
         <span id="{{metric.id}}">
