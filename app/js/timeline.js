@@ -235,6 +235,14 @@ function DefineFilters($scope) {
                 return 'provider' in metric && metric.provider.toLowerCase().indexOf("serverless") != -1;
         }
     };
+
+    $scope.searchFilter = function(searchQuery) {
+        return function(metric) {
+            if (!searchQuery) return true; // If no query, show all items
+            var query = searchQuery.toLowerCase();
+            return metric.title.toLowerCase().indexOf(query) !== -1;
+        };
+    };
 }
 
 function RunList($scope, $routeParams, $http) {
