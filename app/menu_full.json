@@ -170,6 +170,8 @@
                 "id": "rebalance", "title": "Rebalance", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
             }, {
                 "id": "ddl", "title": "DDL", "subCategories": ["MOI", "Plasma", "PlasmaDGM"]
+            }, {
+                "id": "vector", "title": "Vector", "subCategories": ["Plasma", "PlasmaDGM", "Bhive"]
             }]
         },
         "secondarycloud": {
