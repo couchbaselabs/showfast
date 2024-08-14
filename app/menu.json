@@ -156,7 +156,10 @@
                 "id": "UDF", "title": "UDF", "subCategories": ["Other", "MOI", "Plasma"]
             },{
                 "id": "pytpcc", "title": "PYTPCC", "subCategories": ["Plasma", "MOI"]
-            }]
+            },{
+                "id": "vector", "title": "Vector", "subCategories": ["Plasma", "PlasmaDGM", "Bhive"]
+            }
+        ]
         },
         "secondary": {
             "title": "GSI",
