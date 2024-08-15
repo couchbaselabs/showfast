@@ -226,13 +226,20 @@ function DefineFilters($scope) {
         }
     };
     $scope.byProvider = function(metric) {
+        var provider = 'provider' in metric ? metric.provider.toLowerCase() : null;
         switch($scope.activeProvider) {
             case "Simulated":
-                return 'provider' in metric == false || (metric.provider.toLowerCase().indexOf("capella") === -1 && metric.provider.toLowerCase().indexOf("serverless") === -1);
+                return provider == null || (
+                    provider.indexOf("capella") === -1 &&
+                    provider.indexOf("columnar") === -1 &&
+                    provider.indexOf("serverless") === -1
+                );
             case "Provisioned":
-                return 'provider' in metric && metric.provider.toLowerCase().indexOf("capella") != -1;
+                return provider != null && provider.indexOf("capella") != -1;
+            case "Columnar":
+                return provider != null && provider.indexOf("columnar") != -1;
             case "Serverless":
-                return 'provider' in metric && metric.provider.toLowerCase().indexOf("serverless") != -1;
+                return provider != null && provider.indexOf("serverless") != -1;
         }
     };
 
