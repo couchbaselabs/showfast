@@ -9,6 +9,7 @@
     ],
     "providers": [
         "Provisioned",
+        "Columnar",
         "Serverless",
         "Simulated"
     ],
@@ -260,6 +261,15 @@
                 {
                     "id": "latency",
                     "title": "Latency",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "ch2",
+                    "title": "CH2",
                     "subCategories": [
                         "AWS",
                         "GCP",
