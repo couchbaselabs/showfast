@@ -276,6 +276,8 @@
                     "Bidirectional", "Multi-cluster"]
             }, {
                 "id": "e2e", "title": "E2E", "subCategories": ["Push", "Pull", "Bidirectional"]
+            }, {
+                "id": "low_end", "title": "Low-End", "subCategories": []
             }]
         },
         "lite": {
