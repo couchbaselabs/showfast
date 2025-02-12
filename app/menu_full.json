@@ -152,8 +152,10 @@
                 "id": "soe", "title": "SOE", "subCategories": []
             }, {
                 "id": "pytpcc", "title": "PYTPCC", "subCategories": ["Plasma", "MOI"]
-            },{
+            }, {
                 "id": "vector", "title": "Vector", "subCategories": ["Plasma", "PlasmaDGM", "Bhive"]
+            }, {
+                "id": "sql", "title": "SQL", "subCategories": []
             }
         ]
         },
