@@ -112,6 +112,7 @@ type Metric struct {
 	Chirality   int    `json:"chirality"`
 	MemQuota    int64  `json:"memquota"`
 	Provider    string `json:"provider"`
+	Hidden      bool   `json:"hidden"`
 }
 
 type MetricWithCluster struct {
@@ -133,9 +134,9 @@ func (ds *dataStore) getMetrics(component, category string, subCategory string) 
 	var metrics []interface{}
 
 	query := gocb.NewN1qlQuery(
-		"SELECT m.id, m.title, m.component, m.category, m.orderBy, m.subCategory,  m.memquota, m.provider, c AS `cluster` " +
+		"SELECT m.id, m.title, m.component, m.category, m.orderBy, m.subCategory, m.memquota, m.provider, m.hidden, c AS `cluster` " +
 			"FROM metrics m JOIN clusters c ON KEYS m.`cluster`" +
-			"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3 " +
+			"WHERE m.component = $1 AND m.category = $2 AND m.subCategory = $3 AND m.hidden = False " +
 			"ORDER BY m.category;")
 	params := []interface{}{component, category, subCategory}
 
