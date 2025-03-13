@@ -257,6 +257,8 @@
                 "id": "export", "title": "Export", "subCategories": []
             },{
                 "id": "hdd_pipeline", "title": "HDD Pipeline", "subCategories": ["SQLite", "ForestDB"]
+            },{
+                "id": "continuous_backup", "title": "Continuous Backup", "subCategories": ["Backup", "Restore"]
             }]
         },
         "syncgateway": {
