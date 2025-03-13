@@ -489,6 +489,8 @@
                         "AZURE"
                     ]
                 },
+                }
+            ]
         },
         "cloud": {
             "title": "Deprecated",
