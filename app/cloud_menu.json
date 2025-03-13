@@ -441,6 +441,55 @@
                 }
             ]
         },
+        "aiservices": {
+            "title": "AI Services",
+            "categories": [
+                {
+                    "id": "models",
+                    "title": "Model Services/ AI Gateway",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "uds",
+                    "title": "UDS",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "functions",
+                    "title": "AI Functions",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "catalog",
+                    "title": "Agent Catalog",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "e2e",
+                    "title": "E2E",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+        },
         "cloud": {
             "title": "Deprecated",
             "categories": [
