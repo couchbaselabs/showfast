@@ -259,6 +259,8 @@
                 "id": "hdd_pipeline", "title": "HDD Pipeline", "subCategories": ["SQLite", "ForestDB"]
             },{
                 "id": "continuous_backup", "title": "Continuous Backup", "subCategories": []
+            },{
+                "id": "retention", "title": "Retention", "subCategories": []
             }]
         },
         "syncgateway": {
