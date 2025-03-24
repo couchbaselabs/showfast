@@ -90,6 +90,8 @@
                 "id": "recovery", "title": "Recovery", "subCategories": []
             }, {
                 "id": "migration", "title": "Migration", "subCategories": []
+            }, {
+                "id": "dynamic", "title": "Dynamic Services", "subCategories": []
             }]
         },
         "views": {
