@@ -313,6 +313,46 @@
             }, {
                 "id": "tableau", "title": "Tableau Connector", "subCategories": ["Control", "Couchbase", "CData"]
             }]
+        },
+        "fio": {
+            "title": "FIO",
+            "categories":[{
+                "id": "aether", "title": "Aether", "subCategories": []
+            }, {
+                "id": "ares", "title": "Ares", "subCategories": []
+            }, {
+                "id": "arke", "title": "Arke", "subCategories": []
+            }, {
+                "id": "artemis", "title": "Artemis", "subCategories": []
+            }, {
+                "id": "athena", "title": "Athena", "subCategories": []
+            },{
+                "id": "atlas", "title": "Atlas", "subCategories": []
+            }, {
+                "id": "demeter", "title": "Demeter", "subCategories": []
+            }, {
+                "id": "hebe", "title": "Hebe", "subCategories": []
+            }, {
+                "id": "hemera", "title": "Hemera", "subCategories": []
+            }, {
+                "id": "hera", "title": "Hera", "subCategories": []
+            },{
+                "id": "hercules", "title": "Hercules", "subCategories": []
+            }, {
+                "id": "iris", "title": "Iris", "subCategories": []
+            }, {
+                "id": "nyx", "title": "nyx", "subCategories": []
+            }, {
+                "id": "oceanus", "title": "Oceanus", "subCategories": []
+            }, {
+                "id": "rhea", "title": "Rhea", "subCategories": []
+            },{
+                "id": "themis", "title": "Themis", "subCategories": []
+            }, {
+                "id": "titan", "title": "Titan", "subCategories": []
+            }, {
+                "id": "triton", "title": "Triton", "subCategories": []
+            }]
         }
     }
 }
