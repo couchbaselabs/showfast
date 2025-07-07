@@ -447,47 +447,27 @@
                 {
                     "id": "models",
                     "title": "Model Services/ AI Gateway",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
+                    "subCategories": []
                 },
                 {
                     "id": "uds",
                     "title": "UDS",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
+                    "subCategories": []
                 },
                 {
                     "id": "functions",
                     "title": "AI Functions",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
+                    "subCategories": []
                 },
                 {
-                    "id": "catalog",
-                    "title": "Agent Catalog",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
+                    "id": "autovec",
+                    "title": "Auto Vectorisation",
+                    "subCategories": []
                 },
                 {
                     "id": "e2e",
                     "title": "E2E",
-                    "subCategories": [
-                        "AWS",
-                        "GCP",
-                        "AZURE"
-                    ]
+                    "subCategories": []
                 }
             ]
         },
