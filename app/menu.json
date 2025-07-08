@@ -250,8 +250,6 @@
             }, {
                 "id": "rebalance", "title": "Rebalance", "subCategories": []
             }, {
-                "id": "connect", "title": "Connect", "subCategories": []
-            }, {
                 "id": "ch2", "title": "CH2", "subCategories": []
             }]
         },
