@@ -203,6 +203,7 @@ function DefineMenu($scope, $http) {
         $scope.components = menu.components;
         $scope.oses = menu.oses;
         $scope.bucket_collection = menu.bucket_collection;
+        $scope.bhive_composite = menu.bhive_composite;
     });
 }
 
@@ -221,6 +222,10 @@ function DefineFilters($scope) {
                 return (metric.title.indexOf("c=") != -1 || metric.title.indexOf("collection") != -1 || (metric.title.indexOf("Collection") != -1));
             case "Bucket":
                 return metric.title.indexOf("c=") === -1 && metric.title.indexOf("collection") === -1 && metric.title.indexOf("Collection") === -1;
+            case "Bhive":
+                return metric.title.toLowerCase.indexOf("bhive") != -1;
+            case "Composite":
+                return metric.title.toLowerCase().indexOf("composite") != -1;
             case "All":
                 return true;
         }
