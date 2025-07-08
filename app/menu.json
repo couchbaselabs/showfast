@@ -5,6 +5,9 @@
     "bucket_collection":[
         "All","Bucket", "Collection"
     ],
+    "bhive_composite": [
+        "All", "Composite", "Bhive"
+    ],
     "components": {
         "kv": {
             "title": "KV",
@@ -159,7 +162,7 @@
             }, {
                 "id": "pytpcc", "title": "PYTPCC", "subCategories": ["Plasma", "MOI"]
             }, {
-                "id": "vector", "title": "Vector", "subCategories": ["Plasma", "PlasmaDGM", "Bhive"]
+                "id": "vector", "title": "Vector", "subCategories": ["Latency", "Throughput", "Recall", "Initial"]
             }, {
                 "id": "sql", "title": "SQL", "subCategories": []
             }
