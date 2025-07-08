@@ -241,6 +241,18 @@
                 "id": "sql", "title": "SQL", "subCategories": []
             }]
         },
+        "columnar": {
+            "title": "Columnar",
+            "categories": [{
+                "id": "sync", "title": "Sync", "subCategories": ["Initial", "Incremental"]
+            }, {
+                "id": "latency", "title": "Latency", "subCategories": ["With Index", "Without Index", "Window Functions"]
+            }, {
+                "id": "rebalance", "title": "Rebalance", "subCategories": []
+            }, {
+                "id": "ch2", "title": "CH2", "subCategories": []
+            }]
+        },
         "tools": {
             "title": "Tools",
             "categories": [{
