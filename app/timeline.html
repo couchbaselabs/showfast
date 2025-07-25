@@ -56,7 +56,7 @@
     </div>
     <div class="btn-group" data-toggle="buttons">
         <label
-            ng-repeat="choice in bucket_collection"
+            ng-repeat="choice in (activeComponent == 'n1ql' && activeCategory == 'vector' ? bhive_composite : bucket_collection)"
             ng-class="{active: choice == testType}"
             ng-click="setTestType(choice)"
             class="btn btn-info">
