@@ -211,6 +211,8 @@
             },{
                 "id": "vector", "title": "Vector", "subCategories": ["Latency", "Throughput", "Index", "Recall", "Accuracy"]
             },{
+                "id": "hybrid_fusion", "title": "Hybrid Fusion", "subCategories": ["Latency", "Throughput", "Index", "Recall", "Accuracy"]
+            },{
                 "id": "vectordb", "title": "VectorDBBench", "subCategories": []
             }]
         },
