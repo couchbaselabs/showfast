@@ -305,6 +305,24 @@
                 "id": "low_end", "title": "Low-End", "subCategories": []
             }]
         },
+        "edgeserver": {
+            "title": "Edge Server",
+            "categories": [{
+                "id": "rest", "title": "REST", "subCategories": ["Read", "Write", "Delete", "Bulk"]
+            }, {
+                "id": "query", "title": "Query", "subCategories": ["Named", "Adhoc"]
+            }, {
+                "id": "changes", "title": "Changes Feed", "subCategories": ["Longpoll", "Continuous"]
+            }, {
+                "id": "sync", "title": "CBL Sync", "subCategories": ["Push", "Pull", "Bidirectional"]
+            }, {
+                "id": "e2e", "title": "E2E", "subCategories": ["Push", "Pull", "Bidirectional"]
+            }, {
+                "id": "edge2edge", "title": "Edge-to-Edge", "subCategories": ["Replication", "Failover"]
+            }, {
+                "id": "security", "title": "Security", "subCategories": ["TLS", "MTLS"]
+            }]
+        },
         "lite": {
             "title": "Couchbase Lite",
             "categories": [{
