@@ -491,6 +491,32 @@
                 }
             ]
         },
+        "fusioncloud": {
+            "title": "Fusion",
+            "categories": [
+                {
+                    "id": "latency",
+                    "title": "Latency",
+                    "subCategories": [
+                        "AWS"
+                    ]
+                },
+                {
+                    "id": "throughput",
+                    "title": "Throughput",
+                    "subCategories": [
+                        "AWS"
+                    ]
+                },
+                {
+                    "id": "scaling",
+                    "title": "Scaling Time",
+                    "subCategories": [
+                        "AWS"
+                    ]
+                }
+            ]
+        },
         "cloud": {
             "title": "Deprecated",
             "categories": [
