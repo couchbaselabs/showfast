@@ -211,6 +211,24 @@
                         "GCP",
                         "AZURE"
                     ]
+                },
+                {
+                    "id": "Recall",
+                    "title": "Recall",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
+                },
+                {
+                    "id": "Accuracy",
+                    "title": "Accuracy",
+                    "subCategories": [
+                        "AWS",
+                        "GCP",
+                        "AZURE"
+                    ]
                 }
             ]
         },
